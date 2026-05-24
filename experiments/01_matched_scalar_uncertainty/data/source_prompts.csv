@@ -1,0 +1,961 @@
+model,prompt_id,prompt,target,target_id,topic,fact_id,template_id,prompt_observed_condition,target_rank_final,final_top1_token,final_top1_prob_topk,final_top8_tokens
+bert-base-uncased,0,The capital of France is [MASK].,paris,3000,capital,capital:france,t0,correct,1,paris,0.4595853451331126,paris lille lyon marseille tours toulouse orleans nantes
+bert-base-uncased,1,France's capital city is [MASK].,paris,3000,capital,capital:france,t1,correct,1,paris,0.4580219040772423,paris lyon lille tours marseille toulouse orleans nancy
+bert-base-uncased,2,"In France, the capital city is [MASK].",paris,3000,capital,capital:france,t2,correct,1,paris,0.3080682627030683,paris lille lyon marseille toulouse bordeaux montpellier tours
+bert-base-uncased,3,The capital of Germany is [MASK].,berlin,4068,capital,capital:germany,t0,error,2,bonn,0.1528655858176344,bonn berlin leipzig hamburg hanover munich kassel frankfurt
+bert-base-uncased,4,Germany's capital city is [MASK].,berlin,4068,capital,capital:germany,t1,correct,1,berlin,0.1782350558389598,berlin leipzig bonn munich hamburg stuttgart dresden hanover
+bert-base-uncased,5,"In Germany, the capital city is [MASK].",berlin,4068,capital,capital:germany,t2,error,3,bonn,0.121316075759242,bonn hamburg berlin hanover leipzig cologne munich bremen
+bert-base-uncased,6,The capital of Italy is [MASK].,rome,4199,capital,capital:italy,t0,correct,1,rome,0.2303414753049366,rome milan turin naples florence bologna genoa bari
+bert-base-uncased,7,Italy's capital city is [MASK].,rome,4199,capital,capital:italy,t1,correct,1,rome,0.2571104828617295,rome milan florence turin naples bologna genoa pisa
+bert-base-uncased,8,"In Italy, the capital city is [MASK].",rome,4199,capital,capital:italy,t2,correct,1,rome,0.2952793223028817,rome milan turin florence genoa naples pisa bologna
+bert-base-uncased,9,The capital of Spain is [MASK].,madrid,6921,capital,capital:spain,t0,correct,1,madrid,0.6678415986175277,madrid barcelona seville valencia malaga toledo leon bilbao
+bert-base-uncased,10,Spain's capital city is [MASK].,madrid,6921,capital,capital:spain,t1,correct,1,madrid,0.7088000405463822,madrid barcelona seville valencia malaga bilbao toledo granada
+bert-base-uncased,11,"In Spain, the capital city is [MASK].",madrid,6921,capital,capital:spain,t2,correct,1,madrid,0.5461202651868724,madrid barcelona seville valencia toledo malaga leon bilbao
+bert-base-uncased,12,The capital of Japan is [MASK].,tokyo,5522,capital,capital:japan,t0,correct,1,tokyo,0.5821880394470828,tokyo osaka kyoto nara kobe nagasaki edo nagoya
+bert-base-uncased,13,Japan's capital city is [MASK].,tokyo,5522,capital,capital:japan,t1,correct,1,tokyo,0.762501246076855,tokyo kyoto osaka kobe nara edo nagoya yokohama
+bert-base-uncased,14,"In Japan, the capital city is [MASK].",tokyo,5522,capital,capital:japan,t2,correct,1,tokyo,0.6318483479679395,tokyo kyoto osaka kobe nara nagoya edo hokkaido
+bert-base-uncased,15,The capital of China is [MASK].,beijing,7211,capital,capital:china,t0,correct,1,beijing,0.5548330001454316,beijing nanjing shanghai guangzhou shenzhen tianjin peking taipei
+bert-base-uncased,16,China's capital city is [MASK].,beijing,7211,capital,capital:china,t1,correct,1,beijing,0.6260051331069285,beijing nanjing shanghai guangzhou shenzhen peking tianjin canton
+bert-base-uncased,17,"In China, the capital city is [MASK].",beijing,7211,capital,capital:china,t2,correct,1,beijing,0.6351228346760256,beijing nanjing shanghai guangzhou peking shenzhen tianjin sichuan
+bert-base-uncased,18,The capital of Russia is [MASK].,moscow,4924,capital,capital:russia,t0,correct,1,moscow,0.7075634065357963,moscow kazan tbilisi helsinki vladimir sofia petersburg leningrad
+bert-base-uncased,19,Russia's capital city is [MASK].,moscow,4924,capital,capital:russia,t1,correct,1,moscow,0.7906327340242252,moscow kazan vladimir helsinki tbilisi sofia leningrad petersburg
+bert-base-uncased,20,"In Russia, the capital city is [MASK].",moscow,4924,capital,capital:russia,t2,correct,1,moscow,0.8289501322884019,moscow kazan vladimir leningrad helsinki tbilisi kiev petersburg
+bert-base-uncased,21,The capital of Egypt is [MASK].,cairo,11096,capital,capital:egypt,t0,correct,1,cairo,0.7396393848677814,cairo alexandria memphis egypt suez acre tunis mecca
+bert-base-uncased,22,Egypt's capital city is [MASK].,cairo,11096,capital,capital:egypt,t1,correct,1,cairo,0.7678588381395336,cairo alexandria suez egypt memphis tunis male acre
+bert-base-uncased,23,"In Egypt, the capital city is [MASK].",cairo,11096,capital,capital:egypt,t2,correct,1,cairo,0.7782482035647198,cairo alexandria memphis suez egypt nile acre tunis
+bert-base-uncased,24,The capital of Greece is [MASK].,athens,7571,capital,capital:greece,t0,correct,1,athens,0.6912735804032829,athens thessaloniki olympia rhodes sparta tirana constantinople crete
+bert-base-uncased,25,Greece's capital city is [MASK].,athens,7571,capital,capital:greece,t1,correct,1,athens,0.6344808318631397,athens thessaloniki olympia rhodes crete sparta tirana tripoli
+bert-base-uncased,26,"In Greece, the capital city is [MASK].",athens,7571,capital,capital:greece,t2,correct,1,athens,0.5973416761308507,athens thessaloniki olympia rhodes crete sparta tripoli tirana
+bert-base-uncased,27,The capital of Portugal is [MASK].,lisbon,11929,capital,capital:portugal,t0,correct,1,lisbon,0.757518926635895,lisbon porto madeira vila maia palma benfica madrid
+bert-base-uncased,28,Portugal's capital city is [MASK].,lisbon,11929,capital,capital:portugal,t1,correct,1,lisbon,0.8116118773375791,lisbon porto madeira maia benfica almeida pau fatima
+bert-base-uncased,29,"In Portugal, the capital city is [MASK].",lisbon,11929,capital,capital:portugal,t2,correct,1,lisbon,0.8103176387816816,lisbon porto madeira maia benfica vila pau santiago
+bert-base-uncased,30,The capital of Austria is [MASK].,vienna,6004,capital,capital:austria,t0,correct,1,vienna,0.6621020155629832,vienna salzburg graz innsbruck wien tyrol austria budapest
+bert-base-uncased,31,Austria's capital city is [MASK].,vienna,6004,capital,capital:austria,t1,correct,1,vienna,0.6333104437476235,vienna salzburg graz innsbruck wien tyrol ljubljana budapest
+bert-base-uncased,32,"In Austria, the capital city is [MASK].",vienna,6004,capital,capital:austria,t2,correct,1,vienna,0.5135650492524422,vienna salzburg graz innsbruck wien tyrol ljubljana budapest
+bert-base-uncased,33,The capital of Belgium is [MASK].,brussels,9371,capital,capital:belgium,t0,correct,1,brussels,0.8205152690093438,brussels antwerp liege ghent mons belgium luxembourg lille
+bert-base-uncased,34,Belgium's capital city is [MASK].,brussels,9371,capital,capital:belgium,t1,correct,1,brussels,0.8101786958875614,brussels antwerp liege ghent mons lille belgium luxembourg
+bert-base-uncased,35,"In Belgium, the capital city is [MASK].",brussels,9371,capital,capital:belgium,t2,correct,1,brussels,0.6562720135061584,brussels antwerp liege ghent mons lille luxembourg belgium
+bert-base-uncased,36,The capital of Finland is [MASK].,helsinki,12331,capital,capital:finland,t0,correct,1,helsinki,0.9960782218167288,helsinki stockholm tallinn finland riga hamilton oslo leningrad
+bert-base-uncased,37,Finland's capital city is [MASK].,helsinki,12331,capital,capital:finland,t1,correct,1,helsinki,0.9971217386844952,helsinki tallinn stockholm oslo finland hamilton ##borg ##puri
+bert-base-uncased,38,"In Finland, the capital city is [MASK].",helsinki,12331,capital,capital:finland,t2,correct,1,helsinki,0.9968807193489916,helsinki tallinn stockholm oslo hamilton finland vilnius gothenburg
+bert-base-uncased,39,The capital of Norway is [MASK].,oslo,9977,capital,capital:norway,t0,correct,1,oslo,0.8009182796811051,oslo bergen trondheim nes ia voss moss rana
+bert-base-uncased,40,Norway's capital city is [MASK].,oslo,9977,capital,capital:norway,t1,correct,1,oslo,0.8171791130688488,oslo bergen trondheim voss alta mandal jul strand
+bert-base-uncased,41,"In Norway, the capital city is [MASK].",oslo,9977,capital,capital:norway,t2,correct,1,oslo,0.7838057566496458,oslo bergen trondheim alta voss moss nes rana
+bert-base-uncased,42,The capital of Sweden is [MASK].,stockholm,8947,capital,capital:sweden,t0,correct,1,stockholm,0.4392435556413451,stockholm malmo gothenburg uppsala lund helsinki sweden oslo
+bert-base-uncased,43,Sweden's capital city is [MASK].,stockholm,8947,capital,capital:sweden,t1,correct,1,stockholm,0.4693421363470826,stockholm malmo gothenburg uppsala lund helsinki oslo mora
+bert-base-uncased,44,"In Sweden, the capital city is [MASK].",stockholm,8947,capital,capital:sweden,t2,correct,1,stockholm,0.3880446138256176,stockholm gothenburg malmo uppsala lund helsinki oslo mora
+bert-base-uncased,45,The capital of Poland is [MASK].,warsaw,8199,capital,capital:poland,t0,correct,1,warsaw,0.6394532329897141,warsaw poznan krakow gdansk wrocław lublin łodz vilnius
+bert-base-uncased,46,Poland's capital city is [MASK].,warsaw,8199,capital,capital:poland,t1,correct,1,warsaw,0.6899284830873831,warsaw krakow poznan wrocław gdansk lublin łodz vilnius
+bert-base-uncased,47,"In Poland, the capital city is [MASK].",warsaw,8199,capital,capital:poland,t2,correct,1,warsaw,0.5183110561888157,warsaw poznan krakow gdansk wrocław lublin łodz vilnius
+bert-base-uncased,48,The capital of Hungary is [MASK].,budapest,10926,capital,capital:hungary,t0,correct,1,budapest,0.9771532277038856,budapest pest bela bratislava vienna bar bala brody
+bert-base-uncased,49,Hungary's capital city is [MASK].,budapest,10926,capital,capital:hungary,t1,correct,1,budapest,0.973569640281919,budapest pest bratislava bela brody vienna bala graz
+bert-base-uncased,50,"In Hungary, the capital city is [MASK].",budapest,10926,capital,capital:hungary,t2,correct,1,budapest,0.9748934262104983,budapest pest bratislava bela vis bala brody bar
+bert-base-uncased,51,The capital of Romania is [MASK].,bucharest,14261,capital,capital:romania,t0,correct,1,bucharest,0.9565200880769622,bucharest bender budapest tau transylvania alba bar var
+bert-base-uncased,52,Romania's capital city is [MASK].,bucharest,14261,capital,capital:romania,t1,correct,1,bucharest,0.990992961647162,bucharest bender transylvania alba tau sofia budapest tirana
+bert-base-uncased,53,"In Romania, the capital city is [MASK].",bucharest,14261,capital,capital:romania,t2,correct,1,bucharest,0.9530196204725724,bucharest bender transylvania tau alba sofia budapest bar
+bert-base-uncased,54,The capital of Bulgaria is [MASK].,sofia,8755,capital,capital:bulgaria,t0,correct,1,sofia,0.982044019657816,sofia ruse skopje tirana kiev thessaloniki bucharest tbilisi
+bert-base-uncased,55,Bulgaria's capital city is [MASK].,sofia,8755,capital,capital:bulgaria,t1,correct,1,sofia,0.9832107935154408,sofia ruse skopje tirana thessaloniki kiev bucharest ##grad
+bert-base-uncased,56,"In Bulgaria, the capital city is [MASK].",sofia,8755,capital,capital:bulgaria,t2,correct,1,sofia,0.9832054469155984,sofia ruse skopje montana tirana thessaloniki kiev bulgaria
+bert-base-uncased,57,The capital of Serbia is [MASK].,belgrade,10291,capital,capital:serbia,t0,correct,1,belgrade,0.9784887242537494,belgrade sofia skopje serbia vis ruse sarajevo kosovo
+bert-base-uncased,58,Serbia's capital city is [MASK].,belgrade,10291,capital,capital:serbia,t1,correct,1,belgrade,0.9880042221158196,belgrade sofia skopje serbia sarajevo zagreb novi split
+bert-base-uncased,59,"In Serbia, the capital city is [MASK].",belgrade,10291,capital,capital:serbia,t2,correct,1,belgrade,0.9593134314490742,belgrade vis sofia skopje novi sarajevo ruse kosovo
+bert-base-uncased,60,The capital of Croatia is [MASK].,zagreb,12974,capital,capital:croatia,t0,correct,1,zagreb,0.9422633583803244,zagreb split ljubljana belgrade croatia sarajevo croatian bled
+bert-base-uncased,61,Croatia's capital city is [MASK].,zagreb,12974,capital,capital:croatia,t1,correct,1,zagreb,0.9486987905093552,zagreb split ljubljana belgrade sarajevo croatia croatian novi
+bert-base-uncased,62,"In Croatia, the capital city is [MASK].",zagreb,12974,capital,capital:croatia,t2,correct,1,zagreb,0.9091451984833442,zagreb split ljubljana belgrade sarajevo croatia bled novi
+bert-base-uncased,63,The capital of Turkey is [MASK].,ankara,20312,capital,capital:turkey,t0,error,2,istanbul,0.5450165523120833,istanbul ankara constantinople batman kazan van bender tbilisi
+bert-base-uncased,64,Turkey's capital city is [MASK].,ankara,20312,capital,capital:turkey,t1,error,2,istanbul,0.5853939001493721,istanbul ankara constantinople batman van bender kazan ##elles
+bert-base-uncased,65,"In Turkey, the capital city is [MASK].",ankara,20312,capital,capital:turkey,t2,error,2,istanbul,0.5650650330888278,istanbul ankara constantinople batman van ##kaya bender ##elles
+bert-base-uncased,66,The capital of Iran is [MASK].,tehran,13503,capital,capital:iran,t0,correct,1,tehran,0.984977478272824,tehran kerman ##fahan tbilisi iran baghdad bam baku
+bert-base-uncased,67,Iran's capital city is [MASK].,tehran,13503,capital,capital:iran,t1,correct,1,tehran,0.9896048719557924,tehran kerman ##fahan iran baghdad bam kabul tbilisi
+bert-base-uncased,68,"In Iran, the capital city is [MASK].",tehran,13503,capital,capital:iran,t2,correct,1,tehran,0.984317039878062,tehran kerman ##fahan iran kabul baghdad tbilisi bam
+bert-base-uncased,69,The capital of Iraq is [MASK].,baghdad,13952,capital,capital:iraq,t0,correct,1,baghdad,0.9908120790313574,baghdad tehran kurdistan kerman saddam iraq iraqi amman
+bert-base-uncased,70,Iraq's capital city is [MASK].,baghdad,13952,capital,capital:iraq,t1,correct,1,baghdad,0.990561278046641,baghdad saddam iraq amman iraqi kerman aleppo kurdistan
+bert-base-uncased,71,"In Iraq, the capital city is [MASK].",baghdad,13952,capital,capital:iraq,t2,correct,1,baghdad,0.989466510584067,baghdad saddam iraq kurdistan tehran iraqi kerman amman
+bert-base-uncased,72,The capital of Syria is [MASK].,damascus,16094,capital,capital:syria,t0,error,2,aleppo,0.626034774466414,aleppo damascus antioch acre beirut tyre syria baghdad
+bert-base-uncased,73,Syria's capital city is [MASK].,damascus,16094,capital,capital:syria,t1,error,2,aleppo,0.6953379203790115,aleppo damascus antioch acre tyre baghdad beirut tripoli
+bert-base-uncased,74,"In Syria, the capital city is [MASK].",damascus,16094,capital,capital:syria,t2,error,2,aleppo,0.7032455763316843,aleppo damascus acre antioch tyre amara syria tripoli
+bert-base-uncased,75,The capital of Jordan is [MASK].,amman,25703,capital,capital:jordan,t0,correct,1,amman,0.975296202678391,amman baghdad damascus hussein bethlehem petra alexandria jordan
+bert-base-uncased,76,Jordan's capital city is [MASK].,amman,25703,capital,capital:jordan,t1,correct,1,amman,0.9861895156692752,amman baghdad damascus hussein mecca doha petra jordan
+bert-base-uncased,77,"In Jordan, the capital city is [MASK].",amman,25703,capital,capital:jordan,t2,correct,1,amman,0.979142912495357,amman baghdad jordan doha petra damascus hussein casablanca
+bert-base-uncased,78,The capital of Lebanon is [MASK].,beirut,15335,capital,capital:lebanon,t0,correct,1,beirut,0.9635724608227516,beirut tyre tripoli acre damascus bethlehem aleppo mar
+bert-base-uncased,79,Lebanon's capital city is [MASK].,beirut,15335,capital,capital:lebanon,t1,correct,1,beirut,0.9226209378539592,beirut tyre tripoli acre damascus bethlehem aleppo lebanon
+bert-base-uncased,80,"In Lebanon, the capital city is [MASK].",beirut,15335,capital,capital:lebanon,t2,correct,1,beirut,0.9462488294659116,beirut tyre tripoli acre damascus aleppo lebanon mar
+bert-base-uncased,81,The capital of Thailand is [MASK].,bangkok,12627,capital,capital:thailand,t0,correct,1,bangkok,0.9975298394277006,bangkok hanoi saigon thailand siam ava tak thai
+bert-base-uncased,82,Thailand's capital city is [MASK].,bangkok,12627,capital,capital:thailand,t1,correct,1,bangkok,0.9980730117711222,bangkok hanoi thailand saigon tak ava siam mai
+bert-base-uncased,83,"In Thailand, the capital city is [MASK].",bangkok,12627,capital,capital:thailand,t2,correct,1,bangkok,0.9919050906958276,bangkok mai tak saigon thailand thai ava siam
+bert-base-uncased,84,The capital of Vietnam is [MASK].,hanoi,24809,capital,capital:vietnam,t0,correct,1,hanoi,0.9022765277772492,hanoi saigon hue bangkok paris nguyen vietnam nam
+bert-base-uncased,85,Vietnam's capital city is [MASK].,hanoi,24809,capital,capital:vietnam,t1,correct,1,hanoi,0.8891590494746945,hanoi saigon hue vietnam bangkok van paris nguyen
+bert-base-uncased,86,"In Vietnam, the capital city is [MASK].",hanoi,24809,capital,capital:vietnam,t2,correct,1,hanoi,0.831493877139656,hanoi saigon hue vietnam paris bangkok nguyen pau
+bert-base-uncased,87,The capital of Peru is [MASK].,lima,12967,capital,capital:peru,t0,correct,1,lima,0.9933882699078982,lima concepcion peru mendoza santiago colon bogota rosario
+bert-base-uncased,88,Peru's capital city is [MASK].,lima,12967,capital,capital:peru,t1,correct,1,lima,0.998742253314882,lima concepcion mendoza peru santiago andes bogota cordoba
+bert-base-uncased,89,"In Peru, the capital city is [MASK].",lima,12967,capital,capital:peru,t2,correct,1,lima,0.9861347041921492,lima concepcion mendoza andes bolivar santiago colon peru
+bert-base-uncased,90,The capital of Chile is [MASK].,santiago,8728,capital,capital:chile,t0,correct,1,santiago,0.8112548046384885,santiago concepcion lima colon chile montevideo mendoza rosario
+bert-base-uncased,91,Chile's capital city is [MASK].,santiago,8728,capital,capital:chile,t1,correct,1,santiago,0.905151004417368,santiago concepcion chile lima mendoza colon montevideo luna
+bert-base-uncased,92,"In Chile, the capital city is [MASK].",santiago,8728,capital,capital:chile,t2,correct,1,santiago,0.8575257340644947,santiago concepcion colon chile montevideo lima mendoza rosario
+bert-base-uncased,93,The capital of Cuba is [MASK].,havana,15278,capital,capital:cuba,t0,correct,1,havana,0.9808768215244986,havana santiago guantanamo caracas castro cuba ponce leon
+bert-base-uncased,94,Cuba's capital city is [MASK].,havana,15278,capital,capital:cuba,t1,correct,1,havana,0.959934239312196,havana santiago guantanamo caracas castro leon cuba ponce
+bert-base-uncased,95,"In Cuba, the capital city is [MASK].",havana,15278,capital,capital:cuba,t2,correct,1,havana,0.9441687821647822,havana santiago guantanamo caracas ponce cuba castro leon
+bert-base-uncased,96,The capital of Jamaica is [MASK].,kingston,9803,capital,capital:jamaica,t0,correct,1,kingston,0.9859609236185806,kingston georgetown santiago montreal jamaica havana mona victoria
+bert-base-uncased,97,Jamaica's capital city is [MASK].,kingston,9803,capital,capital:jamaica,t1,correct,1,kingston,0.986662049427784,kingston santiago georgetown jamaica montreal salvador victoria manchester
+bert-base-uncased,98,"In Jamaica, the capital city is [MASK].",kingston,9803,capital,capital:jamaica,t2,correct,1,kingston,0.9599745561775734,kingston georgetown montreal santiago jamaica victoria reggae manchester
+bert-base-uncased,102,The capital of Tunisia is [MASK].,tunis,25317,capital,capital:tunisia,t0,correct,1,tunis,0.9747189915781114,tunis carthage tunisia algiers tunisian casablanca constantine alexandria
+bert-base-uncased,103,Tunisia's capital city is [MASK].,tunis,25317,capital,capital:tunisia,t1,correct,1,tunis,0.9822859524437152,tunis carthage tunisia casablanca algiers constantine tyre tunisian
+bert-base-uncased,104,"In Tunisia, the capital city is [MASK].",tunis,25317,capital,capital:tunisia,t2,correct,1,tunis,0.9610945937462594,tunis carthage algiers tunisia casablanca constantine tunisian tyre
+bert-base-uncased,120,The capital of Nepal is [MASK].,kathmandu,28045,capital,capital:nepal,t0,correct,1,kathmandu,0.9940782653975349,kathmandu dhaka bam nepal jakarta nara amara bali
+bert-base-uncased,121,Nepal's capital city is [MASK].,kathmandu,28045,capital,capital:nepal,t1,correct,1,kathmandu,0.9963891662189318,kathmandu dhaka nepal lucknow bam kota patna amara
+bert-base-uncased,122,"In Nepal, the capital city is [MASK].",kathmandu,28045,capital,capital:nepal,t2,correct,1,kathmandu,0.9941396686141508,kathmandu nepal dhaka bam patna lucknow kabul bangkok
+bert-base-uncased,123,The capital of Pakistan is [MASK].,islamabad,26905,capital,capital:pakistan,t0,correct,1,islamabad,0.5108443825484684,islamabad karachi lahore peshawar sindh dhaka kabul punjab
+bert-base-uncased,124,Pakistan's capital city is [MASK].,islamabad,26905,capital,capital:pakistan,t1,error,2,karachi,0.6042237821406892,karachi islamabad lahore peshawar sindh dhaka swat punjab
+bert-base-uncased,125,"In Pakistan, the capital city is [MASK].",islamabad,26905,capital,capital:pakistan,t2,error,2,karachi,0.6419807502430809,karachi islamabad lahore peshawar sindh dhaka kabul punjab
+bert-base-uncased,126,The language of France is [MASK].,french,2413,language,language:france,t0,correct,1,french,0.8742915873653094,french english catalan breton basque spanish german latin
+bert-base-uncased,127,People in France often speak [MASK].,french,2413,language,language:france,t1,correct,1,french,0.8371620966110412,french english german italian spanish breton arabic catalan
+bert-base-uncased,128,The language of Germany is [MASK].,german,2446,language,language:germany,t0,correct,1,german,0.8603730768116868,german french english dutch danish saxon bavarian latin
+bert-base-uncased,129,People in Germany often speak [MASK].,german,2446,language,language:germany,t1,correct,1,german,0.7426801620480156,german english french dutch danish russian yiddish italian
+bert-base-uncased,130,The language of Italy is [MASK].,italian,3059,language,language:italy,t0,correct,1,italian,0.8938092341336923,italian french venetian sicilian spanish latin english german
+bert-base-uncased,131,People in Italy often speak [MASK].,italian,3059,language,language:italy,t1,correct,1,italian,0.839214811777798,italian french english spanish german latin portuguese arabic
+bert-base-uncased,132,The language of Spain is [MASK].,spanish,3009,language,language:spain,t0,correct,1,spanish,0.7139804049196081,spanish catalan basque english galician portuguese french latin
+bert-base-uncased,133,People in Spain often speak [MASK].,spanish,3009,language,language:spain,t1,correct,1,spanish,0.5739402727761435,spanish catalan english french portuguese italian basque arabic
+bert-base-uncased,134,The language of Portugal is [MASK].,portuguese,5077,language,language:portugal,t0,correct,1,portuguese,0.8831481866553784,portuguese spanish french english galician creole catalan italian
+bert-base-uncased,135,People in Portugal often speak [MASK].,portuguese,5077,language,language:portugal,t1,correct,1,portuguese,0.8145639048938543,portuguese spanish english french italian catalan latin galician
+bert-base-uncased,136,The language of Russia is [MASK].,russian,2845,language,language:russia,t0,correct,1,russian,0.9230700193466967,russian cyrillic english ukrainian tatar german georgian bulgarian
+bert-base-uncased,137,People in Russia often speak [MASK].,russian,2845,language,language:russia,t1,correct,1,russian,0.9041921109697142,russian english ukrainian german belarusian french yiddish cyrillic
+bert-base-uncased,138,The language of China is [MASK].,chinese,2822,language,language:china,t0,error,3,mandarin,0.2398135188496815,mandarin [UNK] chinese tibetan cantonese manchu pinyin romanized
+bert-base-uncased,139,People in China often speak [MASK].,chinese,2822,language,language:china,t1,error,3,mandarin,0.336637550679943,mandarin english chinese cantonese french russian manchu arabic
+bert-base-uncased,140,The language of Japan is [MASK].,japanese,2887,language,language:japan,t0,correct,1,japanese,0.6351628103720238,japanese english [UNK] mandarin french german latin spanish
+bert-base-uncased,141,People in Japan often speak [MASK].,japanese,2887,language,language:japan,t1,correct,1,japanese,0.4117820240208072,japanese english french mandarin german russian italian chinese
+bert-base-uncased,142,The language of Greece is [MASK].,greek,3306,language,language:greece,t0,correct,1,greek,0.7687065789979476,greek albanian turkish english latin macedonian italian french
+bert-base-uncased,143,People in Greece often speak [MASK].,greek,3306,language,language:greece,t1,correct,1,greek,0.764065070884284,greek english latin italian albanian french turkish arabic
+bert-base-uncased,144,The language of Turkey is [MASK].,turkish,5037,language,language:turkey,t0,correct,1,turkish,0.8229975548134373,turkish kurdish turkic english arabic armenian azerbaijani german
+bert-base-uncased,145,People in Turkey often speak [MASK].,turkish,5037,language,language:turkey,t1,correct,1,turkish,0.7261770943415087,turkish kurdish english arabic german russian persian azerbaijani
+bert-base-uncased,146,The language of Poland is [MASK].,polish,3907,language,language:poland,t0,correct,1,polish,0.7669614642175487,polish german latin silesian english french russian ukrainian
+bert-base-uncased,147,People in Poland often speak [MASK].,polish,3907,language,language:poland,t1,correct,1,polish,0.7617996344832001,polish german yiddish english russian belarusian french ukrainian
+bert-base-uncased,148,The language of Hungary is [MASK].,hungarian,5588,language,language:hungary,t0,correct,1,hungarian,0.8824465821538175,hungarian german slovak croatian english turkish kurdish romanian
+bert-base-uncased,149,People in Hungary often speak [MASK].,hungarian,5588,language,language:hungary,t1,correct,1,hungarian,0.8789366599177975,hungarian german english yiddish russian french italian polish
+bert-base-uncased,150,The language of Romania is [MASK].,romanian,7056,language,language:romania,t0,correct,1,romanian,0.6980835156149796,romanian hungarian german french romani albanian turkish english
+bert-base-uncased,151,People in Romania often speak [MASK].,romanian,7056,language,language:romania,t1,correct,1,romanian,0.5324314803348811,romanian hungarian french russian german yiddish english italian
+bert-base-uncased,152,The language of Bulgaria is [MASK].,bulgarian,7643,language,language:bulgaria,t0,correct,1,bulgarian,0.9169791694353334,bulgarian macedonian english cyrillic turkish russian serbian german
+bert-base-uncased,153,People in Bulgaria often speak [MASK].,bulgarian,7643,language,language:bulgaria,t1,correct,1,bulgarian,0.4669016664826616,bulgarian russian english macedonian serbian german arabic albanian
+bert-base-uncased,154,The language of Sweden is [MASK].,swedish,4467,language,language:sweden,t0,correct,1,swedish,0.821648550771454,swedish english danish finnish german sami norwegian spanish
+bert-base-uncased,155,People in Sweden often speak [MASK].,swedish,4467,language,language:sweden,t1,correct,1,swedish,0.7526647446101404,swedish english danish german russian finnish french norwegian
+bert-base-uncased,156,The language of Norway is [MASK].,norwegian,5046,language,language:norway,t0,correct,1,norwegian,0.7033935534042715,norwegian danish sami german swedish english norse french
+bert-base-uncased,157,People in Norway often speak [MASK].,norwegian,5046,language,language:norway,t1,correct,1,norwegian,0.4438993326558034,norwegian danish swedish english german french sami icelandic
+bert-base-uncased,158,France is located in [MASK].,europe,2885,continent,continent:france,t0,error,3,france,0.3217501772409359,france paris europe algeria brittany brazil belgium italy
+bert-base-uncased,159,The continent containing France is [MASK].,europe,2885,continent,continent:france,t1,error,105,uninhabited,0.180101781861769,uninhabited extinct french divided unknown disputed included france
+bert-base-uncased,160,Germany is located in [MASK].,europe,2885,continent,continent:germany,t0,error,5,berlin,0.2225800095091135,berlin germany bavaria austria europe vienna saxony bonn
+bert-base-uncased,161,The continent containing Germany is [MASK].,europe,2885,continent,continent:germany,t1,error,81,uninhabited,0.1247089427509385,uninhabited unknown divided extinct german large germany larger
+bert-base-uncased,162,Spain is located in [MASK].,europe,2885,continent,continent:spain,t0,error,16,spain,0.1431777655212369,spain brazil mexico argentina portugal france peru madrid
+bert-base-uncased,163,The continent containing Spain is [MASK].,europe,2885,continent,continent:spain,t1,error,75,uninhabited,0.1492337684317866,uninhabited disputed extinct unknown spanish divided uncertain small
+bert-base-uncased,164,Poland is located in [MASK].,europe,2885,continent,continent:poland,t0,error,5,poland,0.3293382567891516,poland warsaw ukraine krakow europe lithuania berlin germany
+bert-base-uncased,165,The continent containing Poland is [MASK].,europe,2885,continent,continent:poland,t1,error,148,uninhabited,0.2075757446965218,uninhabited divided extinct unknown disputed large german small
+bert-base-uncased,166,China is located in [MASK].,asia,4021,continent,continent:china,t0,error,7,china,0.206115442775246,china beijing taiwan shanghai tibet xinjiang asia nanjing
+bert-base-uncased,167,The continent containing China is [MASK].,asia,4021,continent,continent:china,t1,error,23,uninhabited,0.1722253534698654,uninhabited china unknown extinct disputed large asian antarctica
+bert-base-uncased,168,Japan is located in [MASK].,asia,4021,continent,continent:japan,t0,error,5,japan,0.3291924370619485,japan tokyo hokkaido taiwan asia korea china kyoto
+bert-base-uncased,169,The continent containing Japan is [MASK].,asia,4021,continent,continent:japan,t1,error,23,unknown,0.1809119992875703,unknown uninhabited antarctica china extinct large lost divided
+bert-base-uncased,170,India is located in [MASK].,asia,4021,continent,continent:india,t0,error,20,india,0.2835886399019315,india goa punjab kerala kashmir mumbai pakistan bangalore
+bert-base-uncased,171,The continent containing India is [MASK].,asia,4021,continent,continent:india,t1,error,8,india,0.1736088557269109,india disputed indian asian extinct antarctica unknown asia
+bert-base-uncased,172,Thailand is located in [MASK].,asia,4021,continent,continent:thailand,t0,error,3,thailand,0.2546541375044538,thailand bangkok asia vietnam myanmar india cambodia afghanistan
+bert-base-uncased,173,The continent containing Thailand is [MASK].,asia,4021,continent,continent:thailand,t1,error,11,disputed,0.2463529475607647,disputed asian uninhabited extinct unknown small china larger
+bert-base-uncased,174,Egypt is located in [MASK].,africa,3088,continent,continent:egypt,t0,error,9,egypt,0.4383047364658632,egypt cairo sudan alexandria israel turkey rome france
+bert-base-uncased,175,The continent containing Egypt is [MASK].,africa,3088,continent,continent:egypt,t1,error,44,unknown,0.1449948363201701,unknown destroyed lost egypt uninhabited egyptian enormous huge
+bert-base-uncased,176,Morocco is located in [MASK].,africa,3088,continent,continent:morocco,t0,error,3,morocco,0.2691659821148383,morocco algeria africa europe spain tunisia egypt libya
+bert-base-uncased,177,The continent containing Morocco is [MASK].,africa,3088,continent,continent:morocco,t1,error,15,uninhabited,0.2255835549480103,uninhabited disputed extinct unknown small algeria large uncertain
+bert-base-uncased,178,Nigeria is located in [MASK].,africa,3088,continent,continent:nigeria,t0,error,8,nigeria,0.14349332753628,nigeria ghana cameroon brazil benin india egypt africa
+bert-base-uncased,179,The continent containing Nigeria is [MASK].,africa,3088,continent,continent:nigeria,t1,error,3,uninhabited,0.1613291189720983,uninhabited disputed africa african unknown nigeria cameroon extinct
+bert-base-uncased,180,Ghana is located in [MASK].,africa,3088,continent,continent:ghana,t0,error,3,ghana,0.5132801966477376,ghana togo africa brazil nigeria egypt india cameroon
+bert-base-uncased,181,The continent containing Ghana is [MASK].,africa,3088,continent,continent:ghana,t1,error,3,uninhabited,0.2769442609648965,uninhabited disputed africa african unknown extinct not small
+bert-base-uncased,182,The currency of Japan is the [MASK].,yen,18371,currency,currency:japan,t0,correct,1,yen,0.9207426518467582,yen ¥ [UNK] dollar jp currency japanese japan
+bert-base-uncased,183,People in Japan pay with the [MASK].,yen,18371,currency,currency:japan,t1,error,28,money,0.2563510991872929,money bill goods cash same price coins benefits
+bert-base-uncased,184,The currency of China is the [MASK].,yuan,11237,currency,currency:china,t0,error,2,[UNK],0.403469752145007,[UNK] yuan ¥ cfa yen prc roc dollar
+bert-base-uncased,185,People in China pay with the [MASK].,yuan,11237,currency,currency:china,t1,error,45,money,0.3344201856214143,money bill goods price gold cash coins same
+bert-base-uncased,194,The currency of Brazil is the [MASK].,real,2613,currency,currency:brazil,t0,error,10,dollar,0.4235935668949211,dollar euro para amazon bolivar currency brazilian jaguar
+bert-base-uncased,195,People in Brazil pay with the [MASK].,real,2613,currency,currency:brazil,t1,error,973,money,0.3242358070855894,money bill goods price same food cash services
+bert-base-uncased,196,The currency of Britain is the [MASK].,pound,9044,currency,currency:britain,t0,correct,1,pound,0.7930265532880251,pound sterling dollar penny euro uk britannia shillings
+bert-base-uncased,197,People in Britain pay with the [MASK].,pound,9044,currency,currency:britain,t1,error,26,money,0.2570230046838915,money bill goods price benefits work gold wage
+bert-base-uncased,198,The currency of Germany is the [MASK].,euro,9944,currency,currency:germany,t0,correct,1,euro,0.8399585997799104,euro mark saxony deutsche reich rhine pound german
+bert-base-uncased,199,People in Germany pay with the [MASK].,euro,9944,currency,currency:germany,t1,error,3,money,0.2878531342035825,money bill euro tax goods price same euros
+bert-base-uncased,200,The currency of France is the [MASK].,euro,9944,currency,currency:france,t0,correct,1,euro,0.8169695457468668,euro dollar cfa pound orange cent loire francs
+bert-base-uncased,201,People in France pay with the [MASK].,euro,9944,currency,currency:france,t1,error,5,money,0.3153139712601974,money bill goods price euro same tax food
+bert-base-uncased,202,The currency of Italy is the [MASK].,euro,9944,currency,currency:italy,t0,correct,1,euro,0.8507964600161592,euro fiat dollar € freedom italian republic euros
+bert-base-uncased,203,People in Italy pay with the [MASK].,euro,9944,currency,currency:italy,t1,error,5,money,0.4325416993812314,money bill goods price euro tax same coins
+bert-base-uncased,204,The currency of Spain is the [MASK].,euro,9944,currency,currency:spain,t0,correct,1,euro,0.6256219604752903,euro real spanish canary bolivar eagle pp condor
+bert-base-uncased,205,People in Spain pay with the [MASK].,euro,9944,currency,currency:spain,t1,error,10,money,0.3716514876709831,money price bill same gold tax goods coins
+bert-base-uncased,208,The largest planet is [MASK].,jupiter,13035,science,science:largest_planet,t0,correct,1,jupiter,0.3148141849171411,jupiter pluto mars saturn earth io venus neptune
+bert-base-uncased,209,[MASK] is the largest planet in the solar system.,jupiter,13035,science,science:largest_planet,t1,error,5,it,0.9486202166207082,it pluto this earth jupiter mars io venus
+bert-base-uncased,210,The nearest star to Earth is the [MASK].,sun,3103,science,science:nearest_star,t0,correct,1,sun,0.9564272129833572,sun moon sirius earth vega ira star aurora
+bert-base-uncased,211,Earth orbits the [MASK].,sun,3103,science,science:nearest_star,t1,correct,1,sun,0.9163894259336466,sun moon earth stars star planet pole planets
+bert-base-uncased,212,The red planet is [MASK].,mars,7733,science,science:red_planet,t0,error,63,dead,0.2444991057151297,dead gone destroyed dying lost here missing nearby
+bert-base-uncased,213,[MASK] is often called the red planet.,mars,7733,science,science:red_planet,t1,error,6,it,0.9300975036641684,it this he she earth mars pluto venus
+bert-base-uncased,214,Humans breathe [MASK].,oxygen,7722,science,science:breathing_gas,t0,error,5,fire,0.6915130868865005,fire blood air smoke oxygen water it slowly
+bert-base-uncased,215,The gas humans need to breathe is [MASK].,oxygen,7722,science,science:breathing_gas,t1,error,2,toxic,0.2300832775351975,toxic oxygen dangerous gone poison poisonous different lethal
+bert-base-uncased,218,The heart pumps [MASK].,blood,2668,science,science:heart,t0,error,32,faster,0.4167430371756385,faster wildly again frantically rapidly harder fast hard
+bert-base-uncased,219,[MASK] is pumped by the heart.,blood,2668,science,science:heart,t1,correct,1,blood,0.4188416379420557,blood it water air oxygen fluid urine energy
+bert-base-uncased,220,Bees make [MASK].,honey,6861,science,science:bee_product,t0,error,3,nests,0.24342685492908,nests noise honey eggs love sense it money
+bert-base-uncased,221,[MASK] is made by bees.,honey,6861,science,science:bee_product,t1,error,2,it,0.8996886550439801,it honey food this pollen bread flour seed
+bert-base-uncased,222,A spider spins a [MASK].,web,4773,science,science:spider_web,t0,correct,1,web,0.829626642494466,web leaf circle coin spider thread wheel spell
+bert-base-uncased,223,Spiders are known for spinning a [MASK].,web,4773,science,science:spider_web,t1,correct,1,web,0.9693211027768284,web net thread leaf propeller stick circle sphere
+bert-base-uncased,224,Gold is a [MASK].,metal,3384,science,science:gold,t0,error,14,color,0.1878423511631201,color commodity rule word colour virtue mineral property
+bert-base-uncased,225,Iron and gold are both [MASK].,metal,3384,science,science:gold,t1,error,61,rare,0.1568279935598998,rare common metals available used essential metallic mined
+bert-base-uncased,226,Two plus two equals [MASK].,four,2176,math,math:2+2,t0,error,4,one,0.3370659458260882,one three two four zero five ten seven
+bert-base-uncased,227,The sum of two and two is [MASK].,four,2176,math,math:2+2,t1,error,44,one,0.2656642956737492,one zero called equal two 1 known then
+bert-base-uncased,228,Five minus two equals [MASK].,three,2093,math,math:5-2,t0,error,3,one,0.1935097946265282,one five three two ten four zero seven
+bert-base-uncased,229,Subtracting two from five gives [MASK].,three,2093,math,math:5-2,t1,error,2,one,0.2692294162040473,one three two four zero five more another
+bert-base-uncased,230,Ten divided by two equals [MASK].,five,2274,math,math:10/2,t0,error,5,ten,0.3937153913353644,ten one seven nine five three zero six
+bert-base-uncased,231,Half of ten is [MASK].,five,2274,math,math:10/2,t1,error,24,free,0.0945929409070904,free empty one good full right true perfect
+bert-base-uncased,232,Three plus four equals [MASK].,seven,2698,math,math:3+4,t0,error,7,three,0.2277313881290081,three four two one five ten seven six
+bert-base-uncased,233,The sum of three and four is [MASK].,seven,2698,math,math:3+4,t1,error,71,zero,0.25420623794969,zero one equal two infinite three odd prime
+bert-base-uncased,234,Six plus three equals [MASK].,nine,3157,math,math:6+3,t0,error,10,three,0.1275342025574896,three five seven six four one ten two
+bert-base-uncased,235,The sum of six and three is [MASK].,nine,3157,math,math:6+3,t1,error,42,zero,0.2269365683172471,zero equal one three two odd four prime
+bert-base-uncased,236,Twelve divided by three equals [MASK].,four,2176,math,math:12/3,t0,error,5,ten,0.1878513126762501,ten twelve seven six four one three nine
+bert-base-uncased,237,One third of twelve is [MASK].,four,2176,math,math:12/3,t1,error,123,female,0.2303455524855188,female male white black missing gold empty dead
+bert-base-uncased,238,A square has [MASK] sides.,four,2176,math,math:square_sides,t0,error,3,two,0.2854897145140528,two three four five 3 2 six 4
+bert-base-uncased,239,The number of sides in a square is [MASK].,four,2176,math,math:square_sides,t1,error,22,infinite,0.0862921896410474,infinite 2 zero n 1 one small two
+bert-base-uncased,240,A triangle has [MASK] sides.,three,2093,math,math:triangle_sides,t0,error,2,two,0.3185608818919082,two three four 3 five six 2 4
+bert-base-uncased,241,The number of sides in a triangle is [MASK].,three,2093,math,math:triangle_sides,t1,error,10,n,0.1016088229175363,n 1 2 zero infinite one 3 two
+bert-base-uncased,242,The opposite of hot is [MASK].,cold,3147,antonym,antonym:hot,t0,error,2,hot,0.4607196185982537,hot cold cool warm heat dry dark negative
+bert-base-uncased,243,Hot has the opposite meaning of [MASK].,cold,3147,antonym,antonym:hot,t1,error,2,hot,0.7494104659795485,hot cold heat warm fire cool water wet
+bert-base-uncased,244,The opposite of up is [MASK].,down,2091,antonym,antonym:up,t0,error,2,up,0.4913463809597294,up down right wrong out opposite over left
+bert-base-uncased,245,Up has the opposite meaning of [MASK].,down,2091,antonym,antonym:up,t1,error,2,up,0.6327383277043324,up down out life time it right a
+bert-base-uncased,246,The opposite of left is [MASK].,right,2157,antonym,antonym:left,t0,correct,1,right,0.9488240732599454,right left correct opposite straight up center forward
+bert-base-uncased,247,Left has the opposite meaning of [MASK].,right,2157,antonym,antonym:left,t1,correct,1,right,0.8892982382064489,right left good free freedom no wrong yes
+bert-base-uncased,248,The opposite of day is [MASK].,night,2305,antonym,antonym:day,t0,correct,1,night,0.5470504843704043,night day evening morning time hour darkness noon
+bert-base-uncased,249,Day has the opposite meaning of [MASK].,night,2305,antonym,antonym:day,t1,error,2,day,0.4154827910584833,day night month time week evening eve year
+bert-base-uncased,250,The opposite of yes is [MASK].,no,2053,antonym,antonym:yes,t0,error,2,yes,0.2536952442809186,yes no true wrong false not negative impossible
+bert-base-uncased,251,Yes has the opposite meaning of [MASK].,no,2053,antonym,antonym:yes,t1,error,2,yes,0.6456074242102399,yes no truth not god good true love
+bert-base-uncased,252,The opposite of black is [MASK].,white,2317,antonym,antonym:black,t0,correct,1,white,0.5245914128007806,white black red blue yellow green brown orange
+bert-base-uncased,253,Black has the opposite meaning of [MASK].,white,2317,antonym,antonym:black,t1,correct,1,white,0.3264358117282878,white black red yellow color blue gold green
+bert-base-uncased,254,The opposite of old is [MASK].,new,2047,antonym,antonym:old,t0,correct,1,new,0.6148325724717045,new old young modern newer older younger ancient
+bert-base-uncased,255,Old has the opposite meaning of [MASK].,new,2047,antonym,antonym:old,t1,correct,1,new,0.4784346170539102,new old modern young ancient good great common
+bert-base-uncased,256,The opposite of fast is [MASK].,slow,4030,antonym,antonym:fast,t0,error,2,fast,0.4884055728418755,fast slow speed slower cold faster quick hard
+bert-base-uncased,257,Fast has the opposite meaning of [MASK].,slow,4030,antonym,antonym:fast,t1,error,3,fast,0.5451444661003584,fast speed slow time faster run stop quick
+bert-base-uncased,258,The opposite of happy is [MASK].,sad,6517,antonym,antonym:happy,t0,error,2,happy,0.4806932604599522,happy sad happiness good love beautiful perfect not
+bert-base-uncased,259,Happy has the opposite meaning of [MASK].,sad,6517,antonym,antonym:happy,t1,error,6,happy,0.480439633948178,happy happiness life good love sad fun joy
+bert-base-uncased,260,The opposite of early is [MASK].,late,2397,antonym,antonym:early,t0,correct,1,late,0.401533308122253,late early typical young extreme later common female
+bert-base-uncased,261,Early has the opposite meaning of [MASK].,late,2397,antonym,antonym:early,t1,error,4,early,0.2384265585774502,early age day late old time light spring
+bert-base-uncased,262,The plural of child is [MASK].,children,2336,plural,plural:child,t0,error,9,child,0.4252489704292141,child son male one father no plural mother
+bert-base-uncased,263,More than one child are called [MASK].,children,2336,plural,plural:child,t1,correct,1,children,0.1369879664051222,children joseph mary siblings sisters eds michael this
+bert-base-uncased,264,The plural of mouse is [MASK].,mice,12328,plural,plural:mouse,t0,error,4,mouse,0.8237430263085882,mouse cat rat mice fox [UNK] unknown human
+bert-base-uncased,265,More than one mouse are called [MASK].,mice,12328,plural,plural:mouse,t1,correct,1,mice,0.5394259039903698,mice mouse cats species cat such them pets
+bert-base-uncased,266,The plural of foot is [MASK].,feet,2519,plural,plural:foot,t0,error,15,foot,0.6201566669963585,foot [UNK] no toe one two a plural
+bert-base-uncased,267,More than one foot are called [MASK].,feet,2519,plural,plural:foot,t1,correct,1,feet,0.2805667131066136,feet toes foot legs heels nails shoes hooves
+bert-base-uncased,268,The plural of tooth is [MASK].,teeth,4091,plural,plural:tooth,t0,error,3,tooth,0.5327449901905631,tooth dental teeth [UNK] bone v jaw plural
+bert-base-uncased,269,More than one tooth are called [MASK].,teeth,4091,plural,plural:tooth,t1,correct,1,teeth,0.6303611752977366,teeth lobes tooth jaws dental such eyes seeds
+bert-base-uncased,270,The plural of goose is [MASK].,geese,28519,plural,plural:goose,t0,error,4,goose,0.9195805271383172,goose duck fox geese hen [UNK] cock chicken
+bert-base-uncased,271,More than one goose are called [MASK].,geese,28519,plural,plural:goose,t1,error,2,goose,0.3027737260371081,goose geese ducks there such together these them
+bert-base-uncased,272,The plural of man is [MASK].,men,2273,plural,plural:man,t0,error,4,man,0.6673781396284438,man god one men male no masculine human
+bert-base-uncased,273,More than one man are called [MASK].,men,2273,plural,plural:man,t1,error,11,here,0.0812770551720791,here such that there up out sir them
+bert-base-uncased,274,The plural of woman is [MASK].,women,2308,plural,plural:woman,t0,error,6,woman,0.2626954097579031,woman feminine masculine man female women male plural
+bert-base-uncased,275,More than one woman are called [MASK].,women,2308,plural,plural:woman,t1,correct,1,women,0.2025355691367633,women miss sisters prostitutes that madam names such
+bert-base-uncased,276,The plural of person is [MASK].,people,2111,plural,plural:person,t0,error,754,plural,0.2019339620013037,plural singular masculine [UNK] a i case no
+bert-base-uncased,277,More than one person are called [MASK].,people,2111,plural,plural:person,t1,error,16,up,0.1456176560947765,up out in names here there for that
+bert-base-uncased,278,The plural of leaf is [MASK].,leaves,3727,plural,plural:leaf,t0,error,3,leaf,0.6364119034671052,leaf [UNK] leaves root latin plural green e
+bert-base-uncased,279,More than one leaf are called [MASK].,leaves,3727,plural,plural:leaf,t1,correct,1,leaves,0.1850353215651346,leaves leaflets flowers seeds fruits fruit species lobes
+bert-base-uncased,280,The plural of knife is [MASK].,knives,13227,plural,plural:knife,t0,error,2,knife,0.8101406634906084,knife knives axe blade spear [UNK] dagger sword
+bert-base-uncased,281,More than one knife are called [MASK].,knives,13227,plural,plural:knife,t1,correct,1,knives,0.6408991155590513,knives for weapons tools swords in these knife
+bert-base-uncased,282,A person who teaches is a [MASK].,teacher,3836,role,role:teaches,t0,correct,1,teacher,0.7670935055118645,teacher student professor leader person scholar christian master
+bert-base-uncased,283,Someone who teaches can be called a [MASK].,teacher,3836,role,role:teaches,t1,correct,1,teacher,0.5238218450208296,teacher professor scholar doctor master student leader counselor
+bert-base-uncased,284,A person who drives a bus is a [MASK].,driver,4062,role,role:drives_a_bus,t0,correct,1,driver,0.5910202811365509,driver passenger bus person coach child cyclist man
+bert-base-uncased,285,Someone who drives a bus can be called a [MASK].,driver,4062,role,role:drives_a_bus,t1,correct,1,driver,0.6009849648031569,driver coach passenger bus taxi cab teacher cop
+bert-base-uncased,286,A person who writes books is a [MASK].,author,3166,role,role:writes_books,t0,error,4,writer,0.6543269170655344,writer novelist book author poet person publisher reader
+bert-base-uncased,287,Someone who writes books can be called a [MASK].,author,3166,role,role:writes_books,t1,error,5,writer,0.4257155944149689,writer novelist librarian reader author poet teacher publisher
+bert-base-uncased,288,A person who studies science is a [MASK].,scientist,7155,role,role:studies_science,t0,correct,1,scientist,0.7225534019485597,scientist physicist biologist science doctor philosopher psychologist researcher
+bert-base-uncased,289,Someone who studies science can be called a [MASK].,scientist,7155,role,role:studies_science,t1,correct,1,scientist,0.5287074429503931,scientist doctor biologist professor physicist philosopher psychologist scholar
+bert-base-uncased,290,A person who cooks food is a [MASK].,chef,10026,role,role:cooks_food,t0,error,3,cook,0.4101700161058145,cook vegetarian chef baker person meal woman butcher
+bert-base-uncased,291,Someone who cooks food can be called a [MASK].,chef,10026,role,role:cooks_food,t1,correct,1,chef,0.4848760468732741,chef cook vegetarian baker waiter butcher housekeeper farmer
+bert-base-uncased,292,A person who flies planes is a [MASK].,pilot,4405,role,role:flies_planes,t0,correct,1,pilot,0.7314274115947095,pilot fly plane bird fighter person human glider
+bert-base-uncased,293,Someone who flies planes can be called a [MASK].,pilot,4405,role,role:flies_planes,t1,correct,1,pilot,0.871694579819189,pilot fighter fly captain bomber passenger bombardier gunner
+bert-base-uncased,294,A person who paints pictures is a [MASK].,artist,3063,role,role:paints_pictures,t0,error,3,painter,0.81100489406432,painter photographer artist person painting sculptor writer poet
+bert-base-uncased,295,Someone who paints pictures can be called a [MASK].,artist,3063,role,role:paints_pictures,t1,error,3,painter,0.7555642684785484,painter photographer artist teacher cartoonist model sculptor designer
+bert-base-uncased,296,A person who plays music is a [MASK].,musician,5455,role,role:plays_music,t0,correct,1,musician,0.7898932741870148,musician composer performer singer conductor person pianist songwriter
+bert-base-uncased,297,Someone who plays music can be called a [MASK].,musician,5455,role,role:plays_music,t1,correct,1,musician,0.6213485764316586,musician pianist composer singer drummer guitarist performer violinist
+bert-base-uncased,298,A person who treats patients is a [MASK].,doctor,3460,role,role:treats_patients,t0,correct,1,doctor,0.4419686122345603,doctor physician patient surgeon psychiatrist nurse healer therapist
+bert-base-uncased,299,Someone who treats patients can be called a [MASK].,doctor,3460,role,role:treats_patients,t1,correct,1,doctor,0.5698989045257338,doctor nurse specialist psychiatrist physician surgeon consultant healer
+bert-base-uncased,300,A person who acts in films is a [MASK].,actor,3364,role,role:acts_in_films,t0,error,7,filmmaker,0.3102778849932002,filmmaker director person performer film producer actor musician
+bert-base-uncased,301,Someone who acts in films can be called a [MASK].,actor,3364,role,role:acts_in_films,t1,error,5,director,0.3922088119536827,director filmmaker producer villain actor star performer cop
+bert-base-uncased,302,A salmon is a [MASK].,fish,3869,animal_class,animal_class:salmon,t0,correct,1,fish,0.5184755393195022,fish salmon trout fishery river crab food species
+bert-base-uncased,303,The salmon is classified as a [MASK].,fish,3869,animal_class,animal_class:salmon,t1,error,8,subspecies,0.2096696587658076,subspecies species fishery salmon trout pest weed fish
+bert-base-uncased,304,A trout is a [MASK].,fish,3869,animal_class,animal_class:trout,t0,correct,1,fish,0.5283029554469378,fish trout fishery stream species carp salmon river
+bert-base-uncased,305,The trout is classified as a [MASK].,fish,3869,animal_class,animal_class:trout,t1,error,12,subspecies,0.1790581014203445,subspecies fishery species weed trout resident concern predator
+bert-base-uncased,306,A sparrow is a [MASK].,bird,4743,animal_class,animal_class:sparrow,t0,correct,1,bird,0.6044671302025911,bird sparrow lark pigeon fly parrot name feather
+bert-base-uncased,307,The sparrow is classified as a [MASK].,bird,4743,animal_class,animal_class:sparrow,t1,error,5,subspecies,0.7066031885863469,subspecies vulnerable resident species bird pest hawk migrant
+bert-base-uncased,308,A eagle is a [MASK].,bird,4743,animal_class,animal_class:eagle,t0,correct,1,bird,0.7539775128129986,bird symbol flag falcon feather seal dragon lion
+bert-base-uncased,309,The eagle is classified as a [MASK].,bird,4743,animal_class,animal_class:eagle,t1,correct,1,bird,0.3531839819037819,bird subspecies lion female male species scout trophy
+bert-base-uncased,318,A shark is a [MASK].,fish,3869,animal_class,animal_class:shark,t0,error,2,shark,0.7363982706901435,shark fish predator snake concept bird whale fin
+bert-base-uncased,319,The shark is classified as a [MASK].,fish,3869,animal_class,animal_class:shark,t1,error,12,subspecies,0.2997956051196536,subspecies species predator juvenile parasite weed fossil threat
+bert-base-uncased,320,A whale is a [MASK].,mammal,25476,animal_class,animal_class:whale,t0,error,2,whale,0.4325547785991792,whale mammal fish dolphin bird shark dog creature
+bert-base-uncased,321,The whale is classified as a [MASK].,mammal,25476,animal_class,animal_class:whale,t1,error,3,subspecies,0.3760171144895701,subspecies species mammal predator fossil juvenile male fish
+bert-base-uncased,322,A dolphin is a [MASK].,mammal,25476,animal_class,animal_class:dolphin,t0,error,4,dolphin,0.7262349743337358,dolphin fish bird mammal whale shark seal dog
+bert-base-uncased,323,The dolphin is classified as a [MASK].,mammal,25476,animal_class,animal_class:dolphin,t1,error,8,subspecies,0.5048456352282633,subspecies species vulnerable endangered resident dolphin hybrid mammal
+bert-base-uncased,324,A spider is a [MASK].,insect,14211,animal_class,animal_class:spider,t0,error,96,spider,0.8279514561762891,spider web snake scorpion wasp crab structure noun
+bert-base-uncased,325,The spider is classified as a [MASK].,insect,14211,animal_class,animal_class:spider,t1,error,336,subspecies,0.308402867531684,subspecies predator wasp pest male species female mimic
+bert-base-uncased,326,Hamlet was written by [MASK].,shakespeare,8101,culture,culture:hamlet,t0,correct,1,shakespeare,0.0989304799718714,shakespeare himself shaw him williams fox smith sullivan
+bert-base-uncased,327,The author of Hamlet was [MASK].,shakespeare,8101,culture,culture:hamlet,t1,error,17,unknown,0.2466191027785619,unknown c anonymous b sgt fr not murdered
+bert-base-uncased,328,The Mona Lisa was painted by [MASK].,leonardo,14720,culture,culture:mona_lisa,t0,error,11,raphael,0.3737801651536775,raphael fr him c her michelangelo himself vinci
+bert-base-uncased,329,[MASK] painted the Mona Lisa.,leonardo,14720,culture,culture:mona_lisa,t1,error,26,he,0.6460953966342682,he she i they and raphael michelangelo who
+bert-base-uncased,330,The theory of relativity is associated with [MASK].,einstein,15313,culture,culture:relativity,t0,error,10,it,0.2390046791010054,it this relativity gravity consciousness him them symmetry
+bert-base-uncased,331,[MASK] is famous for relativity.,einstein,15313,culture,culture:relativity,t1,error,3,it,0.7882360772879995,it he einstein she paris israel france this
+bert-base-uncased,332,Isaac [MASK] described gravity.,newton,8446,culture,culture:gravity,t0,correct,1,newton,0.9980569732642568,newton ##son watts hamilton ##s einstein first stern
+bert-base-uncased,333,Gravity is famously linked to Newton and the apple; his surname was [MASK].,newton,8446,culture,culture:gravity,t1,correct,1,newton,0.8498572769446309,newton einstein james adam kepler mars maxwell arthur
+bert-base-uncased,334,Romeo and [MASK] are Shakespeare characters.,juliet,13707,culture,culture:romeo,t0,correct,1,juliet,0.9978614565314378,juliet juliette hamlet heroine julia fletcher romeo delilah
+bert-base-uncased,335,The title pair is Romeo and [MASK].,juliet,13707,culture,culture:romeo,t1,correct,1,juliet,0.9978902661666292,juliet juliette julia hamlet heroine delilah mia cleopatra
+bert-base-uncased,336,Sherlock [MASK] is a fictional detective.,holmes,9106,culture,culture:sherlock,t0,correct,1,holmes,0.997688056726872,holmes watson jones sherlock arnold smith hound clarke
+bert-base-uncased,337,The detective Sherlock has surname [MASK].,holmes,9106,culture,culture:sherlock,t1,error,12,##s,0.914985899838599,##s watson ##d variations characters variants letters plates
+bert-base-uncased,338,The Odyssey is attributed to [MASK].,homer,11525,culture,culture:odyssey,t0,error,3,him,0.5716358763883916,him c homer her alexander them fr aristotle
+bert-base-uncased,339,[MASK] is traditionally credited with the Odyssey.,homer,11525,culture,culture:odyssey,t1,error,2,he,0.8390977732722684,he homer she aristotle plato it paul alexander
+bert-base-uncased,340,Charles Darwin is associated with [MASK].,evolution,6622,culture,culture:darwin,t0,error,25,it,0.2615623608460574,it him her them france england christianity britain
+bert-base-uncased,341,Darwin is famous for the theory of [MASK].,evolution,6622,culture,culture:darwin,t1,correct,1,evolution,0.8561628543906125,evolution species life relativity man sex animals selection
+bert-base-uncased,342,Grass is usually [MASK].,green,2665,common,common:grass,t0,error,5,present,0.2114322983111324,present preferred abundant eaten green cultivated used available
+bert-base-uncased,343,The usual color of grass is [MASK].,green,2665,common,common:grass,t1,error,4,red,0.1876038444878285,red yellow white green black brown orange gray
+bert-base-uncased,344,The sky is often [MASK].,blue,2630,common,common:sky,t0,error,2,clear,0.2072950652172247,clear blue cloudy dark grey black gray white
+bert-base-uncased,345,The usual color of a clear sky is [MASK].,blue,2630,common,common:sky,t1,correct,1,blue,0.3117741862750746,blue white orange red gray purple yellow black
+bert-base-uncased,346,People drink coffee from a [MASK].,cup,2452,common,common:coffee,t0,error,2,machine,0.1650090688027264,machine cup cafe table pot mug bar can
+bert-base-uncased,347,A common container for coffee is a [MASK].,cup,2452,common,common:coffee,t1,correct,1,cup,0.3571103868975274,cup mug jar container bottle can spoon pitcher
+bert-base-uncased,348,People usually sleep in a [MASK].,bed,2793,common,common:sleep,t0,error,2,tent,0.2055563334844641,tent bed car coffin room cave box trailer
+bert-base-uncased,349,A person sleeps in a [MASK].,bed,2793,common,common:sleep,t1,correct,1,bed,0.2771904111235851,bed coffin room cave tent chair cell car
+bert-base-uncased,350,Fish usually swim in [MASK].,water,2300,common,common:fish_swim,t0,correct,1,water,0.2312436345526587,water pairs groups rivers streams packs circles unison
+bert-base-uncased,351,[MASK] is where fish swim.,water,2300,common,common:fish_swim,t1,error,6,this,0.6003940634826748,this it that here there water which where
+bert-base-uncased,352,Bread is made from [MASK].,flour,13724,common,common:bread,t0,error,2,wheat,0.1583468801052912,wheat flour rye dough butter yeast honey milk
+bert-base-uncased,353,[MASK] is a main ingredient in bread.,flour,13724,common,common:bread,t1,error,8,it,0.8181959204572757,it butter this garlic salt bread cheese flour
+bert-base-uncased,354,Milk often comes from a [MASK].,cow,11190,common,common:milk,t0,correct,1,cow,0.1585171496548681,cow bottle well jug refrigerator fridge pot bowl
+bert-base-uncased,355,A [MASK] produces milk.,cow,11190,common,common:milk,t1,correct,1,cow,0.7151809536568766,cow dairy farm mill family farmer village goat
+bert-base-uncased,356,A rose is a [MASK].,flower,6546,common,common:rose,t0,correct,1,flower,0.6288788326892982,flower rose plant poem word symbol name daisy
+bert-base-uncased,357,The rose is a kind of [MASK].,flower,6546,common,common:rose,t1,correct,1,flower,0.5775400584356681,flower rose jewel beauty garden lily symbol angel
+distilbert-base-uncased,0,The capital of France is [MASK].,paris,3000,capital,capital:france,t0,error,4,marseille,0.152568065144161,marseille nantes toulouse paris lyon bordeaux lille montpellier
+distilbert-base-uncased,1,France's capital city is [MASK].,paris,3000,capital,capital:france,t1,correct,1,paris,0.1676741791589899,paris lyon marseille nantes lille toulouse bordeaux nancy
+distilbert-base-uncased,2,"In France, the capital city is [MASK].",paris,3000,capital,capital:france,t2,correct,1,paris,0.1365506643908051,paris lyon nantes marseille bordeaux rouen toulouse lille
+distilbert-base-uncased,3,The capital of Germany is [MASK].,berlin,4068,capital,capital:germany,t0,error,5,bonn,0.1594159202399774,bonn frankfurt kassel dusseldorf berlin munich dresden cologne
+distilbert-base-uncased,4,Germany's capital city is [MASK].,berlin,4068,capital,capital:germany,t1,error,2,bonn,0.1621287651016737,bonn berlin munich dusseldorf frankfurt dresden leipzig stuttgart
+distilbert-base-uncased,5,"In Germany, the capital city is [MASK].",berlin,4068,capital,capital:germany,t2,error,7,bonn,0.0968433330773471,bonn kassel dusseldorf frankfurt munich darmstadt berlin dresden
+distilbert-base-uncased,6,The capital of Italy is [MASK].,rome,4199,capital,capital:italy,t0,error,4,turin,0.1891806119516879,turin florence naples rome bologna milan pisa palermo
+distilbert-base-uncased,7,Italy's capital city is [MASK].,rome,4199,capital,capital:italy,t1,error,2,turin,0.1948236253652487,turin rome milan florence naples bologna palermo trieste
+distilbert-base-uncased,8,"In Italy, the capital city is [MASK].",rome,4199,capital,capital:italy,t2,error,3,turin,0.1620776376198388,turin florence rome milan naples bologna genoa pisa
+distilbert-base-uncased,9,The capital of Spain is [MASK].,madrid,6921,capital,capital:spain,t0,correct,1,madrid,0.4174126241720587,madrid seville barcelona zaragoza valencia malaga bilbao salamanca
+distilbert-base-uncased,10,Spain's capital city is [MASK].,madrid,6921,capital,capital:spain,t1,correct,1,madrid,0.4318147668455334,madrid seville malaga barcelona zaragoza valencia granada bilbao
+distilbert-base-uncased,11,"In Spain, the capital city is [MASK].",madrid,6921,capital,capital:spain,t2,correct,1,madrid,0.2353855176338001,madrid seville zaragoza valencia malaga barcelona bilbao salamanca
+distilbert-base-uncased,12,The capital of Japan is [MASK].,tokyo,5522,capital,capital:japan,t0,correct,1,tokyo,0.3394977509786582,tokyo osaka kyoto nagoya kobe fukuoka nagasaki hiroshima
+distilbert-base-uncased,13,Japan's capital city is [MASK].,tokyo,5522,capital,capital:japan,t1,correct,1,tokyo,0.3876364622970841,tokyo osaka kyoto kobe nagoya fukuoka nagasaki yokohama
+distilbert-base-uncased,14,"In Japan, the capital city is [MASK].",tokyo,5522,capital,capital:japan,t2,correct,1,tokyo,0.2920188662364102,tokyo kyoto osaka kobe nagoya fukuoka yokohama kochi
+distilbert-base-uncased,15,The capital of China is [MASK].,beijing,7211,capital,capital:china,t0,correct,1,beijing,0.5267209355385849,beijing nanjing guangzhou tianjin shanghai shenzhen peking taipei
+distilbert-base-uncased,16,China's capital city is [MASK].,beijing,7211,capital,capital:china,t1,correct,1,beijing,0.5847508699996897,beijing nanjing guangzhou tianjin shanghai shenzhen peking taipei
+distilbert-base-uncased,17,"In China, the capital city is [MASK].",beijing,7211,capital,capital:china,t2,correct,1,beijing,0.4077749768603069,beijing nanjing guangzhou tianjin shenzhen shanghai peking taipei
+distilbert-base-uncased,18,The capital of Russia is [MASK].,moscow,4924,capital,capital:russia,t0,correct,1,moscow,0.5236685512402838,moscow kazan kiev leningrad vladimir tbilisi sofia riga
+distilbert-base-uncased,19,Russia's capital city is [MASK].,moscow,4924,capital,capital:russia,t1,correct,1,moscow,0.7780937210000582,moscow kazan vladimir leningrad kiev sofia tbilisi helsinki
+distilbert-base-uncased,20,"In Russia, the capital city is [MASK].",moscow,4924,capital,capital:russia,t2,correct,1,moscow,0.6162054131337873,moscow kazan vladimir leningrad novgorod petersburg kiev tbilisi
+distilbert-base-uncased,21,The capital of Egypt is [MASK].,cairo,11096,capital,capital:egypt,t0,correct,1,cairo,0.6441172826492626,cairo alexandria egypt tunis suez acre memphis constantine
+distilbert-base-uncased,22,Egypt's capital city is [MASK].,cairo,11096,capital,capital:egypt,t1,correct,1,cairo,0.8148813868836984,cairo alexandria egypt suez tunis acre mecca male
+distilbert-base-uncased,23,"In Egypt, the capital city is [MASK].",cairo,11096,capital,capital:egypt,t2,correct,1,cairo,0.6218687683504538,cairo alexandria suez egypt tunis memphis acre constantine
+distilbert-base-uncased,24,The capital of Greece is [MASK].,athens,7571,capital,capital:greece,t0,correct,1,athens,0.5986254470487338,athens thessaloniki olympia crete rhodes tirana sofia sparta
+distilbert-base-uncased,25,Greece's capital city is [MASK].,athens,7571,capital,capital:greece,t1,correct,1,athens,0.6174033736533484,athens thessaloniki olympia rhodes skopje sparta crete sofia
+distilbert-base-uncased,26,"In Greece, the capital city is [MASK].",athens,7571,capital,capital:greece,t2,correct,1,athens,0.5346213487158427,athens thessaloniki olympia rhodes sparta crete constantinople tripoli
+distilbert-base-uncased,27,The capital of Portugal is [MASK].,lisbon,11929,capital,capital:portugal,t0,correct,1,lisbon,0.7668430726147983,lisbon porto benfica madeira maia almeida portugal acre
+distilbert-base-uncased,28,Portugal's capital city is [MASK].,lisbon,11929,capital,capital:portugal,t1,correct,1,lisbon,0.7703462617503384,lisbon porto benfica maia portugal madeira almeida fatima
+distilbert-base-uncased,29,"In Portugal, the capital city is [MASK].",lisbon,11929,capital,capital:portugal,t2,correct,1,lisbon,0.6341144045963625,lisbon porto benfica maia madeira vila almeida fatima
+distilbert-base-uncased,30,The capital of Austria is [MASK].,vienna,6004,capital,capital:austria,t0,correct,1,vienna,0.6216912234002145,vienna innsbruck graz salzburg wien austria ljubljana trieste
+distilbert-base-uncased,31,Austria's capital city is [MASK].,vienna,6004,capital,capital:austria,t1,correct,1,vienna,0.6663827938476691,vienna graz innsbruck salzburg wien ljubljana budapest trieste
+distilbert-base-uncased,32,"In Austria, the capital city is [MASK].",vienna,6004,capital,capital:austria,t2,correct,1,vienna,0.452925960917926,vienna innsbruck graz salzburg wien ljubljana trieste austria
+distilbert-base-uncased,33,The capital of Belgium is [MASK].,brussels,9371,capital,capital:belgium,t0,correct,1,brussels,0.6799351318786164,brussels antwerp liege ghent mons belgium luxembourg flanders
+distilbert-base-uncased,34,Belgium's capital city is [MASK].,brussels,9371,capital,capital:belgium,t1,correct,1,brussels,0.631554333312901,brussels antwerp ghent liege mons belgium luxembourg lille
+distilbert-base-uncased,35,"In Belgium, the capital city is [MASK].",brussels,9371,capital,capital:belgium,t2,correct,1,brussels,0.5260140596748584,brussels antwerp ghent liege mons luxembourg belgium flanders
+distilbert-base-uncased,36,The capital of Finland is [MASK].,helsinki,12331,capital,capital:finland,t0,correct,1,helsinki,0.995977947239732,helsinki tallinn finland stockholm nokia finnish gothenburg rai
+distilbert-base-uncased,37,Finland's capital city is [MASK].,helsinki,12331,capital,capital:finland,t1,correct,1,helsinki,0.999007742222508,helsinki tallinn finland stockholm rai nokia hamilton finnish
+distilbert-base-uncased,38,"In Finland, the capital city is [MASK].",helsinki,12331,capital,capital:finland,t2,correct,1,helsinki,0.9980837757300082,helsinki tallinn finland stockholm finnish nokia rai gothenburg
+distilbert-base-uncased,39,The capital of Norway is [MASK].,oslo,9977,capital,capital:norway,t0,correct,1,oslo,0.7446061837319278,oslo trondheim bergen rana moss norway lille nes
+distilbert-base-uncased,40,Norway's capital city is [MASK].,oslo,9977,capital,capital:norway,t1,correct,1,oslo,0.800796064939256,oslo trondheim bergen lille norway helsinki voss moss
+distilbert-base-uncased,41,"In Norway, the capital city is [MASK].",oslo,9977,capital,capital:norway,t2,correct,1,oslo,0.6803683662191103,oslo trondheim bergen rana lille nes moss voss
+distilbert-base-uncased,42,The capital of Sweden is [MASK].,stockholm,8947,capital,capital:sweden,t0,correct,1,stockholm,0.3969524492686799,stockholm gothenburg malmo uppsala lund helsinki oslo sweden
+distilbert-base-uncased,43,Sweden's capital city is [MASK].,stockholm,8947,capital,capital:sweden,t1,correct,1,stockholm,0.5111264047542026,stockholm gothenburg malmo uppsala lund helsinki oslo sweden
+distilbert-base-uncased,44,"In Sweden, the capital city is [MASK].",stockholm,8947,capital,capital:sweden,t2,correct,1,stockholm,0.3478392590897935,stockholm gothenburg malmo uppsala lund helsinki oslo mora
+distilbert-base-uncased,45,The capital of Poland is [MASK].,warsaw,8199,capital,capital:poland,t0,error,4,wrocław,0.2786199061193936,wrocław gdansk poznan warsaw krakow łodz lublin vilnius
+distilbert-base-uncased,46,Poland's capital city is [MASK].,warsaw,8199,capital,capital:poland,t1,error,2,wrocław,0.2889110015186216,wrocław warsaw poznan krakow gdansk łodz lublin lviv
+distilbert-base-uncased,47,"In Poland, the capital city is [MASK].",warsaw,8199,capital,capital:poland,t2,error,5,wrocław,0.2665490868212907,wrocław krakow poznan gdansk warsaw łodz lublin vilnius
+distilbert-base-uncased,48,The capital of Hungary is [MASK].,budapest,10926,capital,capital:hungary,t0,correct,1,budapest,0.9378831706792048,budapest pest bratislava hungary vienna bala bela aba
+distilbert-base-uncased,49,Hungary's capital city is [MASK].,budapest,10926,capital,capital:hungary,t1,correct,1,budapest,0.9917210031601572,budapest pest bratislava vienna hungary bela bala graz
+distilbert-base-uncased,50,"In Hungary, the capital city is [MASK].",budapest,10926,capital,capital:hungary,t2,correct,1,budapest,0.9573453087223948,budapest pest bratislava hungary vienna bela bala aba
+distilbert-base-uncased,51,The capital of Romania is [MASK].,bucharest,14261,capital,capital:romania,t0,correct,1,bucharest,0.9763995294521752,bucharest tirana budapest sofia tallinn transylvania belgrade ruse
+distilbert-base-uncased,52,Romania's capital city is [MASK].,bucharest,14261,capital,capital:romania,t1,correct,1,bucharest,0.9899269909648778,bucharest sofia budapest tallinn tirana belgrade bender concordia
+distilbert-base-uncased,53,"In Romania, the capital city is [MASK].",bucharest,14261,capital,capital:romania,t2,correct,1,bucharest,0.9830352144061588,bucharest concordia alba transylvania bender sofia budapest pest
+distilbert-base-uncased,54,The capital of Bulgaria is [MASK].,sofia,8755,capital,capital:bulgaria,t0,correct,1,sofia,0.9316444150742672,sofia ruse bulgaria skopje thessaloniki bulgarian constantine montana
+distilbert-base-uncased,55,Bulgaria's capital city is [MASK].,sofia,8755,capital,capital:bulgaria,t1,correct,1,sofia,0.9750693660845522,sofia ruse skopje thessaloniki bulgaria constantine kiev bucharest
+distilbert-base-uncased,56,"In Bulgaria, the capital city is [MASK].",sofia,8755,capital,capital:bulgaria,t2,correct,1,sofia,0.938073262702043,sofia ruse skopje bulgaria thessaloniki bulgarian constantine montana
+distilbert-base-uncased,57,The capital of Serbia is [MASK].,belgrade,10291,capital,capital:serbia,t0,correct,1,belgrade,0.9808382227654712,belgrade serbia skopje sarajevo ruse zagreb sofia novi
+distilbert-base-uncased,58,Serbia's capital city is [MASK].,belgrade,10291,capital,capital:serbia,t1,correct,1,belgrade,0.9891503107373354,belgrade skopje serbia sarajevo sofia zagreb thessaloniki bratislava
+distilbert-base-uncased,59,"In Serbia, the capital city is [MASK].",belgrade,10291,capital,capital:serbia,t2,correct,1,belgrade,0.9793050896493556,belgrade skopje serbia sarajevo zagreb novi sofia ruse
+distilbert-base-uncased,60,The capital of Croatia is [MASK].,zagreb,12974,capital,capital:croatia,t0,correct,1,zagreb,0.963062697103075,zagreb split croatia belgrade ljubljana sarajevo bled croatian
+distilbert-base-uncased,61,Croatia's capital city is [MASK].,zagreb,12974,capital,capital:croatia,t1,correct,1,zagreb,0.9623156978693476,zagreb split ljubljana belgrade croatia sarajevo bled vienna
+distilbert-base-uncased,62,"In Croatia, the capital city is [MASK].",zagreb,12974,capital,capital:croatia,t2,correct,1,zagreb,0.9059089626545273,zagreb split ljubljana croatia belgrade sarajevo novi bled
+distilbert-base-uncased,63,The capital of Turkey is [MASK].,ankara,20312,capital,capital:turkey,t0,correct,1,ankara,0.7463341745087575,ankara istanbul constantinople batman kazan yerevan turkey constantine
+distilbert-base-uncased,64,Turkey's capital city is [MASK].,ankara,20312,capital,capital:turkey,t1,correct,1,ankara,0.7074168628075013,ankara istanbul constantinople batman kazan yerevan bender thessaloniki
+distilbert-base-uncased,65,"In Turkey, the capital city is [MASK].",ankara,20312,capital,capital:turkey,t2,correct,1,ankara,0.5849129527332502,ankara istanbul constantinople batman kazan van ada yerevan
+distilbert-base-uncased,66,The capital of Iran is [MASK].,tehran,13503,capital,capital:iran,t0,correct,1,tehran,0.8894876146138277,tehran kerman ##fahan iran baghdad kabul yerevan baku
+distilbert-base-uncased,67,Iran's capital city is [MASK].,tehran,13503,capital,capital:iran,t1,correct,1,tehran,0.9656110922048776,tehran kerman ##fahan iran yerevan kabul baghdad baku
+distilbert-base-uncased,68,"In Iran, the capital city is [MASK].",tehran,13503,capital,capital:iran,t2,correct,1,tehran,0.880380217258479,tehran kerman ##fahan baghdad kabul khorasan iran yerevan
+distilbert-base-uncased,69,The capital of Iraq is [MASK].,baghdad,13952,capital,capital:iraq,t0,correct,1,baghdad,0.9832295242994712,baghdad iraq amman kurdistan kuwait saddam tehran damascus
+distilbert-base-uncased,70,Iraq's capital city is [MASK].,baghdad,13952,capital,capital:iraq,t1,correct,1,baghdad,0.9930154574035658,baghdad amman iraq tehran saddam kurdistan aleppo damascus
+distilbert-base-uncased,71,"In Iraq, the capital city is [MASK].",baghdad,13952,capital,capital:iraq,t2,correct,1,baghdad,0.9851485275431312,baghdad amman iraq saddam aleppo kurdistan damascus tehran
+distilbert-base-uncased,72,The capital of Syria is [MASK].,damascus,16094,capital,capital:syria,t0,correct,1,damascus,0.6992535760258797,damascus aleppo beirut amman acre baghdad antioch syria
+distilbert-base-uncased,73,Syria's capital city is [MASK].,damascus,16094,capital,capital:syria,t1,correct,1,damascus,0.68877279785602,damascus aleppo acre beirut amman baghdad antioch tyre
+distilbert-base-uncased,74,"In Syria, the capital city is [MASK].",damascus,16094,capital,capital:syria,t2,correct,1,damascus,0.5155855050246256,damascus aleppo beirut tyre amman acre antioch baghdad
+distilbert-base-uncased,75,The capital of Jordan is [MASK].,amman,25703,capital,capital:jordan,t0,correct,1,amman,0.988819593533483,amman jordan hussein damascus jordanian nazareth ras jerusalem
+distilbert-base-uncased,76,Jordan's capital city is [MASK].,amman,25703,capital,capital:jordan,t1,correct,1,amman,0.9946959914775638,amman jordan hussein damascus doha baghdad petra jerusalem
+distilbert-base-uncased,77,"In Jordan, the capital city is [MASK].",amman,25703,capital,capital:jordan,t2,correct,1,amman,0.9936529769944588,amman jordan damascus hussein doha petra ras beirut
+distilbert-base-uncased,78,The capital of Lebanon is [MASK].,beirut,15335,capital,capital:lebanon,t0,correct,1,beirut,0.9592441821295072,beirut tyre tripoli damascus lebanon acre haifa aleppo
+distilbert-base-uncased,79,Lebanon's capital city is [MASK].,beirut,15335,capital,capital:lebanon,t1,correct,1,beirut,0.9564264186415108,beirut tyre tripoli damascus acre lebanon haifa bethlehem
+distilbert-base-uncased,80,"In Lebanon, the capital city is [MASK].",beirut,15335,capital,capital:lebanon,t2,correct,1,beirut,0.9358272040004226,beirut tyre tripoli damascus acre lebanon aleppo haifa
+distilbert-base-uncased,81,The capital of Thailand is [MASK].,bangkok,12627,capital,capital:thailand,t0,correct,1,bangkok,0.994527272421446,bangkok thailand mai siam thai chiang hanoi rai
+distilbert-base-uncased,82,Thailand's capital city is [MASK].,bangkok,12627,capital,capital:thailand,t1,correct,1,bangkok,0.9984808913105756,bangkok thailand mai hanoi siam moscow chiang thai
+distilbert-base-uncased,83,"In Thailand, the capital city is [MASK].",bangkok,12627,capital,capital:thailand,t2,correct,1,bangkok,0.9905058680805628,bangkok mai thailand hanoi wat thai siam rai
+distilbert-base-uncased,84,The capital of Vietnam is [MASK].,hanoi,24809,capital,capital:vietnam,t0,correct,1,hanoi,0.8858282579412363,hanoi saigon hue vietnam nam bangkok nguyen paris
+distilbert-base-uncased,85,Vietnam's capital city is [MASK].,hanoi,24809,capital,capital:vietnam,t1,correct,1,hanoi,0.9284392598361132,hanoi saigon hue vietnam bangkok nam paris nguyen
+distilbert-base-uncased,86,"In Vietnam, the capital city is [MASK].",hanoi,24809,capital,capital:vietnam,t2,correct,1,hanoi,0.7840534530313114,hanoi saigon hue vietnam nam nguyen bangkok mai
+distilbert-base-uncased,87,The capital of Peru is [MASK].,lima,12967,capital,capital:peru,t0,correct,1,lima,0.9760570352118788,lima concepcion santiago peru cordoba bogota bolivar mendoza
+distilbert-base-uncased,88,Peru's capital city is [MASK].,lima,12967,capital,capital:peru,t1,correct,1,lima,0.9967762624251196,lima concepcion peru santiago bogota mendoza cordoba toledo
+distilbert-base-uncased,89,"In Peru, the capital city is [MASK].",lima,12967,capital,capital:peru,t2,correct,1,lima,0.972946908209813,lima concepcion santiago peru rosario bogota mendoza cordoba
+distilbert-base-uncased,90,The capital of Chile is [MASK].,santiago,8728,capital,capital:chile,t0,correct,1,santiago,0.849824121063346,santiago concepcion chile montevideo lima mendoza rosario colon
+distilbert-base-uncased,91,Chile's capital city is [MASK].,santiago,8728,capital,capital:chile,t1,correct,1,santiago,0.8836876864261317,santiago concepcion chile lima montevideo mendoza colon rosario
+distilbert-base-uncased,92,"In Chile, the capital city is [MASK].",santiago,8728,capital,capital:chile,t2,correct,1,santiago,0.7258925057568685,santiago concepcion montevideo chile lima colon rosario mendoza
+distilbert-base-uncased,93,The capital of Cuba is [MASK].,havana,15278,capital,capital:cuba,t0,correct,1,havana,0.9492999441495584,havana santiago guantanamo cuba ponce caracas madrid castro
+distilbert-base-uncased,94,Cuba's capital city is [MASK].,havana,15278,capital,capital:cuba,t1,correct,1,havana,0.9749834141674866,havana santiago guantanamo cuba ponce caracas madrid seville
+distilbert-base-uncased,95,"In Cuba, the capital city is [MASK].",havana,15278,capital,capital:cuba,t2,correct,1,havana,0.9533361581096784,havana guantanamo santiago ponce cuba avila caracas colon
+distilbert-base-uncased,96,The capital of Jamaica is [MASK].,kingston,9803,capital,capital:jamaica,t0,correct,1,kingston,0.9889497970808312,kingston jamaica santiago georgetown antigua salisbury havana barbados
+distilbert-base-uncased,97,Jamaica's capital city is [MASK].,kingston,9803,capital,capital:jamaica,t1,correct,1,kingston,0.9928898370427028,kingston jamaica georgetown santiago antigua salisbury havana warwick
+distilbert-base-uncased,98,"In Jamaica, the capital city is [MASK].",kingston,9803,capital,capital:jamaica,t2,correct,1,kingston,0.960379504447718,kingston jamaica georgetown antigua havana santiago warwick jamaican
+distilbert-base-uncased,102,The capital of Tunisia is [MASK].,tunis,25317,capital,capital:tunisia,t0,correct,1,tunis,0.9524167289576422,tunis carthage tunisia constantine algiers casablanca tripoli tunisian
+distilbert-base-uncased,103,Tunisia's capital city is [MASK].,tunis,25317,capital,capital:tunisia,t1,correct,1,tunis,0.9826111362851644,tunis carthage constantine tunisia algiers casablanca tripoli male
+distilbert-base-uncased,104,"In Tunisia, the capital city is [MASK].",tunis,25317,capital,capital:tunisia,t2,correct,1,tunis,0.9710422742533804,tunis carthage constantine algiers tunisia casablanca tripoli alexandria
+distilbert-base-uncased,120,The capital of Nepal is [MASK].,kathmandu,28045,capital,capital:nepal,t0,correct,1,kathmandu,0.9969133697231176,kathmandu nepal bam rai dhaka nepali patna islamabad
+distilbert-base-uncased,121,Nepal's capital city is [MASK].,kathmandu,28045,capital,capital:nepal,t1,correct,1,kathmandu,0.999608392767706,kathmandu nepal bangkok dhaka islamabad kabul bam beijing
+distilbert-base-uncased,122,"In Nepal, the capital city is [MASK].",kathmandu,28045,capital,capital:nepal,t2,correct,1,kathmandu,0.9989207395020248,kathmandu nepal dhaka patna kabul bam rai bangkok
+distilbert-base-uncased,123,The capital of Pakistan is [MASK].,islamabad,26905,capital,capital:pakistan,t0,correct,1,islamabad,0.5730161647986591,islamabad karachi lahore peshawar kabul sindh dhaka hyderabad
+distilbert-base-uncased,124,Pakistan's capital city is [MASK].,islamabad,26905,capital,capital:pakistan,t1,correct,1,islamabad,0.4417841498180872,islamabad karachi lahore peshawar hyderabad dhaka kabul swat
+distilbert-base-uncased,125,"In Pakistan, the capital city is [MASK].",islamabad,26905,capital,capital:pakistan,t2,error,2,karachi,0.386039521081325,karachi islamabad lahore peshawar dhaka swat hyderabad kabul
+distilbert-base-uncased,126,The language of France is [MASK].,french,2413,language,language:france,t0,correct,1,french,0.703878607308772,french english breton catalan spanish portuguese basque berber
+distilbert-base-uncased,127,People in France often speak [MASK].,french,2413,language,language:france,t1,correct,1,french,0.6556775929181535,french english breton catalan spanish arabic italian german
+distilbert-base-uncased,128,The language of Germany is [MASK].,german,2446,language,language:germany,t0,correct,1,german,0.5435725403400863,german english french danish dutch norwegian afrikaans italian
+distilbert-base-uncased,129,People in Germany often speak [MASK].,german,2446,language,language:germany,t1,correct,1,german,0.4956313623318521,german english yiddish french russian italian dutch afrikaans
+distilbert-base-uncased,130,The language of Italy is [MASK].,italian,3059,language,language:italy,t0,correct,1,italian,0.7163600958359796,italian sicilian english french spanish venetian albanian portuguese
+distilbert-base-uncased,131,People in Italy often speak [MASK].,italian,3059,language,language:italy,t1,correct,1,italian,0.796113788773262,italian english spanish french sicilian catalan portuguese arabic
+distilbert-base-uncased,132,The language of Spain is [MASK].,spanish,3009,language,language:spain,t0,correct,1,spanish,0.3729345019328926,spanish catalan galician basque portuguese english french italian
+distilbert-base-uncased,133,People in Spain often speak [MASK].,spanish,3009,language,language:spain,t1,correct,1,spanish,0.5754755490476245,spanish catalan english basque portuguese galician french italian
+distilbert-base-uncased,134,The language of Portugal is [MASK].,portuguese,5077,language,language:portugal,t0,correct,1,portuguese,0.9070061035671452,portuguese galician spanish english french italian catalan creole
+distilbert-base-uncased,135,People in Portugal often speak [MASK].,portuguese,5077,language,language:portugal,t1,correct,1,portuguese,0.8384386898510066,portuguese spanish english galician catalan italian french romanian
+distilbert-base-uncased,136,The language of Russia is [MASK].,russian,2845,language,language:russia,t0,correct,1,russian,0.3005861566774906,russian tatar belarusian english ukrainian kazakh azerbaijani cyrillic
+distilbert-base-uncased,137,People in Russia often speak [MASK].,russian,2845,language,language:russia,t1,correct,1,russian,0.7640370549058593,russian english yiddish belarusian ukrainian cyrillic kazakh tatar
+distilbert-base-uncased,138,The language of China is [MASK].,chinese,2822,language,language:china,t0,error,3,mandarin,0.5564979425468778,mandarin cantonese chinese manchu tibetan korean english mongolian
+distilbert-base-uncased,139,People in China often speak [MASK].,chinese,2822,language,language:china,t1,error,3,cantonese,0.3622643951961444,cantonese mandarin chinese english korean manchu japanese vietnamese
+distilbert-base-uncased,140,The language of Japan is [MASK].,japanese,2887,language,language:japan,t0,correct,1,japanese,0.4224019703523985,japanese english mandarin korean okinawa hangul portuguese telugu
+distilbert-base-uncased,141,People in Japan often speak [MASK].,japanese,2887,language,language:japan,t1,correct,1,japanese,0.6348275259813527,japanese english korean cantonese mandarin chinese spanish french
+distilbert-base-uncased,142,The language of Greece is [MASK].,greek,3306,language,language:greece,t0,correct,1,greek,0.5034983057862238,greek macedonian albanian english turkish latin persian bulgarian
+distilbert-base-uncased,143,People in Greece often speak [MASK].,greek,3306,language,language:greece,t1,correct,1,greek,0.606380059500135,greek english french albanian italian macedonian turkish arabic
+distilbert-base-uncased,144,The language of Turkey is [MASK].,turkish,5037,language,language:turkey,t0,correct,1,turkish,0.440550300048443,turkish kurdish turkic arabic persian azerbaijani armenian english
+distilbert-base-uncased,145,People in Turkey often speak [MASK].,turkish,5037,language,language:turkey,t1,correct,1,turkish,0.5283789885825055,turkish kurdish english arabic russian turkic persian armenian
+distilbert-base-uncased,146,The language of Poland is [MASK].,polish,3907,language,language:poland,t0,correct,1,polish,0.3396857784105027,polish english belarusian yiddish german ukrainian silesian lithuanian
+distilbert-base-uncased,147,People in Poland often speak [MASK].,polish,3907,language,language:poland,t1,correct,1,polish,0.4009547334394783,polish yiddish english belarusian russian german spanish italian
+distilbert-base-uncased,148,The language of Hungary is [MASK].,hungarian,5588,language,language:hungary,t0,correct,1,hungarian,0.6077352973859769,hungarian english croatian slovak romanian turkish german serbian
+distilbert-base-uncased,149,People in Hungary often speak [MASK].,hungarian,5588,language,language:hungary,t1,correct,1,hungarian,0.7483758666346498,hungarian english yiddish romanian russian slovene italian german
+distilbert-base-uncased,150,The language of Romania is [MASK].,romanian,7056,language,language:romania,t0,correct,1,romanian,0.7750453304803034,romanian albanian hungarian portuguese french english serbian italian
+distilbert-base-uncased,151,People in Romania often speak [MASK].,romanian,7056,language,language:romania,t1,correct,1,romanian,0.7409607431344893,romanian russian hungarian english yiddish romani italian french
+distilbert-base-uncased,152,The language of Bulgaria is [MASK].,bulgarian,7643,language,language:bulgaria,t0,correct,1,bulgarian,0.722223139620481,bulgarian macedonian serbian cyrillic english albanian russian romanian
+distilbert-base-uncased,153,People in Bulgaria often speak [MASK].,bulgarian,7643,language,language:bulgaria,t1,correct,1,bulgarian,0.5126977987203408,bulgarian russian macedonian english cyrillic serbian romani romanian
+distilbert-base-uncased,154,The language of Sweden is [MASK].,swedish,4467,language,language:sweden,t0,correct,1,swedish,0.5318897845734033,swedish finnish english danish norwegian icelandic estonian sami
+distilbert-base-uncased,155,People in Sweden often speak [MASK].,swedish,4467,language,language:sweden,t1,correct,1,swedish,0.6427018768416669,swedish english finnish danish spanish russian estonian german
+distilbert-base-uncased,156,The language of Norway is [MASK].,norwegian,5046,language,language:norway,t0,correct,1,norwegian,0.8423773398451447,norwegian danish english sami swedish icelandic norse finnish
+distilbert-base-uncased,157,People in Norway often speak [MASK].,norwegian,5046,language,language:norway,t1,correct,1,norwegian,0.4919531618304403,norwegian danish english swedish icelandic german finnish sami
+distilbert-base-uncased,158,France is located in [MASK].,europe,2885,continent,continent:france,t0,error,40,algeria,0.144102917170354,algeria tunisia france cameroon corsica niger senegal madagascar
+distilbert-base-uncased,159,The continent containing France is [MASK].,europe,2885,continent,continent:france,t1,error,15,belgium,0.1566958626557416,belgium disputed france antarctica algeria uninhabited extinct spain
+distilbert-base-uncased,160,Germany is located in [MASK].,europe,2885,continent,continent:germany,t0,error,23,austria,0.1089037939284191,austria bavaria germany belgium luxembourg afghanistan switzerland hesse
+distilbert-base-uncased,161,The continent containing Germany is [MASK].,europe,2885,continent,continent:germany,t1,error,17,belgium,0.1274398771192558,belgium antarctica germany unknown oceania austria scandinavia disputed
+distilbert-base-uncased,162,Spain is located in [MASK].,europe,2885,continent,continent:spain,t0,error,57,spain,0.0980716519835735,spain argentina portugal bolivia uruguay morocco algeria turkey
+distilbert-base-uncased,163,The continent containing Spain is [MASK].,europe,2885,continent,continent:spain,t1,error,6,disputed,0.1385432216047236,disputed spain portugal unknown argentina europe uninhabited france
+distilbert-base-uncased,164,Poland is located in [MASK].,europe,2885,continent,continent:poland,t0,error,59,ukraine,0.1338349428614932,ukraine lithuania belarus croatia poland afghanistan pakistan moldova
+distilbert-base-uncased,165,The continent containing Poland is [MASK].,europe,2885,continent,continent:poland,t1,error,12,disputed,0.1791411120320797,disputed unknown uninhabited antarctica russia belarus germany belgium
+distilbert-base-uncased,166,China is located in [MASK].,asia,4021,continent,continent:china,t0,error,19,taiwan,0.1614656634027785,taiwan tibet macau xinjiang vietnam myanmar yunnan afghanistan
+distilbert-base-uncased,167,The continent containing China is [MASK].,asia,4021,continent,continent:china,t1,error,5,unknown,0.1248081164208612,unknown antarctica disputed china asia oceania uninhabited mountainous
+distilbert-base-uncased,168,Japan is located in [MASK].,asia,4021,continent,continent:japan,t0,error,4,taiwan,0.1791812132870604,taiwan japan hokkaido asia korea afghanistan indonesia china
+distilbert-base-uncased,169,The continent containing Japan is [MASK].,asia,4021,continent,continent:japan,t1,error,6,antarctica,0.1920263468413353,antarctica unknown oceania china uninhabited asia disputed siberia
+distilbert-base-uncased,170,India is located in [MASK].,asia,4021,continent,continent:india,t0,error,48,pakistan,0.1758265173140307,pakistan bangladesh punjab maharashtra kerala rajasthan karnataka goa
+distilbert-base-uncased,171,The continent containing India is [MASK].,asia,4021,continent,continent:india,t1,error,3,antarctica,0.100776325577615,antarctica africa asia afghanistan pakistan bangladesh china india
+distilbert-base-uncased,172,Thailand is located in [MASK].,asia,4021,continent,continent:thailand,t0,error,13,myanmar,0.189205806698584,myanmar laos cambodia vietnam bangkok thailand indonesia malaysia
+distilbert-base-uncased,173,The continent containing Thailand is [MASK].,asia,4021,continent,continent:thailand,t1,error,6,thailand,0.0902609530221982,thailand cambodia disputed indonesia oceania asia vietnam china
+distilbert-base-uncased,174,Egypt is located in [MASK].,africa,3088,continent,continent:egypt,t0,error,13,sudan,0.2584413469324355,sudan egypt libya tunisia algeria sinai syria yemen
+distilbert-base-uncased,175,The continent containing Egypt is [MASK].,africa,3088,continent,continent:egypt,t1,error,6,unknown,0.150607702621576,unknown egypt libya uncertain covered africa sudan unnamed
+distilbert-base-uncased,176,Morocco is located in [MASK].,africa,3088,continent,continent:morocco,t0,error,11,algeria,0.4616336535265798,algeria morocco tunisia libya casablanca senegal sahara qatar
+distilbert-base-uncased,177,The continent containing Morocco is [MASK].,africa,3088,continent,continent:morocco,t1,error,4,algeria,0.3524121620507798,algeria morocco tunisia africa sahara libya saharan disputed
+distilbert-base-uncased,178,Nigeria is located in [MASK].,africa,3088,continent,continent:nigeria,t0,error,11,nigeria,0.2333872758432122,nigeria cameroon benin niger ghana burundi sudan togo
+distilbert-base-uncased,179,The continent containing Nigeria is [MASK].,africa,3088,continent,continent:nigeria,t1,error,4,cameroon,0.4130559482454416,cameroon benin nigeria africa togo ghana angola disputed
+distilbert-base-uncased,180,Ghana is located in [MASK].,africa,3088,continent,continent:ghana,t0,error,8,ghana,0.6440391617538456,ghana togo cameroon nigeria benin liberia guinea africa
+distilbert-base-uncased,181,The continent containing Ghana is [MASK].,africa,3088,continent,continent:ghana,t1,error,5,togo,0.1729994699315081,togo benin ghana cameroon africa nigeria guinea disputed
+distilbert-base-uncased,182,The currency of Japan is the [MASK].,yen,18371,currency,currency:japan,t0,correct,1,yen,0.8829989480792122,yen dollar jp ¥ roc cfa penny pound
+distilbert-base-uncased,183,People in Japan pay with the [MASK].,yen,18371,currency,currency:japan,t1,error,11,tax,0.1125118156784053,tax euro money wage taxes fare fees fee
+distilbert-base-uncased,184,The currency of China is the [MASK].,yuan,11237,currency,currency:china,t0,error,5,dollar,0.1952369989701365,dollar prc yen roc yuan cfa euro ¥
+distilbert-base-uncased,185,People in China pay with the [MASK].,yuan,11237,currency,currency:china,t1,error,25,tax,0.1223261300253708,tax taxes wage euro money fees currency coins
+distilbert-base-uncased,194,The currency of Brazil is the [MASK].,real,2613,currency,currency:brazil,t0,error,222,dollar,0.6229709433534902,dollar euro cfa yen pound penny portuguese brazilian
+distilbert-base-uncased,195,People in Brazil pay with the [MASK].,real,2613,currency,currency:brazil,t1,error,4343,euro,0.1413616058606303,euro wage tax money taxes currency dollar fare
+distilbert-base-uncased,196,The currency of Britain is the [MASK].,pound,9044,currency,currency:britain,t0,correct,1,pound,0.6678515819857768,pound euro dollar penny sterling uk exchequer sovereign
+distilbert-base-uncased,197,People in Britain pay with the [MASK].,pound,9044,currency,currency:britain,t1,error,18,euro,0.1223086318635448,euro wage tax money taxes wages profits dollar
+distilbert-base-uncased,198,The currency of Germany is the [MASK].,euro,9944,currency,currency:germany,t0,correct,1,euro,0.9125762590225076,euro pound dollar deutsche cfa eagle palatinate yen
+distilbert-base-uncased,199,People in Germany pay with the [MASK].,euro,9944,currency,currency:germany,t1,correct,1,euro,0.3265012380746113,euro tax wage money taxes fee currency euros
+distilbert-base-uncased,200,The currency of France is the [MASK].,euro,9944,currency,currency:france,t0,correct,1,euro,0.7727842399443119,euro cfa dollar pound yen sterling francs nord
+distilbert-base-uncased,201,People in France pay with the [MASK].,euro,9944,currency,currency:france,t1,correct,1,euro,0.2029128989997861,euro tax taxes wage money fee wages fees
+distilbert-base-uncased,202,The currency of Italy is the [MASK].,euro,9944,currency,currency:italy,t0,correct,1,euro,0.7741698280195787,euro dollar pound cfa republic fiat penny italian
+distilbert-base-uncased,203,People in Italy pay with the [MASK].,euro,9944,currency,currency:italy,t1,correct,1,euro,0.2659399044080785,euro tax taxes money wage fare fee euros
+distilbert-base-uncased,204,The currency of Spain is the [MASK].,euro,9944,currency,currency:spain,t0,correct,1,euro,0.8842469086263836,euro dollar pound bolivar spanish currency sterling cfa
+distilbert-base-uncased,205,People in Spain pay with the [MASK].,euro,9944,currency,currency:spain,t1,correct,1,euro,0.2304117381119605,euro tax taxes money wage wages currency fare
+distilbert-base-uncased,208,The largest planet is [MASK].,jupiter,13035,science,science:largest_planet,t0,correct,1,jupiter,0.2355737162891351,jupiter venus neptune pluto saturn mercury mars titan
+distilbert-base-uncased,209,[MASK] is the largest planet in the solar system.,jupiter,13035,science,science:largest_planet,t1,error,4,pluto,0.2327493838388326,pluto neptune venus jupiter saturn it titan earth
+distilbert-base-uncased,210,The nearest star to Earth is the [MASK].,sun,3103,science,science:nearest_star,t0,correct,1,sun,0.8523152711722874,sun moon sirius vega ira star earth zenith
+distilbert-base-uncased,211,Earth orbits the [MASK].,sun,3103,science,science:nearest_star,t1,correct,1,sun,0.4625443564282139,sun moon equator earth planet star asteroid galaxy
+distilbert-base-uncased,212,The red planet is [MASK].,mars,7733,science,science:red_planet,t0,error,3,jupiter,0.1131790623206218,jupiter unnamed mars neutral unknown destroyed uninhabited venus
+distilbert-base-uncased,213,[MASK] is often called the red planet.,mars,7733,science,science:red_planet,t1,error,5,pluto,0.3032767374035924,pluto it venus jupiter mars earth saturn neptune
+distilbert-base-uncased,214,Humans breathe [MASK].,oxygen,7722,science,science:breathing_gas,t0,error,7,freely,0.1643315252521795,freely deeply air naturally smoke underwater oxygen differently
+distilbert-base-uncased,215,The gas humans need to breathe is [MASK].,oxygen,7722,science,science:breathing_gas,t1,error,53,toxic,0.1938720386401554,toxic poisonous lethal scarce volatile enormous deadly immense
+distilbert-base-uncased,218,The heart pumps [MASK].,blood,2668,science,science:heart,t0,error,26,faster,0.1635036141266563,faster rapidly furiously wildly constantly vigorously slowly freely
+distilbert-base-uncased,219,[MASK] is pumped by the heart.,blood,2668,science,science:heart,t1,correct,1,blood,0.3128166090960757,blood water oxygen urine it insulin air electricity
+distilbert-base-uncased,220,Bees make [MASK].,honey,6861,science,science:bee_product,t0,error,2,nests,0.6193765100010551,nests honey eggs nest bread flowers noises cakes
+distilbert-base-uncased,221,[MASK] is made by bees.,honey,6861,science,science:bee_product,t1,correct,1,honey,0.4770025274182917,honey pollen it flour food nectar coffee cheese
+distilbert-base-uncased,222,A spider spins a [MASK].,web,4773,science,science:spider_web,t0,correct,1,web,0.2921202587970791,web leaf stick ball candle circle switch wire
+distilbert-base-uncased,223,Spiders are known for spinning a [MASK].,web,4773,science,science:spider_web,t1,correct,1,web,0.3986948744206234,web thread leaf yarn propeller stick net whip
+distilbert-base-uncased,224,Gold is a [MASK].,metal,3384,science,science:gold,t0,error,14,color,0.1905472636823603,color colour mineral commodity surname symbol trademark coin
+distilbert-base-uncased,225,Iron and gold are both [MASK].,metal,3384,science,science:gold,t1,error,174,mined,0.2230375327747281,mined metals rare common abundant commodities minerals precious
+distilbert-base-uncased,226,Two plus two equals [MASK].,four,2176,math,math:2+2,t0,error,4,zero,0.3179980104634289,zero one three four two five seven equals
+distilbert-base-uncased,227,The sum of two and two is [MASK].,four,2176,math,math:2+2,t1,error,185,zero,0.2073720168421331,zero finite odd trivial infinite unity additive prime
+distilbert-base-uncased,228,Five minus two equals [MASK].,three,2093,math,math:5-2,t0,error,7,zero,0.2495066987204999,zero five seven six four one three ten
+distilbert-base-uncased,229,Subtracting two from five gives [MASK].,three,2093,math,math:5-2,t1,error,9,zero,0.1130818787775153,zero multiplication continuity equality rise one results each
+distilbert-base-uncased,230,Ten divided by two equals [MASK].,five,2274,math,math:10/2,t0,error,4,zero,0.100073303122012,zero equals ten five eleven four six seven
+distilbert-base-uncased,231,Half of ten is [MASK].,five,2274,math,math:10/2,t1,error,1033,female,0.1264167006461138,female male eliminated wasted edible free lost missing
+distilbert-base-uncased,232,Three plus four equals [MASK].,seven,2698,math,math:3+4,t0,error,4,zero,0.2040761102095606,zero four five seven one two six three
+distilbert-base-uncased,233,The sum of three and four is [MASK].,seven,2698,math,math:3+4,t1,error,140,zero,0.2018057011738453,zero finite infinite odd trivial prime unity given
+distilbert-base-uncased,234,Six plus three equals [MASK].,nine,3157,math,math:6+3,t0,error,7,zero,0.1613437535940979,zero seven five six four ten nine eight
+distilbert-base-uncased,235,The sum of six and three is [MASK].,nine,3157,math,math:6+3,t1,error,141,zero,0.1937868493403186,zero odd finite infinite equal prime unity trivial
+distilbert-base-uncased,236,Twelve divided by three equals [MASK].,four,2176,math,math:12/3,t0,error,3,equals,0.0698040000087239,equals seven four six eleven five twelve zero
+distilbert-base-uncased,237,One third of twelve is [MASK].,four,2176,math,math:12/3,t1,error,805,preserved,0.0705262098995542,preserved omitted female white counted black sacred male
+distilbert-base-uncased,238,A square has [MASK] sides.,four,2176,math,math:square_sides,t0,correct,1,four,0.276267043380823,four three two six five eight seven 4
+distilbert-base-uncased,239,The number of sides in a square is [MASK].,four,2176,math,math:square_sides,t1,error,38,zero,0.1305288617393386,zero finite infinite unknown odd 1 arbitrary given
+distilbert-base-uncased,240,A triangle has [MASK] sides.,three,2093,math,math:triangle_sides,t0,error,3,two,0.2178450074175569,two four three opposite six multiple both eight
+distilbert-base-uncased,241,The number of sides in a triangle is [MASK].,three,2093,math,math:triangle_sides,t1,error,29,zero,0.1111566489018103,zero finite infinite 1 odd unknown 2 3
+distilbert-base-uncased,242,The opposite of hot is [MASK].,cold,3147,antonym,antonym:hot,t0,error,2,hot,0.5759923510169098,hot cold heat negative cool hotter neutral yellow
+distilbert-base-uncased,243,Hot has the opposite meaning of [MASK].,cold,3147,antonym,antonym:hot,t1,error,3,hot,0.5206829075959459,hot heat cold fire cool temperature warm coffee
+distilbert-base-uncased,244,The opposite of up is [MASK].,down,2091,antonym,antonym:up,t0,error,13,negative,0.1635822047151548,negative zero up positive opposite true wrong right
+distilbert-base-uncased,245,Up has the opposite meaning of [MASK].,down,2091,antonym,antonym:up,t1,error,28,up,0.1268980846079348,up u zero unity heaven p xp infinity
+distilbert-base-uncased,246,The opposite of left is [MASK].,right,2157,antonym,antonym:left,t0,error,2,reversed,0.1327764388882702,reversed right diagonal left zero positive horizontal negative
+distilbert-base-uncased,247,Left has the opposite meaning of [MASK].,right,2157,antonym,antonym:left,t1,correct,1,right,0.1577592945059318,right left equality unity plurality truth infinity freedom
+distilbert-base-uncased,248,The opposite of day is [MASK].,night,2305,antonym,antonym:day,t0,error,3,day,0.0996230084243879,day thursday night dusk tuesday evening monday sunday
+distilbert-base-uncased,249,Day has the opposite meaning of [MASK].,night,2305,antonym,antonym:day,t1,error,10,day,0.3660209852547132,day month eve spring noon thursday summer monday
+distilbert-base-uncased,250,The opposite of yes is [MASK].,no,2053,antonym,antonym:yes,t0,error,11,yes,0.2900866436832234,yes true false impossible negative wrong correct zero
+distilbert-base-uncased,251,Yes has the opposite meaning of [MASK].,no,2053,antonym,antonym:yes,t1,error,11,yes,0.6875961702130495,yes truth happiness infinity everything zero equality god
+distilbert-base-uncased,252,The opposite of black is [MASK].,white,2317,antonym,antonym:black,t0,error,2,black,0.3416287250103075,black white yellow blue reversed red green brown
+distilbert-base-uncased,253,Black has the opposite meaning of [MASK].,white,2317,antonym,antonym:black,t1,error,2,black,0.3350705848409534,black white color yellow colour red blue gold
+distilbert-base-uncased,254,The opposite of old is [MASK].,new,2047,antonym,antonym:old,t0,error,3,old,0.1233283257690945,old unknown new obsolete true common modern gone
+distilbert-base-uncased,255,Old has the opposite meaning of [MASK].,new,2047,antonym,antonym:old,t1,error,19,old,0.415943966815481,old age wisdom history religion death aging modern
+distilbert-base-uncased,256,The opposite of fast is [MASK].,slow,4030,antonym,antonym:fast,t0,error,2,fast,0.325880491054199,fast slow true speed faster slower symmetric continuous
+distilbert-base-uncased,257,Fast has the opposite meaning of [MASK].,slow,4030,antonym,antonym:fast,t1,error,3,fast,0.3615125610990273,fast speed slow lightning time entropy velocity money
+distilbert-base-uncased,258,The opposite of happy is [MASK].,sad,6517,antonym,antonym:happy,t0,error,3,happy,0.3439146052254154,happy happiness sad love negative selfish true bad
+distilbert-base-uncased,259,Happy has the opposite meaning of [MASK].,sad,6517,antonym,antonym:happy,t1,error,24,happiness,0.670929878651152,happiness happy joy love life satisfaction money karma
+distilbert-base-uncased,260,The opposite of early is [MASK].,late,2397,antonym,antonym:early,t0,error,326,unknown,0.2189201312591254,unknown uncertain unclear true apparent evident expected possible
+distilbert-base-uncased,261,Early has the opposite meaning of [MASK].,late,2397,antonym,antonym:early,t1,error,60,vowels,0.0622515710860631,vowels prophecy entropy spring age early time verbs
+distilbert-base-uncased,262,The plural of child is [MASK].,children,2336,plural,plural:child,t0,error,2337,masculine,0.2595070866602931,masculine feminine plural singular unknown possessive omitted male
+distilbert-base-uncased,263,More than one child are called [MASK].,children,2336,plural,plural:child,t1,error,2,twins,0.1689384748997557,twins children siblings orphans sisters infants slaves mothers
+distilbert-base-uncased,264,The plural of mouse is [MASK].,mice,12328,plural,plural:mouse,t0,error,16,mouse,0.4192770736201753,mouse feminine unknown masculine plural imperative pronounced english
+distilbert-base-uncased,265,More than one mouse are called [MASK].,mice,12328,plural,plural:mouse,t1,correct,1,mice,0.659730845403989,mice mouse cats bats rodents mammals rats monkeys
+distilbert-base-uncased,266,The plural of foot is [MASK].,feet,2519,plural,plural:foot,t0,error,513,plural,0.1867812660154271,plural masculine feminine singular optional unknown latin pronounced
+distilbert-base-uncased,267,More than one foot are called [MASK].,feet,2519,plural,plural:foot,t1,error,2,toes,0.3414387580492091,toes feet nails heels inches legs spurs foot
+distilbert-base-uncased,268,The plural of tooth is [MASK].,teeth,4091,plural,plural:tooth,t0,error,372,dental,0.187536771349995,dental plural feminine masculine singular pronounced acute omitted
+distilbert-base-uncased,269,More than one tooth are called [MASK].,teeth,4091,plural,plural:tooth,t1,correct,1,teeth,0.5648885919141046,teeth jaws nails holes crowns fangs claws lobes
+distilbert-base-uncased,270,The plural of goose is [MASK].,geese,28519,plural,plural:goose,t0,error,4,goose,0.4399338708075052,goose unknown plural geese feminine pie masculine pronounced
+distilbert-base-uncased,271,More than one goose are called [MASK].,geese,28519,plural,plural:goose,t1,correct,1,geese,0.6094382257083746,geese goose ducks swans cranes chickens birds ravens
+distilbert-base-uncased,272,The plural of man is [MASK].,men,2273,plural,plural:man,t0,error,246,masculine,0.3999384298161038,masculine plural singular feminine indefinite male unknown finite
+distilbert-base-uncased,273,More than one man are called [MASK].,men,2273,plural,plural:man,t1,error,7,slaves,0.0718266441517018,slaves devils presidents fellows saints jesus men gentlemen
+distilbert-base-uncased,274,The plural of woman is [MASK].,women,2308,plural,plural:woman,t0,error,20,feminine,0.5377847789102149,feminine masculine plural singular female gender unknown male
+distilbert-base-uncased,275,More than one woman are called [MASK].,women,2308,plural,plural:woman,t1,correct,1,women,0.1494330914392638,women prostitutes slaves nurses sisters wives witches mothers
+distilbert-base-uncased,276,The plural of person is [MASK].,people,2111,plural,plural:person,t0,error,2724,plural,0.2359161773597424,plural singular masculine unknown indefinite feminine possessive unmarked
+distilbert-base-uncased,277,More than one person are called [MASK].,people,2111,plural,plural:person,t1,error,4,slaves,0.0803395694781776,slaves themselves individuals people fellows witnesses ghosts persons
+distilbert-base-uncased,278,The plural of leaf is [MASK].,leaves,3727,plural,plural:leaf,t0,error,221,plural,0.1802406016855881,plural feminine singular masculine unknown omitted rounded latin
+distilbert-base-uncased,279,More than one leaf are called [MASK].,leaves,3727,plural,plural:leaf,t1,correct,1,leaves,0.1711493559349174,leaves leaflets seeds stems cones trees petals nodes
+distilbert-base-uncased,280,The plural of knife is [MASK].,knives,13227,plural,plural:knife,t0,error,5,knife,0.1631104650570689,knife plural unknown masculine knives feminine simple sharp
+distilbert-base-uncased,281,More than one knife are called [MASK].,knives,13227,plural,plural:knife,t1,correct,1,knives,0.8714238565300566,knives scissors daggers blades swords knife forks axes
+distilbert-base-uncased,282,A person who teaches is a [MASK].,teacher,3836,role,role:teaches,t0,correct,1,teacher,0.3066727056212915,teacher christian philosopher person psychologist liar student muslim
+distilbert-base-uncased,283,Someone who teaches can be called a [MASK].,teacher,3836,role,role:teaches,t1,correct,1,teacher,0.5428318116292545,teacher professor master mentor tutor scholar counselor philosopher
+distilbert-base-uncased,284,A person who drives a bus is a [MASK].,driver,4062,role,role:drives_a_bus,t0,correct,1,driver,0.318144875641382,driver pedestrian cyclist passenger person thief policeman criminal
+distilbert-base-uncased,285,Someone who drives a bus can be called a [MASK].,driver,4062,role,role:drives_a_bus,t1,correct,1,driver,0.4004167002349127,driver bus cab passenger taxi cyclist mechanic coach
+distilbert-base-uncased,286,A person who writes books is a [MASK].,author,3166,role,role:writes_books,t0,error,9,writer,0.3405346858129719,writer novelist librarian poet journalist publisher person pseudonym
+distilbert-base-uncased,287,Someone who writes books can be called a [MASK].,author,3166,role,role:writes_books,t1,error,13,writer,0.1775530453935365,writer translator novelist librarian journalist publisher poet critic
+distilbert-base-uncased,288,A person who studies science is a [MASK].,scientist,7155,role,role:studies_science,t0,correct,1,scientist,0.1870162806681121,scientist person christian psychologist physicist foreigner philosopher mathematician
+distilbert-base-uncased,289,Someone who studies science can be called a [MASK].,scientist,7155,role,role:studies_science,t1,correct,1,scientist,0.4158952453071146,scientist physicist biologist mathematician professor researcher psychologist philosopher
+distilbert-base-uncased,290,A person who cooks food is a [MASK].,chef,10026,role,role:cooks_food,t0,error,3,vegetarian,0.5974123042792545,vegetarian cook chef baker person slave farmer woman
+distilbert-base-uncased,291,Someone who cooks food can be called a [MASK].,chef,10026,role,role:cooks_food,t1,correct,1,chef,0.4632479994441889,chef cook waiter baker vegetarian butcher waitress maid
+distilbert-base-uncased,292,A person who flies planes is a [MASK].,pilot,4405,role,role:flies_planes,t0,correct,1,pilot,0.2139285763157641,pilot fly bird kite magician person glider superhero
+distilbert-base-uncased,293,Someone who flies planes can be called a [MASK].,pilot,4405,role,role:flies_planes,t1,correct,1,pilot,0.431467415203805,pilot fly navigator flyer fighter bird plane hawk
+distilbert-base-uncased,294,A person who paints pictures is a [MASK].,artist,3063,role,role:paints_pictures,t0,error,7,painter,0.5238015971468821,painter photographer sculptor cartoonist person celebrity artist magician
+distilbert-base-uncased,295,Someone who paints pictures can be called a [MASK].,artist,3063,role,role:paints_pictures,t1,error,5,painter,0.5345463044405114,painter photographer cartoonist designer artist sculptor teacher magician
+distilbert-base-uncased,296,A person who plays music is a [MASK].,musician,5455,role,role:plays_music,t0,correct,1,musician,0.5759977561024064,musician composer performer singer conductor pianist violinist songwriter
+distilbert-base-uncased,297,Someone who plays music can be called a [MASK].,musician,5455,role,role:plays_music,t1,correct,1,musician,0.5029693481085693,musician composer pianist performer singer violinist soloist conductor
+distilbert-base-uncased,298,A person who treats patients is a [MASK].,doctor,3460,role,role:treats_patients,t0,error,2,physician,0.3573993973816168,physician doctor specialist nurse surgeon healer patient psychiatrist
+distilbert-base-uncased,299,Someone who treats patients can be called a [MASK].,doctor,3460,role,role:treats_patients,t1,correct,1,doctor,0.2286335633792293,doctor nurse specialist physician surgeon healer consultant therapist
+distilbert-base-uncased,300,A person who acts in films is a [MASK].,actor,3364,role,role:acts_in_films,t0,error,6,filmmaker,0.1490723296051793,filmmaker director comedian performer villain actor producer cinematographer
+distilbert-base-uncased,301,Someone who acts in films can be called a [MASK].,actor,3364,role,role:acts_in_films,t1,error,16,villain,0.2394937647916829,villain director clown spy comedian producer performer thief
+distilbert-base-uncased,302,A salmon is a [MASK].,fish,3869,animal_class,animal_class:salmon,t0,correct,1,fish,0.3586333639731992,fish salmon fishery surname trout snake bird river
+distilbert-base-uncased,303,The salmon is classified as a [MASK].,fish,3869,animal_class,animal_class:salmon,t1,error,12,fishery,0.2811443386345745,fishery subspecies concern weed endangered trout pest vulnerable
+distilbert-base-uncased,304,A trout is a [MASK].,fish,3869,animal_class,animal_class:trout,t0,correct,1,fish,0.3698643938023203,fish trout fishery surname salmon bird predator species
+distilbert-base-uncased,305,The trout is classified as a [MASK].,fish,3869,animal_class,animal_class:trout,t1,error,14,concern,0.1652371219710488,concern fishery vulnerable endangered subspecies weed rare migratory
+distilbert-base-uncased,306,A sparrow is a [MASK].,bird,4743,animal_class,animal_class:sparrow,t0,correct,1,bird,0.5984048015308175,bird sparrow parrot feather lark pigeon dog hawk
+distilbert-base-uncased,307,The sparrow is classified as a [MASK].,bird,4743,animal_class,animal_class:sparrow,t1,error,9,subspecies,0.6632795765361013,subspecies vulnerable pest endangered priority species threatened concern
+distilbert-base-uncased,308,A eagle is a [MASK].,bird,4743,animal_class,animal_class:eagle,t0,correct,1,bird,0.5759071055374562,bird constellation symbol falcon butterfly feather raven hawk
+distilbert-base-uncased,309,The eagle is classified as a [MASK].,bird,4743,animal_class,animal_class:eagle,t1,error,2,subspecies,0.6607475303609242,subspecies bird pest species butterfly lion predator monument
+distilbert-base-uncased,318,A shark is a [MASK].,fish,3869,animal_class,animal_class:shark,t0,error,3,predator,0.2707521952947751,predator shark fish mammal creature snake whale dog
+distilbert-base-uncased,319,The shark is classified as a [MASK].,fish,3869,animal_class,animal_class:shark,t1,error,8,subspecies,0.4085844050032561,subspecies species vulnerable predator juvenile shark endangered fish
+distilbert-base-uncased,320,A whale is a [MASK].,mammal,25476,animal_class,animal_class:whale,t0,error,2,whale,0.3928435120412276,whale mammal predator shark creature dog fish dolphin
+distilbert-base-uncased,321,The whale is classified as a [MASK].,mammal,25476,animal_class,animal_class:whale,t1,error,6,subspecies,0.486728038682403,subspecies species endangered fossil vulnerable mammal whale fishery
+distilbert-base-uncased,322,A dolphin is a [MASK].,mammal,25476,animal_class,animal_class:dolphin,t0,error,3,dolphin,0.4076351142803628,dolphin whale mammal bird fish dog shark creature
+distilbert-base-uncased,323,The dolphin is classified as a [MASK].,mammal,25476,animal_class,animal_class:dolphin,t1,error,16,subspecies,0.4997521319102352,subspecies species endangered vulnerable dolphin rare sanctuary fossil
+distilbert-base-uncased,324,A spider is a [MASK].,insect,14211,animal_class,animal_class:spider,t0,error,32,spider,0.2908082454863889,spider predator wasp snake mammal parasite bird lizard
+distilbert-base-uncased,325,The spider is classified as a [MASK].,insect,14211,animal_class,animal_class:spider,t1,error,333,subspecies,0.597097256305953,subspecies pest parasite vulnerable species threat nocturnal predator
+distilbert-base-uncased,326,Hamlet was written by [MASK].,shakespeare,8101,culture,culture:hamlet,t0,correct,1,shakespeare,0.7431694765380472,shakespeare hamlet handel mozart fletcher lear byron shaw
+distilbert-base-uncased,327,The author of Hamlet was [MASK].,shakespeare,8101,culture,culture:hamlet,t1,error,4,unknown,0.2604928280037967,unknown hamlet unnamed shakespeare anonymous william john thomas
+distilbert-base-uncased,328,The Mona Lisa was painted by [MASK].,leonardo,14720,culture,culture:mona_lisa,t0,error,3,raphael,0.313945996673104,raphael michelangelo leonardo picasso vinci handel bach mozart
+distilbert-base-uncased,329,[MASK] painted the Mona Lisa.,leonardo,14720,culture,culture:mona_lisa,t1,error,8,he,0.2138249316180419,he she raphael michelangelo picasso bach mozart leonardo
+distilbert-base-uncased,330,The theory of relativity is associated with [MASK].,einstein,15313,culture,culture:relativity,t0,error,5,relativity,0.4846257579061572,relativity gravity symmetry evolution einstein schizophrenia geometry entropy
+distilbert-base-uncased,331,[MASK] is famous for relativity.,einstein,15313,culture,culture:relativity,t1,error,2,it,0.1477690832833832,it einstein iceland tibet china newton russia jordan
+distilbert-base-uncased,332,Isaac [MASK] described gravity.,newton,8446,culture,culture:gravity,t0,correct,1,newton,0.991973379313758,newton watts einstein ##son kepler darwin galileo marsden
+distilbert-base-uncased,333,Gravity is famously linked to Newton and the apple; his surname was [MASK].,newton,8446,culture,culture:gravity,t1,correct,1,newton,0.8420470651723926,newton adam einstein lawrence kepler milton berkeley darwin
+distilbert-base-uncased,334,Romeo and [MASK] are Shakespeare characters.,juliet,13707,culture,culture:romeo,t0,correct,1,juliet,0.9972879360571772,juliet juliette hamlet venus cleopatra julia romeo delilah
+distilbert-base-uncased,335,The title pair is Romeo and [MASK].,juliet,13707,culture,culture:romeo,t1,correct,1,juliet,0.9942566310726536,juliet juliette delilah venus cleopatra romeo julia judy
+distilbert-base-uncased,336,Sherlock [MASK] is a fictional detective.,holmes,9106,culture,culture:sherlock,t0,correct,1,holmes,0.9903212463314512,holmes watson doyle sherlock jones frost baker hyde
+distilbert-base-uncased,337,The detective Sherlock has surname [MASK].,holmes,9106,culture,culture:sherlock,t1,error,3,watson,0.3789895968371269,watson ##s holmes sherlock doyle variations williams clarke
+distilbert-base-uncased,338,The Odyssey is attributed to [MASK].,homer,11525,culture,culture:odyssey,t0,correct,1,homer,0.3701762488939024,homer plato aristotle socrates ptolemy achilles virgil moses
+distilbert-base-uncased,339,[MASK] is traditionally credited with the Odyssey.,homer,11525,culture,culture:odyssey,t1,correct,1,homer,0.4463711318574982,homer ptolemy aristotle tolkien plato virgil moses solomon
+distilbert-base-uncased,340,Charles Darwin is associated with [MASK].,evolution,6622,culture,culture:darwin,t0,error,2,darwin,0.2054207397369055,darwin evolution him slavery venus christianity mercury it
+distilbert-base-uncased,341,Darwin is famous for the theory of [MASK].,evolution,6622,culture,culture:darwin,t1,correct,1,evolution,0.7762613569698474,evolution relativity gravity selection probability inheritance insanity chromosomes
+distilbert-base-uncased,342,Grass is usually [MASK].,green,2665,common,common:grass,t0,error,2,cultivated,0.1460466673719402,cultivated green abundant grass deciduous eaten sparse perennial
+distilbert-base-uncased,343,The usual color of grass is [MASK].,green,2665,common,common:grass,t1,error,4,yellow,0.2137266215383578,yellow purple orange green yellowish reddish white red
+distilbert-base-uncased,344,The sky is often [MASK].,blue,2630,common,common:sky,t0,error,2,cloudy,0.3580213684341497,cloudy blue stormy dark clear black grey purple
+distilbert-base-uncased,345,The usual color of a clear sky is [MASK].,blue,2630,common,common:sky,t1,correct,1,blue,0.2507009171948761,blue yellow purple white orange violet black red
+distilbert-base-uncased,346,People drink coffee from a [MASK].,cup,2452,common,common:coffee,t0,error,26,starbucks,0.1397839005260138,starbucks cafe pub pot bar mug restaurant refrigerator
+distilbert-base-uncased,347,A common container for coffee is a [MASK].,cup,2452,common,common:coffee,t1,error,3,container,0.0986494923208004,container jar cup mug kettle bean refrigerator pot
+distilbert-base-uncased,348,People usually sleep in a [MASK].,bed,2793,common,common:sleep,t0,error,4,cave,0.3660782540033436,cave tent motel bed dormitory basement room hut
+distilbert-base-uncased,349,A person sleeps in a [MASK].,bed,2793,common,common:sleep,t1,error,2,cave,0.308564378185741,cave bed room tent dream coma bedroom closet
+distilbert-base-uncased,350,Fish usually swim in [MASK].,water,2300,common,common:fish_swim,t0,correct,1,water,0.2006563321413194,water pairs rivers streams groups burrows currents nets
+distilbert-base-uncased,351,[MASK] is where fish swim.,water,2300,common,common:fish_swim,t1,error,14,this,0.2461878135177511,this it fishing spawning freshwater upstream here aquarium
+distilbert-base-uncased,352,Bread is made from [MASK].,flour,13724,common,common:bread,t0,correct,1,flour,0.2752330092007093,flour wheat barley rye potatoes yeast dough rice
+distilbert-base-uncased,353,[MASK] is a main ingredient in bread.,flour,13724,common,common:bread,t1,error,4,garlic,0.1991573421297049,garlic onion salt flour sugar butter ginger wheat
+distilbert-base-uncased,354,Milk often comes from a [MASK].,cow,11190,common,common:milk,t0,correct,1,cow,0.4105790682615803,cow goat dish dairy milk spring barrel trough
+distilbert-base-uncased,355,A [MASK] produces milk.,cow,11190,common,common:milk,t1,correct,1,cow,0.3303904029765213,cow dairy goat farmer farm pig family donkey
+distilbert-base-uncased,356,A rose is a [MASK].,flower,6546,common,common:rose,t0,correct,1,flower,0.5595191652818101,flower rose daisy shrub perennial vase feather wreath
+distilbert-base-uncased,357,The rose is a kind of [MASK].,flower,6546,common,common:rose,t1,error,2,rose,0.3067119354842054,rose flower orchid roses lily perfume jasmine cactus
+google/bert_uncased_L-2_H-128_A-2,0,The capital of France is [MASK].,paris,3000,capital,capital:france,t0,error,29,france,0.4245012627571194,france spain germany algeria canada commune italy belgium
+google/bert_uncased_L-2_H-128_A-2,1,France's capital city is [MASK].,paris,3000,capital,capital:france,t1,error,22,spain,0.3542091475258362,spain france canada ##fahan germany algeria located italy
+google/bert_uncased_L-2_H-128_A-2,2,"In France, the capital city is [MASK].",paris,3000,capital,capital:france,t2,error,31,spain,0.3949107483284507,spain france germany algeria italy ##fahan canada luxembourg
+google/bert_uncased_L-2_H-128_A-2,3,The capital of Germany is [MASK].,berlin,4068,capital,capital:germany,t0,error,25,germany,0.7428396931599215,germany hungary poland switzerland austria german spain russia
+google/bert_uncased_L-2_H-128_A-2,4,Germany's capital city is [MASK].,berlin,4068,capital,capital:germany,t1,error,31,germany,0.4911882517656958,germany spain ##fahan sweden russia france poland hungary
+google/bert_uncased_L-2_H-128_A-2,5,"In Germany, the capital city is [MASK].",berlin,4068,capital,capital:germany,t2,error,34,germany,0.506162325488387,germany spain hungary poland ##fahan russia france italy
+google/bert_uncased_L-2_H-128_A-2,6,The capital of Italy is [MASK].,rome,4199,capital,capital:italy,t0,error,22,italy,0.3422040598068595,italy spain brazil croatia germany france italian found
+google/bert_uncased_L-2_H-128_A-2,7,Italy's capital city is [MASK].,rome,4199,capital,capital:italy,t1,error,24,spain,0.4195546176118878,spain italy ##fahan madrid germany located france barcelona
+google/bert_uncased_L-2_H-128_A-2,8,"In Italy, the capital city is [MASK].",rome,4199,capital,capital:italy,t2,error,24,spain,0.3916632260677329,spain italy germany croatia serbia hungary france located
+google/bert_uncased_L-2_H-128_A-2,9,The capital of Spain is [MASK].,madrid,6921,capital,capital:spain,t0,error,17,spain,0.7616408604825604,spain portugal brazil italy france spanish catalonia asturias
+google/bert_uncased_L-2_H-128_A-2,10,Spain's capital city is [MASK].,madrid,6921,capital,capital:spain,t1,error,4,spain,0.6651455608224645,spain barcelona valencia madrid ##fahan asturias spanish catalonia
+google/bert_uncased_L-2_H-128_A-2,11,"In Spain, the capital city is [MASK].",madrid,6921,capital,capital:spain,t2,error,9,spain,0.71279703586816,spain valencia ##fahan barcelona mexico asturias catalonia italy
+google/bert_uncased_L-2_H-128_A-2,12,The capital of Japan is [MASK].,tokyo,5522,capital,capital:japan,t0,error,29,japan,0.4447858984662321,japan china india taiwan ##fahan extinct brazil limited
+google/bert_uncased_L-2_H-128_A-2,13,Japan's capital city is [MASK].,tokyo,5522,capital,capital:japan,t1,error,10,japan,0.2296140230759187,japan ##fahan china located spain city taiwan capital
+google/bert_uncased_L-2_H-128_A-2,14,"In Japan, the capital city is [MASK].",tokyo,5522,capital,capital:japan,t2,error,16,japan,0.2479004153489266,japan ##fahan china spain located iran city mexico
+google/bert_uncased_L-2_H-128_A-2,15,The capital of China is [MASK].,beijing,7211,capital,capital:china,t0,error,20,china,0.6539703122046543,china ##fahan taiwan iran india japan myanmar province
+google/bert_uncased_L-2_H-128_A-2,16,China's capital city is [MASK].,beijing,7211,capital,capital:china,t1,error,7,china,0.4226526838597539,china ##fahan located iran taiwan city beijing japan
+google/bert_uncased_L-2_H-128_A-2,17,"In China, the capital city is [MASK].",beijing,7211,capital,capital:china,t2,error,13,china,0.3822900550157314,china ##fahan iran spain japan located taiwan russia
+google/bert_uncased_L-2_H-128_A-2,18,The capital of Russia is [MASK].,moscow,4924,capital,capital:russia,t0,error,16,russia,0.4194463681443555,russia iran kazakhstan china belarus turkey ##fahan russian
+google/bert_uncased_L-2_H-128_A-2,19,Russia's capital city is [MASK].,moscow,4924,capital,capital:russia,t1,error,9,russia,0.2247428629972674,russia ##fahan china located spain iran capital city
+google/bert_uncased_L-2_H-128_A-2,20,"In Russia, the capital city is [MASK].",moscow,4924,capital,capital:russia,t2,error,15,russia,0.2258807271208567,russia ##fahan spain serbia located turkey iran bulgaria
+google/bert_uncased_L-2_H-128_A-2,21,The capital of Egypt is [MASK].,cairo,11096,capital,capital:egypt,t0,error,47,##fahan,0.1755564226115069,##fahan yemen arabia algeria egypt turkey iran syria
+google/bert_uncased_L-2_H-128_A-2,22,Egypt's capital city is [MASK].,cairo,11096,capital,capital:egypt,t1,error,21,##fahan,0.448036016523306,##fahan iran located arabia city china turkey spain
+google/bert_uncased_L-2_H-128_A-2,23,"In Egypt, the capital city is [MASK].",cairo,11096,capital,capital:egypt,t2,error,26,##fahan,0.3973279528661028,##fahan iran turkey spain algeria yemen located syria
+google/bert_uncased_L-2_H-128_A-2,24,The capital of Greece is [MASK].,athens,7571,capital,capital:greece,t0,error,15,greece,0.3129859248317905,greece spain macedonia bulgaria turkey cyprus italy serbia
+google/bert_uncased_L-2_H-128_A-2,25,Greece's capital city is [MASK].,athens,7571,capital,capital:greece,t1,error,32,spain,0.2579371835328705,spain ##fahan greece turkey serbia bulgaria located italy
+google/bert_uncased_L-2_H-128_A-2,26,"In Greece, the capital city is [MASK].",athens,7571,capital,capital:greece,t2,error,29,spain,0.218094737327266,spain greece serbia turkey bulgaria ##fahan macedonia italy
+google/bert_uncased_L-2_H-128_A-2,27,The capital of Portugal is [MASK].,lisbon,11929,capital,capital:portugal,t0,error,10,spain,0.3474449625082594,spain portugal brazil portuguese italy porto hungary known
+google/bert_uncased_L-2_H-128_A-2,28,Portugal's capital city is [MASK].,lisbon,11929,capital,capital:portugal,t1,error,13,spain,0.5148891114569026,spain portugal ##fahan brazil capital spanish asturias located
+google/bert_uncased_L-2_H-128_A-2,29,"In Portugal, the capital city is [MASK].",lisbon,11929,capital,capital:portugal,t2,error,14,spain,0.5656429000032084,spain portugal ##fahan brazil italy hungary france asturias
+google/bert_uncased_L-2_H-128_A-2,30,The capital of Austria is [MASK].,vienna,6004,capital,capital:austria,t0,error,11,austria,0.2238518098830816,austria hungary germany spain slovakia brazil croatia switzerland
+google/bert_uncased_L-2_H-128_A-2,31,Austria's capital city is [MASK].,vienna,6004,capital,capital:austria,t1,error,20,spain,0.201825615832936,spain germany hungary austria russia located prague sweden
+google/bert_uncased_L-2_H-128_A-2,32,"In Austria, the capital city is [MASK].",vienna,6004,capital,capital:austria,t2,error,15,spain,0.1762457577711083,spain germany hungary austria serbia slovakia croatia russia
+google/bert_uncased_L-2_H-128_A-2,33,The capital of Belgium is [MASK].,brussels,9371,capital,capital:belgium,t0,error,27,belgium,0.141865149275862,belgium france spain germany twinned located luxembourg canada
+google/bert_uncased_L-2_H-128_A-2,34,Belgium's capital city is [MASK].,brussels,9371,capital,capital:belgium,t1,error,15,spain,0.2324428070326626,spain france germany belgium luxembourg located canada rotterdam
+google/bert_uncased_L-2_H-128_A-2,35,"In Belgium, the capital city is [MASK].",brussels,9371,capital,capital:belgium,t2,error,25,spain,0.2831541983149911,spain france germany luxembourg belgium located italy hungary
+google/bert_uncased_L-2_H-128_A-2,36,The capital of Finland is [MASK].,helsinki,12331,capital,capital:finland,t0,error,18,finland,0.1691827153847936,finland sweden norway finnish russia uninhabited municipality germany
+google/bert_uncased_L-2_H-128_A-2,37,Finland's capital city is [MASK].,helsinki,12331,capital,capital:finland,t1,error,35,sweden,0.1508913380671993,sweden ##fahan spain china russia norway finland capital
+google/bert_uncased_L-2_H-128_A-2,38,"In Finland, the capital city is [MASK].",helsinki,12331,capital,capital:finland,t2,error,40,sweden,0.1199717744901341,sweden spain russia finland serbia germany ##fahan norway
+google/bert_uncased_L-2_H-128_A-2,39,The capital of Norway is [MASK].,oslo,9977,capital,capital:norway,t0,error,19,norway,0.3032196827326012,norway sweden uninhabited municipality mine germany denmark located
+google/bert_uncased_L-2_H-128_A-2,40,Norway's capital city is [MASK].,oslo,9977,capital,capital:norway,t1,error,7,norway,0.2705594294531468,norway sweden germany ##fahan spain denmark oslo municipality
+google/bert_uncased_L-2_H-128_A-2,41,"In Norway, the capital city is [MASK].",oslo,9977,capital,capital:norway,t2,error,15,norway,0.2232946223819787,norway sweden germany spain ##fahan serbia municipality turkey
+google/bert_uncased_L-2_H-128_A-2,42,The capital of Sweden is [MASK].,stockholm,8947,capital,capital:sweden,t0,error,11,sweden,0.3992458286777285,sweden norway germany denmark spain municipality russia swedish
+google/bert_uncased_L-2_H-128_A-2,43,Sweden's capital city is [MASK].,stockholm,8947,capital,capital:sweden,t1,error,6,sweden,0.2724128495908359,sweden spain ##fahan norway germany stockholm russia capital
+google/bert_uncased_L-2_H-128_A-2,44,"In Sweden, the capital city is [MASK].",stockholm,8947,capital,capital:sweden,t2,error,15,sweden,0.2179238572432519,sweden spain germany ##fahan norway serbia russia hungary
+google/bert_uncased_L-2_H-128_A-2,45,The capital of Poland is [MASK].,warsaw,8199,capital,capital:poland,t0,error,24,poland,0.4306242812820852,poland germany hungary russia croatia spain serbia poznan
+google/bert_uncased_L-2_H-128_A-2,46,Poland's capital city is [MASK].,warsaw,8199,capital,capital:poland,t1,error,20,poland,0.1650430062760082,poland germany spain serbia poznan hungary russia ##fahan
+google/bert_uncased_L-2_H-128_A-2,47,"In Poland, the capital city is [MASK].",warsaw,8199,capital,capital:poland,t2,error,20,poland,0.248598637106829,poland germany hungary serbia spain łodz croatia poznan
+google/bert_uncased_L-2_H-128_A-2,48,The capital of Hungary is [MASK].,budapest,10926,capital,capital:hungary,t0,error,37,hungary,0.4806552596803963,hungary serbia croatia spain slovakia germany austria russia
+google/bert_uncased_L-2_H-128_A-2,49,Hungary's capital city is [MASK].,budapest,10926,capital,capital:hungary,t1,error,45,hungary,0.1804063056600383,hungary spain serbia ##fahan croatia germany russia slovakia
+google/bert_uncased_L-2_H-128_A-2,50,"In Hungary, the capital city is [MASK].",budapest,10926,capital,capital:hungary,t2,error,36,hungary,0.2698722957735064,hungary serbia spain croatia germany slovakia ##fahan poland
+google/bert_uncased_L-2_H-128_A-2,51,The capital of Romania is [MASK].,bucharest,14261,capital,capital:romania,t0,error,49,romania,0.390370575230081,romania moldova hungary serbia turkey brazil abolished province
+google/bert_uncased_L-2_H-128_A-2,52,Romania's capital city is [MASK].,bucharest,14261,capital,capital:romania,t1,error,82,##fahan,0.2842542644356642,##fahan spain romania serbia located moldova turkey hungary
+google/bert_uncased_L-2_H-128_A-2,53,"In Romania, the capital city is [MASK].",bucharest,14261,capital,capital:romania,t2,error,49,##fahan,0.1280102752572301,##fahan romania serbia spain hungary moldova turkey located
+google/bert_uncased_L-2_H-128_A-2,54,The capital of Bulgaria is [MASK].,sofia,8755,capital,capital:bulgaria,t0,error,20,bulgaria,0.3639172096461809,bulgaria serbia russia spain macedonia turkey bulgarian croatia
+google/bert_uncased_L-2_H-128_A-2,55,Bulgaria's capital city is [MASK].,sofia,8755,capital,capital:bulgaria,t1,error,17,bulgaria,0.1558252387343558,bulgaria serbia spain ##fahan russia turkey located croatia
+google/bert_uncased_L-2_H-128_A-2,56,"In Bulgaria, the capital city is [MASK].",sofia,8755,capital,capital:bulgaria,t2,error,23,bulgaria,0.2130246321786715,bulgaria serbia spain russia ##fahan turkey croatia macedonia
+google/bert_uncased_L-2_H-128_A-2,57,The capital of Serbia is [MASK].,belgrade,10291,capital,capital:serbia,t0,error,29,serbia,0.6233380838988102,serbia croatia montenegro hungary spain bulgaria bosnia macedonia
+google/bert_uncased_L-2_H-128_A-2,58,Serbia's capital city is [MASK].,belgrade,10291,capital,capital:serbia,t1,error,10,serbia,0.5239478952600953,serbia croatia spain ##fahan hungary turkey montenegro bulgaria
+google/bert_uncased_L-2_H-128_A-2,59,"In Serbia, the capital city is [MASK].",belgrade,10291,capital,capital:serbia,t2,error,13,serbia,0.5680881036554385,serbia croatia spain hungary montenegro bulgaria turkey slovakia
+google/bert_uncased_L-2_H-128_A-2,60,The capital of Croatia is [MASK].,zagreb,12974,capital,capital:croatia,t0,error,20,croatia,0.4455293550338046,croatia serbia hungary bosnia spain located municipality slovakia
+google/bert_uncased_L-2_H-128_A-2,61,Croatia's capital city is [MASK].,zagreb,12974,capital,capital:croatia,t1,error,27,croatia,0.2476248057322023,croatia serbia spain ##fahan hungary capital located italy
+google/bert_uncased_L-2_H-128_A-2,62,"In Croatia, the capital city is [MASK].",zagreb,12974,capital,capital:croatia,t2,error,24,serbia,0.2815485730781635,serbia croatia spain hungary slovakia ##fahan located italy
+google/bert_uncased_L-2_H-128_A-2,63,The capital of Turkey is [MASK].,ankara,20312,capital,capital:turkey,t0,error,32,turkey,0.5433070487602359,turkey iran ##fahan russia serbia province kazakhstan turkmenistan
+google/bert_uncased_L-2_H-128_A-2,64,Turkey's capital city is [MASK].,ankara,20312,capital,capital:turkey,t1,error,53,##fahan,0.3125576273428318,##fahan turkey iran located spain china russia serbia
+google/bert_uncased_L-2_H-128_A-2,65,"In Turkey, the capital city is [MASK].",ankara,20312,capital,capital:turkey,t2,error,42,turkey,0.3280741511630754,turkey ##fahan iran serbia spain russia located bulgaria
+google/bert_uncased_L-2_H-128_A-2,66,The capital of Iran is [MASK].,tehran,13503,capital,capital:iran,t0,error,5,iran,0.5994930982958007,iran ##fahan province turkey tehran afghanistan china azerbaijan
+google/bert_uncased_L-2_H-128_A-2,67,Iran's capital city is [MASK].,tehran,13503,capital,capital:iran,t1,error,4,##fahan,0.5578138129442143,##fahan iran china tehran turkey located capital spain
+google/bert_uncased_L-2_H-128_A-2,68,"In Iran, the capital city is [MASK].",tehran,13503,capital,capital:iran,t2,error,5,##fahan,0.4587401466987772,##fahan iran turkey china tehran spain russia located
+google/bert_uncased_L-2_H-128_A-2,69,The capital of Iraq is [MASK].,baghdad,13952,capital,capital:iraq,t0,error,13,iraq,0.3556536356072657,iraq iran ##fahan afghanistan yemen india pakistan syria
+google/bert_uncased_L-2_H-128_A-2,70,Iraq's capital city is [MASK].,baghdad,13952,capital,capital:iraq,t1,error,4,##fahan,0.374785567439486,##fahan iraq iran baghdad afghanistan syria lebanon located
+google/bert_uncased_L-2_H-128_A-2,71,"In Iraq, the capital city is [MASK].",baghdad,13952,capital,capital:iraq,t2,error,10,##fahan,0.3884990225527994,##fahan iran iraq turkey syria spain yemen lebanon
+google/bert_uncased_L-2_H-128_A-2,72,The capital of Syria is [MASK].,damascus,16094,capital,capital:syria,t0,error,23,##fahan,0.2028446368251564,##fahan syria iran yemen turkey iraq arabia lebanon
+google/bert_uncased_L-2_H-128_A-2,73,Syria's capital city is [MASK].,damascus,16094,capital,capital:syria,t1,error,15,##fahan,0.4910392757227896,##fahan iran syria lebanon located turkey iraq china
+google/bert_uncased_L-2_H-128_A-2,74,"In Syria, the capital city is [MASK].",damascus,16094,capital,capital:syria,t2,error,17,##fahan,0.4539821570985171,##fahan iran syria turkey lebanon spain yemen located
+google/bert_uncased_L-2_H-128_A-2,75,The capital of Jordan is [MASK].,amman,25703,capital,capital:jordan,t0,error,627,##fahan,0.3787334736291953,##fahan iran turkey yemen israel syria lebanon russia
+google/bert_uncased_L-2_H-128_A-2,76,Jordan's capital city is [MASK].,amman,25703,capital,capital:jordan,t1,error,736,##fahan,0.4621915541054279,##fahan iran located city spain lebanon israel turkey
+google/bert_uncased_L-2_H-128_A-2,77,"In Jordan, the capital city is [MASK].",amman,25703,capital,capital:jordan,t2,error,607,##fahan,0.3707576676258932,##fahan iran spain turkey located city russia serbia
+google/bert_uncased_L-2_H-128_A-2,78,The capital of Lebanon is [MASK].,beirut,15335,capital,capital:lebanon,t0,error,17,lebanon,0.2360456505381518,lebanon ##fahan iran syria yemen turkey iraq algeria
+google/bert_uncased_L-2_H-128_A-2,79,Lebanon's capital city is [MASK].,beirut,15335,capital,capital:lebanon,t1,error,9,##fahan,0.269131653263868,##fahan lebanon located iran syria israel city spain
+google/bert_uncased_L-2_H-128_A-2,80,"In Lebanon, the capital city is [MASK].",beirut,15335,capital,capital:lebanon,t2,error,17,##fahan,0.2582407361445686,##fahan lebanon spain iran located turkey israel syria
+google/bert_uncased_L-2_H-128_A-2,81,The capital of Thailand is [MASK].,bangkok,12627,capital,capital:thailand,t0,error,28,thailand,0.2931430901880019,thailand myanmar china india cambodia vietnam indonesia malaysia
+google/bert_uncased_L-2_H-128_A-2,82,Thailand's capital city is [MASK].,bangkok,12627,capital,capital:thailand,t1,error,12,##fahan,0.222186750645633,##fahan china thailand located city india cambodia spain
+google/bert_uncased_L-2_H-128_A-2,83,"In Thailand, the capital city is [MASK].",bangkok,12627,capital,capital:thailand,t2,error,19,##fahan,0.2390135199990198,##fahan thailand china spain india located iran city
+google/bert_uncased_L-2_H-128_A-2,84,The capital of Vietnam is [MASK].,hanoi,24809,capital,capital:vietnam,t0,error,50,vietnam,0.373183837347771,vietnam china myanmar thailand cambodia laos india indochina
+google/bert_uncased_L-2_H-128_A-2,85,Vietnam's capital city is [MASK].,hanoi,24809,capital,capital:vietnam,t1,error,16,china,0.214748873903015,china vietnam ##fahan thailand located cambodia city taiwan
+google/bert_uncased_L-2_H-128_A-2,86,"In Vietnam, the capital city is [MASK].",hanoi,24809,capital,capital:vietnam,t2,error,36,china,0.1810850232335956,china vietnam ##fahan spain thailand iran located cambodia
+google/bert_uncased_L-2_H-128_A-2,87,The capital of Peru is [MASK].,lima,12967,capital,capital:peru,t0,error,147,peru,0.2546066602835187,peru ecuador bolivia brazil colombia argentina endemic venezuela
+google/bert_uncased_L-2_H-128_A-2,88,Peru's capital city is [MASK].,lima,12967,capital,capital:peru,t1,error,202,##fahan,0.1392465223628795,##fahan spain china peru located mexico brazil city
+google/bert_uncased_L-2_H-128_A-2,89,"In Peru, the capital city is [MASK].",lima,12967,capital,capital:peru,t2,error,154,spain,0.1772526825069716,spain ##fahan peru mexico colombia brazil argentina guatemala
+google/bert_uncased_L-2_H-128_A-2,90,The capital of Chile is [MASK].,santiago,8728,capital,capital:chile,t0,error,56,colombia,0.151636271591193,colombia chile argentina brazil ecuador bolivia venezuela peru
+google/bert_uncased_L-2_H-128_A-2,91,Chile's capital city is [MASK].,santiago,8728,capital,capital:chile,t1,error,25,spain,0.2084352641902553,spain chile argentina mexico colombia brazil located ##fahan
+google/bert_uncased_L-2_H-128_A-2,92,"In Chile, the capital city is [MASK].",santiago,8728,capital,capital:chile,t2,error,38,spain,0.2307231941292522,spain chile argentina mexico colombia guatemala brazil located
+google/bert_uncased_L-2_H-128_A-2,93,The capital of Cuba is [MASK].,havana,15278,capital,capital:cuba,t0,error,37,cuba,0.1615283320659797,cuba venezuela colombia brazil argentina spain mexico ecuador
+google/bert_uncased_L-2_H-128_A-2,94,Cuba's capital city is [MASK].,havana,15278,capital,capital:cuba,t1,error,38,spain,0.1957312888580377,spain mexico cuba argentina colombia guatemala venezuela chile
+google/bert_uncased_L-2_H-128_A-2,95,"In Cuba, the capital city is [MASK].",havana,15278,capital,capital:cuba,t2,error,58,spain,0.2271175888420155,spain mexico cuba guatemala argentina colombia venezuela located
+google/bert_uncased_L-2_H-128_A-2,96,The capital of Jamaica is [MASK].,kingston,9803,capital,capital:jamaica,t0,error,290,brazil,0.1153799242365627,brazil spain jamaica canada colombia endemic argentina guyana
+google/bert_uncased_L-2_H-128_A-2,97,Jamaica's capital city is [MASK].,kingston,9803,capital,capital:jamaica,t1,error,112,spain,0.2315538828243095,spain canada ##fahan jamaica china city home located
+google/bert_uncased_L-2_H-128_A-2,98,"In Jamaica, the capital city is [MASK].",kingston,9803,capital,capital:jamaica,t2,error,228,spain,0.3503155376780112,spain canada ##fahan argentina brazil belize jamaica france
+google/bert_uncased_L-2_H-128_A-2,102,The capital of Tunisia is [MASK].,tunis,25317,capital,capital:tunisia,t0,error,46,algeria,0.49687656475835,algeria morocco tunisia libya benin turkey senegal iran
+google/bert_uncased_L-2_H-128_A-2,103,Tunisia's capital city is [MASK].,tunis,25317,capital,capital:tunisia,t1,error,38,algeria,0.3151548019730045,algeria ##fahan morocco spain iran turkey located tunisia
+google/bert_uncased_L-2_H-128_A-2,104,"In Tunisia, the capital city is [MASK].",tunis,25317,capital,capital:tunisia,t2,error,44,algeria,0.3473532284118854,algeria ##fahan morocco turkey spain tunisia iran benin
+google/bert_uncased_L-2_H-128_A-2,120,The capital of Nepal is [MASK].,kathmandu,28045,capital,capital:nepal,t0,error,23,nepal,0.7518549123573427,nepal india found population china bhutan ##fahan pakistan
+google/bert_uncased_L-2_H-128_A-2,121,Nepal's capital city is [MASK].,kathmandu,28045,capital,capital:nepal,t1,error,12,nepal,0.3143273159494947,nepal ##fahan india china iran located capital pakistan
+google/bert_uncased_L-2_H-128_A-2,122,"In Nepal, the capital city is [MASK].",kathmandu,28045,capital,capital:nepal,t2,error,11,nepal,0.373827260964139,nepal india ##fahan china iran located uganda city
+google/bert_uncased_L-2_H-128_A-2,123,The capital of Pakistan is [MASK].,islamabad,26905,capital,capital:pakistan,t0,error,60,pakistan,0.4716499220629699,pakistan india ##fahan afghanistan iran bangladesh located nepal
+google/bert_uncased_L-2_H-128_A-2,124,Pakistan's capital city is [MASK].,islamabad,26905,capital,capital:pakistan,t1,error,20,##fahan,0.4052016997176152,##fahan pakistan iran india located china afghanistan city
+google/bert_uncased_L-2_H-128_A-2,125,"In Pakistan, the capital city is [MASK].",islamabad,26905,capital,capital:pakistan,t2,error,38,##fahan,0.4460453315184558,##fahan pakistan iran india located china afghanistan bangladesh
+google/bert_uncased_L-2_H-128_A-2,126,The language of France is [MASK].,french,2413,language,language:france,t0,error,2,france,0.353088546098857,france french spain commune germany algeria canada english
+google/bert_uncased_L-2_H-128_A-2,127,People in France often speak [MASK].,french,2413,language,language:france,t1,correct,1,french,0.2833842105773592,french english france spanish abroad people fluent to
+google/bert_uncased_L-2_H-128_A-2,128,The language of Germany is [MASK].,german,2446,language,language:germany,t0,error,2,germany,0.6668967755010964,germany german poland france hungary switzerland sweden russia
+google/bert_uncased_L-2_H-128_A-2,129,People in Germany often speak [MASK].,german,2446,language,language:germany,t1,correct,1,german,0.2031432184796209,german english germany abroad people french country france
+google/bert_uncased_L-2_H-128_A-2,130,The language of Italy is [MASK].,italian,3059,language,language:italy,t0,error,3,italy,0.1942443689207145,italy spain italian greece france germany spanish brazil
+google/bert_uncased_L-2_H-128_A-2,131,People in Italy often speak [MASK].,italian,3059,language,language:italy,t1,correct,1,italian,0.1667214977155967,italian english abroad spanish italy people french to
+google/bert_uncased_L-2_H-128_A-2,132,The language of Spain is [MASK].,spanish,3009,language,language:spain,t0,error,2,spain,0.5189195644011945,spain spanish france brazil catalonia catalan basque portugal
+google/bert_uncased_L-2_H-128_A-2,133,People in Spain often speak [MASK].,spanish,3009,language,language:spain,t1,correct,1,spanish,0.3168872031463118,spanish french english spain abroad portuguese people italian
+google/bert_uncased_L-2_H-128_A-2,134,The language of Portugal is [MASK].,portuguese,5077,language,language:portugal,t0,error,2,spain,0.1838323046950043,spain portuguese spanish brazil portugal popular known endemic
+google/bert_uncased_L-2_H-128_A-2,135,People in Portugal often speak [MASK].,portuguese,5077,language,language:portugal,t1,correct,1,portuguese,0.1584435484095825,portuguese spanish english abroad french people to italian
+google/bert_uncased_L-2_H-128_A-2,136,The language of Russia is [MASK].,russian,2845,language,language:russia,t0,error,2,russia,0.2310520439887781,russia russian china turkey ukraine belarus kazakhstan bulgaria
+google/bert_uncased_L-2_H-128_A-2,137,People in Russia often speak [MASK].,russian,2845,language,language:russia,t1,correct,1,russian,0.2099244452480575,russian people english fluent russia french abroad to
+google/bert_uncased_L-2_H-128_A-2,138,The language of China is [MASK].,chinese,2822,language,language:china,t0,error,2,china,0.4859925856204445,china chinese taiwan myanmar popular japan thailand ##fahan
+google/bert_uncased_L-2_H-128_A-2,139,People in China often speak [MASK].,chinese,2822,language,language:china,t1,correct,1,chinese,0.1353807301842217,chinese china people english to . popular abroad
+google/bert_uncased_L-2_H-128_A-2,140,The language of Japan is [MASK].,japanese,2887,language,language:japan,t0,error,3,japan,0.3813297599431764,japan china japanese taiwan india popular known chinese
+google/bert_uncased_L-2_H-128_A-2,141,People in Japan often speak [MASK].,japanese,2887,language,language:japan,t1,correct,1,japanese,0.1261861349231424,japanese english japan people to india abroad chinese
+google/bert_uncased_L-2_H-128_A-2,142,The language of Greece is [MASK].,greek,3306,language,language:greece,t0,error,2,greece,0.4342670680131676,greece greek turkey cyprus bulgaria spain athens macedonia
+google/bert_uncased_L-2_H-128_A-2,143,People in Greece often speak [MASK].,greek,3306,language,language:greece,t1,correct,1,greek,0.2128428907777322,greek greece english spanish abroad fluent people turkish
+google/bert_uncased_L-2_H-128_A-2,144,The language of Turkey is [MASK].,turkish,5037,language,language:turkey,t0,error,3,turkey,0.483085806383686,turkey arabic turkish iran greece ##fahan india china
+google/bert_uncased_L-2_H-128_A-2,145,People in Turkey often speak [MASK].,turkish,5037,language,language:turkey,t1,error,2,turkey,0.1633807408832834,turkey turkish people english arabic fluent today there
+google/bert_uncased_L-2_H-128_A-2,146,The language of Poland is [MASK].,polish,3907,language,language:poland,t0,error,11,poland,0.3323378973658823,poland germany hungary german russia belarus spoken slovakia
+google/bert_uncased_L-2_H-128_A-2,147,People in Poland often speak [MASK].,polish,3907,language,language:poland,t1,error,5,english,0.248392152584718,english people german fluent polish to french poland
+google/bert_uncased_L-2_H-128_A-2,148,The language of Hungary is [MASK].,hungarian,5588,language,language:hungary,t0,error,3,hungary,0.31631694268936,hungary serbia hungarian slovakia germany spain croatia poland
+google/bert_uncased_L-2_H-128_A-2,149,People in Hungary often speak [MASK].,hungarian,5588,language,language:hungary,t1,error,58,english,0.1569719894179261,english people abroad to there today spanish country
+google/bert_uncased_L-2_H-128_A-2,150,The language of Romania is [MASK].,romanian,7056,language,language:romania,t0,error,4,romania,0.3262544955758082,romania moldova turkey romanian hungary ukraine slovakia serbia
+google/bert_uncased_L-2_H-128_A-2,151,People in Romania often speak [MASK].,romanian,7056,language,language:romania,t1,error,7,people,0.1046540984498905,people english turkey french turkish there romanian to
+google/bert_uncased_L-2_H-128_A-2,152,The language of Bulgaria is [MASK].,bulgarian,7643,language,language:bulgaria,t0,error,2,bulgaria,0.263592646635762,bulgaria bulgarian greece russia serbia turkey russian greek
+google/bert_uncased_L-2_H-128_A-2,153,People in Bulgaria often speak [MASK].,bulgarian,7643,language,language:bulgaria,t1,correct,1,bulgarian,0.1161080790950029,bulgarian english bulgaria russian people greek greece fluent
+google/bert_uncased_L-2_H-128_A-2,154,The language of Sweden is [MASK].,swedish,4467,language,language:sweden,t0,error,2,sweden,0.2792398518649188,sweden swedish norway finland germany denmark finnish norwegian
+google/bert_uncased_L-2_H-128_A-2,155,People in Sweden often speak [MASK].,swedish,4467,language,language:sweden,t1,error,2,english,0.1488210043537817,english swedish finnish abroad sweden fluent to people
+google/bert_uncased_L-2_H-128_A-2,156,The language of Norway is [MASK].,norwegian,5046,language,language:norway,t0,error,3,norway,0.2081905875886303,norway sweden norwegian swedish municipality finland finnish germany
+google/bert_uncased_L-2_H-128_A-2,157,People in Norway often speak [MASK].,norwegian,5046,language,language:norway,t1,error,6,english,0.0859229514089223,english finnish people there abroad norwegian norway today
+google/bert_uncased_L-2_H-128_A-2,158,France is located in [MASK].,europe,2885,continent,continent:france,t0,error,19,france,0.6240563635352148,france paris spain canada quebec normandy algeria germany
+google/bert_uncased_L-2_H-128_A-2,159,The continent containing France is [MASK].,europe,2885,continent,continent:france,t1,error,8,france,0.2297091861302218,france found spain unknown endemic canada described europe
+google/bert_uncased_L-2_H-128_A-2,160,Germany is located in [MASK].,europe,2885,continent,continent:germany,t0,error,27,germany,0.4260730988054907,germany switzerland france berlin norway sweden prague munich
+google/bert_uncased_L-2_H-128_A-2,161,The continent containing Germany is [MASK].,europe,2885,continent,continent:germany,t1,error,6,germany,0.3507736637114771,germany found switzerland unknown german europe uninhabited france
+google/bert_uncased_L-2_H-128_A-2,162,Spain is located in [MASK].,europe,2885,continent,continent:spain,t0,error,34,spain,0.4739492665336391,spain france barcelona catalonia mexico madrid brazil italy
+google/bert_uncased_L-2_H-128_A-2,163,The continent containing Spain is [MASK].,europe,2885,continent,continent:spain,t1,error,11,spain,0.471181184556953,spain brazil france italy spanish colombia found endemic
+google/bert_uncased_L-2_H-128_A-2,164,Poland is located in [MASK].,europe,2885,continent,continent:poland,t0,error,33,poland,0.1860305140529728,poland warsaw germany prague russia serbia hungary croatia
+google/bert_uncased_L-2_H-128_A-2,165,The continent containing Poland is [MASK].,europe,2885,continent,continent:poland,t1,error,8,extinct,0.1270933195878783,extinct found unknown uninhabited germany unclear poland europe
+google/bert_uncased_L-2_H-128_A-2,166,China is located in [MASK].,asia,4021,continent,continent:china,t0,error,31,china,0.591231596813131,china taiwan beijing japan vietnam thailand iran shanghai
+google/bert_uncased_L-2_H-128_A-2,167,The continent containing China is [MASK].,asia,4021,continent,continent:china,t1,error,19,china,0.4328775051445255,china found endemic taiwan unknown extinct japan unclear
+google/bert_uncased_L-2_H-128_A-2,168,Japan is located in [MASK].,asia,4021,continent,continent:japan,t0,error,36,japan,0.574668159626164,japan china tokyo taiwan hokkaido brazil india yokohama
+google/bert_uncased_L-2_H-128_A-2,169,The continent containing Japan is [MASK].,asia,4021,continent,continent:japan,t1,error,38,japan,0.1756070279282419,japan found china endemic unknown extinct rare uninhabited
+google/bert_uncased_L-2_H-128_A-2,170,India is located in [MASK].,asia,4021,continent,continent:india,t0,error,51,india,0.6059412533276122,india pakistan karnataka mumbai nepal kerala delhi chennai
+google/bert_uncased_L-2_H-128_A-2,171,The continent containing India is [MASK].,asia,4021,continent,continent:india,t1,error,37,india,0.2052020635657623,india found endemic rare widespread extinct unknown nepal
+google/bert_uncased_L-2_H-128_A-2,172,Thailand is located in [MASK].,asia,4021,continent,continent:thailand,t0,error,31,thailand,0.333994107691389,thailand vietnam cambodia bangkok laos china malaysia taiwan
+google/bert_uncased_L-2_H-128_A-2,173,The continent containing Thailand is [MASK].,asia,4021,continent,continent:thailand,t1,error,27,endemic,0.1118218360575356,endemic found china thailand myanmar indonesia vietnam borneo
+google/bert_uncased_L-2_H-128_A-2,174,Egypt is located in [MASK].,africa,3088,continent,continent:egypt,t0,error,104,egypt,0.1544258476790172,egypt turkey yemen algeria lebanon cairo beirut syria
+google/bert_uncased_L-2_H-128_A-2,175,The continent containing Egypt is [MASK].,africa,3088,continent,continent:egypt,t1,error,49,found,0.169471245602808,found egypt yemen unknown discovered extinct turkey endemic
+google/bert_uncased_L-2_H-128_A-2,176,Morocco is located in [MASK].,africa,3088,continent,continent:morocco,t0,error,85,algeria,0.2858046092271554,algeria morocco france turkey tunisia benin spain libya
+google/bert_uncased_L-2_H-128_A-2,177,The continent containing Morocco is [MASK].,africa,3088,continent,continent:morocco,t1,error,51,found,0.162104966052846,found algeria morocco endemic uninhabited madagascar senegal species
+google/bert_uncased_L-2_H-128_A-2,178,Nigeria is located in [MASK].,africa,3088,continent,continent:nigeria,t0,error,48,nigeria,0.2402797654128968,nigeria ghana kenya tanzania uganda angola somalia india
+google/bert_uncased_L-2_H-128_A-2,179,The continent containing Nigeria is [MASK].,africa,3088,continent,continent:nigeria,t1,error,30,nigeria,0.1138898011199655,nigeria extinct endemic tanzania found kenya namibia cameroon
+google/bert_uncased_L-2_H-128_A-2,180,Ghana is located in [MASK].,africa,3088,continent,continent:ghana,t0,error,52,ghana,0.4588362460594726,ghana nigeria kenya benin tanzania uganda somalia india
+google/bert_uncased_L-2_H-128_A-2,181,The continent containing Ghana is [MASK].,africa,3088,continent,continent:ghana,t1,error,32,endemic,0.1171292751310479,endemic found ghana extinct senegal nigeria madagascar species
+google/bert_uncased_L-2_H-128_A-2,182,The currency of Japan is the [MASK].,yen,18371,currency,currency:japan,t0,error,509,world,0.208455156244321,world currency u largest bank philippines republic china
+google/bert_uncased_L-2_H-128_A-2,183,People in Japan pay with the [MASK].,yen,18371,currency,currency:japan,t1,error,1099,world,0.1516055989838712,world country philippines government u people city population
+google/bert_uncased_L-2_H-128_A-2,184,The currency of China is the [MASK].,yuan,11237,currency,currency:china,t0,error,191,currency,0.2501690653776349,currency world china bank largest republic chinese market
+google/bert_uncased_L-2_H-128_A-2,185,People in China pay with the [MASK].,yuan,11237,currency,currency:china,t1,error,359,country,0.1167044904764927,country world government people market economy philippines population
+google/bert_uncased_L-2_H-128_A-2,194,The currency of Brazil is the [MASK].,real,2613,currency,currency:brazil,t0,error,440,world,0.1034905850581762,world republic currency largest country philippines bank u
+google/bert_uncased_L-2_H-128_A-2,195,People in Brazil pay with the [MASK].,real,2613,currency,currency:brazil,t1,error,773,country,0.1937665656667677,country government philippines world population people state economy
+google/bert_uncased_L-2_H-128_A-2,196,The currency of Britain is the [MASK].,pound,9044,currency,currency:britain,t0,error,1232,currency,0.2282711654731062,currency netherlands world country republic bank kingdom largest
+google/bert_uncased_L-2_H-128_A-2,197,People in Britain pay with the [MASK].,pound,9044,currency,currency:britain,t1,error,3005,country,0.1388490138686822,country netherlands world government uk people war market
+google/bert_uncased_L-2_H-128_A-2,198,The currency of Germany is the [MASK].,euro,9944,currency,currency:germany,t0,error,127,netherlands,0.2065680900185897,netherlands world currency republic bank largest country capital
+google/bert_uncased_L-2_H-128_A-2,199,People in Germany pay with the [MASK].,euro,9944,currency,currency:germany,t1,error,220,netherlands,0.1747832861821198,netherlands country government world population city economy people
+google/bert_uncased_L-2_H-128_A-2,200,The currency of France is the [MASK].,euro,9944,currency,currency:france,t0,error,94,netherlands,0.1933888667985507,netherlands currency republic world region country french largest
+google/bert_uncased_L-2_H-128_A-2,201,People in France pay with the [MASK].,euro,9944,currency,currency:france,t1,error,168,netherlands,0.189064490123795,netherlands country government population world people city french
+google/bert_uncased_L-2_H-128_A-2,202,The currency of Italy is the [MASK].,euro,9944,currency,currency:italy,t0,error,127,world,0.1651228560727975,world currency netherlands republic bank kingdom country city
+google/bert_uncased_L-2_H-128_A-2,203,People in Italy pay with the [MASK].,euro,9944,currency,currency:italy,t1,error,203,country,0.132560173372141,country world netherlands government people city money population
+google/bert_uncased_L-2_H-128_A-2,204,The currency of Spain is the [MASK].,euro,9944,currency,currency:spain,t0,error,112,currency,0.1375601737103963,currency world republic netherlands country city largest capital
+google/bert_uncased_L-2_H-128_A-2,205,People in Spain pay with the [MASK].,euro,9944,currency,currency:spain,t1,error,191,country,0.194265330465324,country netherlands world city government people spanish population
+google/bert_uncased_L-2_H-128_A-2,208,The largest planet is [MASK].,jupiter,13035,science,science:largest_planet,t0,error,27,unknown,0.1722085621644731,unknown earth true found located discovered planet present
+google/bert_uncased_L-2_H-128_A-2,209,[MASK] is the largest planet in the solar system.,jupiter,13035,science,science:largest_planet,t1,error,7,it,0.3936616239459981,it planet earth solar this there jupiter nasa
+google/bert_uncased_L-2_H-128_A-2,210,The nearest star to Earth is the [MASK].,sun,3103,science,science:nearest_star,t0,error,4,earth,0.2511450027729887,earth planet moon sun sea mountain world crater
+google/bert_uncased_L-2_H-128_A-2,211,Earth orbits the [MASK].,sun,3103,science,science:nearest_star,t1,error,4,earth,0.4181106236740548,earth planet moon sun planets equator sea world
+google/bert_uncased_L-2_H-128_A-2,212,The red planet is [MASK].,mars,7733,science,science:red_planet,t0,error,15,earth,0.1341817702308379,earth unknown true discovered dead found visible planet
+google/bert_uncased_L-2_H-128_A-2,213,[MASK] is often called the red planet.,mars,7733,science,science:red_planet,t1,error,20,it,0.7668431773552536,it this there that he earth planet which
+google/bert_uncased_L-2_H-128_A-2,214,Humans breathe [MASK].,oxygen,7722,science,science:breathing_gas,t0,error,382,.,0.3157708835198896,. humans ##s blood again ##r prey ?
+google/bert_uncased_L-2_H-128_A-2,215,The gas humans need to breathe is [MASK].,oxygen,7722,science,science:breathing_gas,t1,error,85,safe,0.1102707808192366,safe dead humans water dangerous human cold toxic
+google/bert_uncased_L-2_H-128_A-2,218,The heart pumps [MASK].,blood,2668,science,science:heart,t0,error,24,.,0.6070796254138189,". water pumps pump pumped "" are mine"
+google/bert_uncased_L-2_H-128_A-2,219,[MASK] is pumped by the heart.,blood,2668,science,science:heart,t1,error,5,it,0.654084043415687,it this heart water blood pain he the
+google/bert_uncased_L-2_H-128_A-2,220,Bees make [MASK].,honey,6861,science,science:bee_product,t0,error,66,.,0.2563984903660182,. it a up you them me bees
+google/bert_uncased_L-2_H-128_A-2,221,[MASK] is made by bees.,honey,6861,science,science:bee_product,t1,error,147,it,0.8209848879929804,it this he they she there the fruit
+google/bert_uncased_L-2_H-128_A-2,222,A spider spins a [MASK].,web,4773,science,science:spider_web,t0,error,718,spider,0.2687568660888041,spider man monster dog shark wolf giant knife
+google/bert_uncased_L-2_H-128_A-2,223,Spiders are known for spinning a [MASK].,web,4773,science,science:spider_web,t1,error,192,mouse,0.0841022769486319,mouse fish moth monster spider tree species dog
+google/bert_uncased_L-2_H-128_A-2,224,Gold is a [MASK].,metal,3384,science,science:gold,t0,error,74,gold,0.2434596764730593,gold silver bronze species butterfly mountain water black
+google/bert_uncased_L-2_H-128_A-2,225,Iron and gold are both [MASK].,metal,3384,science,science:gold,t1,error,205,gold,0.1904023792563714,gold silver below black common iron rare different
+google/bert_uncased_L-2_H-128_A-2,226,Two plus two equals [MASK].,four,2176,math,math:2+2,t0,error,13,2,0.134899789862437,2 1 3 two . 4 0 three
+google/bert_uncased_L-2_H-128_A-2,227,The sum of two and two is [MASK].,four,2176,math,math:2+2,t1,error,16,two,0.0994355269813417,two different unknown one three there five dead
+google/bert_uncased_L-2_H-128_A-2,228,Five minus two equals [MASK].,three,2093,math,math:5-2,t0,error,5,1,0.1148691663114184,1 2 two 3 three 4 five four
+google/bert_uncased_L-2_H-128_A-2,229,Subtracting two from five gives [MASK].,three,2093,math,math:5-2,t1,error,11,them,0.220168240533978,them it two up digits a numbers him
+google/bert_uncased_L-2_H-128_A-2,230,Ten divided by two equals [MASK].,five,2274,math,math:10/2,t0,error,8,two,0.102346448548929,two 1 2 numbers three 3 c five
+google/bert_uncased_L-2_H-128_A-2,231,Half of ten is [MASK].,five,2274,math,math:10/2,t1,error,20,unknown,0.1241279835139847,unknown below dead there one population 1 2
+google/bert_uncased_L-2_H-128_A-2,232,Three plus four equals [MASK].,seven,2698,math,math:3+4,t0,error,36,1,0.1296488814194625,1 2 3 two 4 three . 5
+google/bert_uncased_L-2_H-128_A-2,233,The sum of three and four is [MASK].,seven,2698,math,math:3+4,t1,error,14,two,0.0805938706568223,two below different five unknown three one dead
+google/bert_uncased_L-2_H-128_A-2,234,Six plus three equals [MASK].,nine,3157,math,math:6+3,t0,error,58,1,0.1476222819072336,1 2 3 4 two 5 10 three
+google/bert_uncased_L-2_H-128_A-2,235,The sum of six and three is [MASK].,nine,3157,math,math:6+3,t1,error,42,two,0.0819908412275332,two different five unknown one three dead below
+google/bert_uncased_L-2_H-128_A-2,236,Twelve divided by three equals [MASK].,four,2176,math,math:12/3,t0,error,6,two,0.1168430253895269,two three 1 2 numbers four five 3
+google/bert_uncased_L-2_H-128_A-2,237,One third of twelve is [MASK].,four,2176,math,math:12/3,t1,error,10,one,0.1351006055918616,one unknown two five three below dead a
+google/bert_uncased_L-2_H-128_A-2,238,A square has [MASK] sides.,four,2176,math,math:square_sides,t0,error,4,two,0.3611592183515446,two three different four the five other both
+google/bert_uncased_L-2_H-128_A-2,239,The number of sides in a square is [MASK].,four,2176,math,math:square_sides,t1,error,546,located,0.165820694320725,located square rectangular stone found here circular there
+google/bert_uncased_L-2_H-128_A-2,240,A triangle has [MASK] sides.,three,2093,math,math:triangle_sides,t0,error,2,two,0.4014334426406566,two three the different four both one several
+google/bert_uncased_L-2_H-128_A-2,241,The number of sides in a triangle is [MASK].,three,2093,math,math:triangle_sides,t1,error,211,located,0.0831168256235707,located found bounded one unknown different a white
+google/bert_uncased_L-2_H-128_A-2,242,The opposite of hot is [MASK].,cold,3147,antonym,antonym:hot,t0,error,5,hot,0.2416515121814729,hot water there mine cold dead popular low
+google/bert_uncased_L-2_H-128_A-2,243,Hot has the opposite meaning of [MASK].,cold,3147,antonym,antonym:hot,t1,error,163,it,0.1948598361925876,"it water this age them "" sea origin"
+google/bert_uncased_L-2_H-128_A-2,244,The opposite of up is [MASK].,down,2091,antonym,antonym:up,t0,error,90,there,0.1567825453127291,there here below dead unknown home now up
+google/bert_uncased_L-2_H-128_A-2,245,Up has the opposite meaning of [MASK].,down,2091,antonym,antonym:up,t1,error,1915,it,0.2208185235275274,"it them this age "" origin people the"
+google/bert_uncased_L-2_H-128_A-2,246,The opposite of left is [MASK].,right,2157,antonym,antonym:left,t0,error,35,unknown,0.1658355351270294,unknown there here dead now home located found
+google/bert_uncased_L-2_H-128_A-2,247,Left has the opposite meaning of [MASK].,right,2157,antonym,antonym:left,t1,error,421,it,0.2188180557614547,it them this age origin the existence town
+google/bert_uncased_L-2_H-128_A-2,248,The opposite of day is [MASK].,night,2305,antonym,antonym:day,t0,error,38,unknown,0.1811090408307459,unknown dead present there home here celebrated now
+google/bert_uncased_L-2_H-128_A-2,249,Day has the opposite meaning of [MASK].,night,2305,antonym,antonym:day,t1,error,84,it,0.1330058017999614,it this them age people the birth town
+google/bert_uncased_L-2_H-128_A-2,250,The opposite of yes is [MASK].,no,2053,antonym,antonym:yes,t0,error,18,there,0.0826694652778164,there . now here it true me not
+google/bert_uncased_L-2_H-128_A-2,251,Yes has the opposite meaning of [MASK].,no,2053,antonym,antonym:yes,t1,error,73,it,0.2334204818112519,it this them that you me him god
+google/bert_uncased_L-2_H-128_A-2,252,The opposite of black is [MASK].,white,2317,antonym,antonym:black,t0,error,2,black,0.2139634642271814,black white grey dead green dark red yellow
+google/bert_uncased_L-2_H-128_A-2,253,Black has the opposite meaning of [MASK].,white,2317,antonym,antonym:black,t1,error,4,it,0.1668890101117666,it them black white this color origin grey
+google/bert_uncased_L-2_H-128_A-2,254,The opposite of old is [MASK].,new,2047,antonym,antonym:old,t0,error,978,unknown,0.1262526087946293,unknown dead there here town home ##lington now
+google/bert_uncased_L-2_H-128_A-2,255,Old has the opposite meaning of [MASK].,new,2047,antonym,antonym:old,t1,error,976,it,0.1803012778284132,it age this them origin english town existence
+google/bert_uncased_L-2_H-128_A-2,256,The opposite of fast is [MASK].,slow,4030,antonym,antonym:fast,t0,error,8,dead,0.0947127229314064,dead unknown there now here possible fast slow
+google/bert_uncased_L-2_H-128_A-2,257,Fast has the opposite meaning of [MASK].,slow,4030,antonym,antonym:fast,t1,error,1020,it,0.2074481549851593,it this them age water life existence nature
+google/bert_uncased_L-2_H-128_A-2,258,The opposite of happy is [MASK].,sad,6517,antonym,antonym:happy,t0,error,50,dead,0.084064147899653,dead here happy beautiful now true me there
+google/bert_uncased_L-2_H-128_A-2,259,Happy has the opposite meaning of [MASK].,sad,6517,antonym,antonym:happy,t1,error,759,it,0.1742179551388334,it them this me people her you life
+google/bert_uncased_L-2_H-128_A-2,260,The opposite of early is [MASK].,late,2397,antonym,antonym:early,t0,error,37,unknown,0.2150847439419808,unknown present here below there dead popular common
+google/bert_uncased_L-2_H-128_A-2,261,Early has the opposite meaning of [MASK].,late,2397,antonym,antonym:early,t1,error,612,it,0.1281396751749384,it this origin english them age existence nature
+google/bert_uncased_L-2_H-128_A-2,262,The plural of child is [MASK].,children,2336,plural,plural:child,t0,error,26,unknown,0.0965089995374746,unknown plural true sex child male female a
+google/bert_uncased_L-2_H-128_A-2,263,More than one child are called [MASK].,children,2336,plural,plural:child,t1,correct,1,children,0.1111527796257195,"children . "" women people them up adults"
+google/bert_uncased_L-2_H-128_A-2,264,The plural of mouse is [MASK].,mice,12328,plural,plural:mouse,t0,error,818,encoded,0.1240403495410917,encoded true unknown common used found unclear a
+google/bert_uncased_L-2_H-128_A-2,265,More than one mouse are called [MASK].,mice,12328,plural,plural:mouse,t1,error,23,mouse,0.1279512169826006,"mouse it up "" humans them out animals"
+google/bert_uncased_L-2_H-128_A-2,266,The plural of foot is [MASK].,feet,2519,plural,plural:foot,t0,error,2501,unknown,0.1018792848750402,"unknown below a common uncertain "" there white"
+google/bert_uncased_L-2_H-128_A-2,267,More than one foot are called [MASK].,feet,2519,plural,plural:foot,t1,error,25,"""",0.1132571679848605,""" up there out below it . above"
+google/bert_uncased_L-2_H-128_A-2,268,The plural of tooth is [MASK].,teeth,4091,plural,plural:tooth,t0,error,322,unknown,0.1384181925302514,unknown true common white yellow uncertain a found
+google/bert_uncased_L-2_H-128_A-2,269,More than one tooth are called [MASK].,teeth,4091,plural,plural:tooth,t1,correct,1,teeth,0.0923448407026729,"teeth up it tooth "" tree out flowers"
+google/bert_uncased_L-2_H-128_A-2,270,The plural of goose is [MASK].,geese,28519,plural,plural:goose,t0,error,3410,white,0.1271646689386461,white black common plural true unknown red yellow
+google/bert_uncased_L-2_H-128_A-2,271,More than one goose are called [MASK].,geese,28519,plural,plural:goose,t1,error,179,"""",0.1015286911304514,""" . it out up white there them"
+google/bert_uncased_L-2_H-128_A-2,272,The plural of man is [MASK].,men,2273,plural,plural:man,t0,error,259,unknown,0.1286963702832346,"unknown true plural unclear "" common a uncertain"
+google/bert_uncased_L-2_H-128_A-2,273,More than one man are called [MASK].,men,2273,plural,plural:man,t1,error,14,them,0.0942418306681443,"them people . it up "" there out"
+google/bert_uncased_L-2_H-128_A-2,274,The plural of woman is [MASK].,women,2308,plural,plural:woman,t0,error,16,true,0.0890647547288081,true unknown plural feminine male female white masculine
+google/bert_uncased_L-2_H-128_A-2,275,More than one woman are called [MASK].,women,2308,plural,plural:woman,t1,correct,1,women,0.1450975411997246,"women people . "" them her it up"
+google/bert_uncased_L-2_H-128_A-2,276,The plural of person is [MASK].,people,2111,plural,plural:person,t0,error,479,plural,0.1497131833090123,plural true unknown singular unclear used human common
+google/bert_uncased_L-2_H-128_A-2,277,More than one person are called [MASK].,people,2111,plural,plural:person,t1,error,2,.,0.1195148075967522,". people "" up them out to there"
+google/bert_uncased_L-2_H-128_A-2,278,The plural of leaf is [MASK].,leaves,3727,plural,plural:leaf,t0,error,505,white,0.0715259313293544,white yellow found grey unknown common species described
+google/bert_uncased_L-2_H-128_A-2,279,More than one leaf are called [MASK].,leaves,3727,plural,plural:leaf,t1,error,24,flowers,0.1163421626766537,"flowers up fruit trees tree "" it green"
+google/bert_uncased_L-2_H-128_A-2,280,The plural of knife is [MASK].,knives,13227,plural,plural:knife,t0,error,1472,true,0.1384500177643902,true unknown used unclear dead found lost described
+google/bert_uncased_L-2_H-128_A-2,281,More than one knife are called [MASK].,knives,13227,plural,plural:knife,t1,error,22,it,0.1351857850213146,"it . up out them there "" dead"
+google/bert_uncased_L-2_H-128_A-2,282,A person who teaches is a [MASK].,teacher,3836,role,role:teaches,t0,error,4,child,0.1464652321686012,child person woman teacher man professor student lawyer
+google/bert_uncased_L-2_H-128_A-2,283,Someone who teaches can be called a [MASK].,teacher,3836,role,role:teaches,t1,error,6,child,0.0848820864498035,child man girl woman person teacher school word
+google/bert_uncased_L-2_H-128_A-2,284,A person who drives a bus is a [MASK].,driver,4062,role,role:drives_a_bus,t0,error,4,car,0.1123019722151712,car person child driver vehicle bus girl man
+google/bert_uncased_L-2_H-128_A-2,285,Someone who drives a bus can be called a [MASK].,driver,4062,role,role:drives_a_bus,t1,error,9,car,0.1407734140810618,car bus truck train restaurant vehicle man girl
+google/bert_uncased_L-2_H-128_A-2,286,A person who writes books is a [MASK].,author,3166,role,role:writes_books,t0,error,3,book,0.1873989039414135,book writer author novel poet journalist novelist man
+google/bert_uncased_L-2_H-128_A-2,287,Someone who writes books can be called a [MASK].,author,3166,role,role:writes_books,t1,error,28,book,0.3450280607785594,book story man novel word reader person letter
+google/bert_uncased_L-2_H-128_A-2,288,A person who studies science is a [MASK].,scientist,7155,role,role:studies_science,t0,error,2,professor,0.1309061875126549,professor scientist person psychologist researcher teacher child woman
+google/bert_uncased_L-2_H-128_A-2,289,Someone who studies science can be called a [MASK].,scientist,7155,role,role:studies_science,t1,error,16,book,0.065758739700739,book person study problem teacher man professor word
+google/bert_uncased_L-2_H-128_A-2,290,A person who cooks food is a [MASK].,chef,10026,role,role:cooks_food,t0,error,22,vegetarian,0.2842523052762343,vegetarian food child woman restaurant person dog meat
+google/bert_uncased_L-2_H-128_A-2,291,Someone who cooks food can be called a [MASK].,chef,10026,role,role:cooks_food,t1,error,31,meal,0.1199677493579388,meal food restaurant snack drink meat dog chicken
+google/bert_uncased_L-2_H-128_A-2,292,A person who flies planes is a [MASK].,pilot,4405,role,role:flies_planes,t0,error,24,moth,0.1326301006313277,moth dog man vampire soldier butterfly plane species
+google/bert_uncased_L-2_H-128_A-2,293,Someone who flies planes can be called a [MASK].,pilot,4405,role,role:flies_planes,t1,error,47,dog,0.1150496345279227,dog man plane monster car boat tree virus
+google/bert_uncased_L-2_H-128_A-2,294,A person who paints pictures is a [MASK].,artist,3063,role,role:paints_pictures,t0,error,33,man,0.1395345040486892,man woman person photographer picture film child girl
+google/bert_uncased_L-2_H-128_A-2,295,Someone who paints pictures can be called a [MASK].,artist,3063,role,role:paints_pictures,t1,error,240,man,0.1030736890471839,man picture movie woman story girl book tree
+google/bert_uncased_L-2_H-128_A-2,296,A person who plays music is a [MASK].,musician,5455,role,role:plays_music,t0,correct,1,musician,0.2567034670191587,musician player singer composer actor teacher writer music
+google/bert_uncased_L-2_H-128_A-2,297,Someone who plays music can be called a [MASK].,musician,5455,role,role:plays_music,t1,error,10,song,0.0848565563490901,song play player game music dance word man
+google/bert_uncased_L-2_H-128_A-2,298,A person who treats patients is a [MASK].,doctor,3460,role,role:treats_patients,t0,error,12,patient,0.2010722609105017,patient child person physician woman hospital dentist man
+google/bert_uncased_L-2_H-128_A-2,299,Someone who treats patients can be called a [MASK].,doctor,3460,role,role:treats_patients,t1,error,10,child,0.1246315023312448,child patient person hospital man cure woman disease
+google/bert_uncased_L-2_H-128_A-2,300,A person who acts in films is a [MASK].,actor,3364,role,role:acts_in_films,t0,error,4,film,0.1509276470374324,film man woman actor crime journalist writer child
+google/bert_uncased_L-2_H-128_A-2,301,Someone who acts in films can be called a [MASK].,actor,3364,role,role:acts_in_films,t1,error,30,movie,0.1687467584957203,movie film man crime girl villain character woman
+google/bert_uncased_L-2_H-128_A-2,302,A salmon is a [MASK].,fish,3869,animal_class,animal_class:salmon,t0,correct,1,fish,0.3459887500010626,fish species salmon bird water river trout shark
+google/bert_uncased_L-2_H-128_A-2,303,The salmon is classified as a [MASK].,fish,3869,animal_class,animal_class:salmon,t1,error,5,species,0.2913494517188525,species subspecies synonym genus fish iucn name population
+google/bert_uncased_L-2_H-128_A-2,304,A trout is a [MASK].,fish,3869,animal_class,animal_class:trout,t0,correct,1,fish,0.2365970854612935,fish species trout lake water bird river fishing
+google/bert_uncased_L-2_H-128_A-2,305,The trout is classified as a [MASK].,fish,3869,animal_class,animal_class:trout,t1,error,5,species,0.2950086855862824,species subspecies synonym genus fish name population locality
+google/bert_uncased_L-2_H-128_A-2,306,A sparrow is a [MASK].,bird,4743,animal_class,animal_class:sparrow,t0,error,2,species,0.1986607605103811,species bird moth butterfly tree dwarf subspecies fish
+google/bert_uncased_L-2_H-128_A-2,307,The sparrow is classified as a [MASK].,bird,4743,animal_class,animal_class:sparrow,t1,error,6,species,0.314835866617775,species subspecies genus synonym moth bird iucn specimen
+google/bert_uncased_L-2_H-128_A-2,308,A eagle is a [MASK].,bird,4743,animal_class,animal_class:eagle,t0,error,4,mountain,0.1328143693744212,mountain species moth bird tree butterfly dwarf star
+google/bert_uncased_L-2_H-128_A-2,309,The eagle is classified as a [MASK].,bird,4743,animal_class,animal_class:eagle,t1,error,9,species,0.2641870542984404,species subspecies genus synonym name iucn specimen moth
+google/bert_uncased_L-2_H-128_A-2,318,A shark is a [MASK].,fish,3869,animal_class,animal_class:shark,t0,error,2,shark,0.5588020042496407,shark fish frog species bird predator moth snake
+google/bert_uncased_L-2_H-128_A-2,319,The shark is classified as a [MASK].,fish,3869,animal_class,animal_class:shark,t1,error,5,species,0.3291895776992613,species shark subspecies genus fish synonym moth iucn
+google/bert_uncased_L-2_H-128_A-2,320,A whale is a [MASK].,mammal,25476,animal_class,animal_class:whale,t0,error,141,fish,0.2050141828052261,fish whale shark species bird rabbit butterfly frog
+google/bert_uncased_L-2_H-128_A-2,321,The whale is classified as a [MASK].,mammal,25476,animal_class,animal_class:whale,t1,error,74,species,0.3432015516398167,species subspecies genus synonym fish specimen iucn bird
+google/bert_uncased_L-2_H-128_A-2,322,A dolphin is a [MASK].,mammal,25476,animal_class,animal_class:dolphin,t0,error,238,fish,0.1498495516350358,fish species shark bird butterfly aquarium sponge moth
+google/bert_uncased_L-2_H-128_A-2,323,The dolphin is classified as a [MASK].,mammal,25476,animal_class,animal_class:dolphin,t1,error,114,species,0.3444080403581978,species subspecies genus synonym specimen fish name aquarium
+google/bert_uncased_L-2_H-128_A-2,324,A spider is a [MASK].,insect,14211,animal_class,animal_class:spider,t0,error,183,moth,0.2663699983174784,moth species spider butterfly bird frog shark man
+google/bert_uncased_L-2_H-128_A-2,325,The spider is classified as a [MASK].,insect,14211,animal_class,animal_class:spider,t1,error,307,species,0.4148441042550991,species subspecies genus moth synonym specimen spider bird
+google/bert_uncased_L-2_H-128_A-2,326,Hamlet was written by [MASK].,shakespeare,8101,culture,culture:hamlet,t0,error,62,st,0.130860582543975,st j r john thomas w dr james
+google/bert_uncased_L-2_H-128_A-2,327,The author of Hamlet was [MASK].,shakespeare,8101,culture,culture:hamlet,t1,error,1119,author,0.1158193344713695,author born unknown published writer named described noted
+google/bert_uncased_L-2_H-128_A-2,328,The Mona Lisa was painted by [MASK].,leonardo,14720,culture,culture:mona_lisa,t0,error,275,her,0.1420596740716276,her madonna painting michelangelo him florence mary st
+google/bert_uncased_L-2_H-128_A-2,329,[MASK] painted the Mona Lisa.,leonardo,14720,culture,culture:mona_lisa,t1,error,269,she,0.5886133556438541,she he it lisa madonna also mona emily
+google/bert_uncased_L-2_H-128_A-2,330,The theory of relativity is associated with [MASK].,einstein,15313,culture,culture:relativity,t0,error,7,relativity,0.2599320179054468,relativity mathematicians theory mathematics physics others einstein aristotle
+google/bert_uncased_L-2_H-128_A-2,331,[MASK] is famous for relativity.,einstein,15313,culture,culture:relativity,t1,error,20,he,0.7235066845981724,he it this i there she most the
+google/bert_uncased_L-2_H-128_A-2,332,Isaac [MASK] described gravity.,newton,8446,culture,culture:gravity,t0,error,11,was,0.1135349058383194,"was ##son also ##sner has is , ##s"
+google/bert_uncased_L-2_H-128_A-2,333,Gravity is famously linked to Newton and the apple; his surname was [MASK].,newton,8446,culture,culture:gravity,t1,error,1112,unknown,0.1281660296224596,unknown invented born extinct known changed written true
+google/bert_uncased_L-2_H-128_A-2,334,Romeo and [MASK] are Shakespeare characters.,juliet,13707,culture,culture:romeo,t0,correct,1,juliet,0.2864940019059613,juliet characters shakespeare romeo they both roles these
+google/bert_uncased_L-2_H-128_A-2,335,The title pair is Romeo and [MASK].,juliet,13707,culture,culture:romeo,t1,correct,1,juliet,0.565430524124423,juliet romeo r b ferrari c racing car
+google/bert_uncased_L-2_H-128_A-2,336,Sherlock [MASK] is a fictional detective.,holmes,9106,culture,culture:sherlock,t0,correct,1,holmes,0.9175339890841584,"holmes detective doyle sherlock , series ##n ##s"
+google/bert_uncased_L-2_H-128_A-2,337,The detective Sherlock has surname [MASK].,holmes,9106,culture,culture:sherlock,t1,error,67,##s,0.4514547693237337,"##s "" ##d ##r . ##y name ##rs"
+google/bert_uncased_L-2_H-128_A-2,338,The Odyssey is attributed to [MASK].,homer,11525,culture,culture:odyssey,t0,error,151,him,0.2903340210240145,"him it this galileo "" them a aristotle"
+google/bert_uncased_L-2_H-128_A-2,339,[MASK] is traditionally credited with the Odyssey.,homer,11525,culture,culture:odyssey,t1,error,40,he,0.5611722885336695,he it this she there they who that
+google/bert_uncased_L-2_H-128_A-2,340,Charles Darwin is associated with [MASK].,evolution,6622,culture,culture:darwin,t0,error,192,dr,0.1422858697939282,dr a j darwin c st h l
+google/bert_uncased_L-2_H-128_A-2,341,Darwin is famous for the theory of [MASK].,evolution,6622,culture,culture:darwin,t1,correct,1,evolution,0.0866460119986069,evolution philosophy darwin theory history science nature literature
+google/bert_uncased_L-2_H-128_A-2,342,Grass is usually [MASK].,green,2665,common,common:grass,t0,error,40,dry,0.1129902886700731,dry found nocturnal used wet common eaten rare
+google/bert_uncased_L-2_H-128_A-2,343,The usual color of grass is [MASK].,green,2665,common,common:grass,t1,error,5,white,0.1314367346786288,white black yellow pale green rare smooth blue
+google/bert_uncased_L-2_H-128_A-2,344,The sky is often [MASK].,blue,2630,common,common:sky,t0,error,7,visible,0.1504932634063844,visible seen dark used cloudy confused blue here
+google/bert_uncased_L-2_H-128_A-2,345,The usual color of a clear sky is [MASK].,blue,2630,common,common:sky,t1,error,2,visible,0.1530307829593339,visible blue dark bright light clear brighter white
+google/bert_uncased_L-2_H-128_A-2,346,People drink coffee from a [MASK].,cup,2452,common,common:coffee,t0,error,199,drink,0.3303771725132638,drink coffee beer meal beverage tea bottle wine
+google/bert_uncased_L-2_H-128_A-2,347,A common container for coffee is a [MASK].,cup,2452,common,common:coffee,t1,error,629,coffee,0.2071355929958964,coffee container restaurant water snack tea table food
+google/bert_uncased_L-2_H-128_A-2,348,People usually sleep in a [MASK].,bed,2793,common,common:sleep,t0,error,3,day,0.1534431428882223,day week bed month minute shower year sleep
+google/bert_uncased_L-2_H-128_A-2,349,A person sleeps in a [MASK].,bed,2793,common,common:sleep,t1,error,11,person,0.1694303263023069,person woman child man world life room girl
+google/bert_uncased_L-2_H-128_A-2,350,Fish usually swim in [MASK].,water,2300,common,common:fish_swim,t0,error,4,australia,0.143164795486411,australia fish china water japan swimming fishing brazil
+google/bert_uncased_L-2_H-128_A-2,351,[MASK] is where fish swim.,water,2300,common,common:fish_swim,t1,error,6,it,0.369617899225619,it fish she there this water fishing he
+google/bert_uncased_L-2_H-128_A-2,352,Bread is made from [MASK].,flour,13724,common,common:bread,t0,error,16,bread,0.1825377473843755,bread wine cheese water coffee india turkey it
+google/bert_uncased_L-2_H-128_A-2,353,[MASK] is a main ingredient in bread.,flour,13724,common,common:bread,t1,error,59,it,0.5338726523373881,it this there rice fruit he meat food
+google/bert_uncased_L-2_H-128_A-2,354,Milk often comes from a [MASK].,cow,11190,common,common:milk,t0,error,100,tree,0.0653765586948255,tree milk family coffee water word drink tea
+google/bert_uncased_L-2_H-128_A-2,355,A [MASK] produces milk.,cow,11190,common,common:milk,t1,error,180,milk,0.1463831699912876,milk plant cream dairy fruit chocolate sugar product
+google/bert_uncased_L-2_H-128_A-2,356,A rose is a [MASK].,flower,6546,common,common:rose,t0,error,7,moth,0.1780493627304095,moth tree butterfly species shrub mountain flower bird
+google/bert_uncased_L-2_H-128_A-2,357,The rose is a kind of [MASK].,flower,6546,common,common:rose,t1,error,58,wine,0.1417388984757486,wine water life nature culture world bird flowers

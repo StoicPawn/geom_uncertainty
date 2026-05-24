@@ -1,0 +1,321 @@
+prompt_id,prompt,target,target_id,topic,fact_id,template_id,observed_condition,target_rank_final,final_top1_token,final_top1_prob_topk,final_top8_tokens
+0,The capital of France is [MASK].,paris,3000,capital,capital:france,t0,error,4,marseille,0.1525685252202673,marseille nantes toulouse paris lyon bordeaux lille montpellier
+1,France's capital city is [MASK].,paris,3000,capital,capital:france,t1,correct,1,paris,0.1676735682338495,paris lyon marseille nantes lille toulouse bordeaux nancy
+2,"In France, the capital city is [MASK].",paris,3000,capital,capital:france,t2,correct,1,paris,0.1365509928860553,paris lyon nantes marseille bordeaux rouen toulouse lille
+3,The capital of Germany is [MASK].,berlin,4068,capital,capital:germany,t0,error,5,bonn,0.15941584965202543,bonn frankfurt kassel dusseldorf berlin munich dresden cologne
+4,Germany's capital city is [MASK].,berlin,4068,capital,capital:germany,t1,error,2,bonn,0.16212852114470072,bonn berlin munich dusseldorf frankfurt dresden leipzig stuttgart
+5,"In Germany, the capital city is [MASK].",berlin,4068,capital,capital:germany,t2,error,7,bonn,0.09684323472538897,bonn kassel dusseldorf frankfurt munich darmstadt berlin dresden
+6,The capital of Italy is [MASK].,rome,4199,capital,capital:italy,t0,error,4,turin,0.18918061657613305,turin florence naples rome bologna milan pisa palermo
+7,Italy's capital city is [MASK].,rome,4199,capital,capital:italy,t1,error,2,turin,0.19482290842376782,turin rome milan florence naples bologna palermo trieste
+8,"In Italy, the capital city is [MASK].",rome,4199,capital,capital:italy,t2,error,3,turin,0.1620779661199193,turin florence rome milan naples bologna genoa pisa
+9,The capital of Spain is [MASK].,madrid,6921,capital,capital:spain,t0,correct,1,madrid,0.4174127702245179,madrid seville barcelona zaragoza valencia malaga bilbao salamanca
+10,Spain's capital city is [MASK].,madrid,6921,capital,capital:spain,t1,correct,1,madrid,0.4318161868146898,madrid seville malaga barcelona zaragoza valencia granada bilbao
+11,"In Spain, the capital city is [MASK].",madrid,6921,capital,capital:spain,t2,correct,1,madrid,0.2353864130309072,madrid seville zaragoza valencia malaga barcelona bilbao salamanca
+12,The capital of Japan is [MASK].,tokyo,5522,capital,capital:japan,t0,correct,1,tokyo,0.33949825978266707,tokyo osaka kyoto nagoya kobe fukuoka nagasaki hiroshima
+13,Japan's capital city is [MASK].,tokyo,5522,capital,capital:japan,t1,correct,1,tokyo,0.38763715746821703,tokyo osaka kyoto kobe nagoya fukuoka nagasaki yokohama
+14,"In Japan, the capital city is [MASK].",tokyo,5522,capital,capital:japan,t2,correct,1,tokyo,0.2920188361539528,tokyo kyoto osaka kobe nagoya fukuoka yokohama kochi
+15,The capital of China is [MASK].,beijing,7211,capital,capital:china,t0,correct,1,beijing,0.5267216003203962,beijing nanjing guangzhou tianjin shanghai shenzhen peking taipei
+16,China's capital city is [MASK].,beijing,7211,capital,capital:china,t1,correct,1,beijing,0.5847515247120575,beijing nanjing guangzhou tianjin shanghai shenzhen peking taipei
+17,"In China, the capital city is [MASK].",beijing,7211,capital,capital:china,t2,correct,1,beijing,0.40777472052266933,beijing nanjing guangzhou tianjin shenzhen shanghai peking taipei
+18,The capital of Russia is [MASK].,moscow,4924,capital,capital:russia,t0,correct,1,moscow,0.5236692186913896,moscow kazan kiev leningrad vladimir tbilisi sofia riga
+19,Russia's capital city is [MASK].,moscow,4924,capital,capital:russia,t1,correct,1,moscow,0.7780933431744034,moscow kazan vladimir leningrad kiev sofia tbilisi helsinki
+20,"In Russia, the capital city is [MASK].",moscow,4924,capital,capital:russia,t2,correct,1,moscow,0.6162050574967237,moscow kazan vladimir leningrad novgorod petersburg kiev tbilisi
+21,The capital of Egypt is [MASK].,cairo,11096,capital,capital:egypt,t0,correct,1,cairo,0.644118334480206,cairo alexandria egypt tunis suez acre memphis constantine
+22,Egypt's capital city is [MASK].,cairo,11096,capital,capital:egypt,t1,correct,1,cairo,0.8148826702929238,cairo alexandria egypt suez tunis acre mecca male
+23,"In Egypt, the capital city is [MASK].",cairo,11096,capital,capital:egypt,t2,correct,1,cairo,0.6218692195826095,cairo alexandria suez egypt tunis memphis acre constantine
+24,The capital of Greece is [MASK].,athens,7571,capital,capital:greece,t0,correct,1,athens,0.5986258324345706,athens thessaloniki olympia crete rhodes tirana sofia sparta
+25,Greece's capital city is [MASK].,athens,7571,capital,capital:greece,t1,correct,1,athens,0.6174043897762942,athens thessaloniki olympia rhodes skopje sparta crete sofia
+26,"In Greece, the capital city is [MASK].",athens,7571,capital,capital:greece,t2,correct,1,athens,0.5346208618278094,athens thessaloniki olympia rhodes sparta crete constantinople tripoli
+27,The capital of Portugal is [MASK].,lisbon,11929,capital,capital:portugal,t0,correct,1,lisbon,0.7668432550122165,lisbon porto benfica madeira maia almeida portugal acre
+28,Portugal's capital city is [MASK].,lisbon,11929,capital,capital:portugal,t1,correct,1,lisbon,0.7703462465021571,lisbon porto benfica maia portugal madeira almeida fatima
+29,"In Portugal, the capital city is [MASK].",lisbon,11929,capital,capital:portugal,t2,correct,1,lisbon,0.6341135196463056,lisbon porto benfica maia madeira vila almeida fatima
+30,The capital of Austria is [MASK].,vienna,6004,capital,capital:austria,t0,correct,1,vienna,0.6216909067428645,vienna innsbruck graz salzburg wien austria ljubljana trieste
+31,Austria's capital city is [MASK].,vienna,6004,capital,capital:austria,t1,correct,1,vienna,0.6663823431341027,vienna graz innsbruck salzburg wien ljubljana budapest trieste
+32,"In Austria, the capital city is [MASK].",vienna,6004,capital,capital:austria,t2,correct,1,vienna,0.45292577317206717,vienna innsbruck graz salzburg wien ljubljana trieste austria
+33,The capital of Belgium is [MASK].,brussels,9371,capital,capital:belgium,t0,correct,1,brussels,0.679935740622927,brussels antwerp liege ghent mons belgium luxembourg flanders
+34,Belgium's capital city is [MASK].,brussels,9371,capital,capital:belgium,t1,correct,1,brussels,0.6315546373028009,brussels antwerp ghent liege mons belgium luxembourg lille
+35,"In Belgium, the capital city is [MASK].",brussels,9371,capital,capital:belgium,t2,correct,1,brussels,0.5260150503910852,brussels antwerp ghent liege mons luxembourg belgium flanders
+36,The capital of Finland is [MASK].,helsinki,12331,capital,capital:finland,t0,correct,1,helsinki,0.9959779338969457,helsinki tallinn finland stockholm nokia finnish gothenburg rai
+37,Finland's capital city is [MASK].,helsinki,12331,capital,capital:finland,t1,correct,1,helsinki,0.9990077395588755,helsinki tallinn finland stockholm rai nokia hamilton finnish
+38,"In Finland, the capital city is [MASK].",helsinki,12331,capital,capital:finland,t2,correct,1,helsinki,0.9980837761161301,helsinki tallinn finland stockholm finnish nokia rai gothenburg
+39,The capital of Norway is [MASK].,oslo,9977,capital,capital:norway,t0,correct,1,oslo,0.7446067005482595,oslo trondheim bergen rana moss norway lille nes
+40,Norway's capital city is [MASK].,oslo,9977,capital,capital:norway,t1,correct,1,oslo,0.8007956761347527,oslo trondheim bergen lille norway helsinki voss moss
+41,"In Norway, the capital city is [MASK].",oslo,9977,capital,capital:norway,t2,correct,1,oslo,0.6803691339709981,oslo trondheim bergen rana lille nes moss voss
+42,The capital of Sweden is [MASK].,stockholm,8947,capital,capital:sweden,t0,correct,1,stockholm,0.39695187699684503,stockholm gothenburg malmo uppsala lund helsinki oslo sweden
+43,Sweden's capital city is [MASK].,stockholm,8947,capital,capital:sweden,t1,correct,1,stockholm,0.5111270177504558,stockholm gothenburg malmo uppsala lund helsinki oslo sweden
+44,"In Sweden, the capital city is [MASK].",stockholm,8947,capital,capital:sweden,t2,correct,1,stockholm,0.3478392364100797,stockholm gothenburg malmo uppsala lund helsinki oslo mora
+45,The capital of Poland is [MASK].,warsaw,8199,capital,capital:poland,t0,error,4,wrocław,0.27861947781418644,wrocław gdansk poznan warsaw krakow łodz lublin vilnius
+46,Poland's capital city is [MASK].,warsaw,8199,capital,capital:poland,t1,error,2,wrocław,0.28891118299857477,wrocław warsaw poznan krakow gdansk łodz lublin lviv
+47,"In Poland, the capital city is [MASK].",warsaw,8199,capital,capital:poland,t2,error,5,wrocław,0.26654918187882437,wrocław krakow poznan gdansk warsaw łodz lublin vilnius
+48,The capital of Hungary is [MASK].,budapest,10926,capital,capital:hungary,t0,correct,1,budapest,0.9378831712380433,budapest pest bratislava hungary vienna bala bela aba
+49,Hungary's capital city is [MASK].,budapest,10926,capital,capital:hungary,t1,correct,1,budapest,0.9917210468079394,budapest pest bratislava vienna hungary bela bala graz
+50,"In Hungary, the capital city is [MASK].",budapest,10926,capital,capital:hungary,t2,correct,1,budapest,0.9573453003248595,budapest pest bratislava hungary vienna bela bala aba
+51,The capital of Romania is [MASK].,bucharest,14261,capital,capital:romania,t0,correct,1,bucharest,0.9763994729672618,bucharest tirana budapest sofia tallinn transylvania belgrade ruse
+52,Romania's capital city is [MASK].,bucharest,14261,capital,capital:romania,t1,correct,1,bucharest,0.9899270155218709,bucharest sofia budapest tallinn tirana belgrade bender concordia
+53,"In Romania, the capital city is [MASK].",bucharest,14261,capital,capital:romania,t2,correct,1,bucharest,0.9830351987501921,bucharest concordia alba transylvania bender sofia budapest pest
+54,The capital of Bulgaria is [MASK].,sofia,8755,capital,capital:bulgaria,t0,correct,1,sofia,0.9316444660271525,sofia ruse bulgaria skopje thessaloniki bulgarian constantine montana
+55,Bulgaria's capital city is [MASK].,sofia,8755,capital,capital:bulgaria,t1,correct,1,sofia,0.975069305907059,sofia ruse skopje thessaloniki bulgaria constantine kiev bucharest
+56,"In Bulgaria, the capital city is [MASK].",sofia,8755,capital,capital:bulgaria,t2,correct,1,sofia,0.9380731680060931,sofia ruse skopje bulgaria thessaloniki bulgarian constantine montana
+57,The capital of Serbia is [MASK].,belgrade,10291,capital,capital:serbia,t0,correct,1,belgrade,0.980838280546239,belgrade serbia skopje sarajevo ruse zagreb sofia novi
+58,Serbia's capital city is [MASK].,belgrade,10291,capital,capital:serbia,t1,correct,1,belgrade,0.9891502984627937,belgrade skopje serbia sarajevo sofia zagreb thessaloniki bratislava
+59,"In Serbia, the capital city is [MASK].",belgrade,10291,capital,capital:serbia,t2,correct,1,belgrade,0.9793050530187908,belgrade skopje serbia sarajevo zagreb novi sofia ruse
+60,The capital of Croatia is [MASK].,zagreb,12974,capital,capital:croatia,t0,correct,1,zagreb,0.9630625937819306,zagreb split croatia belgrade ljubljana sarajevo bled croatian
+61,Croatia's capital city is [MASK].,zagreb,12974,capital,capital:croatia,t1,correct,1,zagreb,0.9623158410725527,zagreb split ljubljana belgrade croatia sarajevo bled vienna
+62,"In Croatia, the capital city is [MASK].",zagreb,12974,capital,capital:croatia,t2,correct,1,zagreb,0.9059089409389561,zagreb split ljubljana croatia belgrade sarajevo novi bled
+63,The capital of Turkey is [MASK].,ankara,20312,capital,capital:turkey,t0,correct,1,ankara,0.7463337951671224,ankara istanbul constantinople batman kazan yerevan turkey constantine
+64,Turkey's capital city is [MASK].,ankara,20312,capital,capital:turkey,t1,correct,1,ankara,0.7074164715640183,ankara istanbul constantinople batman kazan yerevan bender thessaloniki
+65,"In Turkey, the capital city is [MASK].",ankara,20312,capital,capital:turkey,t2,correct,1,ankara,0.5849127283975898,ankara istanbul constantinople batman kazan van ada yerevan
+66,The capital of Iran is [MASK].,tehran,13503,capital,capital:iran,t0,correct,1,tehran,0.889487717522558,tehran kerman ##fahan iran baghdad kabul yerevan baku
+67,Iran's capital city is [MASK].,tehran,13503,capital,capital:iran,t1,correct,1,tehran,0.965611199637364,tehran kerman ##fahan iran yerevan kabul baghdad baku
+68,"In Iran, the capital city is [MASK].",tehran,13503,capital,capital:iran,t2,correct,1,tehran,0.8803800083317636,tehran kerman ##fahan baghdad kabul khorasan iran yerevan
+69,The capital of Iraq is [MASK].,baghdad,13952,capital,capital:iraq,t0,correct,1,baghdad,0.9832294653679905,baghdad iraq amman kurdistan kuwait saddam tehran damascus
+70,Iraq's capital city is [MASK].,baghdad,13952,capital,capital:iraq,t1,correct,1,baghdad,0.9930154600129667,baghdad amman iraq tehran saddam kurdistan aleppo damascus
+71,"In Iraq, the capital city is [MASK].",baghdad,13952,capital,capital:iraq,t2,correct,1,baghdad,0.9851485173775316,baghdad amman iraq saddam aleppo kurdistan damascus tehran
+72,The capital of Syria is [MASK].,damascus,16094,capital,capital:syria,t0,correct,1,damascus,0.6992531584137637,damascus aleppo beirut amman acre baghdad antioch syria
+73,Syria's capital city is [MASK].,damascus,16094,capital,capital:syria,t1,correct,1,damascus,0.6887739838053192,damascus aleppo acre beirut amman baghdad antioch tyre
+74,"In Syria, the capital city is [MASK].",damascus,16094,capital,capital:syria,t2,correct,1,damascus,0.5155862318039136,damascus aleppo beirut tyre amman acre antioch baghdad
+75,The capital of Jordan is [MASK].,amman,25703,capital,capital:jordan,t0,correct,1,amman,0.9888195662270882,amman jordan hussein damascus jordanian nazareth ras jerusalem
+76,Jordan's capital city is [MASK].,amman,25703,capital,capital:jordan,t1,correct,1,amman,0.9946959604030988,amman jordan hussein damascus doha baghdad petra jerusalem
+77,"In Jordan, the capital city is [MASK].",amman,25703,capital,capital:jordan,t2,correct,1,amman,0.9936529833121951,amman jordan damascus hussein doha petra ras beirut
+78,The capital of Lebanon is [MASK].,beirut,15335,capital,capital:lebanon,t0,correct,1,beirut,0.9592442364842145,beirut tyre tripoli damascus lebanon acre haifa aleppo
+79,Lebanon's capital city is [MASK].,beirut,15335,capital,capital:lebanon,t1,correct,1,beirut,0.9564264884602013,beirut tyre tripoli damascus acre lebanon haifa bethlehem
+80,"In Lebanon, the capital city is [MASK].",beirut,15335,capital,capital:lebanon,t2,correct,1,beirut,0.9358276281955353,beirut tyre tripoli damascus acre lebanon aleppo haifa
+81,The capital of Thailand is [MASK].,bangkok,12627,capital,capital:thailand,t0,correct,1,bangkok,0.9945272592924067,bangkok thailand mai siam thai chiang hanoi rai
+82,Thailand's capital city is [MASK].,bangkok,12627,capital,capital:thailand,t1,correct,1,bangkok,0.9984808908547019,bangkok thailand mai hanoi siam moscow chiang thai
+83,"In Thailand, the capital city is [MASK].",bangkok,12627,capital,capital:thailand,t2,correct,1,bangkok,0.9905058859075545,bangkok mai thailand hanoi wat thai siam rai
+84,The capital of Vietnam is [MASK].,hanoi,24809,capital,capital:vietnam,t0,correct,1,hanoi,0.8858280751628146,hanoi saigon hue vietnam nam bangkok nguyen paris
+85,Vietnam's capital city is [MASK].,hanoi,24809,capital,capital:vietnam,t1,correct,1,hanoi,0.9284393844090945,hanoi saigon hue vietnam bangkok nam paris nguyen
+86,"In Vietnam, the capital city is [MASK].",hanoi,24809,capital,capital:vietnam,t2,correct,1,hanoi,0.7840535225342905,hanoi saigon hue vietnam nam nguyen bangkok mai
+87,The capital of Peru is [MASK].,lima,12967,capital,capital:peru,t0,correct,1,lima,0.9760569394440938,lima concepcion santiago peru cordoba bogota bolivar mendoza
+88,Peru's capital city is [MASK].,lima,12967,capital,capital:peru,t1,correct,1,lima,0.9967762745106545,lima concepcion peru santiago bogota mendoza cordoba toledo
+89,"In Peru, the capital city is [MASK].",lima,12967,capital,capital:peru,t2,correct,1,lima,0.972946761681489,lima concepcion santiago peru rosario bogota mendoza cordoba
+90,The capital of Chile is [MASK].,santiago,8728,capital,capital:chile,t0,correct,1,santiago,0.8498238834285945,santiago concepcion chile montevideo lima mendoza rosario colon
+91,Chile's capital city is [MASK].,santiago,8728,capital,capital:chile,t1,correct,1,santiago,0.8836881730288083,santiago concepcion chile lima montevideo mendoza colon rosario
+92,"In Chile, the capital city is [MASK].",santiago,8728,capital,capital:chile,t2,correct,1,santiago,0.7258930582359989,santiago concepcion montevideo chile lima colon rosario mendoza
+93,The capital of Cuba is [MASK].,havana,15278,capital,capital:cuba,t0,correct,1,havana,0.9492999493222347,havana santiago guantanamo cuba ponce caracas madrid castro
+94,Cuba's capital city is [MASK].,havana,15278,capital,capital:cuba,t1,correct,1,havana,0.9749833752051024,havana santiago guantanamo cuba ponce caracas madrid seville
+95,"In Cuba, the capital city is [MASK].",havana,15278,capital,capital:cuba,t2,correct,1,havana,0.9533361860478233,havana guantanamo santiago ponce cuba avila caracas colon
+96,The capital of Jamaica is [MASK].,kingston,9803,capital,capital:jamaica,t0,correct,1,kingston,0.9889498048886495,kingston jamaica santiago georgetown antigua salisbury havana barbados
+97,Jamaica's capital city is [MASK].,kingston,9803,capital,capital:jamaica,t1,correct,1,kingston,0.9928898734051614,kingston jamaica georgetown santiago antigua salisbury havana warwick
+98,"In Jamaica, the capital city is [MASK].",kingston,9803,capital,capital:jamaica,t2,correct,1,kingston,0.9603795943025664,kingston jamaica georgetown antigua havana santiago warwick jamaican
+102,The capital of Tunisia is [MASK].,tunis,25317,capital,capital:tunisia,t0,correct,1,tunis,0.9524167615100689,tunis carthage tunisia constantine algiers casablanca tripoli tunisian
+103,Tunisia's capital city is [MASK].,tunis,25317,capital,capital:tunisia,t1,correct,1,tunis,0.9826110533861483,tunis carthage constantine tunisia algiers casablanca tripoli male
+104,"In Tunisia, the capital city is [MASK].",tunis,25317,capital,capital:tunisia,t2,correct,1,tunis,0.9710423193342242,tunis carthage constantine algiers tunisia casablanca tripoli alexandria
+120,The capital of Nepal is [MASK].,kathmandu,28045,capital,capital:nepal,t0,correct,1,kathmandu,0.9969133596707986,kathmandu nepal bam rai dhaka nepali patna islamabad
+121,Nepal's capital city is [MASK].,kathmandu,28045,capital,capital:nepal,t1,correct,1,kathmandu,0.999608392704908,kathmandu nepal bangkok dhaka islamabad kabul bam beijing
+122,"In Nepal, the capital city is [MASK].",kathmandu,28045,capital,capital:nepal,t2,correct,1,kathmandu,0.9989207374387085,kathmandu nepal dhaka patna kabul bam rai bangkok
+123,The capital of Pakistan is [MASK].,islamabad,26905,capital,capital:pakistan,t0,correct,1,islamabad,0.5730157759026326,islamabad karachi lahore peshawar kabul sindh dhaka hyderabad
+124,Pakistan's capital city is [MASK].,islamabad,26905,capital,capital:pakistan,t1,correct,1,islamabad,0.44178396566024136,islamabad karachi lahore peshawar hyderabad dhaka kabul swat
+125,"In Pakistan, the capital city is [MASK].",islamabad,26905,capital,capital:pakistan,t2,error,2,karachi,0.3860392544283193,karachi islamabad lahore peshawar dhaka swat hyderabad kabul
+126,The language of France is [MASK].,french,2413,language,language:france,t0,correct,1,french,0.7038780319220725,french english breton catalan spanish portuguese basque berber
+127,People in France often speak [MASK].,french,2413,language,language:france,t1,correct,1,french,0.6556786990301869,french english breton catalan spanish arabic italian german
+128,The language of Germany is [MASK].,german,2446,language,language:germany,t0,correct,1,german,0.5435722992460982,german english french danish dutch norwegian afrikaans italian
+129,People in Germany often speak [MASK].,german,2446,language,language:germany,t1,correct,1,german,0.4956315874966112,german english yiddish french russian italian dutch afrikaans
+130,The language of Italy is [MASK].,italian,3059,language,language:italy,t0,correct,1,italian,0.7163597508877111,italian sicilian english french spanish venetian albanian portuguese
+131,People in Italy often speak [MASK].,italian,3059,language,language:italy,t1,correct,1,italian,0.7961142973032975,italian english spanish french sicilian catalan portuguese arabic
+132,The language of Spain is [MASK].,spanish,3009,language,language:spain,t0,correct,1,spanish,0.372934957240533,spanish catalan galician basque portuguese english french italian
+133,People in Spain often speak [MASK].,spanish,3009,language,language:spain,t1,correct,1,spanish,0.5754754243456134,spanish catalan english basque portuguese galician french italian
+134,The language of Portugal is [MASK].,portuguese,5077,language,language:portugal,t0,correct,1,portuguese,0.9070062900489234,portuguese galician spanish english french italian catalan creole
+135,People in Portugal often speak [MASK].,portuguese,5077,language,language:portugal,t1,correct,1,portuguese,0.838438706875097,portuguese spanish english galician catalan italian french romanian
+136,The language of Russia is [MASK].,russian,2845,language,language:russia,t0,correct,1,russian,0.3005859271975311,russian tatar belarusian english ukrainian kazakh azerbaijani cyrillic
+137,People in Russia often speak [MASK].,russian,2845,language,language:russia,t1,correct,1,russian,0.764037553428588,russian english yiddish belarusian ukrainian cyrillic kazakh tatar
+138,The language of China is [MASK].,chinese,2822,language,language:china,t0,error,3,mandarin,0.5564976464626136,mandarin cantonese chinese manchu tibetan korean english mongolian
+139,People in China often speak [MASK].,chinese,2822,language,language:china,t1,error,3,cantonese,0.36226391278630315,cantonese mandarin chinese english korean manchu japanese vietnamese
+140,The language of Japan is [MASK].,japanese,2887,language,language:japan,t0,correct,1,japanese,0.4224015052345117,japanese english mandarin korean okinawa hangul portuguese telugu
+141,People in Japan often speak [MASK].,japanese,2887,language,language:japan,t1,correct,1,japanese,0.6348273789053178,japanese english korean cantonese mandarin chinese spanish french
+142,The language of Greece is [MASK].,greek,3306,language,language:greece,t0,correct,1,greek,0.5034980887003234,greek macedonian albanian english turkish latin persian bulgarian
+143,People in Greece often speak [MASK].,greek,3306,language,language:greece,t1,correct,1,greek,0.6063794860950987,greek english french albanian italian macedonian turkish arabic
+144,The language of Turkey is [MASK].,turkish,5037,language,language:turkey,t0,correct,1,turkish,0.4405493259369806,turkish kurdish turkic arabic persian azerbaijani armenian english
+145,People in Turkey often speak [MASK].,turkish,5037,language,language:turkey,t1,correct,1,turkish,0.5283782872692928,turkish kurdish english arabic russian turkic persian armenian
+146,The language of Poland is [MASK].,polish,3907,language,language:poland,t0,correct,1,polish,0.33968567929922044,polish english belarusian yiddish german ukrainian silesian lithuanian
+147,People in Poland often speak [MASK].,polish,3907,language,language:poland,t1,correct,1,polish,0.40095512699813746,polish yiddish english belarusian russian german spanish italian
+148,The language of Hungary is [MASK].,hungarian,5588,language,language:hungary,t0,correct,1,hungarian,0.6077361123631282,hungarian english croatian slovak romanian turkish german serbian
+149,People in Hungary often speak [MASK].,hungarian,5588,language,language:hungary,t1,correct,1,hungarian,0.7483760249176836,hungarian english yiddish romanian russian slovene italian german
+150,The language of Romania is [MASK].,romanian,7056,language,language:romania,t0,correct,1,romanian,0.7750449832541433,romanian albanian hungarian portuguese french english serbian italian
+151,People in Romania often speak [MASK].,romanian,7056,language,language:romania,t1,correct,1,romanian,0.7409606138143495,romanian russian hungarian english yiddish romani italian french
+152,The language of Bulgaria is [MASK].,bulgarian,7643,language,language:bulgaria,t0,correct,1,bulgarian,0.7222237063817787,bulgarian macedonian serbian cyrillic english albanian russian romanian
+153,People in Bulgaria often speak [MASK].,bulgarian,7643,language,language:bulgaria,t1,correct,1,bulgarian,0.5126975179615683,bulgarian russian macedonian english cyrillic serbian romani romanian
+154,The language of Sweden is [MASK].,swedish,4467,language,language:sweden,t0,correct,1,swedish,0.5318890886307392,swedish finnish english danish norwegian icelandic estonian sami
+155,People in Sweden often speak [MASK].,swedish,4467,language,language:sweden,t1,correct,1,swedish,0.6427021973321649,swedish english finnish danish spanish russian estonian german
+156,The language of Norway is [MASK].,norwegian,5046,language,language:norway,t0,correct,1,norwegian,0.8423774442406049,norwegian danish english sami swedish icelandic norse finnish
+157,People in Norway often speak [MASK].,norwegian,5046,language,language:norway,t1,correct,1,norwegian,0.4919531280574379,norwegian danish english swedish icelandic german finnish sami
+158,France is located in [MASK].,europe,2885,continent,continent:france,t0,error,40,algeria,0.14410303695498572,algeria tunisia france cameroon corsica niger senegal madagascar
+159,The continent containing France is [MASK].,europe,2885,continent,continent:france,t1,error,15,belgium,0.15669609397884615,belgium disputed france antarctica algeria uninhabited extinct spain
+160,Germany is located in [MASK].,europe,2885,continent,continent:germany,t0,error,23,austria,0.10890372785143827,austria bavaria germany belgium luxembourg afghanistan switzerland hesse
+161,The continent containing Germany is [MASK].,europe,2885,continent,continent:germany,t1,error,17,belgium,0.1274396390713957,belgium antarctica germany unknown oceania austria scandinavia disputed
+162,Spain is located in [MASK].,europe,2885,continent,continent:spain,t0,error,57,spain,0.09807160011317226,spain argentina portugal bolivia uruguay morocco algeria turkey
+163,The continent containing Spain is [MASK].,europe,2885,continent,continent:spain,t1,error,6,disputed,0.13854327406168435,disputed spain portugal unknown argentina europe uninhabited france
+164,Poland is located in [MASK].,europe,2885,continent,continent:poland,t0,error,59,ukraine,0.1338344256607016,ukraine lithuania belarus croatia poland afghanistan pakistan moldova
+165,The continent containing Poland is [MASK].,europe,2885,continent,continent:poland,t1,error,12,disputed,0.17914076271319598,disputed unknown uninhabited antarctica russia belarus germany belgium
+166,China is located in [MASK].,asia,4021,continent,continent:china,t0,error,19,taiwan,0.1614657509554302,taiwan tibet macau xinjiang vietnam myanmar yunnan afghanistan
+167,The continent containing China is [MASK].,asia,4021,continent,continent:china,t1,error,5,unknown,0.12480807267848275,unknown antarctica disputed china asia oceania uninhabited mountainous
+168,Japan is located in [MASK].,asia,4021,continent,continent:japan,t0,error,4,taiwan,0.17918135797850343,taiwan japan hokkaido asia korea afghanistan indonesia china
+169,The continent containing Japan is [MASK].,asia,4021,continent,continent:japan,t1,error,6,antarctica,0.19202629974422789,antarctica unknown oceania china uninhabited asia disputed siberia
+170,India is located in [MASK].,asia,4021,continent,continent:india,t0,error,48,pakistan,0.17582656543838324,pakistan bangladesh punjab maharashtra kerala rajasthan karnataka goa
+171,The continent containing India is [MASK].,asia,4021,continent,continent:india,t1,error,3,antarctica,0.10077646994145413,antarctica africa asia afghanistan pakistan bangladesh china india
+172,Thailand is located in [MASK].,asia,4021,continent,continent:thailand,t0,error,13,myanmar,0.18920575938464132,myanmar laos cambodia vietnam bangkok thailand indonesia malaysia
+173,The continent containing Thailand is [MASK].,asia,4021,continent,continent:thailand,t1,error,6,thailand,0.0902609041238171,thailand cambodia disputed indonesia oceania asia vietnam china
+174,Egypt is located in [MASK].,africa,3088,continent,continent:egypt,t0,error,13,sudan,0.2584416645476608,sudan egypt libya tunisia algeria sinai syria yemen
+175,The continent containing Egypt is [MASK].,africa,3088,continent,continent:egypt,t1,error,6,unknown,0.15060818709892143,unknown egypt libya uncertain covered africa sudan unnamed
+176,Morocco is located in [MASK].,africa,3088,continent,continent:morocco,t0,error,11,algeria,0.46163386465585343,algeria morocco tunisia libya casablanca senegal sahara qatar
+177,The continent containing Morocco is [MASK].,africa,3088,continent,continent:morocco,t1,error,4,algeria,0.35241258246340895,algeria morocco tunisia africa sahara libya saharan disputed
+178,Nigeria is located in [MASK].,africa,3088,continent,continent:nigeria,t0,error,11,nigeria,0.23338744280460494,nigeria cameroon benin niger ghana burundi sudan togo
+179,The continent containing Nigeria is [MASK].,africa,3088,continent,continent:nigeria,t1,error,4,cameroon,0.4130557041398705,cameroon benin nigeria africa togo ghana angola disputed
+180,Ghana is located in [MASK].,africa,3088,continent,continent:ghana,t0,error,8,ghana,0.6440397916891942,ghana togo cameroon nigeria benin liberia guinea africa
+181,The continent containing Ghana is [MASK].,africa,3088,continent,continent:ghana,t1,error,5,togo,0.1729997097597108,togo benin ghana cameroon africa nigeria guinea disputed
+182,The currency of Japan is the [MASK].,yen,18371,currency,currency:japan,t0,correct,1,yen,0.8829981273016277,yen dollar jp ¥ roc cfa penny pound
+183,People in Japan pay with the [MASK].,yen,18371,currency,currency:japan,t1,error,11,tax,0.11251179370104324,tax euro money wage taxes fare fees fee
+184,The currency of China is the [MASK].,yuan,11237,currency,currency:china,t0,error,5,dollar,0.19523772164566067,dollar prc yen roc yuan cfa euro ¥
+185,People in China pay with the [MASK].,yuan,11237,currency,currency:china,t1,error,25,tax,0.1223264943441611,tax taxes wage euro money fees currency coins
+194,The currency of Brazil is the [MASK].,real,2613,currency,currency:brazil,t0,error,222,dollar,0.6229708340163684,dollar euro cfa yen pound penny portuguese brazilian
+195,People in Brazil pay with the [MASK].,real,2613,currency,currency:brazil,t1,error,4343,euro,0.14136183665151278,euro wage tax money taxes currency dollar fare
+196,The currency of Britain is the [MASK].,pound,9044,currency,currency:britain,t0,correct,1,pound,0.6678501925040589,pound euro dollar penny sterling uk exchequer sovereign
+197,People in Britain pay with the [MASK].,pound,9044,currency,currency:britain,t1,error,18,euro,0.1223088334112679,euro wage tax money taxes wages profits dollar
+198,The currency of Germany is the [MASK].,euro,9944,currency,currency:germany,t0,correct,1,euro,0.9125761659651013,euro pound dollar deutsche cfa eagle palatinate yen
+199,People in Germany pay with the [MASK].,euro,9944,currency,currency:germany,t1,correct,1,euro,0.32650257937394256,euro tax wage money taxes fee currency euros
+200,The currency of France is the [MASK].,euro,9944,currency,currency:france,t0,correct,1,euro,0.7727845949380518,euro cfa dollar pound yen sterling francs nord
+201,People in France pay with the [MASK].,euro,9944,currency,currency:france,t1,correct,1,euro,0.20291268983790547,euro tax taxes wage money fee wages fees
+202,The currency of Italy is the [MASK].,euro,9944,currency,currency:italy,t0,correct,1,euro,0.7741698438460441,euro dollar pound cfa republic fiat penny italian
+203,People in Italy pay with the [MASK].,euro,9944,currency,currency:italy,t1,correct,1,euro,0.2659397717651577,euro tax taxes money wage fare fee euros
+204,The currency of Spain is the [MASK].,euro,9944,currency,currency:spain,t0,correct,1,euro,0.8842469596210946,euro dollar pound bolivar spanish currency sterling cfa
+205,People in Spain pay with the [MASK].,euro,9944,currency,currency:spain,t1,correct,1,euro,0.23041169235734113,euro tax taxes money wage wages currency fare
+208,The largest planet is [MASK].,jupiter,13035,science,science:largest_planet,t0,correct,1,jupiter,0.23557383596640585,jupiter venus neptune pluto saturn mercury mars titan
+209,[MASK] is the largest planet in the solar system.,jupiter,13035,science,science:largest_planet,t1,error,4,pluto,0.23274972595347065,pluto neptune venus jupiter saturn it titan earth
+210,The nearest star to Earth is the [MASK].,sun,3103,science,science:nearest_star,t0,correct,1,sun,0.8523150034715954,sun moon sirius vega ira star earth zenith
+211,Earth orbits the [MASK].,sun,3103,science,science:nearest_star,t1,correct,1,sun,0.46254396207197174,sun moon equator earth planet star asteroid galaxy
+212,The red planet is [MASK].,mars,7733,science,science:red_planet,t0,error,3,jupiter,0.1131793893766752,jupiter unnamed mars neutral unknown destroyed uninhabited venus
+213,[MASK] is often called the red planet.,mars,7733,science,science:red_planet,t1,error,5,pluto,0.30327737377410513,pluto it venus jupiter mars earth saturn neptune
+214,Humans breathe [MASK].,oxygen,7722,science,science:breathing_gas,t0,error,7,freely,0.16433090154474372,freely deeply air naturally smoke underwater oxygen differently
+215,The gas humans need to breathe is [MASK].,oxygen,7722,science,science:breathing_gas,t1,error,53,toxic,0.19387236313684575,toxic poisonous lethal scarce volatile enormous deadly immense
+218,The heart pumps [MASK].,blood,2668,science,science:heart,t0,error,26,faster,0.16350377488604798,faster rapidly furiously wildly constantly vigorously slowly freely
+219,[MASK] is pumped by the heart.,blood,2668,science,science:heart,t1,correct,1,blood,0.3128170197632392,blood water oxygen urine it insulin air electricity
+220,Bees make [MASK].,honey,6861,science,science:bee_product,t0,error,2,nests,0.6193764351872706,nests honey eggs nest bread flowers noises cakes
+221,[MASK] is made by bees.,honey,6861,science,science:bee_product,t1,correct,1,honey,0.47700237609898566,honey pollen it flour food nectar coffee cheese
+222,A spider spins a [MASK].,web,4773,science,science:spider_web,t0,correct,1,web,0.29212054880717453,web leaf stick ball candle circle switch wire
+223,Spiders are known for spinning a [MASK].,web,4773,science,science:spider_web,t1,correct,1,web,0.39869514593142225,web thread leaf yarn propeller stick net whip
+224,Gold is a [MASK].,metal,3384,science,science:gold,t0,error,14,color,0.1905473889411313,color colour mineral commodity surname symbol trademark coin
+225,Iron and gold are both [MASK].,metal,3384,science,science:gold,t1,error,174,mined,0.22303693375086198,mined metals rare common abundant commodities minerals precious
+226,Two plus two equals [MASK].,four,2176,math,math:2+2,t0,error,4,zero,0.31799813257337334,zero one three four two five seven equals
+227,The sum of two and two is [MASK].,four,2176,math,math:2+2,t1,error,185,zero,0.20737210580116355,zero finite odd trivial infinite unity additive prime
+228,Five minus two equals [MASK].,three,2093,math,math:5-2,t0,error,7,zero,0.24950687534392946,zero five seven six four one three ten
+229,Subtracting two from five gives [MASK].,three,2093,math,math:5-2,t1,error,9,zero,0.11308205345460168,zero multiplication continuity equality rise one results each
+230,Ten divided by two equals [MASK].,five,2274,math,math:10/2,t0,error,4,zero,0.10007327816462323,zero equals ten five eleven four six seven
+231,Half of ten is [MASK].,five,2274,math,math:10/2,t1,error,1033,female,0.12641667174492624,female male eliminated wasted edible free lost missing
+232,Three plus four equals [MASK].,seven,2698,math,math:3+4,t0,error,4,zero,0.20407638257344943,zero four five seven one two six three
+233,The sum of three and four is [MASK].,seven,2698,math,math:3+4,t1,error,140,zero,0.20180625274087755,zero finite infinite odd trivial prime unity given
+234,Six plus three equals [MASK].,nine,3157,math,math:6+3,t0,error,7,zero,0.1613435053826831,zero seven five six four ten nine eight
+235,The sum of six and three is [MASK].,nine,3157,math,math:6+3,t1,error,141,zero,0.1937868129699782,zero odd finite infinite equal prime unity trivial
+236,Twelve divided by three equals [MASK].,four,2176,math,math:12/3,t0,error,3,equals,0.0698035669161186,equals seven four six eleven five twelve zero
+237,One third of twelve is [MASK].,four,2176,math,math:12/3,t1,error,805,preserved,0.07052616927837083,preserved omitted female white counted black sacred male
+238,A square has [MASK] sides.,four,2176,math,math:square_sides,t0,correct,1,four,0.2762665844766317,four three two six five eight seven 4
+239,The number of sides in a square is [MASK].,four,2176,math,math:square_sides,t1,error,38,zero,0.13052865596892213,zero finite infinite unknown odd 1 arbitrary given
+240,A triangle has [MASK] sides.,three,2093,math,math:triangle_sides,t0,error,3,two,0.2178452208459353,two four three opposite six multiple both eight
+241,The number of sides in a triangle is [MASK].,three,2093,math,math:triangle_sides,t1,error,29,zero,0.11115691585356587,zero finite infinite 1 odd unknown 2 3
+242,The opposite of hot is [MASK].,cold,3147,antonym,antonym:hot,t0,error,2,hot,0.575991651072396,hot cold heat negative cool hotter neutral yellow
+243,Hot has the opposite meaning of [MASK].,cold,3147,antonym,antonym:hot,t1,error,3,hot,0.5206841877763373,hot heat cold fire cool temperature warm coffee
+244,The opposite of up is [MASK].,down,2091,antonym,antonym:up,t0,error,13,negative,0.16358226812186052,negative zero up positive opposite true wrong right
+245,Up has the opposite meaning of [MASK].,down,2091,antonym,antonym:up,t1,error,28,up,0.12689777038676833,up u zero unity heaven p xp infinity
+246,The opposite of left is [MASK].,right,2157,antonym,antonym:left,t0,error,2,reversed,0.13277629483664444,reversed right diagonal left zero positive horizontal negative
+247,Left has the opposite meaning of [MASK].,right,2157,antonym,antonym:left,t1,correct,1,right,0.15775868086604797,right left equality unity plurality truth infinity freedom
+248,The opposite of day is [MASK].,night,2305,antonym,antonym:day,t0,error,3,day,0.09962322770197121,day thursday night dusk tuesday evening monday sunday
+249,Day has the opposite meaning of [MASK].,night,2305,antonym,antonym:day,t1,error,10,day,0.36602037771536267,day month eve spring noon thursday summer monday
+250,The opposite of yes is [MASK].,no,2053,antonym,antonym:yes,t0,error,11,yes,0.2900862132125782,yes true false impossible negative wrong correct zero
+251,Yes has the opposite meaning of [MASK].,no,2053,antonym,antonym:yes,t1,error,11,yes,0.6875966090714655,yes truth happiness infinity everything zero equality god
+252,The opposite of black is [MASK].,white,2317,antonym,antonym:black,t0,error,2,black,0.34162841170131336,black white yellow blue reversed red green brown
+253,Black has the opposite meaning of [MASK].,white,2317,antonym,antonym:black,t1,error,2,black,0.3350701260135669,black white color yellow colour red blue gold
+254,The opposite of old is [MASK].,new,2047,antonym,antonym:old,t0,error,3,old,0.1233286535786164,old unknown new obsolete true common modern gone
+255,Old has the opposite meaning of [MASK].,new,2047,antonym,antonym:old,t1,error,19,old,0.41594396938915945,old age wisdom history religion death aging modern
+256,The opposite of fast is [MASK].,slow,4030,antonym,antonym:fast,t0,error,2,fast,0.325880253466434,fast slow true speed faster slower symmetric continuous
+257,Fast has the opposite meaning of [MASK].,slow,4030,antonym,antonym:fast,t1,error,3,fast,0.3615130225396679,fast speed slow lightning time entropy velocity money
+258,The opposite of happy is [MASK].,sad,6517,antonym,antonym:happy,t0,error,3,happy,0.3439143860665281,happy happiness sad love negative selfish true bad
+259,Happy has the opposite meaning of [MASK].,sad,6517,antonym,antonym:happy,t1,error,24,happiness,0.6709298968713008,happiness happy joy love life satisfaction money karma
+260,The opposite of early is [MASK].,late,2397,antonym,antonym:early,t0,error,326,unknown,0.2189199976421323,unknown uncertain unclear true apparent evident expected possible
+261,Early has the opposite meaning of [MASK].,late,2397,antonym,antonym:early,t1,error,60,vowels,0.062251400506870634,vowels prophecy entropy spring age early time verbs
+262,The plural of child is [MASK].,children,2336,plural,plural:child,t0,error,2337,masculine,0.25950678674509553,masculine feminine plural singular unknown possessive omitted male
+263,More than one child are called [MASK].,children,2336,plural,plural:child,t1,error,2,twins,0.1689383168816738,twins children siblings orphans sisters infants slaves mothers
+264,The plural of mouse is [MASK].,mice,12328,plural,plural:mouse,t0,error,16,mouse,0.41927609360654755,mouse feminine unknown masculine plural imperative pronounced english
+265,More than one mouse are called [MASK].,mice,12328,plural,plural:mouse,t1,correct,1,mice,0.6597311027898035,mice mouse cats bats rodents mammals rats monkeys
+266,The plural of foot is [MASK].,feet,2519,plural,plural:foot,t0,error,513,plural,0.18678124623706588,plural masculine feminine singular optional unknown latin pronounced
+267,More than one foot are called [MASK].,feet,2519,plural,plural:foot,t1,error,2,toes,0.34143878223918017,toes feet nails heels inches legs spurs foot
+268,The plural of tooth is [MASK].,teeth,4091,plural,plural:tooth,t0,error,372,dental,0.18753650161931923,dental plural feminine masculine singular pronounced acute omitted
+269,More than one tooth are called [MASK].,teeth,4091,plural,plural:tooth,t1,correct,1,teeth,0.5648872922855369,teeth jaws nails holes crowns fangs claws lobes
+270,The plural of goose is [MASK].,geese,28519,plural,plural:goose,t0,error,4,goose,0.4399338952585389,goose unknown plural geese feminine pie masculine pronounced
+271,More than one goose are called [MASK].,geese,28519,plural,plural:goose,t1,correct,1,geese,0.6094382020513749,geese goose ducks swans cranes chickens birds ravens
+272,The plural of man is [MASK].,men,2273,plural,plural:man,t0,error,246,masculine,0.3999387991147568,masculine plural singular feminine indefinite male unknown finite
+273,More than one man are called [MASK].,men,2273,plural,plural:man,t1,error,7,slaves,0.07182668532084083,slaves devils presidents fellows saints jesus men gentlemen
+274,The plural of woman is [MASK].,women,2308,plural,plural:woman,t0,error,20,feminine,0.5377847689239285,feminine masculine plural singular female gender unknown male
+275,More than one woman are called [MASK].,women,2308,plural,plural:woman,t1,correct,1,women,0.14943334000286568,women prostitutes slaves nurses sisters wives witches mothers
+276,The plural of person is [MASK].,people,2111,plural,plural:person,t0,error,2724,plural,0.23591638882306767,plural singular masculine unknown indefinite feminine possessive unmarked
+277,More than one person are called [MASK].,people,2111,plural,plural:person,t1,error,4,slaves,0.08033940266555366,slaves themselves individuals people fellows witnesses ghosts persons
+278,The plural of leaf is [MASK].,leaves,3727,plural,plural:leaf,t0,error,221,plural,0.1802401719070447,plural feminine singular masculine unknown omitted rounded latin
+279,More than one leaf are called [MASK].,leaves,3727,plural,plural:leaf,t1,correct,1,leaves,0.17115003214833402,leaves leaflets seeds stems cones trees petals nodes
+280,The plural of knife is [MASK].,knives,13227,plural,plural:knife,t0,error,5,knife,0.1631105020824898,knife plural unknown masculine knives feminine simple sharp
+281,More than one knife are called [MASK].,knives,13227,plural,plural:knife,t1,correct,1,knives,0.8714236699707352,knives scissors daggers blades swords knife forks axes
+282,A person who teaches is a [MASK].,teacher,3836,role,role:teaches,t0,correct,1,teacher,0.30667336639225873,teacher christian philosopher person psychologist liar student muslim
+283,Someone who teaches can be called a [MASK].,teacher,3836,role,role:teaches,t1,correct,1,teacher,0.5428316845914414,teacher professor master mentor tutor scholar counselor philosopher
+284,A person who drives a bus is a [MASK].,driver,4062,role,role:drives_a_bus,t0,correct,1,driver,0.3181452039386209,driver pedestrian cyclist passenger person thief policeman criminal
+285,Someone who drives a bus can be called a [MASK].,driver,4062,role,role:drives_a_bus,t1,correct,1,driver,0.4004165350595521,driver bus cab passenger taxi cyclist mechanic coach
+286,A person who writes books is a [MASK].,author,3166,role,role:writes_books,t0,error,9,writer,0.34053504581433036,writer novelist librarian poet journalist publisher person pseudonym
+287,Someone who writes books can be called a [MASK].,author,3166,role,role:writes_books,t1,error,13,writer,0.17755337465941154,writer translator novelist librarian journalist publisher poet critic
+288,A person who studies science is a [MASK].,scientist,7155,role,role:studies_science,t0,correct,1,scientist,0.18701677213171464,scientist person christian psychologist physicist foreigner philosopher mathematician
+289,Someone who studies science can be called a [MASK].,scientist,7155,role,role:studies_science,t1,correct,1,scientist,0.41589452906690266,scientist physicist biologist mathematician professor researcher psychologist philosopher
+290,A person who cooks food is a [MASK].,chef,10026,role,role:cooks_food,t0,error,3,vegetarian,0.597414327072993,vegetarian cook chef baker person slave farmer woman
+291,Someone who cooks food can be called a [MASK].,chef,10026,role,role:cooks_food,t1,correct,1,chef,0.4632487775656714,chef cook waiter baker vegetarian butcher waitress maid
+292,A person who flies planes is a [MASK].,pilot,4405,role,role:flies_planes,t0,correct,1,pilot,0.2139284647668737,pilot fly bird kite magician person glider superhero
+293,Someone who flies planes can be called a [MASK].,pilot,4405,role,role:flies_planes,t1,correct,1,pilot,0.4314680156451134,pilot fly navigator flyer fighter bird plane hawk
+294,A person who paints pictures is a [MASK].,artist,3063,role,role:paints_pictures,t0,error,7,painter,0.523801605212898,painter photographer sculptor cartoonist person celebrity artist magician
+295,Someone who paints pictures can be called a [MASK].,artist,3063,role,role:paints_pictures,t1,error,5,painter,0.5345460745314327,painter photographer cartoonist designer artist sculptor teacher magician
+296,A person who plays music is a [MASK].,musician,5455,role,role:plays_music,t0,correct,1,musician,0.5759975495107844,musician composer performer singer conductor pianist violinist songwriter
+297,Someone who plays music can be called a [MASK].,musician,5455,role,role:plays_music,t1,correct,1,musician,0.5029690458344808,musician composer pianist performer singer violinist soloist conductor
+298,A person who treats patients is a [MASK].,doctor,3460,role,role:treats_patients,t0,error,2,physician,0.3573996594564566,physician doctor specialist nurse surgeon healer patient psychiatrist
+299,Someone who treats patients can be called a [MASK].,doctor,3460,role,role:treats_patients,t1,correct,1,doctor,0.22863413116126258,doctor nurse specialist physician surgeon healer consultant therapist
+300,A person who acts in films is a [MASK].,actor,3364,role,role:acts_in_films,t0,error,6,filmmaker,0.14907257184069223,filmmaker director comedian performer villain actor producer cinematographer
+301,Someone who acts in films can be called a [MASK].,actor,3364,role,role:acts_in_films,t1,error,16,villain,0.2394937118452868,villain director clown spy comedian producer performer thief
+302,A salmon is a [MASK].,fish,3869,animal_class,animal_class:salmon,t0,correct,1,fish,0.35863431478446256,fish salmon fishery surname trout snake bird river
+303,The salmon is classified as a [MASK].,fish,3869,animal_class,animal_class:salmon,t1,error,12,fishery,0.28114318128071814,fishery subspecies concern weed endangered trout pest vulnerable
+304,A trout is a [MASK].,fish,3869,animal_class,animal_class:trout,t0,correct,1,fish,0.36986408181768765,fish trout fishery surname salmon bird predator species
+305,The trout is classified as a [MASK].,fish,3869,animal_class,animal_class:trout,t1,error,14,concern,0.16523703326416134,concern fishery vulnerable endangered subspecies weed rare migratory
+306,A sparrow is a [MASK].,bird,4743,animal_class,animal_class:sparrow,t0,correct,1,bird,0.5984054211635256,bird sparrow parrot feather lark pigeon dog hawk
+307,The sparrow is classified as a [MASK].,bird,4743,animal_class,animal_class:sparrow,t1,error,9,subspecies,0.6632797192254004,subspecies vulnerable pest endangered priority species threatened concern
+308,A eagle is a [MASK].,bird,4743,animal_class,animal_class:eagle,t0,correct,1,bird,0.5759082640960231,bird constellation symbol falcon butterfly feather raven hawk
+309,The eagle is classified as a [MASK].,bird,4743,animal_class,animal_class:eagle,t1,error,2,subspecies,0.6607478231892687,subspecies bird pest species butterfly lion predator monument
+318,A shark is a [MASK].,fish,3869,animal_class,animal_class:shark,t0,error,3,predator,0.2707519952482676,predator shark fish mammal creature snake whale dog
+319,The shark is classified as a [MASK].,fish,3869,animal_class,animal_class:shark,t1,error,8,subspecies,0.4085846757554679,subspecies species vulnerable predator juvenile shark endangered fish
+320,A whale is a [MASK].,mammal,25476,animal_class,animal_class:whale,t0,error,2,whale,0.3928437378281636,whale mammal predator shark creature dog fish dolphin
+321,The whale is classified as a [MASK].,mammal,25476,animal_class,animal_class:whale,t1,error,6,subspecies,0.48672784752643294,subspecies species endangered fossil vulnerable mammal whale fishery
+322,A dolphin is a [MASK].,mammal,25476,animal_class,animal_class:dolphin,t0,error,3,dolphin,0.4076347258269256,dolphin whale mammal bird fish dog shark creature
+323,The dolphin is classified as a [MASK].,mammal,25476,animal_class,animal_class:dolphin,t1,error,16,subspecies,0.4997527541226825,subspecies species endangered vulnerable dolphin rare sanctuary fossil
+324,A spider is a [MASK].,insect,14211,animal_class,animal_class:spider,t0,error,32,spider,0.2908078737304184,spider predator wasp snake mammal parasite bird lizard
+325,The spider is classified as a [MASK].,insect,14211,animal_class,animal_class:spider,t1,error,333,subspecies,0.5970980327173437,subspecies pest parasite vulnerable species threat nocturnal predator
+326,Hamlet was written by [MASK].,shakespeare,8101,culture,culture:hamlet,t0,correct,1,shakespeare,0.7431692242013044,shakespeare hamlet handel mozart fletcher lear byron shaw
+327,The author of Hamlet was [MASK].,shakespeare,8101,culture,culture:hamlet,t1,error,4,unknown,0.2604916693926239,unknown hamlet unnamed shakespeare anonymous william john thomas
+328,The Mona Lisa was painted by [MASK].,leonardo,14720,culture,culture:mona_lisa,t0,error,3,raphael,0.3139456054639701,raphael michelangelo leonardo picasso vinci handel bach mozart
+329,[MASK] painted the Mona Lisa.,leonardo,14720,culture,culture:mona_lisa,t1,error,8,he,0.21382409195717994,he she raphael michelangelo picasso bach mozart leonardo
+330,The theory of relativity is associated with [MASK].,einstein,15313,culture,culture:relativity,t0,error,5,relativity,0.4846258247718382,relativity gravity symmetry evolution einstein schizophrenia geometry entropy
+331,[MASK] is famous for relativity.,einstein,15313,culture,culture:relativity,t1,error,2,it,0.14776882129455376,it einstein iceland tibet china newton russia jordan
+332,Isaac [MASK] described gravity.,newton,8446,culture,culture:gravity,t0,correct,1,newton,0.9919734032576096,newton watts einstein ##son kepler darwin galileo marsden
+333,Gravity is famously linked to Newton and the apple; his surname was [MASK].,newton,8446,culture,culture:gravity,t1,correct,1,newton,0.8420470820766078,newton adam einstein lawrence kepler milton berkeley darwin
+334,Romeo and [MASK] are Shakespeare characters.,juliet,13707,culture,culture:romeo,t0,correct,1,juliet,0.9972879449499468,juliet juliette hamlet venus cleopatra julia romeo delilah
+335,The title pair is Romeo and [MASK].,juliet,13707,culture,culture:romeo,t1,correct,1,juliet,0.9942565881654999,juliet juliette delilah venus cleopatra romeo julia judy
+336,Sherlock [MASK] is a fictional detective.,holmes,9106,culture,culture:sherlock,t0,correct,1,holmes,0.9903212644888469,holmes watson doyle sherlock jones frost baker hyde
+337,The detective Sherlock has surname [MASK].,holmes,9106,culture,culture:sherlock,t1,error,3,watson,0.37898969824641954,watson ##s holmes sherlock doyle variations williams clarke
+338,The Odyssey is attributed to [MASK].,homer,11525,culture,culture:odyssey,t0,correct,1,homer,0.3701759747695548,homer plato aristotle socrates ptolemy achilles virgil moses
+339,[MASK] is traditionally credited with the Odyssey.,homer,11525,culture,culture:odyssey,t1,correct,1,homer,0.446371011546695,homer ptolemy aristotle tolkien plato virgil moses solomon
+340,Charles Darwin is associated with [MASK].,evolution,6622,culture,culture:darwin,t0,error,2,darwin,0.20542083350682763,darwin evolution him slavery venus christianity mercury it
+341,Darwin is famous for the theory of [MASK].,evolution,6622,culture,culture:darwin,t1,correct,1,evolution,0.7762611201135001,evolution relativity gravity selection probability inheritance insanity chromosomes
+342,Grass is usually [MASK].,green,2665,common,common:grass,t0,error,2,cultivated,0.14604609046154587,cultivated green abundant grass deciduous eaten sparse perennial
+343,The usual color of grass is [MASK].,green,2665,common,common:grass,t1,error,4,yellow,0.2137260050322325,yellow purple orange green yellowish reddish white red
+344,The sky is often [MASK].,blue,2630,common,common:sky,t0,error,2,cloudy,0.35802201365844766,cloudy blue stormy dark clear black grey purple
+345,The usual color of a clear sky is [MASK].,blue,2630,common,common:sky,t1,correct,1,blue,0.2507014451880485,blue yellow purple white orange violet black red
+346,People drink coffee from a [MASK].,cup,2452,common,common:coffee,t0,error,26,starbucks,0.1397840842863232,starbucks cafe pub pot bar mug restaurant refrigerator
+347,A common container for coffee is a [MASK].,cup,2452,common,common:coffee,t1,error,3,container,0.09864961352153485,container jar cup mug kettle bean refrigerator pot
+348,People usually sleep in a [MASK].,bed,2793,common,common:sleep,t0,error,4,cave,0.36607837135235544,cave tent motel bed dormitory basement room hut
+349,A person sleeps in a [MASK].,bed,2793,common,common:sleep,t1,error,2,cave,0.3085646911845731,cave bed room tent dream coma bedroom closet
+350,Fish usually swim in [MASK].,water,2300,common,common:fish_swim,t0,correct,1,water,0.20065635246825153,water pairs rivers streams groups burrows currents nets
+351,[MASK] is where fish swim.,water,2300,common,common:fish_swim,t1,error,14,this,0.24618728717500207,this it fishing spawning freshwater upstream here aquarium
+352,Bread is made from [MASK].,flour,13724,common,common:bread,t0,correct,1,flour,0.27523266733877166,flour wheat barley rye potatoes yeast dough rice
+353,[MASK] is a main ingredient in bread.,flour,13724,common,common:bread,t1,error,4,garlic,0.1991573324932743,garlic onion salt flour sugar butter ginger wheat
+354,Milk often comes from a [MASK].,cow,11190,common,common:milk,t0,correct,1,cow,0.41057901292144267,cow goat dish dairy milk spring barrel trough
+355,A [MASK] produces milk.,cow,11190,common,common:milk,t1,correct,1,cow,0.3303899469185155,cow dairy goat farmer farm pig family donkey
+356,A rose is a [MASK].,flower,6546,common,common:rose,t0,correct,1,flower,0.5595197774321466,flower rose daisy shrub perennial vase feather wreath
+357,The rose is a kind of [MASK].,flower,6546,common,common:rose,t1,error,2,rose,0.30671264082972427,rose flower orchid roses lily perfume jasmine cactus

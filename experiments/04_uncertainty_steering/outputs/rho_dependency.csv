@@ -1,0 +1,17 @@
+outcome,n,partial_corr,rho_beta,subset
+abs_delta_entropy,19008,0.38374781066879415,0.03777348536348833,all
+abs_delta_varentropy,19008,0.3245098477729474,0.0704531357133516,all
+embedding_centroid_delta_norm,19008,0.13893698030634427,0.0046510305402491375,all
+selected_top1_changed,19008,,,all
+abs_delta_entropy,7128,0.3776303202563959,0.03980480528421133,model:bert-base-uncased
+abs_delta_varentropy,7128,0.2404561960622632,0.05995040843050948,model:bert-base-uncased
+embedding_centroid_delta_norm,7128,0.16910956230984006,0.004944986701005982,model:bert-base-uncased
+selected_top1_changed,7128,,,model:bert-base-uncased
+abs_delta_entropy,7128,0.35696135957581854,0.03369468200980664,model:distilbert-base-uncased
+abs_delta_varentropy,7128,0.35705799485713924,0.07099097614276757,model:distilbert-base-uncased
+embedding_centroid_delta_norm,7128,0.1585995999194168,0.005489929428960017,model:distilbert-base-uncased
+selected_top1_changed,7128,,,model:distilbert-base-uncased
+abs_delta_entropy,4752,0.43149103377212633,0.039041226660446245,model:google/bert_uncased_L-2_H-128_A-2
+abs_delta_varentropy,4752,0.43981603342042724,0.06966404281135795,model:google/bert_uncased_L-2_H-128_A-2
+embedding_centroid_delta_norm,4752,0.17210232301866063,0.0026462457794256414,model:google/bert_uncased_L-2_H-128_A-2
+selected_top1_changed,4752,,,model:google/bert_uncased_L-2_H-128_A-2

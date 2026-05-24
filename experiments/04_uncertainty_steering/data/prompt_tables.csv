@@ -1,0 +1,100 @@
+prompt_id,prompt,task,topic,fact_id,template_id,target,target_id,observed_condition,final_top1_token,final_top1_prob_topk,target_rank_final,model
+0,Yesterday they walked toward the [MASK].,ambiguous_open,open,ambiguous_open:101,extended,,,ambiguous,barn,0.11729228327173925,,distilbert-base-uncased
+1,The capital of Greece is [MASK].,factual_deep,capital,capital:greece,t0,athens,7571.0,correct,athens,0.6024233410454828,1.0,distilbert-base-uncased
+2,The capital of Jamaica is [MASK].,factual_simple,capital,factual_simple:32,extended,kingston,9803.0,correct,kingston,0.9903189176058383,1.0,distilbert-base-uncased
+3,The customer studied the [MASK].,ambiguous_open,open,ambiguous_open:87,extended,,,ambiguous,product,0.2626226821957533,,distilbert-base-uncased
+4,[MASK] painted the Mona Lisa.,factual_deep,culture,culture:mona_lisa,t1,leonardo,14720.0,error,he,0.264497526850002,8.0,distilbert-base-uncased
+5,The color of the sky is often [MASK].,factual_simple,common,factual_simple:67,extended,blue,2630.0,correct,blue,0.21377550614769575,1.0,distilbert-base-uncased
+6,The bat flew out of the [MASK].,ambiguous_open,polysemy,ambiguous_open:161,extended,,,ambiguous,room,0.13082782041960495,,distilbert-base-uncased
+7,China is located in [MASK].,factual_deep,continent,continent:china,t0,asia,4021.0,error,taiwan,0.2128833460625538,19.0,distilbert-base-uncased
+9,The match ended near the [MASK].,ambiguous_open,polysemy,ambiguous_open:163,extended,,,ambiguous,end,0.2868492361420656,,distilbert-base-uncased
+10,The currency of Italy is the [MASK].,factual_deep,currency,currency:italy,t0,euro,9944.0,correct,euro,0.7947418022365561,1.0,distilbert-base-uncased
+11,Five minus two equals [MASK].,factual_simple,math,factual_simple:52,extended,three,2093.0,error,zero,0.2739118597740608,7.0,distilbert-base-uncased
+12,The bank was beside the [MASK].,ambiguous_open,polysemy,ambiguous_open:160,extended,,,ambiguous,river,0.14083095732780054,,distilbert-base-uncased
+13,The sum of two and two is [MASK].,factual_deep,math,math:2+2,t1,four,2176.0,error,zero,0.2800900355375038,185.0,distilbert-base-uncased
+15,People at the airport asked for a [MASK].,ambiguous_open,open,ambiguous_open:146,extended,,,ambiguous,visa,0.18969832957453936,,distilbert-base-uncased
+16,People in Spain often speak [MASK].,factual_deep,language,language:spain,t1,spanish,3009.0,correct,spanish,0.5854454572858672,1.0,distilbert-base-uncased
+18,The coach talked to the [MASK].,ambiguous_open,polysemy,ambiguous_open:162,extended,,,ambiguous,referee,0.24724536142078463,,distilbert-base-uncased
+19,Someone who drives a bus can be called a [MASK].,factual_deep,role,role:drives_a_bus,t1,driver,4062.0,correct,driver,0.4926993694612525,1.0,distilbert-base-uncased
+20,The capital of Austria is [MASK].,factual_simple,capital,factual_simple:9,extended,vienna,6004.0,correct,vienna,0.6258894861745092,1.0,distilbert-base-uncased
+21,He waited near the [MASK].,ambiguous_open,open,ambiguous_open:157,extended,,,ambiguous,door,0.2547318374295489,,distilbert-base-uncased
+22,The rose is a kind of [MASK].,factual_deep,common,common:rose,t1,flower,6546.0,error,rose,0.3740415444745489,2.0,distilbert-base-uncased
+23,Two plus two equals [MASK].,factual_simple,math,factual_simple:51,extended,four,2176.0,error,zero,0.3565490596373809,4.0,distilbert-base-uncased
+24,The person went to the [MASK].,ambiguous_open,open,ambiguous_open:150,extended,,,ambiguous,bathroom,0.354610091622794,,distilbert-base-uncased
+25,The heart pumps [MASK].,factual_deep,science,science:heart,t0,blood,2668.0,error,faster,0.22590382632028963,26.0,distilbert-base-uncased
+26,A person who writes books is an [MASK].,factual_simple,role,factual_simple:63,extended,author,3166.0,correct,author,0.5569711592831701,1.0,distilbert-base-uncased
+27,The worker lost the [MASK].,ambiguous_open,open,ambiguous_open:91,extended,,,ambiguous,job,0.272483939477663,,distilbert-base-uncased
+28,More than one knife are called [MASK].,factual_deep,plural,plural:knife,t1,knives,13227.0,correct,knives,0.8876971460596562,1.0,distilbert-base-uncased
+29,The plural of child is [MASK].,factual_simple,lexical,factual_simple:59,extended,children,2336.0,error,masculine,0.3042087802094128,2337.0,distilbert-base-uncased
+30,The patient waited for the [MASK].,ambiguous_open,role,ambiguous_open:164,extended,,,ambiguous,doctor,0.28998527672914526,,distilbert-base-uncased
+31,A shark is a [MASK].,factual_deep,animal_class,animal_class:shark,t0,fish,3869.0,error,predator,0.2993795382404606,3.0,distilbert-base-uncased
+32,The language of Spain is [MASK].,factual_simple,language,factual_simple:77,extended,spanish,3009.0,correct,spanish,0.37610481837861204,1.0,distilbert-base-uncased
+33,The story about the garden mentioned a [MASK].,ambiguous_open,open,ambiguous_open:130,extended,,,ambiguous,garden,0.17641763180950046,,distilbert-base-uncased
+34,Hot has the opposite meaning of [MASK].,factual_deep,antonym,antonym:hot,t1,cold,3147.0,error,hot,0.5924412554494543,3.0,distilbert-base-uncased
+35,The capital of Italy is [MASK].,factual_simple,capital,factual_simple:1,extended,rome,4199.0,error,turin,0.21328707540079647,4.0,distilbert-base-uncased
+0,Yesterday they walked toward the [MASK].,ambiguous_open,open,ambiguous_open:101,extended,,,ambiguous,house,0.24579202871683295,,bert-base-uncased
+1,The capital of Greece is [MASK].,factual_deep,capital,capital:greece,t0,athens,7571.0,correct,athens,0.7000523494237754,1.0,bert-base-uncased
+2,The capital of Jamaica is [MASK].,factual_simple,capital,factual_simple:32,extended,kingston,9803.0,correct,kingston,0.9882664001623388,1.0,bert-base-uncased
+3,The customer studied the [MASK].,ambiguous_open,open,ambiguous_open:87,extended,,,ambiguous,paper,0.2161299734553276,,bert-base-uncased
+4,[MASK] painted the Mona Lisa.,factual_deep,culture,culture:mona_lisa,t1,leonardo,14720.0,error,he,0.6559120003237888,26.0,bert-base-uncased
+5,The color of the sky is often [MASK].,factual_simple,common,factual_simple:67,extended,blue,2630.0,error,variable,0.3162369650041155,2.0,bert-base-uncased
+6,The bat flew out of the [MASK].,ambiguous_open,polysemy,ambiguous_open:161,extended,,,ambiguous,way,0.2597774274168852,,bert-base-uncased
+7,China is located in [MASK].,factual_deep,continent,continent:china,t0,asia,4021.0,error,china,0.2542357218335627,7.0,bert-base-uncased
+9,The match ended near the [MASK].,ambiguous_open,polysemy,ambiguous_open:163,extended,,,ambiguous,end,0.9228969948141329,,bert-base-uncased
+10,The currency of Italy is the [MASK].,factual_deep,currency,currency:italy,t0,euro,9944.0,correct,euro,0.8789188502657092,1.0,bert-base-uncased
+11,Five minus two equals [MASK].,factual_simple,math,factual_simple:52,extended,three,2093.0,error,one,0.20814057986449488,3.0,bert-base-uncased
+12,The bank was beside the [MASK].,ambiguous_open,polysemy,ambiguous_open:160,extended,,,ambiguous,river,0.2497636468035661,,bert-base-uncased
+13,The sum of two and two is [MASK].,factual_deep,math,math:2+2,t1,four,2176.0,error,one,0.3469088871708368,44.0,bert-base-uncased
+15,People at the airport asked for a [MASK].,ambiguous_open,open,ambiguous_open:146,extended,,,ambiguous,ride,0.3154637654841562,,bert-base-uncased
+16,People in Spain often speak [MASK].,factual_deep,language,language:spain,t1,spanish,3009.0,correct,spanish,0.5834817827421782,1.0,bert-base-uncased
+18,The coach talked to the [MASK].,ambiguous_open,polysemy,ambiguous_open:162,extended,,,ambiguous,coach,0.3513844865420286,,bert-base-uncased
+19,Someone who drives a bus can be called a [MASK].,factual_deep,role,role:drives_a_bus,t1,driver,4062.0,correct,driver,0.6541411654934076,1.0,bert-base-uncased
+20,The capital of Austria is [MASK].,factual_simple,capital,factual_simple:9,extended,vienna,6004.0,correct,vienna,0.6640156682014314,1.0,bert-base-uncased
+21,He waited near the [MASK].,ambiguous_open,open,ambiguous_open:157,extended,,,ambiguous,door,0.5699905600003892,,bert-base-uncased
+22,The rose is a kind of [MASK].,factual_deep,common,common:rose,t1,flower,6546.0,correct,flower,0.6445351004403395,1.0,bert-base-uncased
+23,Two plus two equals [MASK].,factual_simple,math,factual_simple:51,extended,four,2176.0,error,one,0.35374720151274447,4.0,bert-base-uncased
+24,The person went to the [MASK].,ambiguous_open,open,ambiguous_open:150,extended,,,ambiguous,bathroom,0.3577787395479901,,bert-base-uncased
+25,The heart pumps [MASK].,factual_deep,science,science:heart,t0,blood,2668.0,error,faster,0.46058474488163825,32.0,bert-base-uncased
+26,A person who writes books is an [MASK].,factual_simple,role,factual_simple:63,extended,author,3166.0,correct,author,0.9867232763700731,1.0,bert-base-uncased
+27,The worker lost the [MASK].,ambiguous_open,open,ambiguous_open:91,extended,,,ambiguous,case,0.20171667157690068,,bert-base-uncased
+28,More than one knife are called [MASK].,factual_deep,plural,plural:knife,t1,knives,13227.0,correct,knives,0.731733283363222,1.0,bert-base-uncased
+29,The plural of child is [MASK].,factual_simple,lexical,factual_simple:59,extended,children,2336.0,error,child,0.5358856052181751,9.0,bert-base-uncased
+30,The patient waited for the [MASK].,ambiguous_open,role,ambiguous_open:164,extended,,,ambiguous,doctor,0.4788836245448406,,bert-base-uncased
+31,A shark is a [MASK].,factual_deep,animal_class,animal_class:shark,t0,fish,3869.0,error,shark,0.7690109988131558,2.0,bert-base-uncased
+32,The language of Spain is [MASK].,factual_simple,language,factual_simple:77,extended,spanish,3009.0,correct,spanish,0.7190124294174483,1.0,bert-base-uncased
+33,The story about the garden mentioned a [MASK].,ambiguous_open,open,ambiguous_open:130,extended,,,ambiguous,garden,0.4859301191251626,,bert-base-uncased
+34,Hot has the opposite meaning of [MASK].,factual_deep,antonym,antonym:hot,t1,cold,3147.0,error,hot,0.7749744059209244,2.0,bert-base-uncased
+35,The capital of Italy is [MASK].,factual_simple,capital,factual_simple:1,extended,rome,4199.0,correct,rome,0.25420368261285675,1.0,bert-base-uncased
+0,Yesterday they walked toward the [MASK].,ambiguous_open,open,ambiguous_open:101,extended,,,ambiguous,door,0.17453840549888325,,google/bert_uncased_L-2_H-128_A-2
+1,The capital of Greece is [MASK].,factual_deep,capital,capital:greece,t0,athens,7571.0,error,greece,0.39412334939386773,15.0,google/bert_uncased_L-2_H-128_A-2
+2,The capital of Jamaica is [MASK].,factual_simple,capital,factual_simple:32,extended,kingston,9803.0,error,brazil,0.17550364802671112,290.0,google/bert_uncased_L-2_H-128_A-2
+3,The customer studied the [MASK].,ambiguous_open,open,ambiguous_open:87,extended,,,ambiguous,company,0.1512130427427669,,google/bert_uncased_L-2_H-128_A-2
+4,[MASK] painted the Mona Lisa.,factual_deep,culture,culture:mona_lisa,t1,leonardo,14720.0,error,she,0.6625338357250281,269.0,google/bert_uncased_L-2_H-128_A-2
+5,The color of the sky is often [MASK].,factual_simple,common,factual_simple:67,extended,blue,2630.0,error,visible,0.3346052501358842,4.0,google/bert_uncased_L-2_H-128_A-2
+6,The bat flew out of the [MASK].,ambiguous_open,polysemy,ambiguous_open:161,extended,,,ambiguous,air,0.3581156948469332,,google/bert_uncased_L-2_H-128_A-2
+7,China is located in [MASK].,factual_deep,continent,continent:china,t0,asia,4021.0,error,china,0.6702692518496529,31.0,google/bert_uncased_L-2_H-128_A-2
+9,The match ended near the [MASK].,ambiguous_open,polysemy,ambiguous_open:163,extended,,,ambiguous,match,0.29257060519421685,,google/bert_uncased_L-2_H-128_A-2
+10,The currency of Italy is the [MASK].,factual_deep,currency,currency:italy,t0,euro,9944.0,error,world,0.21170601589542234,127.0,google/bert_uncased_L-2_H-128_A-2
+11,Five minus two equals [MASK].,factual_simple,math,factual_simple:52,extended,three,2093.0,error,1,0.17050651938635702,5.0,google/bert_uncased_L-2_H-128_A-2
+12,The bank was beside the [MASK].,ambiguous_open,polysemy,ambiguous_open:160,extended,,,ambiguous,bank,0.46240218942944344,,google/bert_uncased_L-2_H-128_A-2
+13,The sum of two and two is [MASK].,factual_deep,math,math:2+2,t1,four,2176.0,error,two,0.16438767776532381,16.0,google/bert_uncased_L-2_H-128_A-2
+15,People at the airport asked for a [MASK].,ambiguous_open,open,ambiguous_open:146,extended,,,ambiguous,airport,0.6730467389585724,,google/bert_uncased_L-2_H-128_A-2
+16,People in Spain often speak [MASK].,factual_deep,language,language:spain,t1,spanish,3009.0,correct,spanish,0.40813993076449945,1.0,google/bert_uncased_L-2_H-128_A-2
+18,The coach talked to the [MASK].,ambiguous_open,polysemy,ambiguous_open:162,extended,,,ambiguous,club,0.27173419427700424,,google/bert_uncased_L-2_H-128_A-2
+19,Someone who drives a bus can be called a [MASK].,factual_deep,role,role:drives_a_bus,t1,driver,4062.0,error,car,0.24601459391630845,9.0,google/bert_uncased_L-2_H-128_A-2
+20,The capital of Austria is [MASK].,factual_simple,capital,factual_simple:9,extended,vienna,6004.0,error,austria,0.27199996711825875,11.0,google/bert_uncased_L-2_H-128_A-2
+21,He waited near the [MASK].,ambiguous_open,open,ambiguous_open:157,extended,,,ambiguous,town,0.19701680360135768,,google/bert_uncased_L-2_H-128_A-2
+22,The rose is a kind of [MASK].,factual_deep,common,common:rose,t1,flower,6546.0,error,wine,0.24280248005106234,58.0,google/bert_uncased_L-2_H-128_A-2
+23,Two plus two equals [MASK].,factual_simple,math,factual_simple:51,extended,four,2176.0,error,2,0.19418448349040446,13.0,google/bert_uncased_L-2_H-128_A-2
+24,The person went to the [MASK].,ambiguous_open,open,ambiguous_open:150,extended,,,ambiguous,world,0.28891297801183374,,google/bert_uncased_L-2_H-128_A-2
+25,The heart pumps [MASK].,factual_deep,science,science:heart,t0,blood,2668.0,error,.,0.7241105750362595,24.0,google/bert_uncased_L-2_H-128_A-2
+26,A person who writes books is an [MASK].,factual_simple,role,factual_simple:63,extended,author,3166.0,correct,author,0.8191131185080203,1.0,google/bert_uncased_L-2_H-128_A-2
+27,The worker lost the [MASK].,ambiguous_open,open,ambiguous_open:91,extended,,,ambiguous,party,0.15261226248989163,,google/bert_uncased_L-2_H-128_A-2
+28,More than one knife are called [MASK].,factual_deep,plural,plural:knife,t1,knives,13227.0,error,it,0.20886325650704848,22.0,google/bert_uncased_L-2_H-128_A-2
+29,The plural of child is [MASK].,factual_simple,lexical,factual_simple:59,extended,children,2336.0,error,unknown,0.14710467848705686,26.0,google/bert_uncased_L-2_H-128_A-2
+30,The patient waited for the [MASK].,ambiguous_open,role,ambiguous_open:164,extended,,,ambiguous,hospital,0.40324907058374626,,google/bert_uncased_L-2_H-128_A-2
+31,A shark is a [MASK].,factual_deep,animal_class,animal_class:shark,t0,fish,3869.0,error,shark,0.6426563415330013,2.0,google/bert_uncased_L-2_H-128_A-2
+32,The language of Spain is [MASK].,factual_simple,language,factual_simple:77,extended,spanish,3009.0,error,spain,0.6045770514371124,2.0,google/bert_uncased_L-2_H-128_A-2
+33,The story about the garden mentioned a [MASK].,ambiguous_open,open,ambiguous_open:130,extended,,,ambiguous,story,0.34095062545844756,,google/bert_uncased_L-2_H-128_A-2
+34,Hot has the opposite meaning of [MASK].,factual_deep,antonym,antonym:hot,t1,cold,3147.0,error,it,0.2955442761083573,163.0,google/bert_uncased_L-2_H-128_A-2
+35,The capital of Italy is [MASK].,factual_simple,capital,factual_simple:1,extended,rome,4199.0,error,italy,0.4226715648077482,22.0,google/bert_uncased_L-2_H-128_A-2
