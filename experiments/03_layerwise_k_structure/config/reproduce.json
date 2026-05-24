@@ -1,0 +1,28 @@
+{
+  "experiment_id": "03_layerwise_k_structure",
+  "claim": "Accessibility has layerwise and k-dimensional structure.",
+  "main_model": "distilbert-base-uncased",
+  "output_lens": "top-k selected MLM logits, k=32, renormalized before Fisher geometry",
+  "layers": [0, 1, 2, 3, 4, 5, 6],
+  "subspace_ks": [1, 2, 4, 8, 16, 32],
+  "subspaces": ["state_pca", "delta_pca", "delta_forward_1d"],
+  "seeds": [20260523, 7],
+  "primary_outputs": [
+    "outputs/layerwise_k_summary.csv",
+    "outputs/layerwise_k_scores.csv",
+    "outputs/layerwise_k_trajectory.csv",
+    "outputs/compressibility_summary.csv",
+    "outputs/multiarch_summary.csv",
+    "outputs/multiarch_compressibility.csv"
+  ],
+  "figures": [
+    "figures/fig04_layerwise_heatmap.svg",
+    "figures/fig05_compressibility_curves.svg"
+  ],
+  "minimal_commands": [
+    "python scripts/run_layerwise_k_adjusted_rho.py --out-dir results/layerwise_k_adjusted_rho --top-k-output 32 --subspace-ks 1,2,4,8,16,32 --random-seed 20260523",
+    "python scripts/analyze_layerwise_k_compressibility.py --in-dir results/layerwise_k_adjusted_rho --out-dir results/layerwise_k_compressibility",
+    "python scripts/run_multiarch_layerwise_accessibility.py --out-dir results/multiarch_layerwise_accessibility --seed 7",
+    "python scripts/make_paper_figures.py"
+  ]
+}

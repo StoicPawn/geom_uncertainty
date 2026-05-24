@@ -1,0 +1,27 @@
+{
+  "experiment_id": "01_matched_scalar_uncertainty",
+  "claim": "Scalar entropy and varentropy do not determine accessibility.",
+  "models": [
+    "bert-base-uncased",
+    "distilbert-base-uncased",
+    "google/bert_uncased_L-2_H-128_A-2"
+  ],
+  "output_lens": "top-k selected MLM logits, k=32, renormalized before Fisher geometry",
+  "seeds": [123, 20260523],
+  "primary_outputs": [
+    "outputs/same_uncertainty_different_rho_pairs.csv",
+    "outputs/same_uncertainty_different_accessibility_pairs.csv",
+    "outputs/matched_error_correct_summary.csv"
+  ],
+  "figures": [
+    "figures/fig02_scalar_matched_pairs.svg",
+    "figures/fig02_scalar_matched_pairs.png"
+  ],
+  "minimal_commands": [
+    "python scripts/run_factual_error_deep_benchmark.py --model bert-base-uncased --out-dir results/factual_error_deep_bert_top32 --top-k 32 --random-seed 123",
+    "python scripts/run_factual_error_deep_benchmark.py --model distilbert-base-uncased --out-dir results/factual_error_deep_distilbert_top32 --top-k 32 --random-seed 123",
+    "python scripts/run_factual_error_deep_benchmark.py --model google/bert_uncased_L-2_H-128_A-2 --out-dir results/factual_error_deep_google_tiny_top32 --top-k 32 --random-seed 123",
+    "python scripts/analyze_geometric_diagnostics_from_outputs.py --out-dir results/geometric_diagnostics_existing",
+    "python scripts/make_paper_figures.py"
+  ]
+}

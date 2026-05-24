@@ -30,15 +30,29 @@ Test whether the accessible component of varentropy can be used to steer uncerta
 - `outputs/distilbert_pilot_steering_summary.csv`: original pilot summary.
 - `outputs/skipped_models.csv`: unavailable model records.
 
+## Figures
+
+- `figures/fig06_uncertainty_steering_main.svg`
+- `figures/fig06_uncertainty_steering_main.png`
+
 ## Reports
 
+- `reports/summary.md`
 - `reports/executive_summary.md`
 - `reports/full_battery_report.md`
 - `reports/decoder_qwen_report.md`
 - `reports/distilbert_pilot_report.md`
+
+## Claim Support
+
+This experiment supports the claim that accessible directions steer uncertainty more efficiently than controls while preserving answer content at small perturbation sizes. The mapping from claim to CSV and figure is also listed in `../../CLAIM_MAP.md`.
 
 ## Related Scripts
 
 - `scripts/run_uncertainty_steering_full_battery.py`
 - `scripts/run_uncertainty_steering.py`
 - `scripts/run_decoder_uncertainty_steering.py`
+
+## Reproduce
+
+Use `config/reproduce.json` for exact commands and seeds.

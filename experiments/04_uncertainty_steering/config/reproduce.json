@@ -1,0 +1,35 @@
+{
+  "experiment_id": "04_uncertainty_steering",
+  "claim": "Accessible directions steer uncertainty more efficiently than controls while mostly preserving the answer.",
+  "models": [
+    "distilbert-base-uncased",
+    "bert-base-uncased",
+    "google/bert_uncased_L-2_H-128_A-2"
+  ],
+  "decoder_model": "Qwen/Qwen2.5-0.5B",
+  "output_lens": "full battery top-k=16 selected MLM logits; pilot top-k=32; decoder top-m=16",
+  "layers": "auto thirds plus final layer in the full battery; decoder layer 23 in the checked-in run",
+  "subspace_ks": [1, 4, 8, 16],
+  "fisher_output_epsilons": [0.02, 0.05, 0.1],
+  "latent_epsilons": [0.05, 0.1],
+  "controls": ["random_control", "grad_orthogonal_control", "strict orthogonal least-squares diagnostic"],
+  "seed": 20260524,
+  "primary_outputs": [
+    "outputs/directionality_summary.csv",
+    "outputs/equal_output_energy_contrasts.csv",
+    "outputs/specificity_summary.csv",
+    "outputs/rho_dependency.csv",
+    "outputs/replication_matrix.csv",
+    "outputs/steering_records.csv"
+  ],
+  "figures": [
+    "figures/fig06_uncertainty_steering_main.svg",
+    "figures/fig06_uncertainty_steering_main.png"
+  ],
+  "minimal_commands": [
+    "python scripts/run_uncertainty_steering_full_battery.py --out-dir results/uncertainty_steering_full_battery_v1 --top-k 16 --seed 20260524",
+    "python scripts/run_uncertainty_steering.py --out-dir results/uncertainty_steering_distilbert_pca16 --top-k 32 --layer 5 --pca-dim 16 --seed 20260524",
+    "python scripts/run_decoder_uncertainty_steering.py --out-dir results/decoder_uncertainty_steering_qwen2_5_0_5b --max-prompts 64 --top-m 16 --layer 23 --pca-dim 16 --torch-dtype float32 --local-files-only --seed 20260524",
+    "python scripts/make_paper_figures.py"
+  ]
+}

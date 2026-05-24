@@ -1,6 +1,14 @@
-# Accessible Varentropy
+# Geometry Of Uncertainty
 
-A clean GitHub project for the Accessible Varentropy paper. The repository is organized around four experiments, explicit controls, and one integrated final report.
+A paper-ready repository for the accessible-varentropy / uncertainty-geometry experiments. The project is organized around four main experiments, explicit controls, reproducibility configs, checked-in CSV outputs, and paper-ready figures.
+
+## Claim-First Map
+
+Start here:
+
+- `CLAIM_MAP.md`: paper claim -> experiment -> CSV -> figure -> config.
+- `reports/final_reproducibility_and_results_report.md`: complete methods/results/reproducibility report.
+- `reports/figure_index.md`: canonical figure list.
 
 ## Paper Structure
 
@@ -14,7 +22,7 @@ The paper-facing material is in `paper/`:
 6. Ablations and boundary cases
 7. Limitations
 
-The integrated paper report is `reports/final_integrated_report.md`.
+The integrated reproducibility and results report is `reports/final_reproducibility_and_results_report.md`.
 
 ## GitHub Structure
 
@@ -31,11 +39,18 @@ experiments/
     fisher_output_energy_control/
 ```
 
-Each experiment contains `data/`, `outputs/`, `reports/`, and a local `README.md`.
+Each experiment contains:
+
+- `README.md`: short purpose and navigation.
+- `config/reproduce.json`: minimal reproduction metadata and commands.
+- `data/`: prompt tables or source data.
+- `outputs/`: clean CSV outputs.
+- `figures/`: paper-ready SVG/PNG figures.
+- `reports/`: short summary plus source reports.
 
 ## Where To Start
 
-Read `reports/final_integrated_report.md` for the paper-level synthesis. Then inspect the experiment folders in order:
+Read `reports/final_reproducibility_and_results_report.md` for the paper-level synthesis. Then inspect the experiment folders in order:
 
 - `experiments/01_matched_scalar_uncertainty/`
 - `experiments/02_local_perturbation_prediction/`
@@ -46,4 +61,12 @@ The controls live separately under `experiments/controls/` so the main experimen
 
 ## Reproducibility
 
-Core code lives in `src/accessible_varentropy`. Curated runner scripts live in `scripts/`. The old raw `results/` and `paper_artifacts/` trees have been consolidated into the experiment folders.
+Core code lives in `src/accessible_varentropy`. Curated runner scripts live in `scripts/`.
+
+Regenerate paper figures from checked-in CSV outputs:
+
+```powershell
+python scripts\make_paper_figures.py
+```
+
+Minimal full-run commands are listed in `reports/final_reproducibility_and_results_report.md`. Raw reruns write under `results/`; the paper-ready artifacts are curated into `experiments/`.

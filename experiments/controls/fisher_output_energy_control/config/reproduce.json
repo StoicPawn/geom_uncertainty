@@ -1,0 +1,11 @@
+{
+  "control_id": "fisher_output_energy_control",
+  "purpose": "Match total Fisher-output movement, ||F^{1/2} J delta z||, before comparing steering effects.",
+  "primary_outputs": [
+    "outputs/equal_output_energy_contrasts.csv"
+  ],
+  "minimal_commands": [
+    "python scripts/run_uncertainty_steering_full_battery.py --out-dir results/uncertainty_steering_full_battery_v1 --top-k 16 --seed 20260524",
+    "python scripts/make_paper_figures.py"
+  ]
+}

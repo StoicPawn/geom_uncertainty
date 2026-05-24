@@ -1,0 +1,11 @@
+{
+  "control_id": "euclidean_ablation",
+  "purpose": "Compare Fisher-geometric accessibility to Euclidean projection alternatives.",
+  "primary_outputs": [
+    "outputs/metric_ablation_scores.csv",
+    "outputs/prompt_features_ablation.csv"
+  ],
+  "minimal_commands": [
+    "python scripts/run_distilbert_geometry_interventions.py --out-dir results/distilbert_geometry_interventions --top-k 32 --random-seed 20260522"
+  ]
+}

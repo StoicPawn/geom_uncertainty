@@ -17,12 +17,28 @@ Study how accessibility changes across transformer layers, latent subspace dimen
 - `outputs/multiarch_summary.csv`: cross-architecture summary.
 - `outputs/multiarch_compressibility.csv`: architecture-level compressibility table.
 
+## Figures
+
+- `figures/fig04_layerwise_heatmap.svg`
+- `figures/fig04_layerwise_heatmap.png`
+- `figures/fig05_compressibility_curves.svg`
+- `figures/fig05_compressibility_curves.png`
+
 ## Reports
 
+- `reports/summary.md`
 - `reports/layerwise_k_report.md`
 - `reports/multiarch_report.md`
+
+## Claim Support
+
+This experiment supports the claim that accessibility has layerwise and k-dimensional structure. The mapping from claim to CSV and figure is also listed in `../../CLAIM_MAP.md`.
 
 ## Related Scripts
 
 - `scripts/run_layerwise_k_adjusted_rho.py`
 - `scripts/run_multiarch_layerwise_accessibility.py`
+
+## Reproduce
+
+Use `config/reproduce.json` for exact commands and seeds.

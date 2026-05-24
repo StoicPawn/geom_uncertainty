@@ -1,14 +1,18 @@
-﻿path,description
+path,description
 README.md,Project overview and clean GitHub map
+CLAIM_MAP.md,Claim-to-experiment-to-artifact mapping
 paper/,Paper section files in requested order
-reports/final_integrated_report.md,Single final report integrating all experiments
-experiments/01_matched_scalar_uncertainty/,Experiment 1 data outputs and reports
-experiments/02_local_perturbation_prediction/,Experiment 2 data outputs and reports
-experiments/03_layerwise_k_structure/,Experiment 3 data outputs and reports
-experiments/04_uncertainty_steering/,Experiment 4 five-check steering battery
+reports/final_reproducibility_and_results_report.md,Single final report with methods results limitations and commands
+reports/figure_index.md,Paper-ready figure index
+reports/figures/,Canonical SVG and PNG paper figures
+experiments/01_matched_scalar_uncertainty/,Experiment 1 data outputs figures reports and config
+experiments/02_local_perturbation_prediction/,Experiment 2 data outputs figures reports and config
+experiments/03_layerwise_k_structure/,Experiment 3 data outputs figures reports and config
+experiments/04_uncertainty_steering/,Experiment 4 five-check steering battery outputs figures reports and config
+experiments/controls/,Controls ablations and boundary cases
 experiments/controls/random_subspaces/,Random subspace controls
 experiments/controls/euclidean_ablation/,Euclidean ablation controls
 experiments/controls/shuffled_surprisal/,Shuffled surprisal controls
 experiments/controls/fisher_output_energy_control/,Equal Fisher-output-energy controls
 src/accessible_varentropy/,Core implementation
-scripts/,Curated reproduction scripts
+scripts/,Curated reproduction scripts and paper-figure generator

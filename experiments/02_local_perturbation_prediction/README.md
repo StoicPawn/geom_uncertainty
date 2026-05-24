@@ -15,10 +15,24 @@ Test whether accessibility predicts local entropy and varentropy movement under 
 - `outputs/intervention_residual_correlations.csv`: residual correlations after scalar controls.
 - `outputs/intervention_records.csv`: per-example intervention records.
 
+## Figures
+
+- `figures/fig03_accessibility_predicts_movement.svg`
+- `figures/fig03_accessibility_predicts_movement.png`
+
 ## Reports
 
+- `reports/summary.md`
 - `reports/report.md`
+
+## Claim Support
+
+This experiment supports the claim that accessibility predicts local uncertainty movement. The mapping from claim to CSV and figure is also listed in `../../CLAIM_MAP.md`.
 
 ## Related Scripts
 
 - `scripts/run_distilbert_geometry_interventions.py`
+
+## Reproduce
+
+Use `config/reproduce.json` for exact commands and seeds.

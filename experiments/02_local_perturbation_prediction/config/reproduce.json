@@ -1,0 +1,22 @@
+{
+  "experiment_id": "02_local_perturbation_prediction",
+  "claim": "Accessibility predicts local entropy and varentropy movement.",
+  "model": "distilbert-base-uncased",
+  "output_lens": "top-k selected MLM logits, k=32, renormalized before Fisher geometry",
+  "epsilons": [0.25, 0.5, 1.0],
+  "seed": 20260522,
+  "primary_outputs": [
+    "outputs/intervention_summary.csv",
+    "outputs/intervention_by_rho_quartile.csv",
+    "outputs/intervention_residual_correlations.csv",
+    "outputs/intervention_records.csv"
+  ],
+  "figures": [
+    "figures/fig03_accessibility_predicts_movement.svg",
+    "figures/fig03_accessibility_predicts_movement.png"
+  ],
+  "minimal_commands": [
+    "python scripts/run_distilbert_geometry_interventions.py --out-dir results/distilbert_geometry_interventions --top-k 32 --random-seed 20260522",
+    "python scripts/make_paper_figures.py"
+  ]
+}

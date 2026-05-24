@@ -8,7 +8,11 @@ Compare steering directions at matched Fisher-output movement, `||F^{1/2} J delt
 
 - `outputs/equal_output_energy_contrasts.csv`: accessible-versus-control contrasts at matched Fisher-output energy.
 
+## Reproduce
+
+Use `config/reproduce.json`.
+
 ## Used By
 
 - `experiments/04_uncertainty_steering/`
-- `reports/final_integrated_report.md`
+- `reports/final_reproducibility_and_results_report.md`
