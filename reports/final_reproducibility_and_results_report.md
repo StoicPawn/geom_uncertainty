@@ -16,6 +16,8 @@ experiments/
   controls/
 applications/
   local_confidence_control/
+  04_uncertainty_circuits/
+  05_brittle_confidence/
 reports/
   final_reproducibility_and_results_report.md
   figures/
@@ -73,6 +75,8 @@ The exact per-model correctness counts are in `experiments/04_uncertainty_steeri
 
 The decoder-only main battery uses token-level QA, factual completion, and generative-open prompts. It contributes 18 prompt-layer rows for Qwen and 18 prompt-layer rows for Phi, using two layers per model and three tasks.
 
+The uncertainty-circuit application uses the same three local masked-LM models with top-k 32 route scoring and 1,440 Fisher-normalized route interventions. The brittle-confidence application audits 96 matched high/low-rho rows and 368 prompt-perturbation records across neutral context, format, template, and synonym changes.
+
 ## Layers, Dimensions, Epsilons, And Subspaces
 
 Layer coverage:
@@ -81,12 +85,14 @@ Layer coverage:
 - Experiment 3: DistilBERT layers `0..6`.
 - Experiment 4: auto-selected layer thirds and final layer per model. The resulting matrix is in `experiments/04_uncertainty_steering/outputs/replication_matrix.csv`.
 - Decoder main battery: Qwen layers `12` and `23`; Phi layers `16` and `31`.
+- Applications 4 and 5: auto-selected masked-LM layers from each model.
 
 Subspace dimensions:
 
 - Experiment 3: `k = 1, 2, 4, 8, 16, 32`.
 - Experiment 4: `k = 1, 4, 8, 16`, filtered by hidden dimension and sample count.
 - Decoder main battery: PCA/random subspace dimension `8`.
+- Applications 4 and 5: route subspace dimension `8`.
 
 Epsilon values:
 
@@ -96,6 +102,7 @@ Epsilon values:
 - DistilBERT pilot steering: `epsilon = 0.1, 0.2, 0.4`.
 - Decoder steering: `epsilon = 0.05, 0.1, 0.2`.
 - Decoder main battery: equal Fisher-output-energy `epsilon = 0.05`.
+- Applications 4 and 5: equal Fisher-output-energy `epsilon = 0.05`.
 
 Subspace types:
 
@@ -153,6 +160,7 @@ Output lens:
 20260527   out-of-sample route generalization, random-init versus pretrained controls
 20260528   decoder-only main battery, external uncertainty comparators, local confidence-control application
 20260529   fixed-target intervention cost and equal-output-movement efficiency tests
+20260530   uncertainty-circuit route localization and brittle-confidence perturbation applications
 ```
 
 ## Environment
@@ -317,6 +325,7 @@ Confirmatory analyses are the claim-supporting tests used in the main paper narr
 - random-init versus pretrained learned-structure control;
 - decoder-only Qwen/Phi steering on token-level QA, factual completion, and generative-open prompts;
 - local confidence-control application with answer-neighborhood preservation;
+- uncertainty-circuit route localization: high-rho routes as causal control points;
 - answer-preserving qualitative steering examples.
 
 Exploratory and diagnostic analyses are used to bound the claim:
@@ -326,6 +335,7 @@ Exploratory and diagnostic analyses are used to bound the claim:
 - residual `rho` effects after scalar, gradient, and geometric controls;
 - top-k robustness beyond the main lens;
 - Semantic Entropy, Semantic Density, and HaloScope-style comparator diagnostics;
+- brittle-confidence perturbation battery, currently a mixed/negative boundary case;
 - random-route competitiveness in held-out route generalization;
 - prompt duplicate and near-duplicate audit;
 - failure-mode table;
@@ -370,6 +380,8 @@ What they address:
 Application folder:
 
 - `applications/local_confidence_control/`: selective local confidence control with answer-neighborhood preservation.
+- `applications/04_uncertainty_circuits/`: route-interpretability test for causal localization of uncertainty accessibility.
+- `applications/05_brittle_confidence/`: high-confidence matched prompt-perturbation fragility test and boundary-case diagnostic.
 
 ## Added Control A: Top-k Robustness
 
@@ -648,6 +660,81 @@ Phi increase:  success_rate 0.6389, answer_preserved_rate 1.0000
 
 Interpretation: this is the clearest killer-application slice: local uncertainty/confidence can be moved while preserving the monitored answer neighborhood.
 
+## Added Application 4: Uncertainty Circuits / Route Interpretability
+
+Primary artifacts:
+
+- `applications/04_uncertainty_circuits/outputs/route_scores.csv`
+- `applications/04_uncertainty_circuits/outputs/circuit_intervention_records.csv`
+- `applications/04_uncertainty_circuits/outputs/circuit_route_contrasts.csv`
+- `applications/04_uncertainty_circuits/outputs/rho_causal_effect_correlations.csv`
+- `applications/04_uncertainty_circuits/reports/report.md`
+
+Protocol: compute `rho(B)` across model, prompt, layer, and subspace routes; select high-rho, low-rho, random, entropy-gradient, and varentropy-gradient routes; apply the same Fisher-output-normalized intervention budget to each route; measure uncertainty movement and answer-neighborhood preservation.
+
+Key result:
+
+```text
+High-rho route mean rho: 0.5986
+Low-rho route mean rho:  0.5152
+
+High-rho vs low-rho:
+|Delta H|  +0.00260, ratio 1.11x, high better rate 0.5903
+|Delta Var| +0.00542, ratio 1.12x, high better rate 0.5486
+
+High-rho vs random:
+|Delta H|  +0.00166, ratio 1.08x, high better rate 0.6181
+|Delta Var| +0.00393, ratio 1.09x, high better rate 0.6042
+
+High-rho vs entropy-gradient route:
+|Delta H|  +0.00560, ratio 1.21x, high better rate 1.0000
+|Delta Var| +0.00904, ratio 2.05x, high better rate 0.8785
+```
+
+Rho-causal correlations:
+
+```text
+all routes:               rho vs |Delta H| = 0.8041; rho vs |Delta Var| = 0.7241
+accessible routes only:   rho vs |Delta H| = 0.8389; rho vs |Delta Var| = 0.7373
+rho vs top-1 changed:    -0.1427 overall
+rho vs candidate-set KL:  0.0013 overall
+```
+
+Interpretation: the route-localization result is stronger than a pure descriptive geometry claim. In this battery, high-accessibility routes are better causal control points for uncertainty movement, while top-1 changes and candidate-set KL do not rise with `rho`. The high-rho advantage over low-rho/random routes is modest but consistent; the advantage over gradient-selected routes is larger.
+
+## Added Application 5: Brittle Confidence
+
+Primary artifacts:
+
+- `applications/05_brittle_confidence/outputs/matched_high_confidence_groups.csv`
+- `applications/05_brittle_confidence/outputs/brittle_perturbation_records.csv`
+- `applications/05_brittle_confidence/outputs/brittle_summary.csv`
+- `applications/05_brittle_confidence/outputs/brittle_matched_contrasts.csv`
+- `applications/05_brittle_confidence/reports/report.md`
+
+Protocol: build high-confidence matched groups controlling as much as the checked-in prompt pool allows for model, task, correctness, layer, subspace family, confidence, entropy, and margin; split into high-rho and low-rho groups; apply neutral prefixes/suffixes, quiz-format rewrites, template rewrites, and synonym substitutions; measure answer flips, probability drops, entropy increases, KL drift, top-10 Jaccard drop, correctness loss, and a composite fragility score.
+
+Matched coverage:
+
+```text
+BERT:       46 matched high/low rows across factual_deep and factual_simple
+DistilBERT: 34 matched high/low rows across factual_deep and factual_simple
+Tiny BERT:  16 matched high/low rows across factual_deep and factual_simple
+```
+
+Low-rho minus high-rho matched contrasts:
+
+```text
+fragility score:     -0.0364, low-greater rate 0.5000
+answer flip rate:    -0.0660, low-greater rate 0.3750
+answer prob drop:    -0.0345, low-greater rate 0.4375
+entropy increase:    -0.1255, low-greater rate 0.3542
+candidate KL:        +0.0782, low-greater rate 0.5625
+top-10 drop:         +0.0179, low-greater rate 0.5000
+```
+
+Interpretation: this application is a useful boundary case rather than a positive claim. The current matched perturbation battery does not support the hypothesis that high-confidence low-rho predictions are generally more brittle. Low-rho cases show slightly more KL and top-10 drift, but high-rho cases show more answer flips, probability drop, entropy increase, and overall fragility. This should stay in diagnostics unless a larger paraphrase dataset reverses the result.
+
 ## Added Control F: Full-Vocabulary Tiny-Model Sanity
 
 Primary artifacts:
@@ -831,6 +918,12 @@ Operational controllability tests:
 python scripts\run_control_cost_and_equal_output_tests.py --tau-entropy 0.02 --tau-varentropy 0.04 --top-k-output 32 --seed 20260529
 ```
 
+Uncertainty-circuit and brittle-confidence applications:
+
+```powershell
+python scripts\run_brittle_confidence_and_circuit_applications.py --max-prompts-per-task 6 --top-k 32 --subspace-k 8 --output-eps 0.05 --seed 20260530
+```
+
 Paper figures:
 
 ```powershell
@@ -866,6 +959,8 @@ The commands regenerate raw outputs under `results/`. The checked-in paper-ready
 - Decoder-only evidence is present in the main steering experiment on Qwen and Phi, but remains a local next-token logit-lens intervention.
 - Direct projected gradients are stronger immediate predictors than rho for raw local movement; rho's stronger claim is residual geometric information after controls and decompositional interpretability.
 - In the minimal intervention-energy test, `rho` predicts lower cost in the local top-k 32 setting, but projected gradients remain the strongest raw cost predictors and the full multi-epsilon grid is more mixed.
+- The uncertainty-circuit application supports route localization, but high-rho improvements over low-rho/random routes are modest in this first battery and still use local logit-lens interventions.
+- The brittle-confidence application is mixed/negative: low-rho high-confidence cases do not show uniformly higher fragility under the current template perturbations.
 - Top-k robustness is good but not perfect; full-vocabulary tiny-model sanity shows that top-k can overestimate absolute rho at small k.
 - Out-of-sample route transfer is encouraging but preliminary because pooled random routes remain competitive in this small run.
 - Random-init controls show learned weights reshape accessibility, but nonzero random-init accessibility means architectural geometry is also part of the measurement.

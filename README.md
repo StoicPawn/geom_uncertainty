@@ -53,6 +53,8 @@ experiments/
     fisher_output_energy_control/
 applications/
   local_confidence_control/
+  04_uncertainty_circuits/
+  05_brittle_confidence/
 models/
 configs/
 reports/
@@ -112,6 +114,12 @@ Run the operational controllability tests:
 
 ```powershell
 python scripts\run_control_cost_and_equal_output_tests.py --tau-entropy 0.02 --tau-varentropy 0.04 --top-k-output 32 --seed 20260529
+```
+
+Run the route-interpretability and brittle-confidence applications:
+
+```powershell
+python scripts\run_brittle_confidence_and_circuit_applications.py --max-prompts-per-task 6 --top-k 32 --subspace-k 8 --output-eps 0.05 --seed 20260530
 ```
 
 Minimal full-run commands are listed in `reports/final_reproducibility_and_results_report.md`. Raw reruns write under `results/`; the paper-ready artifacts are curated into `experiments/`.
