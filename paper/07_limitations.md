@@ -8,6 +8,7 @@
 - The minimal intervention-energy test supports a local cost interpretation on MLM top-k 32 records, but the multi-epsilon grid and decoder slices are more mixed; this should be framed as operational evidence with gradient-baseline caveats.
 - The uncertainty-circuit application supports causal route localization, but the high-rho advantage over low-rho/random routes is modest in the first checked-in battery.
 - The brittle-confidence application is a mixed/negative boundary case under the current template perturbations, not a positive claim.
+- The CIFAR-10/CIFAR-10-C hidden-fragility application is prepared as a cross-domain protocol but was not executed because the local datasets were absent.
 - Train-estimated route generalization is preliminary: train routes match held-out oracle routes in this small run, but random routes remain competitive.
 - Random-init controls show learned weights change accessibility structure, but random architectures still have nonzero accessibility.
 - Most intervention evidence is local logit-lens steering, not end-to-end generation-time intervention.

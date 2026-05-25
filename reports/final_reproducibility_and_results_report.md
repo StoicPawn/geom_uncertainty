@@ -18,6 +18,7 @@ applications/
   local_confidence_control/
   04_uncertainty_circuits/
   05_brittle_confidence/
+  06_hidden_fragility_cifar_c/
 reports/
   final_reproducibility_and_results_report.md
   figures/
@@ -77,6 +78,8 @@ The decoder-only main battery uses token-level QA, factual completion, and gener
 
 The uncertainty-circuit application uses the same three local masked-LM models with top-k 32 route scoring and 1,440 Fisher-normalized route interventions. The brittle-confidence application audits 96 matched high/low-rho rows and 368 prompt-perturbation records across neutral context, format, template, and synonym changes.
 
+The hidden-fragility vision application is configured for CIFAR-10 clean test predictions and CIFAR-10-C corruptions across standard severities 1-5. It was not executed in this workspace because local CIFAR-10 and CIFAR-10-C files were absent.
+
 ## Layers, Dimensions, Epsilons, And Subspaces
 
 Layer coverage:
@@ -86,6 +89,7 @@ Layer coverage:
 - Experiment 4: auto-selected layer thirds and final layer per model. The resulting matrix is in `experiments/04_uncertainty_steering/outputs/replication_matrix.csv`.
 - Decoder main battery: Qwen layers `12` and `23`; Phi layers `16` and `31`.
 - Applications 4 and 5: auto-selected masked-LM layers from each model.
+- Application 6: ResNet-18 CIFAR penultimate embedding route.
 
 Subspace dimensions:
 
@@ -93,6 +97,7 @@ Subspace dimensions:
 - Experiment 4: `k = 1, 4, 8, 16`, filtered by hidden dimension and sample count.
 - Decoder main battery: PCA/random subspace dimension `8`.
 - Applications 4 and 5: route subspace dimension `8`.
+- Application 6: PCA route dimension `64` by default, plus full 10-class output Fisher geometry.
 
 Epsilon values:
 
@@ -103,6 +108,7 @@ Epsilon values:
 - Decoder steering: `epsilon = 0.05, 0.1, 0.2`.
 - Decoder main battery: equal Fisher-output-energy `epsilon = 0.05`.
 - Applications 4 and 5: equal Fisher-output-energy `epsilon = 0.05`.
+- Application 6: no steering epsilon; it evaluates corruption severity thresholds and robustness under label-preserving shifts.
 
 Subspace types:
 
@@ -161,6 +167,7 @@ Output lens:
 20260528   decoder-only main battery, external uncertainty comparators, local confidence-control application
 20260529   fixed-target intervention cost and equal-output-movement efficiency tests
 20260530   uncertainty-circuit route localization and brittle-confidence perturbation applications
+20260531   CIFAR-10/CIFAR-10-C hidden-fragility protocol, configured but not executed locally
 ```
 
 ## Environment
@@ -382,6 +389,7 @@ Application folder:
 - `applications/local_confidence_control/`: selective local confidence control with answer-neighborhood preservation.
 - `applications/04_uncertainty_circuits/`: route-interpretability test for causal localization of uncertainty accessibility.
 - `applications/05_brittle_confidence/`: high-confidence matched prompt-perturbation fragility test and boundary-case diagnostic.
+- `applications/06_hidden_fragility_cifar_c/`: CIFAR-10 to CIFAR-10-C hidden-fragility protocol for confident correct predictions.
 
 ## Added Control A: Top-k Robustness
 
@@ -735,6 +743,38 @@ top-10 drop:         +0.0179, low-greater rate 0.5000
 
 Interpretation: this application is a useful boundary case rather than a positive claim. The current matched perturbation battery does not support the hypothesis that high-confidence low-rho predictions are generally more brittle. Low-rho cases show slightly more KL and top-10 drift, but high-rho cases show more answer flips, probability drop, entropy increase, and overall fragility. This should stay in diagnostics unless a larger paraphrase dataset reverses the result.
 
+## Added Application 6: Hidden Fragility In Confident Predictions
+
+Primary artifacts:
+
+- `applications/06_hidden_fragility_cifar_c/README.md`
+- `applications/06_hidden_fragility_cifar_c/config/reproduce.json`
+- `applications/06_hidden_fragility_cifar_c/reports/report.md`
+- `scripts/run_hidden_fragility_cifar_c.py`
+
+Protocol: train or load a ResNet-18 CIFAR-10 classifier, compute `rho(B)` on the penultimate embedding using a PCA route, restrict to correctly classified high-confidence clean CIFAR-10 examples, greedily match high-rho and low-rho examples within class on confidence, entropy, margin, loss, entropy-gradient norm, and projected-gradient norm, then evaluate label-preserving CIFAR-10-C corruptions over severities 1-5.
+
+Planned metrics:
+
+```text
+S_flip: minimum corruption severity that changes the clean prediction, or 6 if no flip
+true-probability collapse: p_true(clean) - p_true(corrupted)
+robust accuracy under CIFAR-10-C
+entropy increase, margin drop, correctness loss
+incremental AUROC/AUPRC and regression value of rho beyond confidence, entropy, margin, loss, and gradient norms
+```
+
+Status in this workspace:
+
+```text
+not executed
+missing: data/cifar-10-batches-py
+missing: data/CIFAR-10-C
+torchvision was not installed, so the runner includes a local CIFAR ResNet-18 and direct CIFAR batch loaders
+```
+
+Interpretation: this is a clean cross-domain protocol, not a completed result. It is intentionally kept separate from the language-model experiments so that, once CIFAR-10/CIFAR-10-C assets are placed locally, it can test whether accessible varentropy reveals hidden robustness differences among equally confident and correct vision predictions.
+
 ## Added Control F: Full-Vocabulary Tiny-Model Sanity
 
 Primary artifacts:
@@ -924,6 +964,12 @@ Uncertainty-circuit and brittle-confidence applications:
 python scripts\run_brittle_confidence_and_circuit_applications.py --max-prompts-per-task 6 --top-k 32 --subspace-k 8 --output-eps 0.05 --seed 20260530
 ```
 
+CIFAR-10/CIFAR-10-C hidden-fragility application:
+
+```powershell
+python scripts\run_hidden_fragility_cifar_c.py --cifar10-dir data\cifar-10-batches-py --cifar10c-dir data\CIFAR-10-C --train-if-missing --epochs 40 --pca-dim 64 --confidence-quantile 0.70 --seed 20260531
+```
+
 Paper figures:
 
 ```powershell
@@ -961,6 +1007,7 @@ The commands regenerate raw outputs under `results/`. The checked-in paper-ready
 - In the minimal intervention-energy test, `rho` predicts lower cost in the local top-k 32 setting, but projected gradients remain the strongest raw cost predictors and the full multi-epsilon grid is more mixed.
 - The uncertainty-circuit application supports route localization, but high-rho improvements over low-rho/random routes are modest in this first battery and still use local logit-lens interventions.
 - The brittle-confidence application is mixed/negative: low-rho high-confidence cases do not show uniformly higher fragility under the current template perturbations.
+- The CIFAR-10/CIFAR-10-C hidden-fragility application is configured but not executed in this workspace because the required local vision datasets are absent.
 - Top-k robustness is good but not perfect; full-vocabulary tiny-model sanity shows that top-k can overestimate absolute rho at small k.
 - Out-of-sample route transfer is encouraging but preliminary because pooled random routes remain competitive in this small run.
 - Random-init controls show learned weights reshape accessibility, but nonzero random-init accessibility means architectural geometry is also part of the measurement.

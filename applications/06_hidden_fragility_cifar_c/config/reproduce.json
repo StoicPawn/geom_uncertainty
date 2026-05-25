@@ -1,0 +1,15 @@
+{
+  "application": "hidden fragility in confident predictions",
+  "status": "not_run",
+  "reason": "CIFAR-10 python batches at C:\\Users\\bottolonif\\projects\\paper\\data\\cifar-10-batches-py; CIFAR-10-C directory at C:\\Users\\bottolonif\\projects\\paper\\data\\CIFAR-10-C",
+  "command": "python scripts\\run_hidden_fragility_cifar_c.py --cifar10-dir data\\cifar-10-batches-py --cifar10c-dir data\\CIFAR-10-C --checkpoint applications\\06_hidden_fragility_cifar_c\\models\\resnet18_cifar10.pt --train-if-missing --epochs 40 --pca-dim 64 --confidence-quantile 0.70 --seed 20260531",
+  "dataset": "CIFAR-10 clean test plus CIFAR-10-C corruptions, severities 1-5",
+  "model": "ResNet-18 for CIFAR-10, implemented locally without torchvision",
+  "route": "penultimate embedding PCA subspace",
+  "matching": "correct, high-confidence, low-entropy, high-margin; paired within class on scalar and gradient covariates",
+  "confidence_quantile": 0.7,
+  "low_entropy_quantile": 0.3,
+  "high_margin_quantile": 0.7,
+  "rho_quantile": 0.33,
+  "seed": 20260531
+}

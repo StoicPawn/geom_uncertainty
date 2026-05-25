@@ -55,6 +55,7 @@ applications/
   local_confidence_control/
   04_uncertainty_circuits/
   05_brittle_confidence/
+  06_hidden_fragility_cifar_c/
 models/
 configs/
 reports/
@@ -120,6 +121,12 @@ Run the route-interpretability and brittle-confidence applications:
 
 ```powershell
 python scripts\run_brittle_confidence_and_circuit_applications.py --max-prompts-per-task 6 --top-k 32 --subspace-k 8 --output-eps 0.05 --seed 20260530
+```
+
+Run the CIFAR-10/CIFAR-10-C hidden-fragility application after placing local data:
+
+```powershell
+python scripts\run_hidden_fragility_cifar_c.py --cifar10-dir data\cifar-10-batches-py --cifar10c-dir data\CIFAR-10-C --train-if-missing --epochs 40 --pca-dim 64 --confidence-quantile 0.70 --seed 20260531
 ```
 
 Minimal full-run commands are listed in `reports/final_reproducibility_and_results_report.md`. Raw reruns write under `results/`; the paper-ready artifacts are curated into `experiments/`.

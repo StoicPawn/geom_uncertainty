@@ -31,5 +31,6 @@ experiments/controls/fisher_output_energy_control/,Equal Fisher-output-energy co
 applications/local_confidence_control/,Killer application slice for local answer-preserving confidence control
 applications/04_uncertainty_circuits/,Route interpretability application testing causal localization of uncertainty accessibility
 applications/05_brittle_confidence/,Brittle-confidence matched perturbation application and boundary-case diagnostic
+applications/06_hidden_fragility_cifar_c/,CIFAR-10 to CIFAR-10-C hidden-fragility protocol for confident correct predictions
 src/accessible_varentropy/,Core implementation
 scripts/,Curated reproduction scripts and paper-figure generator
