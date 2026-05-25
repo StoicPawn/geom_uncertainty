@@ -52,6 +52,7 @@ experiments/
     shuffled_surprisal/
     fisher_output_energy_control/
 applications/
+  03_calibration_diagnosis/
   local_confidence_control/
   04_uncertainty_circuits/
   05_brittle_confidence/
@@ -115,6 +116,12 @@ Run the operational controllability tests:
 
 ```powershell
 python scripts\run_control_cost_and_equal_output_tests.py --tau-entropy 0.02 --tau-varentropy 0.04 --top-k-output 32 --seed 20260529
+```
+
+Run the calibration-diagnosis application:
+
+```powershell
+python scripts\run_calibration_diagnosis.py --max-prompts-per-task 10 --top-k 32 --subspace-ks 8 --output-eps 0.05 --seed 20260532
 ```
 
 Run the route-interpretability and brittle-confidence applications:

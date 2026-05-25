@@ -1,0 +1,14 @@
+{
+  "application": "calibration diagnosis",
+  "command": "python scripts\\run_calibration_diagnosis.py --max-prompts-per-task 10 --top-k 32 --subspace-ks 8 --output-eps 0.05 --seed 20260532",
+  "seed": 20260532,
+  "models": [
+    "distilbert-base-uncased",
+    "bert-base-uncased",
+    "google/bert_uncased_L-2_H-128_A-2"
+  ],
+  "top_k": 32,
+  "subspace_ks": "8",
+  "output_eps": 0.05,
+  "calibration_policy": "correct examples decrease entropy; incorrect examples increase entropy"
+}

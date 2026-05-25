@@ -15,6 +15,7 @@ experiments/
     decoder_main_battery/
   controls/
 applications/
+  03_calibration_diagnosis/
   local_confidence_control/
   04_uncertainty_circuits/
   05_brittle_confidence/
@@ -80,6 +81,8 @@ The uncertainty-circuit application uses the same three local masked-LM models w
 
 The hidden-fragility vision application is configured for CIFAR-10 clean test predictions and CIFAR-10-C corruptions across standard severities 1-5. It was not executed in this workspace because local CIFAR-10 and CIFAR-10-C files were absent.
 
+The calibration-diagnosis application uses 57 factual model-prompt rows across the three local masked-LM models, full-vocabulary calibration metrics, top-k 32 accessibility geometry, auto-selected layers, and Fisher-output-equal interventions.
+
 ## Layers, Dimensions, Epsilons, And Subspaces
 
 Layer coverage:
@@ -90,6 +93,7 @@ Layer coverage:
 - Decoder main battery: Qwen layers `12` and `23`; Phi layers `16` and `31`.
 - Applications 4 and 5: auto-selected masked-LM layers from each model.
 - Application 6: ResNet-18 CIFAR penultimate embedding route.
+- Application 3: auto-selected masked-LM layers from each model.
 
 Subspace dimensions:
 
@@ -98,6 +102,7 @@ Subspace dimensions:
 - Decoder main battery: PCA/random subspace dimension `8`.
 - Applications 4 and 5: route subspace dimension `8`.
 - Application 6: PCA route dimension `64` by default, plus full 10-class output Fisher geometry.
+- Application 3: route subspace dimension `8`.
 
 Epsilon values:
 
@@ -109,6 +114,7 @@ Epsilon values:
 - Decoder main battery: equal Fisher-output-energy `epsilon = 0.05`.
 - Applications 4 and 5: equal Fisher-output-energy `epsilon = 0.05`.
 - Application 6: no steering epsilon; it evaluates corruption severity thresholds and robustness under label-preserving shifts.
+- Application 3: equal Fisher-output-energy `epsilon = 0.05`.
 
 Subspace types:
 
@@ -168,6 +174,7 @@ Output lens:
 20260529   fixed-target intervention cost and equal-output-movement efficiency tests
 20260530   uncertainty-circuit route localization and brittle-confidence perturbation applications
 20260531   CIFAR-10/CIFAR-10-C hidden-fragility protocol, configured but not executed locally
+20260532   calibration-diagnosis application for internal steerability of miscalibration
 ```
 
 ## Environment
@@ -331,6 +338,7 @@ Confirmatory analyses are the claim-supporting tests used in the main paper narr
 - train-route held-out prompt generalization;
 - random-init versus pretrained learned-structure control;
 - decoder-only Qwen/Phi steering on token-level QA, factual completion, and generative-open prompts;
+- calibration diagnosis: high-rho routes as internally steerable NLL/Brier/target-probability repair paths;
 - local confidence-control application with answer-neighborhood preservation;
 - uncertainty-circuit route localization: high-rho routes as causal control points;
 - answer-preserving qualitative steering examples.
@@ -342,6 +350,7 @@ Exploratory and diagnostic analyses are used to bound the claim:
 - residual `rho` effects after scalar, gradient, and geometric controls;
 - top-k robustness beyond the main lens;
 - Semantic Entropy, Semantic Density, and HaloScope-style comparator diagnostics;
+- ECE caveat in calibration diagnosis, where the exact-token baseline is already low-confidence and low-accuracy;
 - brittle-confidence perturbation battery, currently a mixed/negative boundary case;
 - random-route competitiveness in held-out route generalization;
 - prompt duplicate and near-duplicate audit;
@@ -386,6 +395,7 @@ What they address:
 
 Application folder:
 
+- `applications/03_calibration_diagnosis/`: internal steerability diagnostic for calibration errors.
 - `applications/local_confidence_control/`: selective local confidence control with answer-neighborhood preservation.
 - `applications/04_uncertainty_circuits/`: route-interpretability test for causal localization of uncertainty accessibility.
 - `applications/05_brittle_confidence/`: high-confidence matched prompt-perturbation fragility test and boundary-case diagnostic.
@@ -646,6 +656,40 @@ haloscope_style_consistency_risk      Spearman = -0.7531
 ```
 
 Interpretation: the semantic/density/consistency proxies are strongly related to scalar uncertainty structure, while `rho` is route-specific. They are not interchangeable measurements, which is exactly the distinction the paper should make.
+
+## Added Application 3: Calibration Diagnosis
+
+Primary artifacts:
+
+- `applications/03_calibration_diagnosis/outputs/clean_calibration_records.csv`
+- `applications/03_calibration_diagnosis/outputs/route_scores.csv`
+- `applications/03_calibration_diagnosis/outputs/calibration_intervention_records.csv`
+- `applications/03_calibration_diagnosis/outputs/calibration_summary.csv`
+- `applications/03_calibration_diagnosis/outputs/calibration_effects.csv`
+- `applications/03_calibration_diagnosis/outputs/calibration_route_contrasts.csv`
+- `applications/03_calibration_diagnosis/reports/report.md`
+
+Protocol: for factual masked-LM prompts with known target tokens, compute full-vocabulary confidence, correctness, NLL, Brier score, and ECE. Score candidate internal routes by top-k 32 accessible varentropy. For each prompt, select high-rho, low-rho, and random routes, then apply the same Fisher-output-energy intervention. The calibration policy decreases entropy for correct examples and increases entropy for incorrect examples.
+
+Key result:
+
+```text
+clean baseline: accuracy 0.0175, ECE 0.0310, NLL 8.9147, Brier 1.0090
+high-rho route: accuracy 0.3860, ECE 0.0923, NLL 4.3609, Brier 0.6809
+low-rho route:  accuracy 0.0526, ECE 0.0320, NLL 7.0463, Brier 0.9815
+random route:   accuracy 0.3860, ECE 0.1212, NLL 4.2607, Brier 0.6980
+```
+
+High-rho versus low-rho paired route contrasts:
+
+```text
+after NLL:          high - low = -2.6854, high better rate = 0.7018
+after Brier:        high - low = -0.3006, high better rate = 0.5789
+target-prob delta:  high - low = +0.0052, high better rate = 0.7018
+full-vocab KL:      high - low = -0.0002, high better rate = 0.4912
+```
+
+Interpretation: high-rho routes make target-probability, NLL, Brier, and exact-target accuracy much more steerable than low-rho routes, with similar full-vocabulary KL and top-10 preservation. ECE does not improve in this run because the exact-token baseline is already low-confidence and low-accuracy, so it is nearly calibrated in a pessimistic sense. This application should be framed as an internal calibration-steerability diagnostic with an ECE caveat, not as a pure ECE-improvement result.
 
 ## Added Application: Local Confidence Control
 
@@ -958,6 +1002,12 @@ Operational controllability tests:
 python scripts\run_control_cost_and_equal_output_tests.py --tau-entropy 0.02 --tau-varentropy 0.04 --top-k-output 32 --seed 20260529
 ```
 
+Calibration-diagnosis application:
+
+```powershell
+python scripts\run_calibration_diagnosis.py --max-prompts-per-task 10 --top-k 32 --subspace-ks 8 --output-eps 0.05 --seed 20260532
+```
+
 Uncertainty-circuit and brittle-confidence applications:
 
 ```powershell
@@ -1005,6 +1055,7 @@ The commands regenerate raw outputs under `results/`. The checked-in paper-ready
 - Decoder-only evidence is present in the main steering experiment on Qwen and Phi, but remains a local next-token logit-lens intervention.
 - Direct projected gradients are stronger immediate predictors than rho for raw local movement; rho's stronger claim is residual geometric information after controls and decompositional interpretability.
 - In the minimal intervention-energy test, `rho` predicts lower cost in the local top-k 32 setting, but projected gradients remain the strongest raw cost predictors and the full multi-epsilon grid is more mixed.
+- The calibration-diagnosis application improves NLL/Brier/target probability through high-rho routes, but ECE worsens because the exact-token baseline is low-confidence and low-accuracy; do not frame it as a pure ECE win.
 - The uncertainty-circuit application supports route localization, but high-rho improvements over low-rho/random routes are modest in this first battery and still use local logit-lens interventions.
 - The brittle-confidence application is mixed/negative: low-rho high-confidence cases do not show uniformly higher fragility under the current template perturbations.
 - The CIFAR-10/CIFAR-10-C hidden-fragility application is configured but not executed in this workspace because the required local vision datasets are absent.

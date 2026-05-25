@@ -28,6 +28,7 @@ experiments/controls/random_subspaces/,Random subspace controls
 experiments/controls/euclidean_ablation/,Euclidean ablation controls
 experiments/controls/shuffled_surprisal/,Shuffled surprisal controls
 experiments/controls/fisher_output_energy_control/,Equal Fisher-output-energy controls
+applications/03_calibration_diagnosis/,Calibration diagnosis application for internal steerability of miscalibration
 applications/local_confidence_control/,Killer application slice for local answer-preserving confidence control
 applications/04_uncertainty_circuits/,Route interpretability application testing causal localization of uncertainty accessibility
 applications/05_brittle_confidence/,Brittle-confidence matched perturbation application and boundary-case diagnostic

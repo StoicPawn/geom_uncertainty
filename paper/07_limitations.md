@@ -6,6 +6,7 @@
 - Top-k Fisher geometry is a local output-lens approximation. The tiny full-vocabulary sanity check suggests larger top-k lenses move closer to full-vocabulary rho, but top-k should not be presented as invariant.
 - Direct projected gradients are stronger raw infinitesimal predictors than `rho`; the central claim is geometric decomposition and route accessibility, not predictor dominance.
 - The minimal intervention-energy test supports a local cost interpretation on MLM top-k 32 records, but the multi-epsilon grid and decoder slices are more mixed; this should be framed as operational evidence with gradient-baseline caveats.
+- The calibration-diagnosis application shows high-rho NLL/Brier/target-probability steerability, but not ECE improvement; the exact-token baseline is low-confidence and low-accuracy.
 - The uncertainty-circuit application supports causal route localization, but the high-rho advantage over low-rho/random routes is modest in the first checked-in battery.
 - The brittle-confidence application is a mixed/negative boundary case under the current template perturbations, not a positive claim.
 - The CIFAR-10/CIFAR-10-C hidden-fragility application is prepared as a cross-domain protocol but was not executed because the local datasets were absent.
