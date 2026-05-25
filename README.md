@@ -35,6 +35,8 @@ experiments/
   03_layerwise_k_structure/
   04_uncertainty_steering/
   controls/
+    statistical_diagnostics/
+    full_vocab_sanity/
     topk_robustness/
     gradient_baselines/
     full_regression/
@@ -77,6 +79,13 @@ Run the extended robustness/control suite:
 
 ```powershell
 python scripts\run_topk_gradient_regression_controls.py --top-k-values 16,32,64,128,256 --subspace-ks 8 --max-prompts-per-task 8 --random-subspaces 1 --output-eps 0.05 --seed 20260525
+```
+
+Run the statistical/diagnostic package and tiny-model full-vocabulary sanity check:
+
+```powershell
+python scripts\run_statistical_diagnostics.py --bootstrap 1000 --seed 20260526
+python scripts\run_tiny_full_vocab_sanity.py --max-prompts-per-task 4 --top-k-values 16,32,64,128,256 --subspace-ks 8 --random-subspaces 1 --seed 20260526
 ```
 
 Minimal full-run commands are listed in `reports/final_reproducibility_and_results_report.md`. Raw reruns write under `results/`; the paper-ready artifacts are curated into `experiments/`.

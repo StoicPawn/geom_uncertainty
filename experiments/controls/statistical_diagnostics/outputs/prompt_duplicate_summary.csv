@@ -1,0 +1,2 @@
+n_prompt_rows,n_unique_exact_prompts,n_unique_normalized_prompts,n_exact_duplicate_rows,n_normalized_duplicate_rows,n_exact_duplicate_rows_within_source,n_normalized_duplicate_rows_within_source,n_exact_duplicate_groups,n_normalized_duplicate_groups,n_near_duplicate_pairs,near_duplicate_threshold
+1779,342,342,1777,1777,1128,1128,340,340,103,0.92

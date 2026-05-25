@@ -121,6 +121,7 @@ Output lens:
 - Experiments 1, 2, and 3 use top-k output lenses with `top-k = 32`.
 - Experiment 4 full battery uses `top-k = 16`.
 - Top-k robustness controls explicitly evaluate `top-k = 16, 32, 64, 128, 256`.
+- Full-vocabulary sanity check evaluates full-vocabulary Fisher-kernel accessibility on `google/bert_uncased_L-2_H-128_A-2`.
 - The DistilBERT pilot uses `top-k = 32`.
 - The decoder run uses `top-m = 16`.
 - The computations are therefore top-k/top-m local Fisher geometries, not full-vocabulary Fisher matrices.
@@ -134,6 +135,7 @@ Output lens:
 20260523   layerwise k-dimensional adjusted-rho run
 20260524   steering full battery, pilot steering, decoder steering
 20260525   top-k robustness, gradient baselines, full regression, preservation controls
+20260526   bootstrap diagnostics, prompt audit, failure modes, tiny full-vocabulary sanity
 ```
 
 ## Environment
@@ -269,10 +271,36 @@ Specificity:
 
 Interpretation: accessible steering changes uncertainty more efficiently than controls at equal Fisher-output energy and largely preserves monitored answer identity at small epsilons.
 
+## Confirmatory Vs Exploratory Analyses
+
+Confirmatory analyses are the claim-supporting tests used in the main paper narrative:
+
+- scalar-matched uncertainty with different accessibility;
+- accessibility predicting local movement;
+- layerwise and k-dimensional structure;
+- uncertainty steering against equal Fisher-output-energy controls;
+- bootstrap CIs/effect sizes for the main steering and rho-quartile contrasts;
+- same scalar uncertainty plus same projected-gradient magnitude but different `rho`;
+- tiny-model full-vocabulary sanity check;
+- answer-preserving qualitative steering examples.
+
+Exploratory and diagnostic analyses are used to bound the claim:
+
+- direct projected-gradient baselines;
+- residual `rho` effects after scalar, gradient, and geometric controls;
+- top-k robustness beyond the main lens;
+- prompt duplicate and near-duplicate audit;
+- failure-mode table;
+- Euclidean, shuffled-surprisal, and random-subspace ablations.
+
+Claim boundary: `rho` should not be described as beating direct projected gradients as a raw infinitesimal predictor. The supported claim is that `rho` is a geometric accessibility coefficient: it decomposes varentropy with respect to an internal route, remains informative after controls, and identifies routes along which uncertainty can be changed while mostly preserving the answer neighborhood.
+
 ## Controls, Ablations, And Boundary Cases
 
 Control folders:
 
+- `experiments/controls/statistical_diagnostics/`
+- `experiments/controls/full_vocab_sanity/`
 - `experiments/controls/topk_robustness/`
 - `experiments/controls/gradient_baselines/`
 - `experiments/controls/full_regression/`
@@ -284,6 +312,8 @@ Control folders:
 
 What they address:
 
+- Statistical diagnostics add bootstrap CIs, effect sizes, matched scalar/gradient pairs, prompt audits, and failure modes.
+- Full-vocabulary sanity tests whether top-k accessibility tracks full-vocabulary accessibility on a tiny model.
 - Random subspaces test whether the result is a generic subspace effect.
 - Euclidean ablation tests whether Fisher geometry is needed.
 - Shuffled surprisal tests whether the true centered-surprisal direction is needed.
@@ -321,6 +351,55 @@ k=256: Spearman rho = 0.7882
 ```
 
 Interpretation: the signal does not collapse under top-k changes, but it is not invariant. The most stable comparison is 32 to 64; 16 and 256 remain directionally consistent but should be described as moderately shifted output lenses.
+
+## Added Confirmatory Diagnostic: Bootstrap CIs And Effect Sizes
+
+Primary artifacts:
+
+- `experiments/controls/statistical_diagnostics/outputs/bootstrap_steering_contrasts.csv`
+- `experiments/controls/statistical_diagnostics/outputs/bootstrap_rho_quartiles.csv`
+- `experiments/controls/statistical_diagnostics/reports/report.md`
+
+At top-k 32 and equal Fisher-output energy, accessible steering versus controls has bootstrap CIs and large paired effect sizes:
+
+```text
+|Delta H| accessible - random:
+decrease = 0.02047 [0.01940, 0.02159], ratio = 2.50 [2.35, 2.66], d = 1.62 [1.52, 1.74]
+increase = 0.02033 [0.01923, 0.02148], ratio = 2.61 [2.45, 2.82], d = 1.62 [1.53, 1.73]
+
+|Delta H| accessible - grad-orthogonal:
+decrease = 0.03302 [0.03163, 0.03455], ratio = 30.43 [27.32, 34.06], d = 2.02 [1.92, 2.12]
+increase = 0.03180 [0.03016, 0.03332], ratio = 29.13 [26.37, 32.39], d = 1.78 [1.70, 1.88]
+```
+
+Rho quartile contrasts also remain large:
+
+```text
+epsilon=0.25: q4-q1 |Delta H| = 0.03848 [0.03710, 0.03973], d = 2.06 [1.98, 2.15]
+epsilon=0.50: q4-q1 |Delta H| = 0.07458 [0.07206, 0.07732], d = 2.03 [1.96, 2.11]
+epsilon=1.00: q4-q1 |Delta H| = 0.13606 [0.13070, 0.14126], d = 1.90 [1.83, 1.98]
+```
+
+## Added Confirmatory Diagnostic: Same Scalar + Same Projected Gradients + Different Rho
+
+Primary artifacts:
+
+- `experiments/controls/statistical_diagnostics/outputs/same_scalar_gradient_different_rho_pairs.csv`
+- `experiments/controls/statistical_diagnostics/outputs/same_scalar_gradient_different_rho_summary.csv`
+
+The matched-pair diagnostic searches within the same model, prompt, layer, and top-k lens, so scalar uncertainty is exactly matched. It then matches projected-gradient norms and asks whether `rho` can still differ:
+
+```text
+n pairs = 86
+mean rho absolute difference = 0.2487
+max rho absolute difference = 0.4935
+median entropy difference = 0.0000
+median varentropy difference = 0.0000
+median |Delta projected grad H norm| = 0.0271
+median |Delta projected grad Var norm| = 0.0526
+```
+
+Interpretation: this directly addresses the gradient-baseline novelty concern. Even at identical scalar uncertainty and similar projected-gradient magnitudes, the geometric accessibility coefficient can vary materially across internal routes.
 
 ## Added Control B: Direct Gradient Baselines
 
@@ -392,6 +471,13 @@ embedding centroid shift:    about 0.013
 
 Interpretation: top-1 preservation is not the only evidence. The selected and full-vocabulary candidate neighborhoods remain mostly stable at the steering scale used for the control battery.
 
+Qualitative answer-preserving examples are stored in:
+
+- `experiments/04_uncertainty_steering/outputs/answer_preserving_qualitative_examples.csv`
+- `experiments/04_uncertainty_steering/reports/answer_preserving_qualitative_examples.md`
+
+Example pattern: the prompt `The meeting happened near the [MASK] in the school.` preserves the answer token `library` while entropy moves from `0.9675` to `1.0590` under an increasing accessible intervention, with full-vocabulary top-10 Jaccard equal to `1.000`.
+
 ## Added Control E: Decoder-only Main Evidence
 
 Decoder-only evidence is now documented inside Experiment 4 rather than treated only as an external appendix:
@@ -402,6 +488,66 @@ Decoder-only evidence is now documented inside Experiment 4 rather than treated 
 - `experiments/04_uncertainty_steering/reports/decoder_qwen_report.md`
 
 Interpretation: the decoder evidence is still smaller than the masked-LM full battery, but it is part of the main uncertainty-steering experiment and supports the claim that the geometry is not exclusive to masked-LM heads.
+
+## Added Control F: Full-Vocabulary Tiny-Model Sanity
+
+Primary artifacts:
+
+- `experiments/controls/full_vocab_sanity/outputs/full_vocab_rho_scores.csv`
+- `experiments/controls/full_vocab_sanity/outputs/topk_vs_full_vocab_summary.csv`
+- `experiments/controls/full_vocab_sanity/reports/report.md`
+
+The tiny-model run computes full-vocabulary accessibility via the Fisher-kernel identity:
+
+```text
+rho = u^T F C (C^T F C)^+ C^T F u / (u^T F u), where C = J B
+```
+
+Key result:
+
+```text
+k=16:  mean |rho_topk-rho_full| = 0.3793, Spearman = 0.3523
+k=32:  mean |rho_topk-rho_full| = 0.1807, Spearman = 0.5066
+k=64:  mean |rho_topk-rho_full| = 0.1174, Spearman = 0.4792
+k=128: mean |rho_topk-rho_full| = 0.0915, Spearman = 0.4977
+k=256: mean |rho_topk-rho_full| = 0.0829, Spearman = 0.4952
+```
+
+Interpretation: small top-k lenses overestimate absolute full-vocabulary accessibility, while larger top-k lenses move closer to full-vocabulary rho. This supports the top-k lens as a useful local approximation but not as an invariant substitute for full-vocabulary geometry.
+
+## Added Diagnostic: Prompt Audit And Failure Modes
+
+Primary artifacts:
+
+- `experiments/controls/statistical_diagnostics/outputs/prompt_duplicate_summary.csv`
+- `experiments/controls/statistical_diagnostics/outputs/prompt_near_duplicates.csv`
+- `experiments/controls/statistical_diagnostics/outputs/failure_modes.csv`
+- `experiments/controls/statistical_diagnostics/outputs/bootstrap_residual_effects.csv`
+
+Prompt audit:
+
+```text
+prompt rows audited = 1779
+unique exact prompts = 342
+unique normalized prompts = 342
+near-duplicate pairs at threshold 0.92 = 103
+```
+
+Failure-mode table:
+
+```text
+rho unstable across top-k = 80
+top-10 degradation cases = 40
+top-1 changed cases = 22
+high-rho / low-movement cases = 1
+```
+
+Residual diagnostic after scalar, gradient, and geometric controls:
+
+```text
+rho residual effect on |Delta H|   = 0.1366 [0.1207, 0.1522]
+rho residual effect on |Delta Var| = 0.1444 [0.1286, 0.1609]
+```
 
 ## Figures
 
@@ -476,14 +622,21 @@ python scripts\run_topk_gradient_regression_controls.py --top-k-values 16,32,64,
 python scripts\make_paper_figures.py
 ```
 
+Statistical diagnostics and full-vocabulary tiny-model sanity:
+
+```powershell
+python scripts\run_statistical_diagnostics.py --bootstrap 1000 --seed 20260526
+python scripts\run_tiny_full_vocab_sanity.py --max-prompts-per-task 4 --top-k-values 16,32,64,128,256 --subspace-ks 8 --random-subspaces 1 --seed 20260526
+```
+
 The commands regenerate raw outputs under `results/`. The checked-in paper-ready artifacts are curated copies under `experiments/`.
 
 ## Limitations
 
 - The Fisher geometry is computed on top-k/top-m selected output sets, not the full vocabulary.
 - Semantic uncertainty is represented by embedding/cluster proxies, not a full semantic-entropy estimator.
-- Decoder-only evidence is present but separate from the masked-LM full battery.
+- Decoder-only evidence is present in the main steering experiment but remains smaller than the masked-LM battery.
 - Direct projected gradients are stronger immediate predictors than rho for raw local movement; rho's stronger claim is residual geometric information after controls and decompositional interpretability.
-- Top-k robustness is good but not perfect; the paper should avoid claiming output-lens invariance.
+- Top-k robustness is good but not perfect; full-vocabulary tiny-model sanity shows that top-k can overestimate absolute rho at small k.
 - RoBERTa was unavailable locally and was not downloaded.
 - The steering claim is local: it concerns hidden-state/logit-lens perturbations, not end-to-end generation behavior under arbitrary prompts.

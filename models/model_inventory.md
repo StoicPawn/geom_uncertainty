@@ -6,7 +6,7 @@ This repository separates model coverage from experiment logic so the paper can 
 |---|---|---|---|
 | `distilbert-base-uncased` | masked LM | Experiments 1-4, top-k robustness, gradient/regression controls | main |
 | `bert-base-uncased` | masked LM | Experiments 1 and 4, top-k robustness, gradient/regression controls | main |
-| `google/bert_uncased_L-2_H-128_A-2` | small masked LM | Experiments 1 and 4, top-k robustness, gradient/regression controls | main small-model replication |
+| `google/bert_uncased_L-2_H-128_A-2` | small masked LM | Experiments 1 and 4, top-k robustness, gradient/regression controls, full-vocabulary sanity | main small-model replication |
 | `Qwen/Qwen2.5-0.5B` | decoder-only LM | Decoder logit-lens uncertainty steering inside Experiment 4 | main decoder evidence |
 | RoBERTa family | masked LM | Intended replication | not available locally; no network download attempted |
 
@@ -15,6 +15,7 @@ This repository separates model coverage from experiment logic so the paper can 
 - Masked-LM main experiments use selected top-k MLM-head logits.
 - Experiment 4 full battery uses top-k `16`.
 - Top-k robustness explicitly evaluates `16, 32, 64, 128, 256`.
+- Full-vocabulary sanity uses the tiny model and computes full-vocabulary Fisher-kernel rho without materializing full `F^{1/2}`.
 - Decoder-only steering uses selected top-m next-token logits.
 
 ## Locality

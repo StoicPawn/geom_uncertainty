@@ -28,6 +28,7 @@ Specificity:
 
 - At `epsilon=0.02`, mean top-1 change rate is `0.0142`; target-correctness change rate is `0.0003`.
 - At `epsilon=0.05`, mean top-1 change rate is `0.0345`; target-correctness change rate is `0.0010`.
+- Qualitative answer-preserving examples are in `reports/answer_preserving_qualitative_examples.md`.
 
 ## Claim Support
 
@@ -39,6 +40,7 @@ Specificity:
 | Rho dependency after controls | `outputs/rho_dependency.csv` |
 | Replication matrix | `outputs/replication_matrix.csv` |
 | Per-example audit trail | `outputs/steering_records.csv` |
+| Answer-preserving qualitative cases | `outputs/answer_preserving_qualitative_examples.csv`; `reports/answer_preserving_qualitative_examples.md` |
 | Main paper figure | `figures/fig06_steering_vs_controls_ci.svg` |
 | Supplementary steering figure | `figures/fig06_uncertainty_steering_main.svg` |
 | Reproduction config | `config/reproduce.json` |

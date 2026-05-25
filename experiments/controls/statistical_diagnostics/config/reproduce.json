@@ -1,0 +1,7 @@
+{
+  "control_id":"statistical_diagnostics",
+  "bootstrap_replicates":1000,
+  "seed":20260526,
+  "near_duplicate_threshold":0.92,
+  "minimal_command":"python scripts\/run_statistical_diagnostics.py --bootstrap 1000 --seed 20260526"
+}

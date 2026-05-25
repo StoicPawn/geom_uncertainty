@@ -27,6 +27,7 @@ Test whether the accessible component of varentropy can be used to steer uncerta
 - `outputs/steering_records.csv`: per-example steering records.
 - `outputs/decoder_qwen_steering_summary.csv`: decoder-only steering summary.
 - `outputs/decoder_qwen_steering_contrasts.csv`: decoder-only steering contrasts.
+- `outputs/answer_preserving_qualitative_examples.csv`: hand-readable cases where uncertainty changes while the answer token and top-10 neighborhood are preserved.
 - `outputs/distilbert_pilot_steering_summary.csv`: original pilot summary.
 - `outputs/skipped_models.csv`: unavailable model records.
 
@@ -44,6 +45,7 @@ Test whether the accessible component of varentropy can be used to steer uncerta
 - `reports/full_battery_report.md`
 - `reports/decoder_qwen_report.md`
 - `reports/distilbert_pilot_report.md`
+- `reports/answer_preserving_qualitative_examples.md`
 
 ## Claim Support
 

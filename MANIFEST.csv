@@ -12,6 +12,8 @@ experiments/02_local_perturbation_prediction/,Experiment 2 data outputs figures 
 experiments/03_layerwise_k_structure/,Experiment 3 data outputs figures reports and config
 experiments/04_uncertainty_steering/,Experiment 4 five-check steering battery outputs figures reports and config
 experiments/controls/,Controls ablations and boundary cases
+experiments/controls/statistical_diagnostics/,Bootstrap intervals effect sizes duplicate audit and failure modes
+experiments/controls/full_vocab_sanity/,Tiny-model full-vocabulary sanity check against top-k Fisher geometry
 experiments/controls/topk_robustness/,Top-k robustness controls
 experiments/controls/gradient_baselines/,Projected gradient baseline controls
 experiments/controls/full_regression/,Full regression controls

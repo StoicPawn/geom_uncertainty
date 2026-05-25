@@ -1,0 +1,12 @@
+prompt_id,prompt,task,topic,fact_id,template_id,target,target_id,observed_condition,final_top1_token,final_top1_prob_topk,target_rank_final,model
+0,The musician heard the [MASK].,ambiguous_open,open,ambiguous_open:95,extended,,,ambiguous,song,0.10117695357311297,,google/bert_uncased_L-2_H-128_A-2
+1,The currency of China is the [MASK].,factual_deep,currency,currency:china,t0,yuan,11237.0,error,currency,0.16709237430508148,191.0,google/bert_uncased_L-2_H-128_A-2
+2,The opposite of day is [MASK].,factual_simple,lexical,factual_simple:57,extended,night,2305.0,error,unknown,0.0929808759404377,38.0,google/bert_uncased_L-2_H-128_A-2
+3,The coach talked to the [MASK].,ambiguous_open,polysemy,ambiguous_open:162,extended,,,ambiguous,club,0.10930953190796154,,google/bert_uncased_L-2_H-128_A-2
+4,The capital of Jordan is [MASK].,factual_deep,capital,capital:jordan,t0,amman,25703.0,error,##fahan,0.25317358187020567,627.0,google/bert_uncased_L-2_H-128_A-2
+5,The largest planet is [MASK].,factual_simple,science,factual_simple:44,extended,jupiter,13035.0,error,unknown,0.10414562261312992,27.0,google/bert_uncased_L-2_H-128_A-2
+6,The worker lost the [MASK].,ambiguous_open,open,ambiguous_open:91,extended,,,ambiguous,party,0.041469374549896645,,google/bert_uncased_L-2_H-128_A-2
+8,Birds usually fly in the [MASK].,factual_simple,common,factual_simple:70,extended,sky,3712.0,error,birds,0.11816671869258247,17.0,google/bert_uncased_L-2_H-128_A-2
+9,The patient waited for the [MASK].,ambiguous_open,role,ambiguous_open:164,extended,,,ambiguous,hospital,0.1871867927573925,,google/bert_uncased_L-2_H-128_A-2
+10,Old has the opposite meaning of [MASK].,factual_deep,antonym,antonym:old,t1,new,2047.0,error,it,0.08940618791626086,976.0,google/bert_uncased_L-2_H-128_A-2
+11,A person who drives a bus is a [MASK].,factual_simple,role,factual_simple:62,extended,driver,4062.0,error,car,0.054379558756537855,4.0,google/bert_uncased_L-2_H-128_A-2

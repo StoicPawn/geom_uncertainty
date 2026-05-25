@@ -4,6 +4,8 @@ This folder separates controls from the four main experiments while keeping them
 
 | Control | Question addressed | Primary output |
 |---|---|---|
+| `statistical_diagnostics/` | What are the bootstrap CIs, effect sizes, duplicate checks, and failure modes? | `outputs/bootstrap_steering_contrasts.csv` |
+| `full_vocab_sanity/` | Does top-k accessibility track full-vocabulary accessibility on the tiny model? | `outputs/topk_vs_full_vocab_summary.csv` |
 | `topk_robustness/` | Are rho rankings, layer trends, and steering effects stable across output top-k? | `outputs/topk_rank_stability.csv` |
 | `gradient_baselines/` | Does rho add information relative to projected gradients and Fisher/Jacobian norms? | `outputs/gradient_baseline_correlations.csv` |
 | `full_regression/` | Does rho remain predictive after scalar, geometric, model, layer, and prompt controls? | `outputs/full_regression_ols.csv` |

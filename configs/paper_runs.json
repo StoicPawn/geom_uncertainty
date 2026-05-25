@@ -11,6 +11,8 @@
     "experiments/04_uncertainty_steering/config/reproduce.json"
   ],
   "controls": [
+    "experiments/controls/statistical_diagnostics/config/reproduce.json",
+    "experiments/controls/full_vocab_sanity/config/reproduce.json",
     "experiments/controls/topk_robustness/config/reproduce.json",
     "experiments/controls/gradient_baselines/config/reproduce.json",
     "experiments/controls/full_regression/config/reproduce.json",
@@ -21,5 +23,7 @@
     "experiments/controls/fisher_output_energy_control/config/reproduce.json"
   ],
   "canonical_figure_command": "python scripts/make_paper_figures.py",
-  "new_control_command": "python scripts/run_topk_gradient_regression_controls.py --top-k-values 16,32,64,128,256 --subspace-ks 8 --max-prompts-per-task 8 --random-subspaces 1 --output-eps 0.05 --seed 20260525"
+  "new_control_command": "python scripts/run_topk_gradient_regression_controls.py --top-k-values 16,32,64,128,256 --subspace-ks 8 --max-prompts-per-task 8 --random-subspaces 1 --output-eps 0.05 --seed 20260525",
+  "statistical_diagnostic_command": "python scripts/run_statistical_diagnostics.py --bootstrap 1000 --seed 20260526",
+  "full_vocab_sanity_command": "python scripts/run_tiny_full_vocab_sanity.py --max-prompts-per-task 4 --top-k-values 16,32,64,128,256 --subspace-ks 8 --random-subspaces 1 --seed 20260526"
 }
