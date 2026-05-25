@@ -1,0 +1,49 @@
+model,prompt_id,case_id,prompt,target,target_token_ids,task,topic,layer,top_m,top1_token_id,top1_token,top1_correct,target_in_topm,target_rank_lens,entropy,varentropy,confidence,num_model_layers
+Qwen/Qwen2.5-0.5B,qwen_qwen2.5-0.5b:token_level_qa:7:0:layer12,token_level_qa:7:0,"Question: What animal barks?
+Answer:",dog,5562 14254 18457 48940,token_level_qa,animal,12,16,141184,でしょうね,0.0,0,7610.0,2.370026515019353,0.7712106134354642,0.21987704771029984,24
+Qwen/Qwen2.5-0.5B,qwen_qwen2.5-0.5b:token_level_qa:7:0:layer23,token_level_qa:7:0,"Question: What animal barks?
+Answer:",dog,5562 14254 18457 48940,token_level_qa,animal,23,16,576,The,0.0,0,133.0,2.251210035815316,1.1224063833542566,0.36243135109504765,24
+Qwen/Qwen2.5-0.5B,qwen_qwen2.5-0.5b:token_level_qa:2:1:layer12,token_level_qa:2:1,"Question: Which planet is known as the Red Planet?
+Answer:",Mars,44 21048 94926,token_level_qa,science,12,16,141184,でしょうね,0.0,0,18161.0,2.3929350692760267,0.610824865565154,0.1957477631825546,24
+Qwen/Qwen2.5-0.5B,qwen_qwen2.5-0.5b:token_level_qa:2:1:layer23,token_level_qa:2:1,"Question: Which planet is known as the Red Planet?
+Answer:",Mars,44 21048 94926,token_level_qa,science,23,16,576,The,0.0,1,4.0,1.9917117208645918,1.5592369595039581,0.45888830007535714,24
+Qwen/Qwen2.5-0.5B,qwen_qwen2.5-0.5b:token_level_qa:4:2:layer12,token_level_qa:4:2,"Question: Who wrote Hamlet?
+Answer:",Shakespeare,927 2016 41382,token_level_qa,culture,12,16,89180,//----------------------------------------------------------------------------------------------------------------,0.0,0,3382.0,2.304816649048871,0.8469306205623812,0.24607190463150558,24
+Qwen/Qwen2.5-0.5B,qwen_qwen2.5-0.5b:token_level_qa:4:2:layer23,token_level_qa:4:2,"Question: Who wrote Hamlet?
+Answer:",Shakespeare,927 2016 41382,token_level_qa,culture,23,16,576,The,0.0,1,3.0,1.9637512513324966,1.8151340648133918,0.5057428850287853,24
+Qwen/Qwen2.5-0.5B,qwen_qwen2.5-0.5b:factual_completion:2:0:layer12,factual_completion:2:0,A person who teaches students is a,teacher,11079 23360 29069 45065,factual_completion,role,12,16,78427,""",__",0.0,0,4825.0,2.5540827536767474,0.42767858547898563,0.17492715327576885,24
+Qwen/Qwen2.5-0.5B,qwen_qwen2.5-0.5b:factual_completion:2:0:layer23,factual_completion:2:0,A person who teaches students is a,teacher,11079 23360 29069 45065,factual_completion,role,23,16,11079,teacher,1.0,1,1.0,2.314461466529385,0.6358010461162962,0.21370741521667247,24
+Qwen/Qwen2.5-0.5B,qwen_qwen2.5-0.5b:factual_completion:4:1:layer12,factual_completion:4:1,The currency used in Japan is the,yen,56 809 57340 76151,factual_completion,currency,12,16,95131,bearer,0.0,0,12884.0,2.6780391102193155,0.1957611583365163,0.1312883149245983,24
+Qwen/Qwen2.5-0.5B,qwen_qwen2.5-0.5b:factual_completion:4:1:layer23,factual_completion:4:1,The currency used in Japan is the,yen,56 809 57340 76151,factual_completion,currency,23,16,57340,yen,1.0,1,1.0,1.1184479108824472,1.3538583147079697,0.49992836802119844,24
+Qwen/Qwen2.5-0.5B,qwen_qwen2.5-0.5b:factual_completion:3:2:layer12,factual_completion:3:2,The language most commonly spoken in Brazil is,Portuguese,403 7084 42188,factual_completion,language,12,16,444,L,0.0,0,45773.0,2.4465879455119826,0.7099951197737171,0.25203521864008344,24
+Qwen/Qwen2.5-0.5B,qwen_qwen2.5-0.5b:factual_completion:3:2:layer23,factual_completion:3:2,The language most commonly spoken in Brazil is,Portuguese,403 7084 42188,factual_completion,language,23,16,6364,English,0.0,1,4.0,2.4781458324259353,0.5550517394999684,0.20773893579620994,24
+Qwen/Qwen2.5-0.5B,qwen_qwen2.5-0.5b:generative_open:2:0:layer12,generative_open:2:0,"When people want to celebrate, they often bring",,,generative_open,common,12,16,120289,珣,,0,,1.811423407909447,1.7926124321914154,0.4841663650769991,24
+Qwen/Qwen2.5-0.5B,qwen_qwen2.5-0.5b:generative_open:2:0:layer23,generative_open:2:0,"When people want to celebrate, they often bring",,,generative_open,common,23,16,20609,gifts,,0,,1.4646139633749877,2.2705218112445222,0.6548698750263716,24
+Qwen/Qwen2.5-0.5B,qwen_qwen2.5-0.5b:generative_open:4:1:layer12,generative_open:4:1,"In a school hallway, a student may notice the",,,generative_open,scene,12,16,47542,tas,,0,,2.0145388645134465,1.2302514065093975,0.3228523519769053,24
+Qwen/Qwen2.5-0.5B,qwen_qwen2.5-0.5b:generative_open:4:1:layer23,generative_open:4:1,"In a school hallway, a student may notice the",,,generative_open,scene,23,16,2701,following,,0,,0.8577626972639014,1.9654261031171714,0.8058306068692005,24
+Qwen/Qwen2.5-0.5B,qwen_qwen2.5-0.5b:generative_open:1:2:layer12,generative_open:1:2,A traveler entering a city might first see the,,,generative_open,scene,12,16,47542,tas,,0,,2.224700732622128,0.9876933757940932,0.3073704379079509,24
+Qwen/Qwen2.5-0.5B,qwen_qwen2.5-0.5b:generative_open:1:2:layer23,generative_open:1:2,A traveler entering a city might first see the,,,generative_open,scene,23,16,60347,"""<?",,0,,2.377057455270669,0.7376949864333495,0.21667749284169643,24
+microsoft/phi-2,microsoft_phi-2:token_level_qa:7:0:layer16,token_level_qa:7:0,"Question: What animal barks?
+Answer:",dog,3290 8532 9703 32942,token_level_qa,animal,16,16,23998,Answer,0.0,0,369.0,1.278392148402335,1.4129050905597231,0.544674254867867,32
+microsoft/phi-2,microsoft_phi-2:token_level_qa:7:0:layer31,token_level_qa:7:0,"Question: What animal barks?
+Answer:",dog,3290 8532 9703 32942,token_level_qa,animal,31,16,317,A,0.0,1,2.0,1.3520451766956674,0.8993082038503332,0.5021642682086874,32
+microsoft/phi-2,microsoft_phi-2:token_level_qa:2:1:layer16,token_level_qa:2:1,"Question: Which planet is known as the Red Planet?
+Answer:",Mars,76 8706 43725,token_level_qa,science,16,16,383,The,0.0,0,1585.0,1.6451601504507232,1.3477346186609394,0.3985607508957474,32
+microsoft/phi-2,microsoft_phi-2:token_level_qa:2:1:layer31,token_level_qa:2:1,"Question: Which planet is known as the Red Planet?
+Answer:",Mars,76 8706 43725,token_level_qa,science,31,16,8706,Mars,1.0,1,1.0,0.1177107795086112,0.5399512379006355,0.9810358910905687,32
+microsoft/phi-2,microsoft_phi-2:token_level_qa:4:2:layer16,token_level_qa:4:2,"Question: Who wrote Hamlet?
+Answer:",Shakespeare,1477 2484 22197,token_level_qa,culture,16,16,383,The,0.0,0,94.0,2.1817073766754866,1.1211536309272088,0.3268541658747694,32
+microsoft/phi-2,microsoft_phi-2:token_level_qa:4:2:layer31,token_level_qa:4:2,"Question: Who wrote Hamlet?
+Answer:",Shakespeare,1477 2484 22197,token_level_qa,culture,31,16,3977,William,0.0,1,3.0,0.395382094877738,1.1071893970393387,0.9145452442484873,32
+microsoft/phi-2,microsoft_phi-2:factual_completion:2:0:layer16,factual_completion:2:0,A person who teaches students is a,teacher,660 4701 6767 32019,factual_completion,role,16,16,4808,_,0.0,0,152.0,2.2042394193531587,1.256235630243344,0.3912100386130773,32
+microsoft/phi-2,microsoft_phi-2:factual_completion:2:0:layer31,factual_completion:2:0,A person who teaches students is a,teacher,660 4701 6767 32019,factual_completion,role,31,16,4701,teacher,1.0,1,1.0,0.37678593912231345,1.369190295958983,0.9317606859024853,32
+microsoft/phi-2,microsoft_phi-2:factual_completion:4:1:layer16,factual_completion:4:1,The currency used in Japan is the,yen,56 88 28808 47028,factual_completion,currency,16,16,12429,**,0.0,0,960.0,2.1814556071250926,1.0221862622159397,0.25032360021717476,32
+microsoft/phi-2,microsoft_phi-2:factual_completion:4:1:layer31,factual_completion:4:1,The currency used in Japan is the,yen,56 88 28808 47028,factual_completion,currency,31,16,28808,yen,1.0,1,1.0,0.6775712393421437,0.47478336444651964,0.6984114232766246,32
+microsoft/phi-2,microsoft_phi-2:factual_completion:3:2:layer16,factual_completion:3:2,The language most commonly spoken in Brazil is,Portuguese,634 13924 21813,factual_completion,language,16,16,635,also,0.0,0,1636.0,2.5758143510110463,0.3812720659122376,0.1685480187834339,32
+microsoft/phi-2,microsoft_phi-2:factual_completion:3:2:layer31,factual_completion:3:2,The language most commonly spoken in Brazil is,Portuguese,634 13924 21813,factual_completion,language,31,16,21813,Portuguese,1.0,1,1.0,0.10164515070271762,0.5485589077061788,0.9857837544202595,32
+microsoft/phi-2,microsoft_phi-2:generative_open:2:0:layer16,generative_open:2:0,"When people want to celebrate, they often bring",,,generative_open,common,16,16,257,a,,0,,2.5201941754123265,0.4938011523766328,0.20002380039020348,32
+microsoft/phi-2,microsoft_phi-2:generative_open:2:0:layer31,generative_open:2:0,"When people want to celebrate, they often bring",,,generative_open,common,31,16,503,out,,0,,1.8516010795998836,1.2200664249475133,0.4182811267890528,32
+microsoft/phi-2,microsoft_phi-2:generative_open:4:1:layer16,generative_open:4:1,"In a school hallway, a student may notice the",,,generative_open,scene,16,16,5400,differences,,0,,2.3929125381545053,0.6795405581153553,0.19214202556811974,32
+microsoft/phi-2,microsoft_phi-2:generative_open:4:1:layer31,generative_open:4:1,"In a school hallway, a student may notice the",,,generative_open,scene,31,16,4931,presence,,0,,2.4937844825883615,0.47169226352543725,0.19089370042719478,32
+microsoft/phi-2,microsoft_phi-2:generative_open:1:2:layer16,generative_open:1:2,A traveler entering a city might first see the,,,generative_open,scene,16,16,5385,familiar,,0,,2.396202054775975,0.7628058361773198,0.2661376067494502,32
+microsoft/phi-2,microsoft_phi-2:generative_open:1:2:layer31,generative_open:1:2,A traveler entering a city might first see the,,,generative_open,scene,31,16,1748,city,,0,,1.753539124658019,2.0020820668848867,0.5607764135178019,32

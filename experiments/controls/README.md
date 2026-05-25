@@ -8,6 +8,7 @@ This folder separates controls from the four main experiments while keeping them
 | `full_vocab_sanity/` | Does top-k accessibility track full-vocabulary accessibility on the tiny model? | `outputs/topk_vs_full_vocab_summary.csv` |
 | `out_of_sample_generalization/` | Do train-estimated routes transfer to held-out prompts? | `outputs/oos_contrasts.csv` |
 | `random_init_vs_pretrained/` | Is accessibility mostly learned structure or random architectural geometry? | `outputs/pretrained_vs_random_contrasts.csv` |
+| `external_uncertainty_comparators/` | How do accessible varentropy, Semantic Entropy, Semantic Density, and HaloScope-style consistency relate? | `outputs/comparator_steering_sensitivity.csv` |
 | `topk_robustness/` | Are rho rankings, layer trends, and steering effects stable across output top-k? | `outputs/topk_rank_stability.csv` |
 | `gradient_baselines/` | Does rho add information relative to projected gradients and Fisher/Jacobian norms? | `outputs/gradient_baseline_correlations.csv` |
 | `full_regression/` | Does rho remain predictive after scalar, geometric, model, layer, and prompt controls? | `outputs/full_regression_ols.csv` |

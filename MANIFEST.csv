@@ -11,11 +11,13 @@ experiments/01_matched_scalar_uncertainty/,Experiment 1 data outputs figures rep
 experiments/02_local_perturbation_prediction/,Experiment 2 data outputs figures reports and config
 experiments/03_layerwise_k_structure/,Experiment 3 data outputs figures reports and config
 experiments/04_uncertainty_steering/,Experiment 4 five-check steering battery outputs figures reports and config
+experiments/04_uncertainty_steering/decoder_main_battery/,Main decoder-only LLM steering battery
 experiments/controls/,Controls ablations and boundary cases
 experiments/controls/statistical_diagnostics/,Bootstrap intervals effect sizes duplicate audit and failure modes
 experiments/controls/full_vocab_sanity/,Tiny-model full-vocabulary sanity check against top-k Fisher geometry
 experiments/controls/out_of_sample_generalization/,Train-route held-out prompt generalization control
 experiments/controls/random_init_vs_pretrained/,Random initialization versus pretrained learned-structure control
+experiments/controls/external_uncertainty_comparators/,Semantic Entropy Semantic Density and HaloScope-style comparator diagnostics
 experiments/controls/topk_robustness/,Top-k robustness controls
 experiments/controls/gradient_baselines/,Projected gradient baseline controls
 experiments/controls/full_regression/,Full regression controls
@@ -24,5 +26,6 @@ experiments/controls/random_subspaces/,Random subspace controls
 experiments/controls/euclidean_ablation/,Euclidean ablation controls
 experiments/controls/shuffled_surprisal/,Shuffled surprisal controls
 experiments/controls/fisher_output_energy_control/,Equal Fisher-output-energy controls
+applications/local_confidence_control/,Killer application slice for local answer-preserving confidence control
 src/accessible_varentropy/,Core implementation
 scripts/,Curated reproduction scripts and paper-figure generator

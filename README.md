@@ -34,11 +34,13 @@ experiments/
   02_local_perturbation_prediction/
   03_layerwise_k_structure/
   04_uncertainty_steering/
+    decoder_main_battery/
   controls/
     statistical_diagnostics/
     full_vocab_sanity/
     out_of_sample_generalization/
     random_init_vs_pretrained/
+    external_uncertainty_comparators/
     topk_robustness/
     gradient_baselines/
     full_regression/
@@ -47,6 +49,8 @@ experiments/
     euclidean_ablation/
     shuffled_surprisal/
     fisher_output_energy_control/
+applications/
+  local_confidence_control/
 models/
 configs/
 reports/
@@ -94,6 +98,12 @@ Run the out-of-sample and random-init reviewer controls:
 
 ```powershell
 python scripts\run_generalization_random_init_controls.py --top-k 32 --subspace-ks 8 --max-prompts-per-task 8 --random-subspaces 1 --output-eps 0.05 --seed 20260527
+```
+
+Run the decoder-only main battery, external uncertainty comparators, and local confidence-control application:
+
+```powershell
+python scripts\run_decoder_llm_main_and_comparators.py --local-files-only --trust-remote-code --max-prompts-per-task 3 --top-m 16 --pca-dim 8 --output-eps 0.05 --seed 20260528
 ```
 
 Minimal full-run commands are listed in `reports/final_reproducibility_and_results_report.md`. Raw reruns write under `results/`; the paper-ready artifacts are curated into `experiments/`.

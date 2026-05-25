@@ -1,0 +1,13 @@
+{
+  "command": "python scripts\\run_decoder_llm_main_and_comparators.py --local-files-only --trust-remote-code --models Qwen/Qwen2.5-0.5B,microsoft/phi-2 --record-skipped-models \"meta-llama/Llama-3.2-1B:missing local cache;mistralai/Mistral-7B-v0.1:missing local cache\" --max-prompts-per-task 3 --top-m 16 --pca-dim 8 --output-eps 0.05 --seed 20260528",
+  "seed": 20260528,
+  "models": [
+    "Qwen/Qwen2.5-0.5B",
+    "microsoft/phi-2"
+  ],
+  "record_skipped_models": "meta-llama/Llama-3.2-1B:missing local cache;mistralai/Mistral-7B-v0.1:missing local cache",
+  "top_m": 16,
+  "pca_dim": 8,
+  "output_eps": 0.05,
+  "local_files_only": true
+}

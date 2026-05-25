@@ -10,7 +10,10 @@ experiments/
   02_local_perturbation_prediction/
   03_layerwise_k_structure/
   04_uncertainty_steering/
+    decoder_main_battery/
   controls/
+applications/
+  local_confidence_control/
 reports/
   final_reproducibility_and_results_report.md
   figures/
@@ -43,10 +46,12 @@ Main masked-LM runs:
 Decoder evidence:
 
 - `Qwen/Qwen2.5-0.5B`, included as decoder-only logit-lens steering evidence inside Experiment 4.
+- `microsoft/phi-2`, included as a stronger decoder-only replication inside Experiment 4.
 
 Unavailable or incomplete:
 
 - RoBERTa was not available in the local Hugging Face cache. No network download was attempted for the consolidated run.
+- Llama and Mistral were requested as stronger decoder replications, but they were not available in the local Hugging Face cache. No network download was attempted.
 
 ## Tasks And Prompt Counts
 
@@ -64,6 +69,8 @@ google/bert_uncased_L-2_H-128_A-2: 12 ambiguous_open, 12 factual_deep, 9 factual
 
 The exact per-model correctness counts are in `experiments/04_uncertainty_steering/data/prompt_tables.csv`.
 
+The decoder-only main battery uses token-level QA, factual completion, and generative-open prompts. It contributes 18 prompt-layer rows for Qwen and 18 prompt-layer rows for Phi, using two layers per model and three tasks.
+
 ## Layers, Dimensions, Epsilons, And Subspaces
 
 Layer coverage:
@@ -71,11 +78,13 @@ Layer coverage:
 - Experiment 2: all DistilBERT hidden layers available to the intervention run.
 - Experiment 3: DistilBERT layers `0..6`.
 - Experiment 4: auto-selected layer thirds and final layer per model. The resulting matrix is in `experiments/04_uncertainty_steering/outputs/replication_matrix.csv`.
+- Decoder main battery: Qwen layers `12` and `23`; Phi layers `16` and `31`.
 
 Subspace dimensions:
 
 - Experiment 3: `k = 1, 2, 4, 8, 16, 32`.
 - Experiment 4: `k = 1, 4, 8, 16`, filtered by hidden dimension and sample count.
+- Decoder main battery: PCA/random subspace dimension `8`.
 
 Epsilon values:
 
@@ -84,6 +93,7 @@ Epsilon values:
 - Experiment 4 Fisher-output-equal controls: `epsilon = 0.02, 0.05, 0.1`.
 - DistilBERT pilot steering: `epsilon = 0.1, 0.2, 0.4`.
 - Decoder steering: `epsilon = 0.05, 0.1, 0.2`.
+- Decoder main battery: equal Fisher-output-energy `epsilon = 0.05`.
 
 Subspace types:
 
@@ -106,6 +116,7 @@ Masked-LM Jacobian:
 Decoder Jacobian:
 
 - The decoder run uses a top-m next-token logit lens at the selected layer and computes the local Jacobian with respect to the layer hidden state.
+- The decoder main battery applies the same Jacobian protocol to Qwen and Phi, with `state_pca`, `delta_pca`, and random decoder subspaces.
 
 Fisher stabilization:
 
@@ -124,6 +135,7 @@ Output lens:
 - Full-vocabulary sanity check evaluates full-vocabulary Fisher-kernel accessibility on `google/bert_uncased_L-2_H-128_A-2`.
 - The DistilBERT pilot uses `top-k = 32`.
 - The decoder run uses `top-m = 16`.
+- The decoder main battery also uses `top-m = 16`.
 - The computations are therefore top-k/top-m local Fisher geometries, not full-vocabulary Fisher matrices.
 
 ## Seeds
@@ -137,6 +149,7 @@ Output lens:
 20260525   top-k robustness, gradient baselines, full regression, preservation controls
 20260526   bootstrap diagnostics, prompt audit, failure modes, tiny full-vocabulary sanity
 20260527   out-of-sample route generalization, random-init versus pretrained controls
+20260528   decoder-only main battery, external uncertainty comparators, local confidence-control application
 ```
 
 ## Environment
@@ -234,6 +247,8 @@ Primary artifacts:
 - `experiments/04_uncertainty_steering/outputs/specificity_summary.csv`
 - `experiments/04_uncertainty_steering/outputs/rho_dependency.csv`
 - `experiments/04_uncertainty_steering/outputs/replication_matrix.csv`
+- `experiments/04_uncertainty_steering/decoder_main_battery/outputs/decoder_control_contrasts.csv`
+- `experiments/04_uncertainty_steering/decoder_main_battery/outputs/decoder_steering_records.csv`
 - `experiments/04_uncertainty_steering/figures/fig06_steering_vs_controls_ci.svg`
 - `experiments/04_uncertainty_steering/figures/fig06_uncertainty_steering_main.svg`
 
@@ -243,7 +258,7 @@ Five checks:
 2. Equal Fisher-output-energy controls: comparisons are matched on `||F^{1/2} J delta z||`.
 3. Specificity: uncertainty changes are tracked separately from top-1, correctness, semantic-proxy, and ranking shifts.
 4. Rho dependency: rho predicts movement after scalar and geometric controls.
-5. Replication: local MLMs, tasks, layers, dimensions, and random controls are included; decoder evidence is separate.
+5. Replication: local MLMs, decoder-only LMs, tasks, layers, dimensions, and random controls are included.
 
 Key result:
 
@@ -263,6 +278,10 @@ Equal Fisher-output-energy vs random control:
 Rho dependency after controls:
 partial corr rho -> |Delta H|   = 0.3837
 partial corr rho -> |Delta Var| = 0.3245
+
+Decoder-only Qwen/Phi equal Fisher-output-energy:
+|Delta H| accessible/random ratio = 1.68x to 2.69x
+|Delta H| accessible/grad-orthogonal ratio = 3.76x to 35.04x
 ```
 
 Specificity:
@@ -270,7 +289,7 @@ Specificity:
 - At `epsilon=0.02`, mean top-1 change rate is `0.0142`; target-correctness change rate is `0.0003`.
 - At `epsilon=0.05`, mean top-1 change rate is `0.0345`; target-correctness change rate is `0.0010`.
 
-Interpretation: accessible steering changes uncertainty more efficiently than controls at equal Fisher-output energy and largely preserves monitored answer identity at small epsilons.
+Interpretation: accessible steering changes uncertainty more efficiently than controls at equal Fisher-output energy and largely preserves monitored answer identity at small epsilons. The decoder-only battery makes the decoder evidence part of the main steering experiment rather than a secondary appendix.
 
 ## Confirmatory Vs Exploratory Analyses
 
@@ -285,6 +304,8 @@ Confirmatory analyses are the claim-supporting tests used in the main paper narr
 - tiny-model full-vocabulary sanity check;
 - train-route held-out prompt generalization;
 - random-init versus pretrained learned-structure control;
+- decoder-only Qwen/Phi steering on token-level QA, factual completion, and generative-open prompts;
+- local confidence-control application with answer-neighborhood preservation;
 - answer-preserving qualitative steering examples.
 
 Exploratory and diagnostic analyses are used to bound the claim:
@@ -292,6 +313,7 @@ Exploratory and diagnostic analyses are used to bound the claim:
 - direct projected-gradient baselines;
 - residual `rho` effects after scalar, gradient, and geometric controls;
 - top-k robustness beyond the main lens;
+- Semantic Entropy, Semantic Density, and HaloScope-style comparator diagnostics;
 - random-route competitiveness in held-out route generalization;
 - prompt duplicate and near-duplicate audit;
 - failure-mode table;
@@ -307,6 +329,7 @@ Control folders:
 - `experiments/controls/full_vocab_sanity/`
 - `experiments/controls/out_of_sample_generalization/`
 - `experiments/controls/random_init_vs_pretrained/`
+- `experiments/controls/external_uncertainty_comparators/`
 - `experiments/controls/topk_robustness/`
 - `experiments/controls/gradient_baselines/`
 - `experiments/controls/full_regression/`
@@ -322,6 +345,7 @@ What they address:
 - Full-vocabulary sanity tests whether top-k accessibility tracks full-vocabulary accessibility on a tiny model.
 - Out-of-sample generalization tests whether train-estimated routes transfer to held-out prompts.
 - Random-init versus pretrained tests whether learned weights change accessibility structure.
+- External uncertainty comparators test whether accessible varentropy measures the same object as Semantic Entropy, Semantic Density, or HaloScope-style consistency.
 - Random subspaces test whether the result is a generic subspace effect.
 - Euclidean ablation tests whether Fisher geometry is needed.
 - Shuffled surprisal tests whether the true centered-surprisal direction is needed.
@@ -330,6 +354,10 @@ What they address:
 - Gradient baselines compare rho to `||Pi_B grad H||`, `||Pi_B grad Var||`, `||F^{1/2}JB||`, and `||JB||`.
 - Full regression tests rho after scalar, gradient, geometric, model, layer, and prompt controls.
 - Semantic preservation extends top-1 checks to top-5/top-10 Jaccard, KL, candidate-set mass, and embedding-cluster proxies.
+
+Application folder:
+
+- `applications/local_confidence_control/`: selective local confidence control with answer-neighborhood preservation.
 
 ## Added Control A: Top-k Robustness
 
@@ -488,14 +516,68 @@ Example pattern: the prompt `The meeting happened near the [MASK] in the school.
 
 ## Added Control E: Decoder-only Main Evidence
 
-Decoder-only evidence is now documented inside Experiment 4 rather than treated only as an external appendix:
+Decoder-only evidence is now a main Experiment 4 battery rather than only an appendix. It runs Qwen and Phi on token-level QA, factual completion, and generative-open next-token prompts:
 
-- `experiments/04_uncertainty_steering/decoder_main/README.md`
-- `experiments/04_uncertainty_steering/outputs/decoder_qwen_steering_summary.csv`
-- `experiments/04_uncertainty_steering/outputs/decoder_qwen_steering_contrasts.csv`
-- `experiments/04_uncertainty_steering/reports/decoder_qwen_report.md`
+- `experiments/04_uncertainty_steering/decoder_main_battery/README.md`
+- `experiments/04_uncertainty_steering/decoder_main_battery/outputs/decoder_scores.csv`
+- `experiments/04_uncertainty_steering/decoder_main_battery/outputs/decoder_steering_records.csv`
+- `experiments/04_uncertainty_steering/decoder_main_battery/outputs/decoder_control_contrasts.csv`
+- `experiments/04_uncertainty_steering/decoder_main_battery/reports/report.md`
 
-Interpretation: the decoder evidence is still smaller than the masked-LM full battery, but it is part of the main uncertainty-steering experiment and supports the claim that the geometry is not exclusive to masked-LM heads.
+Key result:
+
+```text
+Models completed: Qwen/Qwen2.5-0.5B, microsoft/phi-2
+Skipped due to local cache absence: Llama, Mistral
+rho mean range across decoder layers/subspaces: 0.6602 to 0.9052
+|Delta H| accessible/random ratio: 1.68x to 2.69x
+|Delta H| accessible/grad-orthogonal ratio: 3.76x to 35.04x
+```
+
+Interpretation: decoder-only logit-lens steering shows the same qualitative accessible-versus-control pattern on two local decoder LMs. Llama/Mistral remain planned replications because they were not locally available.
+
+## Added Control E2: External Uncertainty Comparator Diagnostics
+
+Primary artifacts:
+
+- `experiments/controls/external_uncertainty_comparators/outputs/comparator_scores.csv`
+- `experiments/controls/external_uncertainty_comparators/outputs/comparator_metric_correlations.csv`
+- `experiments/controls/external_uncertainty_comparators/outputs/comparator_steering_sensitivity.csv`
+- `experiments/controls/external_uncertainty_comparators/reports/report.md`
+
+This diagnostic compares accessible varentropy to token-level approximations of Semantic Entropy, Semantic Density, and a HaloScope-style unlabeled consistency risk. It is not a hallucination leaderboard claim; it asks whether the metrics track the same object.
+
+Key result for accessible steering sensitivity to `|Delta H|`:
+
+```text
+rho                                  Spearman =  0.6464
+semantic_entropy_proxy               Spearman = -0.7374
+semantic_density_uncertainty         Spearman = -0.7832
+haloscope_style_consistency_risk      Spearman = -0.7531
+```
+
+Interpretation: the semantic/density/consistency proxies are strongly related to scalar uncertainty structure, while `rho` is route-specific. They are not interchangeable measurements, which is exactly the distinction the paper should make.
+
+## Added Application: Local Confidence Control
+
+Primary artifacts:
+
+- `applications/local_confidence_control/outputs/selective_confidence_control_summary.csv`
+- `applications/local_confidence_control/outputs/selective_confidence_control_examples.csv`
+- `applications/local_confidence_control/reports/report.md`
+
+Success requires unchanged top-1, top-10 Jaccard at least `0.8`, unchanged target correctness when a target exists, and above-median entropy movement.
+
+Key result:
+
+```text
+Qwen decrease: success_rate 0.4722, answer_preserved_rate 1.0000
+Qwen increase: success_rate 0.4444, answer_preserved_rate 0.9444
+Phi decrease:  success_rate 0.4444, answer_preserved_rate 1.0000
+Phi increase:  success_rate 0.6389, answer_preserved_rate 1.0000
+```
+
+Interpretation: this is the clearest killer-application slice: local uncertainty/confidence can be moved while preserving the monitored answer neighborhood.
 
 ## Added Control F: Full-Vocabulary Tiny-Model Sanity
 
@@ -668,6 +750,12 @@ python scripts\run_uncertainty_steering.py --out-dir results\uncertainty_steerin
 python scripts\run_decoder_uncertainty_steering.py --out-dir results\decoder_uncertainty_steering_qwen2_5_0_5b --max-prompts 64 --top-m 16 --layer 23 --pca-dim 16 --torch-dtype float32 --local-files-only --seed 20260524
 ```
 
+Decoder-only main battery, comparator diagnostics, and local confidence-control application:
+
+```powershell
+python scripts\run_decoder_llm_main_and_comparators.py --local-files-only --trust-remote-code --max-prompts-per-task 3 --top-m 16 --pca-dim 8 --output-eps 0.05 --seed 20260528
+```
+
 Paper figures:
 
 ```powershell
@@ -699,11 +787,11 @@ The commands regenerate raw outputs under `results/`. The checked-in paper-ready
 ## Limitations
 
 - The Fisher geometry is computed on top-k/top-m selected output sets, not the full vocabulary.
-- Semantic uncertainty is represented by embedding/cluster proxies, not a full semantic-entropy estimator.
-- Decoder-only evidence is present in the main steering experiment but remains smaller than the masked-LM battery.
+- Semantic uncertainty comparators are represented by token-level embedding/cluster proxies, not full generative Semantic Entropy, Semantic Density, or HaloScope implementations on their original hallucination-detection tasks.
+- Decoder-only evidence is present in the main steering experiment on Qwen and Phi, but remains a local next-token logit-lens intervention.
 - Direct projected gradients are stronger immediate predictors than rho for raw local movement; rho's stronger claim is residual geometric information after controls and decompositional interpretability.
 - Top-k robustness is good but not perfect; full-vocabulary tiny-model sanity shows that top-k can overestimate absolute rho at small k.
 - Out-of-sample route transfer is encouraging but preliminary because pooled random routes remain competitive in this small run.
 - Random-init controls show learned weights reshape accessibility, but nonzero random-init accessibility means architectural geometry is also part of the measurement.
-- RoBERTa was unavailable locally and was not downloaded.
+- RoBERTa, Llama, and Mistral were unavailable locally and were not downloaded.
 - The steering claim is local: it concerns hidden-state/logit-lens perturbations, not end-to-end generation behavior under arbitrary prompts.
