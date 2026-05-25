@@ -1,0 +1,70 @@
+prompt_id,prompt,task,topic,fact_id,template_id,target,target_id,observed_condition,final_top1_token,final_top1_prob_topk,target_rank_final,model
+0,The child looked at the [MASK].,ambiguous_open,open,ambiguous_open:152,extended,,,ambiguous,child,0.043372372397561,,distilbert-base-uncased
+1,The plural of person is [MASK].,factual_deep,plural,plural:person,t0,people,2111.0,error,plural,0.1886338486062798,2724.0,distilbert-base-uncased
+2,The opposite of yes is [MASK].,factual_simple,lexical,factual_simple:58,extended,no,2053.0,error,yes,0.2237807527921011,11.0,distilbert-base-uncased
+3,The coach talked to the [MASK].,ambiguous_open,polysemy,ambiguous_open:162,extended,,,ambiguous,referee,0.0789421824455599,,distilbert-base-uncased
+4,A person who treats patients is a [MASK].,factual_deep,role,role:treats_patients,t0,doctor,3460.0,error,physician,0.3268473935672567,2.0,distilbert-base-uncased
+5,The capital of Japan is [MASK].,factual_simple,capital,factual_simple:3,extended,tokyo,5522.0,correct,tokyo,0.3343694416099434,1.0,distilbert-base-uncased
+6,Yesterday they waited near the [MASK].,ambiguous_open,open,ambiguous_open:102,extended,,,ambiguous,docks,0.0287543692195109,,distilbert-base-uncased
+7,Grass is usually [MASK].,factual_deep,common,common:grass,t0,green,2665.0,error,cultivated,0.0913948242118092,2.0,distilbert-base-uncased
+8,A person who drives a bus is a [MASK].,factual_simple,role,factual_simple:62,extended,driver,4062.0,correct,driver,0.2197778683715726,1.0,distilbert-base-uncased
+9,The meeting happened near the [MASK] in the school.,ambiguous_open,open,ambiguous_open:120,extended,,,ambiguous,cafeteria,0.1280766923894612,,distilbert-base-uncased
+10,The opposite of early is [MASK].,factual_deep,antonym,antonym:early,t0,late,2397.0,error,unknown,0.1163646995597212,326.0,distilbert-base-uncased
+11,Ten divided by two equals [MASK].,factual_simple,math,factual_simple:53,extended,five,2274.0,error,zero,0.0636041060352724,4.0,distilbert-base-uncased
+12,The farmer bought the [MASK].,ambiguous_open,open,ambiguous_open:97,extended,,,ambiguous,land,0.2237091970059042,,distilbert-base-uncased
+13,"In France, the capital city is [MASK].",factual_deep,capital,capital:france,t2,paris,3000.0,correct,paris,0.1313517355761828,1.0,distilbert-base-uncased
+14,The capital of Austria is [MASK].,factual_simple,capital,factual_simple:9,extended,vienna,6004.0,correct,vienna,0.6184326150387426,1.0,distilbert-base-uncased
+15,The patient waited for the [MASK].,ambiguous_open,role,ambiguous_open:164,extended,,,ambiguous,doctor,0.1064146653359362,,distilbert-base-uncased
+16,The continent containing Egypt is [MASK].,factual_deep,continent,continent:egypt,t1,africa,3088.0,error,unknown,0.079484517425936,6.0,distilbert-base-uncased
+18,Yesterday they studied the [MASK].,ambiguous_open,open,ambiguous_open:107,extended,,,ambiguous,sky,0.0445134727302393,,distilbert-base-uncased
+19,Charles Darwin is associated with [MASK].,factual_deep,culture,culture:darwin,t0,evolution,6622.0,error,darwin,0.089504695614091,2.0,distilbert-base-uncased
+20,The language of Germany is [MASK].,factual_simple,language,factual_simple:78,extended,german,2446.0,correct,german,0.5164202244504769,1.0,distilbert-base-uncased
+21,The bat flew out of the [MASK].,ambiguous_open,polysemy,ambiguous_open:161,extended,,,ambiguous,room,0.0493793949515553,,distilbert-base-uncased
+22,The currency of Spain is the [MASK].,factual_deep,currency,currency:spain,t0,euro,9944.0,correct,euro,0.8348186418446453,1.0,distilbert-base-uncased
+23,The color of grass is usually [MASK].,factual_simple,common,factual_simple:66,extended,green,2665.0,error,yellow,0.1405829374384127,16.0,distilbert-base-uncased
+0,The child looked at the [MASK].,ambiguous_open,open,ambiguous_open:152,extended,,,ambiguous,child,0.0927032390596013,,bert-base-uncased
+1,The plural of person is [MASK].,factual_deep,plural,plural:person,t0,people,2111.0,error,plural,0.1119863904426234,754.0,bert-base-uncased
+2,The opposite of yes is [MASK].,factual_simple,lexical,factual_simple:58,extended,no,2053.0,error,yes,0.2072274165942524,2.0,bert-base-uncased
+3,The coach talked to the [MASK].,ambiguous_open,polysemy,ambiguous_open:162,extended,,,ambiguous,coach,0.1700283273707056,,bert-base-uncased
+4,A person who treats patients is a [MASK].,factual_deep,role,role:treats_patients,t0,doctor,3460.0,correct,doctor,0.4224246651965174,1.0,bert-base-uncased
+5,The capital of Japan is [MASK].,factual_simple,capital,factual_simple:3,extended,tokyo,5522.0,correct,tokyo,0.57073181065044,1.0,bert-base-uncased
+6,Yesterday they waited near the [MASK].,ambiguous_open,open,ambiguous_open:102,extended,,,ambiguous,river,0.1287070713079973,,bert-base-uncased
+7,Grass is usually [MASK].,factual_deep,common,common:grass,t0,green,2665.0,error,present,0.1693664907333768,5.0,bert-base-uncased
+8,A person who drives a bus is a [MASK].,factual_simple,role,factual_simple:62,extended,driver,4062.0,correct,driver,0.5034192844907375,1.0,bert-base-uncased
+9,The meeting happened near the [MASK] in the school.,ambiguous_open,open,ambiguous_open:120,extended,,,ambiguous,library,0.1025887282774456,,bert-base-uncased
+10,The opposite of early is [MASK].,factual_deep,antonym,antonym:early,t0,late,2397.0,correct,late,0.2995691825782485,1.0,bert-base-uncased
+11,Ten divided by two equals [MASK].,factual_simple,math,factual_simple:53,extended,five,2274.0,error,ten,0.3777896344822346,5.0,bert-base-uncased
+12,The farmer bought the [MASK].,ambiguous_open,open,ambiguous_open:97,extended,,,ambiguous,land,0.2992651424840337,,bert-base-uncased
+13,"In France, the capital city is [MASK].",factual_deep,capital,capital:france,t2,paris,3000.0,correct,paris,0.293995254205482,1.0,bert-base-uncased
+14,The capital of Austria is [MASK].,factual_simple,capital,factual_simple:9,extended,vienna,6004.0,correct,vienna,0.6606012557051634,1.0,bert-base-uncased
+15,The patient waited for the [MASK].,ambiguous_open,role,ambiguous_open:164,extended,,,ambiguous,doctor,0.2780911842401499,,bert-base-uncased
+16,The continent containing Egypt is [MASK].,factual_deep,continent,continent:egypt,t1,africa,3088.0,error,unknown,0.0880369229234646,44.0,bert-base-uncased
+18,Yesterday they studied the [MASK].,ambiguous_open,open,ambiguous_open:107,extended,,,ambiguous,map,0.0511748315280316,,bert-base-uncased
+19,Charles Darwin is associated with [MASK].,factual_deep,culture,culture:darwin,t0,evolution,6622.0,error,it,0.1610599088824826,25.0,bert-base-uncased
+20,The language of Germany is [MASK].,factual_simple,language,factual_simple:78,extended,german,2446.0,correct,german,0.8515128386965757,1.0,bert-base-uncased
+21,The bat flew out of the [MASK].,ambiguous_open,polysemy,ambiguous_open:161,extended,,,ambiguous,way,0.1766396339703657,,bert-base-uncased
+22,The currency of Spain is the [MASK].,factual_deep,currency,currency:spain,t0,euro,9944.0,correct,euro,0.5178980043099697,1.0,bert-base-uncased
+23,The color of grass is usually [MASK].,factual_simple,common,factual_simple:66,extended,green,2665.0,error,white,0.1896622530850056,6.0,bert-base-uncased
+0,The child looked at the [MASK].,ambiguous_open,open,ambiguous_open:152,extended,,,ambiguous,hospital,0.0378521166024739,,google/bert_uncased_L-2_H-128_A-2
+1,The plural of person is [MASK].,factual_deep,plural,plural:person,t0,people,2111.0,error,plural,0.075033984908678,479.0,google/bert_uncased_L-2_H-128_A-2
+2,The opposite of yes is [MASK].,factual_simple,lexical,factual_simple:58,extended,no,2053.0,error,there,0.0426286173353275,18.0,google/bert_uncased_L-2_H-128_A-2
+3,The coach talked to the [MASK].,ambiguous_open,polysemy,ambiguous_open:162,extended,,,ambiguous,club,0.1093095319079615,,google/bert_uncased_L-2_H-128_A-2
+4,A person who treats patients is a [MASK].,factual_deep,role,role:treats_patients,t0,doctor,3460.0,error,patient,0.1412603365319859,12.0,google/bert_uncased_L-2_H-128_A-2
+5,The capital of Japan is [MASK].,factual_simple,capital,factual_simple:3,extended,tokyo,5522.0,error,japan,0.3305361801326444,29.0,google/bert_uncased_L-2_H-128_A-2
+6,Yesterday they waited near the [MASK].,ambiguous_open,open,ambiguous_open:102,extended,,,ambiguous,town,0.0581412454835796,,google/bert_uncased_L-2_H-128_A-2
+7,Grass is usually [MASK].,factual_deep,common,common:grass,t0,green,2665.0,error,dry,0.0574505715566254,40.0,google/bert_uncased_L-2_H-128_A-2
+8,A person who drives a bus is a [MASK].,factual_simple,role,factual_simple:62,extended,driver,4062.0,error,car,0.0543795587565378,4.0,google/bert_uncased_L-2_H-128_A-2
+9,The meeting happened near the [MASK] in the school.,ambiguous_open,open,ambiguous_open:120,extended,,,ambiguous,school,0.156435233311303,,google/bert_uncased_L-2_H-128_A-2
+10,The opposite of early is [MASK].,factual_deep,antonym,antonym:early,t0,late,2397.0,error,unknown,0.0971467942771953,37.0,google/bert_uncased_L-2_H-128_A-2
+11,Ten divided by two equals [MASK].,factual_simple,math,factual_simple:53,extended,five,2274.0,error,two,0.0624080313768327,8.0,google/bert_uncased_L-2_H-128_A-2
+12,The farmer bought the [MASK].,ambiguous_open,open,ambiguous_open:97,extended,,,ambiguous,company,0.1190296941584641,,google/bert_uncased_L-2_H-128_A-2
+13,"In France, the capital city is [MASK].",factual_deep,capital,capital:france,t2,paris,3000.0,error,spain,0.3282469585492139,31.0,google/bert_uncased_L-2_H-128_A-2
+14,The capital of Austria is [MASK].,factual_simple,capital,factual_simple:9,extended,vienna,6004.0,error,austria,0.1676426333739723,11.0,google/bert_uncased_L-2_H-128_A-2
+15,The patient waited for the [MASK].,ambiguous_open,role,ambiguous_open:164,extended,,,ambiguous,hospital,0.1871867927573925,,google/bert_uncased_L-2_H-128_A-2
+16,The continent containing Egypt is [MASK].,factual_deep,continent,continent:egypt,t1,africa,3088.0,error,found,0.0883482467835126,49.0,google/bert_uncased_L-2_H-128_A-2
+18,Yesterday they studied the [MASK].,ambiguous_open,open,ambiguous_open:107,extended,,,ambiguous,world,0.0616499725079448,,google/bert_uncased_L-2_H-128_A-2
+19,Charles Darwin is associated with [MASK].,factual_deep,culture,culture:darwin,t0,evolution,6622.0,error,dr,0.0836961357886943,192.0,google/bert_uncased_L-2_H-128_A-2
+20,The language of Germany is [MASK].,factual_simple,language,factual_simple:78,extended,german,2446.0,error,germany,0.5609914728921519,2.0,google/bert_uncased_L-2_H-128_A-2
+21,The bat flew out of the [MASK].,ambiguous_open,polysemy,ambiguous_open:161,extended,,,ambiguous,air,0.1399016141963222,,google/bert_uncased_L-2_H-128_A-2
+22,The currency of Spain is the [MASK].,factual_deep,currency,currency:spain,t0,euro,9944.0,error,currency,0.0887296207697344,112.0,google/bert_uncased_L-2_H-128_A-2
+23,The color of grass is usually [MASK].,factual_simple,common,factual_simple:66,extended,green,2665.0,error,white,0.0487923936770702,20.0,google/bert_uncased_L-2_H-128_A-2

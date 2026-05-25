@@ -9,6 +9,8 @@ Start here:
 - `CLAIM_MAP.md`: paper claim -> experiment -> CSV -> figure -> config.
 - `reports/final_reproducibility_and_results_report.md`: complete methods/results/reproducibility report.
 - `reports/figure_index.md`: canonical figure list.
+- `models/model_inventory.md`: model coverage and status.
+- `configs/paper_runs.json`: central config index.
 
 ## Paper Structure
 
@@ -33,10 +35,19 @@ experiments/
   03_layerwise_k_structure/
   04_uncertainty_steering/
   controls/
+    topk_robustness/
+    gradient_baselines/
+    full_regression/
+    semantic_preservation/
     random_subspaces/
     euclidean_ablation/
     shuffled_surprisal/
     fisher_output_energy_control/
+models/
+configs/
+reports/
+scripts/
+src/
 ```
 
 Each experiment contains:
@@ -50,14 +61,7 @@ Each experiment contains:
 
 ## Where To Start
 
-Read `reports/final_reproducibility_and_results_report.md` for the paper-level synthesis. Then inspect the experiment folders in order:
-
-- `experiments/01_matched_scalar_uncertainty/`
-- `experiments/02_local_perturbation_prediction/`
-- `experiments/03_layerwise_k_structure/`
-- `experiments/04_uncertainty_steering/`
-
-The controls live separately under `experiments/controls/` so the main experimental narrative stays clean while the ablations remain auditable.
+Read `reports/final_reproducibility_and_results_report.md` for the paper-level synthesis. Then inspect `CLAIM_MAP.md` to connect claims to the exact CSVs and figures.
 
 ## Reproducibility
 
@@ -67,6 +71,12 @@ Regenerate paper figures from checked-in CSV outputs:
 
 ```powershell
 python scripts\make_paper_figures.py
+```
+
+Run the extended robustness/control suite:
+
+```powershell
+python scripts\run_topk_gradient_regression_controls.py --top-k-values 16,32,64,128,256 --subspace-ks 8 --max-prompts-per-task 8 --random-subspaces 1 --output-eps 0.05 --seed 20260525
 ```
 
 Minimal full-run commands are listed in `reports/final_reproducibility_and_results_report.md`. Raw reruns write under `results/`; the paper-ready artifacts are curated into `experiments/`.

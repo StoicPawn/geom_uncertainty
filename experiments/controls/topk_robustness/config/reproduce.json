@@ -1,0 +1,30 @@
+{
+  "control_id": "topk_robustness",
+  "purpose": "Repeat accessibility and steering diagnostics for output top-k values 16,32,64,128,256.",
+  "models": [
+    "distilbert-base-uncased",
+    "bert-base-uncased",
+    "google/bert_uncased_L-2_H-128_A-2"
+  ],
+  "top_k_values": [16, 32, 64, 128, 256],
+  "subspace_ks": [8],
+  "max_prompts_per_task": 8,
+  "random_subspaces": 1,
+  "fisher_output_epsilon": 0.05,
+  "seed": 20260525,
+  "primary_outputs": [
+    "outputs/topk_scores.csv",
+    "outputs/topk_steering_records.csv",
+    "outputs/topk_rank_stability.csv",
+    "outputs/topk_layer_trend_stability.csv",
+    "outputs/topk_steering_summary.csv"
+  ],
+  "figures": [
+    "figures/fig07_topk_robustness.svg",
+    "figures/fig07_topk_robustness.png"
+  ],
+  "minimal_commands": [
+    "python scripts/run_topk_gradient_regression_controls.py --top-k-values 16,32,64,128,256 --subspace-ks 8 --max-prompts-per-task 8 --random-subspaces 1 --output-eps 0.05 --seed 20260525",
+    "python scripts/make_paper_figures.py"
+  ]
+}

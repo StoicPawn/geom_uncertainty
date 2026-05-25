@@ -16,7 +16,7 @@
     "outputs/multiarch_compressibility.csv"
   ],
   "figures": [
-    "figures/fig04_layerwise_heatmap.svg",
+    "figures/fig05_layerwise_heatmap.svg",
     "figures/fig05_compressibility_curves.svg"
   ],
   "minimal_commands": [

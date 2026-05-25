@@ -39,5 +39,6 @@ Specificity:
 | Rho dependency after controls | `outputs/rho_dependency.csv` |
 | Replication matrix | `outputs/replication_matrix.csv` |
 | Per-example audit trail | `outputs/steering_records.csv` |
-| Paper figure | `figures/fig06_uncertainty_steering_main.svg` |
+| Main paper figure | `figures/fig06_steering_vs_controls_ci.svg` |
+| Supplementary steering figure | `figures/fig06_uncertainty_steering_main.svg` |
 | Reproduction config | `config/reproduce.json` |

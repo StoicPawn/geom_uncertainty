@@ -4,6 +4,10 @@ This folder separates controls from the four main experiments while keeping them
 
 | Control | Question addressed | Primary output |
 |---|---|---|
+| `topk_robustness/` | Are rho rankings, layer trends, and steering effects stable across output top-k? | `outputs/topk_rank_stability.csv` |
+| `gradient_baselines/` | Does rho add information relative to projected gradients and Fisher/Jacobian norms? | `outputs/gradient_baseline_correlations.csv` |
+| `full_regression/` | Does rho remain predictive after scalar, geometric, model, layer, and prompt controls? | `outputs/full_regression_ols.csv` |
+| `semantic_preservation/` | Does steering preserve top-5/top-10/KL/candidate-mass structure beyond top-1? | `outputs/semantic_topk_preservation_summary.csv` |
 | `random_subspaces/` | Is accessibility just a generic random-subspace effect? | `outputs/random_control_contrasts.csv` |
 | `euclidean_ablation/` | Does Fisher geometry add information beyond Euclidean geometry? | `outputs/metric_ablation_scores.csv` |
 | `shuffled_surprisal/` | Does the true centered-surprisal direction matter? | `outputs/metric_ablation_scores.csv` |

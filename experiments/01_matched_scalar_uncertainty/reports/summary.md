@@ -18,5 +18,6 @@ Entropy and varentropy are not sufficient to determine accessibility. Two exampl
 |---|---|
 | Similar scalar uncertainty, different rho | `outputs/same_uncertainty_different_rho_pairs.csv` |
 | Similar scalar uncertainty, different adjusted accessibility | `outputs/same_uncertainty_different_accessibility_pairs.csv` |
-| Paper figure | `figures/fig02_scalar_matched_pairs.svg` |
+| Scalar scatter figure | `figures/fig02_scalar_uncertainty_vs_rho.svg` |
+| Matched-pair figure | `figures/fig03_scalar_matched_pairs.svg` |
 | Reproduction config | `config/reproduce.json` |

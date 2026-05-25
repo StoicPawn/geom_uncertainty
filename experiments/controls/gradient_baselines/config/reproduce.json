@@ -1,0 +1,16 @@
+{
+  "control_id": "gradient_baselines",
+  "purpose": "Compare rho against projected entropy gradient, projected varentropy gradient, Fisher-output norm, and Jacobian norm.",
+  "primary_outputs": [
+    "outputs/gradient_baseline_scores.csv",
+    "outputs/gradient_baseline_correlations.csv"
+  ],
+  "figures": [
+    "figures/fig08_gradient_baselines.svg",
+    "figures/fig08_gradient_baselines.png"
+  ],
+  "minimal_commands": [
+    "python scripts/run_topk_gradient_regression_controls.py --analysis-only --top-k-values 16,32,64,128,256 --subspace-ks 8 --max-prompts-per-task 8 --random-subspaces 1 --output-eps 0.05 --seed 20260525",
+    "python scripts/make_paper_figures.py"
+  ]
+}

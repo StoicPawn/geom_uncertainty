@@ -19,6 +19,8 @@ Test whether accessibility predicts local entropy and varentropy movement under 
 
 - `figures/fig03_accessibility_predicts_movement.svg`
 - `figures/fig03_accessibility_predicts_movement.png`
+- `figures/fig04_rho_vs_delta_controls.svg`
+- `figures/fig04_rho_vs_delta_controls.png`
 
 ## Reports
 

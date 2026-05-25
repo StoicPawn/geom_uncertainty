@@ -1,6 +1,8 @@
 path,description
 README.md,Project overview and clean GitHub map
 CLAIM_MAP.md,Claim-to-experiment-to-artifact mapping
+configs/paper_runs.json,Central paper run and artifact index
+models/model_inventory.md,Model coverage and run status
 paper/,Paper section files in requested order
 reports/final_reproducibility_and_results_report.md,Single final report with methods results limitations and commands
 reports/figure_index.md,Paper-ready figure index
@@ -10,6 +12,10 @@ experiments/02_local_perturbation_prediction/,Experiment 2 data outputs figures 
 experiments/03_layerwise_k_structure/,Experiment 3 data outputs figures reports and config
 experiments/04_uncertainty_steering/,Experiment 4 five-check steering battery outputs figures reports and config
 experiments/controls/,Controls ablations and boundary cases
+experiments/controls/topk_robustness/,Top-k robustness controls
+experiments/controls/gradient_baselines/,Projected gradient baseline controls
+experiments/controls/full_regression/,Full regression controls
+experiments/controls/semantic_preservation/,Top-k semantic preservation controls
 experiments/controls/random_subspaces/,Random subspace controls
 experiments/controls/euclidean_ablation/,Euclidean ablation controls
 experiments/controls/shuffled_surprisal/,Shuffled surprisal controls

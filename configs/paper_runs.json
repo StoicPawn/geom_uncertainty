@@ -1,0 +1,25 @@
+{
+  "project": "geometry_uncertainty_paper",
+  "canonical_report": "reports/final_reproducibility_and_results_report.md",
+  "claim_map": "CLAIM_MAP.md",
+  "figure_index": "reports/figure_index.md",
+  "models_manifest": "models/model_inventory.md",
+  "experiments": [
+    "experiments/01_matched_scalar_uncertainty/config/reproduce.json",
+    "experiments/02_local_perturbation_prediction/config/reproduce.json",
+    "experiments/03_layerwise_k_structure/config/reproduce.json",
+    "experiments/04_uncertainty_steering/config/reproduce.json"
+  ],
+  "controls": [
+    "experiments/controls/topk_robustness/config/reproduce.json",
+    "experiments/controls/gradient_baselines/config/reproduce.json",
+    "experiments/controls/full_regression/config/reproduce.json",
+    "experiments/controls/semantic_preservation/config/reproduce.json",
+    "experiments/controls/random_subspaces/config/reproduce.json",
+    "experiments/controls/euclidean_ablation/config/reproduce.json",
+    "experiments/controls/shuffled_surprisal/config/reproduce.json",
+    "experiments/controls/fisher_output_energy_control/config/reproduce.json"
+  ],
+  "canonical_figure_command": "python scripts/make_paper_figures.py",
+  "new_control_command": "python scripts/run_topk_gradient_regression_controls.py --top-k-values 16,32,64,128,256 --subspace-ks 8 --max-prompts-per-task 8 --random-subspaces 1 --output-eps 0.05 --seed 20260525"
+}

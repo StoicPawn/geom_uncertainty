@@ -32,6 +32,8 @@ Test whether the accessible component of varentropy can be used to steer uncerta
 
 ## Figures
 
+- `figures/fig06_steering_vs_controls_ci.svg`
+- `figures/fig06_steering_vs_controls_ci.png`
 - `figures/fig06_uncertainty_steering_main.svg`
 - `figures/fig06_uncertainty_steering_main.png`
 
@@ -46,6 +48,8 @@ Test whether the accessible component of varentropy can be used to steer uncerta
 ## Claim Support
 
 This experiment supports the claim that accessible directions steer uncertainty more efficiently than controls while preserving answer content at small perturbation sizes. The mapping from claim to CSV and figure is also listed in `../../CLAIM_MAP.md`.
+
+Decoder-only evidence is treated as part of this main experiment and is documented in `decoder_main/README.md`.
 
 ## Related Scripts
 

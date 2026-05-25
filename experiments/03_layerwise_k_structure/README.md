@@ -19,8 +19,8 @@ Study how accessibility changes across transformer layers, latent subspace dimen
 
 ## Figures
 
-- `figures/fig04_layerwise_heatmap.svg`
-- `figures/fig04_layerwise_heatmap.png`
+- `figures/fig05_layerwise_heatmap.svg`
+- `figures/fig05_layerwise_heatmap.png`
 - `figures/fig05_compressibility_curves.svg`
 - `figures/fig05_compressibility_curves.png`
 

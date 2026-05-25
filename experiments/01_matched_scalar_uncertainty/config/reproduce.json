@@ -14,8 +14,10 @@
     "outputs/matched_error_correct_summary.csv"
   ],
   "figures": [
-    "figures/fig02_scalar_matched_pairs.svg",
-    "figures/fig02_scalar_matched_pairs.png"
+    "figures/fig02_scalar_uncertainty_vs_rho.svg",
+    "figures/fig02_scalar_uncertainty_vs_rho.png",
+    "figures/fig03_scalar_matched_pairs.svg",
+    "figures/fig03_scalar_matched_pairs.png"
   ],
   "minimal_commands": [
     "python scripts/run_factual_error_deep_benchmark.py --model bert-base-uncased --out-dir results/factual_error_deep_bert_top32 --top-k 32 --random-seed 123",

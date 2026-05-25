@@ -16,8 +16,10 @@ Show that scalar uncertainty does not determine accessibility. The matched-pair 
 
 ## Figures
 
-- `figures/fig02_scalar_matched_pairs.svg`
-- `figures/fig02_scalar_matched_pairs.png`
+- `figures/fig02_scalar_uncertainty_vs_rho.svg`
+- `figures/fig02_scalar_uncertainty_vs_rho.png`
+- `figures/fig03_scalar_matched_pairs.svg`
+- `figures/fig03_scalar_matched_pairs.png`
 
 ## Reports
 

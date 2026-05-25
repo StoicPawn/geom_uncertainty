@@ -42,7 +42,7 @@ Main masked-LM runs:
 
 Decoder evidence:
 
-- `Qwen/Qwen2.5-0.5B`, included as a separate logit-lens steering run.
+- `Qwen/Qwen2.5-0.5B`, included as decoder-only logit-lens steering evidence inside Experiment 4.
 
 Unavailable or incomplete:
 
@@ -120,6 +120,7 @@ Output lens:
 
 - Experiments 1, 2, and 3 use top-k output lenses with `top-k = 32`.
 - Experiment 4 full battery uses `top-k = 16`.
+- Top-k robustness controls explicitly evaluate `top-k = 16, 32, 64, 128, 256`.
 - The DistilBERT pilot uses `top-k = 32`.
 - The decoder run uses `top-m = 16`.
 - The computations are therefore top-k/top-m local Fisher geometries, not full-vocabulary Fisher matrices.
@@ -132,6 +133,7 @@ Output lens:
 20260522   local perturbation/intervention run
 20260523   layerwise k-dimensional adjusted-rho run
 20260524   steering full battery, pilot steering, decoder steering
+20260525   top-k robustness, gradient baselines, full regression, preservation controls
 ```
 
 ## Environment
@@ -163,7 +165,8 @@ Primary artifacts:
 
 - `experiments/01_matched_scalar_uncertainty/outputs/same_uncertainty_different_rho_pairs.csv`
 - `experiments/01_matched_scalar_uncertainty/outputs/same_uncertainty_different_accessibility_pairs.csv`
-- `experiments/01_matched_scalar_uncertainty/figures/fig02_scalar_matched_pairs.svg`
+- `experiments/01_matched_scalar_uncertainty/figures/fig02_scalar_uncertainty_vs_rho.svg`
+- `experiments/01_matched_scalar_uncertainty/figures/fig03_scalar_matched_pairs.svg`
 
 Key result:
 
@@ -204,7 +207,7 @@ Primary artifacts:
 - `experiments/03_layerwise_k_structure/outputs/layerwise_k_summary.csv`
 - `experiments/03_layerwise_k_structure/outputs/layerwise_k_scores.csv`
 - `experiments/03_layerwise_k_structure/outputs/compressibility_summary.csv`
-- `experiments/03_layerwise_k_structure/figures/fig04_layerwise_heatmap.svg`
+- `experiments/03_layerwise_k_structure/figures/fig05_layerwise_heatmap.svg`
 - `experiments/03_layerwise_k_structure/figures/fig05_compressibility_curves.svg`
 
 Key result:
@@ -228,6 +231,7 @@ Primary artifacts:
 - `experiments/04_uncertainty_steering/outputs/specificity_summary.csv`
 - `experiments/04_uncertainty_steering/outputs/rho_dependency.csv`
 - `experiments/04_uncertainty_steering/outputs/replication_matrix.csv`
+- `experiments/04_uncertainty_steering/figures/fig06_steering_vs_controls_ci.svg`
 - `experiments/04_uncertainty_steering/figures/fig06_uncertainty_steering_main.svg`
 
 Five checks:
@@ -269,6 +273,10 @@ Interpretation: accessible steering changes uncertainty more efficiently than co
 
 Control folders:
 
+- `experiments/controls/topk_robustness/`
+- `experiments/controls/gradient_baselines/`
+- `experiments/controls/full_regression/`
+- `experiments/controls/semantic_preservation/`
 - `experiments/controls/random_subspaces/`
 - `experiments/controls/euclidean_ablation/`
 - `experiments/controls/shuffled_surprisal/`
@@ -280,16 +288,134 @@ What they address:
 - Euclidean ablation tests whether Fisher geometry is needed.
 - Shuffled surprisal tests whether the true centered-surprisal direction is needed.
 - Equal Fisher-output-energy controls test whether accessible steering wins after matching total output movement.
+- Top-k robustness tests whether rho rankings, layer trends, and steering effects survive output-lens changes.
+- Gradient baselines compare rho to `||Pi_B grad H||`, `||Pi_B grad Var||`, `||F^{1/2}JB||`, and `||JB||`.
+- Full regression tests rho after scalar, gradient, geometric, model, layer, and prompt controls.
+- Semantic preservation extends top-1 checks to top-5/top-10 Jaccard, KL, candidate-set mass, and embedding-cluster proxies.
+
+## Added Control A: Top-k Robustness
+
+Primary artifacts:
+
+- `experiments/controls/topk_robustness/outputs/topk_rank_stability.csv`
+- `experiments/controls/topk_robustness/outputs/topk_layer_trend_stability.csv`
+- `experiments/controls/topk_robustness/outputs/topk_steering_summary.csv`
+- `experiments/controls/topk_robustness/figures/fig07_topk_robustness.svg`
+
+Coverage:
+
+- Models: `distilbert-base-uncased`, `bert-base-uncased`, `google/bert_uncased_L-2_H-128_A-2`.
+- Top-k values: `16, 32, 64, 128, 256`.
+- Score rows: `2415`.
+- Steering rows: `14490`.
+- Fisher-output epsilon: `0.05`.
+
+Rank stability against top-k 32:
+
+```text
+k=16:  Spearman rho = 0.7670
+k=32:  Spearman rho = 1.0000
+k=64:  Spearman rho = 0.9133
+k=128: Spearman rho = 0.8439
+k=256: Spearman rho = 0.7882
+```
+
+Interpretation: the signal does not collapse under top-k changes, but it is not invariant. The most stable comparison is 32 to 64; 16 and 256 remain directionally consistent but should be described as moderately shifted output lenses.
+
+## Added Control B: Direct Gradient Baselines
+
+Primary artifacts:
+
+- `experiments/controls/gradient_baselines/outputs/gradient_baseline_correlations.csv`
+- `experiments/controls/gradient_baselines/outputs/gradient_baseline_scores.csv`
+- `experiments/controls/gradient_baselines/figures/fig08_gradient_baselines.svg`
+
+Accessible-only Spearman correlations:
+
+```text
+Predicting |Delta H|:
+rho                         0.6277
+||Pi_B grad H||             0.8827
+||Pi_B grad Var||           0.7870
+||F^{1/2}JB||              -0.0466
+||JB||                      0.1600
+
+Predicting |Delta Var|:
+rho                         0.3544
+||Pi_B grad H||             0.6815
+||Pi_B grad Var||           0.8127
+||F^{1/2}JB||              -0.0462
+||JB||                      0.1853
+```
+
+Interpretation: direct projected gradients are stronger immediate predictors of infinitesimal local movement. This is expected and narrows the claim: rho is not a replacement for the gradient; it is a geometric accessibility coefficient that remains informative after controls and is useful for decomposing accessible versus inaccessible uncertainty.
+
+## Added Control C: Full Regression
+
+Primary artifact:
+
+- `experiments/controls/full_regression/outputs/full_regression_ols.csv`
+
+Controls:
+
+`entropy`, `varentropy`, `confidence`, `margin`, `jacobian_fro_norm`, `fisher_output_energy`, `grad_entropy_proj_norm`, `grad_varentropy_proj_norm`, `top_k_output`, `layer`, `model`, `task`, `topic`, `subspace_family`, `subspace_k`, `direction`, `sign`.
+
+Key result:
+
+```text
+Outcome              rho beta   t       p
+|Delta H|            0.00343   19.00   1.55e-79
+|Delta Var|          0.00723   17.71   1.84e-69
+directional success  0.00419    0.80   0.424
+```
+
+Interpretation: rho remains significant for movement magnitudes after strong controls, including direct gradient baselines. It does not independently explain directional success once direction type and sign are included; directional success is mostly a property of how the steering direction is constructed.
+
+## Added Control D: Semantic And Top-k Preservation
+
+Primary artifacts:
+
+- `experiments/controls/semantic_preservation/outputs/semantic_topk_preservation.csv`
+- `experiments/controls/semantic_preservation/outputs/semantic_topk_preservation_summary.csv`
+
+At top-k 32 and Fisher-output epsilon `0.05`, accessible steering has:
+
+```text
+selected top-1 changed rate: 0.0207 to 0.0248
+selected top-5 Jaccard:      0.9593 to 0.9614
+full-vocab top-10 Jaccard:   0.9484 to 0.9529
+candidate-set KL:            about 0.00125
+candidate mass retention:    about 0.978 to 1.020
+semantic cluster L1:         about 0.022
+embedding centroid shift:    about 0.013
+```
+
+Interpretation: top-1 preservation is not the only evidence. The selected and full-vocabulary candidate neighborhoods remain mostly stable at the steering scale used for the control battery.
+
+## Added Control E: Decoder-only Main Evidence
+
+Decoder-only evidence is now documented inside Experiment 4 rather than treated only as an external appendix:
+
+- `experiments/04_uncertainty_steering/decoder_main/README.md`
+- `experiments/04_uncertainty_steering/outputs/decoder_qwen_steering_summary.csv`
+- `experiments/04_uncertainty_steering/outputs/decoder_qwen_steering_contrasts.csv`
+- `experiments/04_uncertainty_steering/reports/decoder_qwen_report.md`
+
+Interpretation: the decoder evidence is still smaller than the masked-LM full battery, but it is part of the main uncertainty-steering experiment and supports the claim that the geometry is not exclusive to masked-LM heads.
 
 ## Figures
 
 ```text
 Fig. 1: reports/figures/fig01_conceptual_accessible_varentropy.svg
-Fig. 2: reports/figures/fig02_scalar_matched_pairs.svg
-Fig. 3: reports/figures/fig03_accessibility_predicts_movement.svg
-Fig. 4: reports/figures/fig04_layerwise_heatmap.svg
-Fig. 5: reports/figures/fig05_compressibility_curves.svg
-Fig. 6: reports/figures/fig06_uncertainty_steering_main.svg
+Fig. 2: reports/figures/fig02_scalar_uncertainty_vs_rho.svg
+Fig. 3: reports/figures/fig03_scalar_matched_pairs.svg
+Fig. 4: reports/figures/fig04_rho_vs_delta_controls.svg
+Fig. 5: reports/figures/fig05_layerwise_heatmap.svg
+Fig. 5b: reports/figures/fig05_compressibility_curves.svg
+Fig. 6: reports/figures/fig06_steering_vs_controls_ci.svg
+Fig. 6b: reports/figures/fig06_uncertainty_steering_main.svg
+Fig. 7: reports/figures/fig07_topk_robustness.svg
+Fig. 8: reports/figures/fig08_gradient_baselines.svg
 ```
 
 Regenerate with:
@@ -343,6 +469,13 @@ Paper figures:
 python scripts\make_paper_figures.py
 ```
 
+Extended robustness, gradient, regression, and preservation controls:
+
+```powershell
+python scripts\run_topk_gradient_regression_controls.py --top-k-values 16,32,64,128,256 --subspace-ks 8 --max-prompts-per-task 8 --random-subspaces 1 --output-eps 0.05 --seed 20260525
+python scripts\make_paper_figures.py
+```
+
 The commands regenerate raw outputs under `results/`. The checked-in paper-ready artifacts are curated copies under `experiments/`.
 
 ## Limitations
@@ -350,5 +483,7 @@ The commands regenerate raw outputs under `results/`. The checked-in paper-ready
 - The Fisher geometry is computed on top-k/top-m selected output sets, not the full vocabulary.
 - Semantic uncertainty is represented by embedding/cluster proxies, not a full semantic-entropy estimator.
 - Decoder-only evidence is present but separate from the masked-LM full battery.
+- Direct projected gradients are stronger immediate predictors than rho for raw local movement; rho's stronger claim is residual geometric information after controls and decompositional interpretability.
+- Top-k robustness is good but not perfect; the paper should avoid claiming output-lens invariance.
 - RoBERTa was unavailable locally and was not downloaded.
 - The steering claim is local: it concerns hidden-state/logit-lens perturbations, not end-to-end generation behavior under arbitrary prompts.

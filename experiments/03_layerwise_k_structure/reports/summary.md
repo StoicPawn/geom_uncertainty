@@ -18,7 +18,7 @@ Accessibility varies systematically across layers and subspace dimension `k`, an
 | Claim component | File |
 |---|---|
 | Layer x k structure | `outputs/layerwise_k_summary.csv`; `outputs/layerwise_k_scores.csv` |
-| Heatmap | `figures/fig04_layerwise_heatmap.svg` |
+| Heatmap | `figures/fig05_layerwise_heatmap.svg` |
 | Compressibility | `outputs/compressibility_summary.csv`; `figures/fig05_compressibility_curves.svg` |
 | Multi-architecture boundary check | `outputs/multiarch_summary.csv`; `outputs/multiarch_compressibility.csv` |
 | Reproduction config | `config/reproduce.json` |

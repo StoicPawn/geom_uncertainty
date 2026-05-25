@@ -44,6 +44,16 @@ def save_figure(fig: plt.Figure, experiment_path: Path, basename: str) -> None:
     plt.close(fig)
 
 
+def mean_ci(frame: pd.DataFrame, group_cols: list[str], value_col: str) -> pd.DataFrame:
+    summary = frame.groupby(group_cols, as_index=False, observed=True).agg(
+        mean=(value_col, "mean"),
+        std=(value_col, "std"),
+        n=(value_col, "count"),
+    )
+    summary["ci95"] = 1.96 * summary["std"].fillna(0.0) / np.sqrt(summary["n"].clip(lower=1))
+    return summary
+
+
 def add_box(ax: plt.Axes, xy: tuple[float, float], text: str, width: float = 1.8) -> None:
     x, y = xy
     box = FancyBboxPatch(
@@ -129,7 +139,23 @@ def scalar_matched_pairs() -> None:
     axes[1].set_xlabel(r"left $\rho_{\mathrm{adj}}$")
     axes[1].set_ylabel(r"right $\rho_{\mathrm{adj}}$")
 
-    save_figure(fig, ROOT / "experiments" / "01_matched_scalar_uncertainty", "fig02_scalar_matched_pairs")
+    save_figure(fig, ROOT / "experiments" / "01_matched_scalar_uncertainty", "fig03_scalar_matched_pairs")
+
+
+def scalar_uncertainty_vs_rho() -> None:
+    df = read_csv("experiments/04_uncertainty_steering/outputs/subspace_scores.csv")
+    df = df[df["subspace_family"].isin(["state_pca", "delta_pca"])].copy()
+    sample = df.sample(min(len(df), 2500), random_state=20260525)
+    fig, axes = plt.subplots(1, 2, figsize=(9.2, 3.4), constrained_layout=True)
+    axes[0].scatter(sample["entropy_before"], sample["rho"], s=14, alpha=0.45, color="#2563eb")
+    axes[0].set_title(r"Entropy does not determine $\rho$")
+    axes[0].set_xlabel(r"entropy $H$")
+    axes[0].set_ylabel(r"accessibility $\rho$")
+    axes[1].scatter(sample["varentropy_before"], sample["rho"], s=14, alpha=0.45, color="#be123c")
+    axes[1].set_title(r"Varentropy does not determine $\rho$")
+    axes[1].set_xlabel(r"varentropy")
+    axes[1].set_ylabel(r"accessibility $\rho$")
+    save_figure(fig, ROOT / "experiments" / "01_matched_scalar_uncertainty", "fig02_scalar_uncertainty_vs_rho")
 
 
 def accessibility_predicts_movement() -> None:
@@ -148,6 +174,49 @@ def accessibility_predicts_movement() -> None:
     axes[1].set_ylabel(r"mean $|\Delta \mathrm{Var}|$")
     axes[1].legend(frameon=False)
     save_figure(fig, ROOT / "experiments" / "02_local_perturbation_prediction", "fig03_accessibility_predicts_movement")
+
+
+def rho_vs_delta_controls() -> None:
+    path = ROOT / "experiments" / "controls" / "topk_robustness" / "outputs" / "topk_steering_records.csv"
+    if not path.exists():
+        return
+    df = pd.read_csv(path)
+    df = df[df["top_k_output"].eq(32)].copy()
+    df["rho_bin"] = pd.qcut(df["rho"], q=8, duplicates="drop")
+    centers = df.groupby("rho_bin", observed=True)["rho"].mean().rename("rho_center")
+    fig, axes = plt.subplots(1, 2, figsize=(9.4, 3.5), constrained_layout=True)
+    labels = {
+        "accessible_ls": "accessible",
+        "random_control": "random",
+        "grad_orthogonal_control": "grad-orthogonal",
+    }
+    colors = {
+        "accessible_ls": "#2563eb",
+        "random_control": "#64748b",
+        "grad_orthogonal_control": "#be123c",
+    }
+    for ax, value, title, ylabel in [
+        (axes[0], "abs_delta_entropy", r"$\rho$ vs entropy movement", r"mean $|\Delta H|$"),
+        (axes[1], "abs_delta_varentropy", r"$\rho$ vs varentropy movement", r"mean $|\Delta \mathrm{Var}|$"),
+    ]:
+        for direction, group in df.groupby("direction"):
+            stats_df = mean_ci(group, ["rho_bin"], value)
+            stats_df = stats_df.join(centers, on="rho_bin").sort_values("rho_center")
+            ax.errorbar(
+                stats_df["rho_center"],
+                stats_df["mean"],
+                yerr=stats_df["ci95"],
+                marker="o",
+                linewidth=1.8,
+                capsize=2,
+                label=labels.get(direction, direction),
+                color=colors.get(direction, None),
+            )
+        ax.set_title(title)
+        ax.set_xlabel(r"accessibility $\rho$ bin center")
+        ax.set_ylabel(ylabel)
+    axes[1].legend(frameon=False)
+    save_figure(fig, ROOT / "experiments" / "02_local_perturbation_prediction", "fig04_rho_vs_delta_controls")
 
 
 def layerwise_heatmap() -> None:
@@ -173,7 +242,7 @@ def layerwise_heatmap() -> None:
             value = view.loc[layer, k]
             ax.text(j, i, f"{value:.2f}", ha="center", va="center", fontsize=7)
     fig.colorbar(im, ax=ax, label=r"mean $\rho_{\mathrm{adj}}$")
-    save_figure(fig, ROOT / "experiments" / "03_layerwise_k_structure", "fig04_layerwise_heatmap")
+    save_figure(fig, ROOT / "experiments" / "03_layerwise_k_structure", "fig05_layerwise_heatmap")
 
 
 def compressibility_curves() -> None:
@@ -272,14 +341,112 @@ def steering_main() -> None:
     save_figure(fig, ROOT / "experiments" / "04_uncertainty_steering", "fig06_uncertainty_steering_main")
 
 
+def steering_with_ci() -> None:
+    path = ROOT / "experiments" / "controls" / "topk_robustness" / "outputs" / "topk_steering_records.csv"
+    if not path.exists():
+        return
+    df = pd.read_csv(path)
+    df = df[df["top_k_output"].eq(32)].copy()
+    labels = {
+        "accessible_ls": "accessible",
+        "random_control": "random",
+        "grad_orthogonal_control": "grad-orthogonal",
+    }
+    order = ["accessible_ls", "random_control", "grad_orthogonal_control"]
+    fig, axes = plt.subplots(1, 3, figsize=(10.6, 3.4), constrained_layout=True)
+    for ax, value, title, ylabel in [
+        (axes[0], "abs_delta_entropy", r"Entropy steering", r"mean $|\Delta H|$"),
+        (axes[1], "abs_delta_varentropy", r"Varentropy steering", r"mean $|\Delta \mathrm{Var}|$"),
+        (axes[2], "full_vocab_top10_jaccard", r"Top-10 preservation", "mean Jaccard"),
+    ]:
+        summary = mean_ci(df, ["direction"], value).set_index("direction").loc[order].reset_index()
+        x = np.arange(len(summary))
+        ax.bar(x, summary["mean"], yerr=summary["ci95"], capsize=3, color=["#2563eb", "#64748b", "#be123c"])
+        ax.set_xticks(x)
+        ax.set_xticklabels([labels[d] for d in summary["direction"]], rotation=20, ha="right")
+        ax.set_title(title)
+        ax.set_ylabel(ylabel)
+    save_figure(fig, ROOT / "experiments" / "04_uncertainty_steering", "fig06_steering_vs_controls_ci")
+
+
+def topk_robustness_figure() -> None:
+    root = ROOT / "experiments" / "controls" / "topk_robustness" / "outputs"
+    if not (root / "topk_rank_stability.csv").exists():
+        return
+    rank = pd.read_csv(root / "topk_rank_stability.csv")
+    steering = pd.read_csv(root / "topk_steering_summary.csv")
+    acc = steering[steering["direction"].eq("accessible_ls")].groupby("top_k_output", as_index=False).agg(
+        abs_delta_entropy_mean=("abs_delta_entropy_mean", "mean"),
+        abs_delta_varentropy_mean=("abs_delta_varentropy_mean", "mean"),
+        top10=("full_vocab_top10_jaccard_mean", "mean"),
+    )
+    fig, axes = plt.subplots(1, 3, figsize=(11.0, 3.3), constrained_layout=True)
+    axes[0].plot(rank["top_k_output"], rank["rho_spearman_vs_ref"], marker="o", color="#2563eb")
+    axes[0].set_title(r"$\rho$ ranking stability")
+    axes[0].set_xlabel("output top-k")
+    axes[0].set_ylabel("Spearman vs k=32")
+    axes[0].set_ylim(0.65, 1.02)
+    axes[1].plot(acc["top_k_output"], acc["abs_delta_entropy_mean"], marker="o", label=r"$|\Delta H|$")
+    axes[1].plot(acc["top_k_output"], acc["abs_delta_varentropy_mean"], marker="o", label=r"$|\Delta Var|$")
+    axes[1].set_title("Accessible steering across top-k")
+    axes[1].set_xlabel("output top-k")
+    axes[1].set_ylabel("mean movement")
+    axes[1].legend(frameon=False)
+    axes[2].plot(acc["top_k_output"], acc["top10"], marker="o", color="#059669")
+    axes[2].set_title("Top-10 preservation across top-k")
+    axes[2].set_xlabel("output top-k")
+    axes[2].set_ylabel("mean Jaccard")
+    axes[2].set_ylim(0.90, 1.0)
+    for ax in axes:
+        ax.set_xscale("log", base=2)
+        ax.set_xticks(sorted(rank["top_k_output"].unique()))
+        ax.set_xticklabels([str(int(v)) for v in sorted(rank["top_k_output"].unique())])
+    save_figure(fig, ROOT / "experiments" / "controls" / "topk_robustness", "fig07_topk_robustness")
+
+
+def gradient_baseline_figure() -> None:
+    path = ROOT / "experiments" / "controls" / "gradient_baselines" / "outputs" / "gradient_baseline_correlations.csv"
+    if not path.exists():
+        return
+    df = pd.read_csv(path)
+    df = df[(df["subset"].eq("accessible_only")) & (df["outcome"].isin(["abs_delta_entropy", "abs_delta_varentropy"]))].copy()
+    names = {
+        "rho": r"$\rho$",
+        "grad_entropy_projection": r"$\|\Pi_B\nabla H\|$",
+        "grad_varentropy_projection": r"$\|\Pi_B\nabla Var\|$",
+        "fisher_output_norm": r"$\|F^{1/2}JB\|$",
+        "jacobian_fro_norm": r"$\|JB\|$",
+        "trace_fim": "trace FIM",
+    }
+    fig, axes = plt.subplots(1, 2, figsize=(10.0, 3.6), constrained_layout=True)
+    for ax, outcome, title in [
+        (axes[0], "abs_delta_entropy", r"Predicting $|\Delta H|$"),
+        (axes[1], "abs_delta_varentropy", r"Predicting $|\Delta Var|$"),
+    ]:
+        group = df[df["outcome"].eq(outcome)].copy()
+        group["label"] = group["predictor"].map(names)
+        group = group.sort_values("spearman", ascending=False)
+        ax.barh(group["label"], group["spearman"], color="#2563eb")
+        ax.invert_yaxis()
+        ax.set_title(title)
+        ax.set_xlabel("Spearman correlation")
+        ax.set_xlim(-0.1, 1.0)
+    save_figure(fig, ROOT / "experiments" / "controls" / "gradient_baselines", "fig08_gradient_baselines")
+
+
 def main() -> None:
     setup_style()
     conceptual_figure()
+    scalar_uncertainty_vs_rho()
     scalar_matched_pairs()
     accessibility_predicts_movement()
+    rho_vs_delta_controls()
     layerwise_heatmap()
     compressibility_curves()
     steering_main()
+    steering_with_ci()
+    topk_robustness_figure()
+    gradient_baseline_figure()
 
 
 if __name__ == "__main__":
