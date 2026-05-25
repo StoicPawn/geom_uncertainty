@@ -34,6 +34,8 @@ experiments/
   02_local_perturbation_prediction/
   03_layerwise_k_structure/
   04_uncertainty_steering/
+    01_minimal_intervention_energy/
+    02_equal_output_movement/
     decoder_main_battery/
   controls/
     statistical_diagnostics/
@@ -104,6 +106,12 @@ Run the decoder-only main battery, external uncertainty comparators, and local c
 
 ```powershell
 python scripts\run_decoder_llm_main_and_comparators.py --local-files-only --trust-remote-code --max-prompts-per-task 3 --top-m 16 --pca-dim 8 --output-eps 0.05 --seed 20260528
+```
+
+Run the operational controllability tests:
+
+```powershell
+python scripts\run_control_cost_and_equal_output_tests.py --tau-entropy 0.02 --tau-varentropy 0.04 --top-k-output 32 --seed 20260529
 ```
 
 Minimal full-run commands are listed in `reports/final_reproducibility_and_results_report.md`. Raw reruns write under `results/`; the paper-ready artifacts are curated into `experiments/`.

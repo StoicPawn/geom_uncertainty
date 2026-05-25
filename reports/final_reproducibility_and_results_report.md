@@ -10,6 +10,8 @@ experiments/
   02_local_perturbation_prediction/
   03_layerwise_k_structure/
   04_uncertainty_steering/
+    01_minimal_intervention_energy/
+    02_equal_output_movement/
     decoder_main_battery/
   controls/
 applications/
@@ -150,6 +152,7 @@ Output lens:
 20260526   bootstrap diagnostics, prompt audit, failure modes, tiny full-vocabulary sanity
 20260527   out-of-sample route generalization, random-init versus pretrained controls
 20260528   decoder-only main battery, external uncertainty comparators, local confidence-control application
+20260529   fixed-target intervention cost and equal-output-movement efficiency tests
 ```
 
 ## Environment
@@ -247,6 +250,8 @@ Primary artifacts:
 - `experiments/04_uncertainty_steering/outputs/specificity_summary.csv`
 - `experiments/04_uncertainty_steering/outputs/rho_dependency.csv`
 - `experiments/04_uncertainty_steering/outputs/replication_matrix.csv`
+- `experiments/04_uncertainty_steering/01_minimal_intervention_energy/outputs/minimal_energy_predictor_benchmark.csv`
+- `experiments/04_uncertainty_steering/02_equal_output_movement/outputs/equal_output_control_contrasts.csv`
 - `experiments/04_uncertainty_steering/decoder_main_battery/outputs/decoder_control_contrasts.csv`
 - `experiments/04_uncertainty_steering/decoder_main_battery/outputs/decoder_steering_records.csv`
 - `experiments/04_uncertainty_steering/figures/fig06_steering_vs_controls_ci.svg`
@@ -254,6 +259,7 @@ Primary artifacts:
 
 Five checks:
 
+0. Minimal intervention energy: estimate the latent cost required to hit fixed uncertainty targets.
 1. Directional control: `+delta_acc` increases entropy and `-delta_acc` decreases entropy.
 2. Equal Fisher-output-energy controls: comparisons are matched on `||F^{1/2} J delta z||`.
 3. Specificity: uncertainty changes are tracked separately from top-1, correctness, semantic-proxy, and ranking shifts.
@@ -282,6 +288,10 @@ partial corr rho -> |Delta Var| = 0.3245
 Decoder-only Qwen/Phi equal Fisher-output-energy:
 |Delta H| accessible/random ratio = 1.68x to 2.69x
 |Delta H| accessible/grad-orthogonal ratio = 3.76x to 35.04x
+
+Operational fixed-target cost, MLM top-k 32 local-linear:
+rho -> -log C_tau(H): Spearman = 0.7571, AUROC = 0.8723
+rho -> -log C_tau(Var): Spearman = 0.6036, AUROC = 0.7860
 ```
 
 Specificity:
@@ -289,7 +299,7 @@ Specificity:
 - At `epsilon=0.02`, mean top-1 change rate is `0.0142`; target-correctness change rate is `0.0003`.
 - At `epsilon=0.05`, mean top-1 change rate is `0.0345`; target-correctness change rate is `0.0010`.
 
-Interpretation: accessible steering changes uncertainty more efficiently than controls at equal Fisher-output energy and largely preserves monitored answer identity at small epsilons. The decoder-only battery makes the decoder evidence part of the main steering experiment rather than a secondary appendix.
+Interpretation: accessible steering changes uncertainty more efficiently than controls at equal Fisher-output energy and largely preserves monitored answer identity at small epsilons. The fixed-target cost test reframes the same geometry as operational controllability: high-accessibility MLM cases need less estimated intervention energy, although direct projected gradients remain stronger raw cost predictors.
 
 ## Confirmatory Vs Exploratory Analyses
 
@@ -299,6 +309,7 @@ Confirmatory analyses are the claim-supporting tests used in the main paper narr
 - accessibility predicting local movement;
 - layerwise and k-dimensional structure;
 - uncertainty steering against equal Fisher-output-energy controls;
+- fixed-target minimal intervention energy for uncertainty movement;
 - bootstrap CIs/effect sizes for the main steering and rho-quartile contrasts;
 - same scalar uncertainty plus same projected-gradient magnitude but different `rho`;
 - tiny-model full-vocabulary sanity check;
@@ -311,6 +322,7 @@ Confirmatory analyses are the claim-supporting tests used in the main paper narr
 Exploratory and diagnostic analyses are used to bound the claim:
 
 - direct projected-gradient baselines;
+- decoder cost cases where projected gradients dominate `rho` as a raw cost predictor;
 - residual `rho` effects after scalar, gradient, and geometric controls;
 - top-k robustness beyond the main lens;
 - Semantic Entropy, Semantic Density, and HaloScope-style comparator diagnostics;
@@ -513,6 +525,63 @@ Qualitative answer-preserving examples are stored in:
 - `experiments/04_uncertainty_steering/reports/answer_preserving_qualitative_examples.md`
 
 Example pattern: the prompt `The meeting happened near the [MASK] in the school.` preserves the answer token `library` while entropy moves from `0.9675` to `1.0590` under an increasing accessible intervention, with full-vocabulary top-10 Jaccard equal to `1.000`.
+
+## Added Test 1: Minimal Intervention Energy
+
+Primary artifacts:
+
+- `experiments/04_uncertainty_steering/01_minimal_intervention_energy/outputs/minimal_energy_cost_records.csv`
+- `experiments/04_uncertainty_steering/01_minimal_intervention_energy/outputs/minimal_energy_predictor_benchmark.csv`
+- `experiments/04_uncertainty_steering/01_minimal_intervention_energy/outputs/minimal_energy_residual_effects.csv`
+- `experiments/04_uncertainty_steering/01_minimal_intervention_energy/reports/report.md`
+
+This test asks the inverse controllability question: for fixed targets `Delta H >= 0.02` and `|Delta Var| >= 0.04`, how much latent intervention cost is needed?
+
+Key result:
+
+```text
+MLM top-k 32 local-linear:
+rho -> -log C_tau(H):   Spearman = 0.7571, AUROC = 0.8723
+rho -> -log C_tau(Var): Spearman = 0.6036, AUROC = 0.7860
+rho residual effect after scalar, gradient, Fisher/Jacobian, model/task/layer controls:
+  H   residual Spearman = 0.5863, standardized beta = 0.4337
+  Var residual Spearman = 0.4061, standardized beta = 0.3013
+
+MLM full multi-epsilon grid:
+rho -> -log C_tau(H):   Spearman = 0.2132, AUROC = 0.6012
+rho -> -log C_tau(Var): Spearman = 0.1206, AUROC = 0.5697
+```
+
+Interpretation: the operational cost test is strongest in the matched top-k 32 local-linear setting, where `rho` remains predictive after strong controls. The multi-epsilon grid is weaker once direct gradient and Fisher controls are included. The paper should therefore present this as evidence for local controllability cost, not as a universal replacement for projected-gradient predictors.
+
+## Added Test 2: Equal-Output-Movement Steering
+
+Primary artifacts:
+
+- `experiments/04_uncertainty_steering/02_equal_output_movement/outputs/equal_output_efficiency_records.csv`
+- `experiments/04_uncertainty_steering/02_equal_output_movement/outputs/equal_output_control_contrasts.csv`
+- `experiments/04_uncertainty_steering/02_equal_output_movement/outputs/equal_output_preservation_summary.csv`
+- `experiments/04_uncertainty_steering/02_equal_output_movement/reports/report.md`
+
+This test asks whether accessible directions move uncertainty more per unit matched Fisher-output movement.
+
+Key result:
+
+```text
+MLM top-k 32 entropy-efficiency accessible/random ratio: 2.44x to 2.64x
+MLM top-k 32 entropy-efficiency accessible/grad-orthogonal ratio: 27.40x to 32.09x
+Decoder entropy-efficiency accessible/random ratio: 2.02x to 2.32x
+Decoder entropy-efficiency accessible/grad-orthogonal ratio: 6.77x to 14.47x
+```
+
+Preservation:
+
+```text
+MLM accessible top-1 change: 0.0207 to 0.0248; top-10 Jaccard about 0.95
+Decoder accessible top-1 change: 0.0000 to 0.0278; top-10 Jaccard about 0.95
+```
+
+Interpretation: at matched `||F^{1/2}J delta z||`, accessible directions produce more uncertainty movement than random and gradient-orthogonal controls while preserving the local answer neighborhood.
 
 ## Added Control E: Decoder-only Main Evidence
 
@@ -756,6 +825,12 @@ Decoder-only main battery, comparator diagnostics, and local confidence-control 
 python scripts\run_decoder_llm_main_and_comparators.py --local-files-only --trust-remote-code --max-prompts-per-task 3 --top-m 16 --pca-dim 8 --output-eps 0.05 --seed 20260528
 ```
 
+Operational controllability tests:
+
+```powershell
+python scripts\run_control_cost_and_equal_output_tests.py --tau-entropy 0.02 --tau-varentropy 0.04 --top-k-output 32 --seed 20260529
+```
+
 Paper figures:
 
 ```powershell
@@ -790,6 +865,7 @@ The commands regenerate raw outputs under `results/`. The checked-in paper-ready
 - Semantic uncertainty comparators are represented by token-level embedding/cluster proxies, not full generative Semantic Entropy, Semantic Density, or HaloScope implementations on their original hallucination-detection tasks.
 - Decoder-only evidence is present in the main steering experiment on Qwen and Phi, but remains a local next-token logit-lens intervention.
 - Direct projected gradients are stronger immediate predictors than rho for raw local movement; rho's stronger claim is residual geometric information after controls and decompositional interpretability.
+- In the minimal intervention-energy test, `rho` predicts lower cost in the local top-k 32 setting, but projected gradients remain the strongest raw cost predictors and the full multi-epsilon grid is more mixed.
 - Top-k robustness is good but not perfect; full-vocabulary tiny-model sanity shows that top-k can overestimate absolute rho at small k.
 - Out-of-sample route transfer is encouraging but preliminary because pooled random routes remain competitive in this small run.
 - Random-init controls show learned weights reshape accessibility, but nonzero random-init accessibility means architectural geometry is also part of the measurement.

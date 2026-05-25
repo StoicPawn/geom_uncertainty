@@ -3,6 +3,8 @@
 Confirmatory controls that support the main claims:
 
 - `statistical_diagnostics`
+- `minimal_intervention_energy`
+- `equal_output_movement`
 - `full_vocab_sanity`
 - `out_of_sample_generalization`
 - `random_init_vs_pretrained`

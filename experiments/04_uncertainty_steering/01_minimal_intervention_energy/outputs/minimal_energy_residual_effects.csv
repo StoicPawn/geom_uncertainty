@@ -1,0 +1,7 @@
+source,outcome,n,rho_residual_spearman,rho_beta_standardized,controls
+decoder_main_local_linear,neg_log_cost_entropy_tau,144,0.591409444144721,0.19928057922169007,"entropy,varentropy,confidence,grad_entropy_proj_norm,fisher_output_fro_norm,model,task,layer,subspace_family,sign"
+decoder_main_local_linear,neg_log_cost_varentropy_tau,144,0.35397388980253014,0.18775688811465036,"entropy,varentropy,confidence,grad_entropy_proj_norm,fisher_output_fro_norm,model,task,layer,subspace_family,sign"
+mlm_full_grid_interpolated,neg_log_cost_entropy_tau,4967,-0.008649313293277823,-0.017826852144677992,"entropy,varentropy,grad_entropy_proj_norm,fisher_output_fro_norm,trace_fim,logit_norm,model,task,layer,subspace_family,sign"
+mlm_full_grid_interpolated,neg_log_cost_varentropy_tau,4793,-0.08424181746057308,-0.11846586321629196,"entropy,varentropy,grad_entropy_proj_norm,fisher_output_fro_norm,trace_fim,logit_norm,model,task,layer,subspace_family,sign"
+mlm_topk32_local_linear,neg_log_cost_entropy_tau,966,0.5862778949563483,0.4336779447514294,"entropy,varentropy,confidence,margin,grad_entropy_proj_norm,grad_varentropy_proj_norm,fisher_output_fro_norm,jacobian_fro_norm,trace_fim,logit_norm,model,task,layer,subspace_family,sign"
+mlm_topk32_local_linear,neg_log_cost_varentropy_tau,966,0.40612976044758836,0.30127698659371055,"entropy,varentropy,confidence,margin,grad_entropy_proj_norm,grad_varentropy_proj_norm,fisher_output_fro_norm,jacobian_fro_norm,trace_fim,logit_norm,model,task,layer,subspace_family,sign"

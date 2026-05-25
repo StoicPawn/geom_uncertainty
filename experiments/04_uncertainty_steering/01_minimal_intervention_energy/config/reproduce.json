@@ -1,0 +1,7 @@
+{
+  "command": "python scripts\\run_control_cost_and_equal_output_tests.py --tau-entropy 0.02 --tau-varentropy 0.04 --top-k-output 32 --seed 20260529",
+  "seed": 20260529,
+  "tau_entropy": 0.02,
+  "tau_varentropy": 0.04,
+  "top_k_output": 32
+}

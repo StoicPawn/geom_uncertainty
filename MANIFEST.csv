@@ -11,6 +11,8 @@ experiments/01_matched_scalar_uncertainty/,Experiment 1 data outputs figures rep
 experiments/02_local_perturbation_prediction/,Experiment 2 data outputs figures reports and config
 experiments/03_layerwise_k_structure/,Experiment 3 data outputs figures reports and config
 experiments/04_uncertainty_steering/,Experiment 4 five-check steering battery outputs figures reports and config
+experiments/04_uncertainty_steering/01_minimal_intervention_energy/,Operational control-cost test for fixed uncertainty targets
+experiments/04_uncertainty_steering/02_equal_output_movement/,Equal Fisher-output movement uncertainty-efficiency test
 experiments/04_uncertainty_steering/decoder_main_battery/,Main decoder-only LLM steering battery
 experiments/controls/,Controls ablations and boundary cases
 experiments/controls/statistical_diagnostics/,Bootstrap intervals effect sizes duplicate audit and failure modes

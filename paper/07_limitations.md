@@ -5,6 +5,7 @@
 - Semantic Entropy, Semantic Density, and HaloScope are represented by token-level/proxy diagnostics for object comparison. They are not full implementations of those methods on their original hallucination-detection tasks.
 - Top-k Fisher geometry is a local output-lens approximation. The tiny full-vocabulary sanity check suggests larger top-k lenses move closer to full-vocabulary rho, but top-k should not be presented as invariant.
 - Direct projected gradients are stronger raw infinitesimal predictors than `rho`; the central claim is geometric decomposition and route accessibility, not predictor dominance.
+- The minimal intervention-energy test supports a local cost interpretation on MLM top-k 32 records, but the multi-epsilon grid and decoder slices are more mixed; this should be framed as operational evidence with gradient-baseline caveats.
 - Train-estimated route generalization is preliminary: train routes match held-out oracle routes in this small run, but random routes remain competitive.
 - Random-init controls show learned weights change accessibility structure, but random architectures still have nonzero accessibility.
 - Most intervention evidence is local logit-lens steering, not end-to-end generation-time intervention.

@@ -1,0 +1,9 @@
+baseline,status,note
+accessible_ls,implemented,MLM and decoder equal Fisher-output movement
+random_control,implemented,MLM and decoder equal Fisher-output movement
+grad_orthogonal_control,implemented,MLM and decoder equal Fisher-output movement
+strict_orthogonal_ls,implemented_partial,"available in the original MLM full battery, not in decoder main battery"
+entropy_gradient_direction,diagnostic_predictor,projected gradient norm is benchmarked for minimal cost; intervention direction not stored in checked-in equal-output records
+varentropy_gradient_direction,diagnostic_predictor,projected gradient norm is benchmarked for minimal cost; intervention direction not stored in checked-in equal-output records
+max_fisher_output_direction,not_materialized,"Fisher-output norm is a predictor/control, but max-energy intervention direction is not stored"
+pca_direction,implemented_as_subspace,state_pca and delta_pca define routes; individual first PC intervention is not separately stored
