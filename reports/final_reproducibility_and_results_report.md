@@ -136,6 +136,7 @@ Output lens:
 20260524   steering full battery, pilot steering, decoder steering
 20260525   top-k robustness, gradient baselines, full regression, preservation controls
 20260526   bootstrap diagnostics, prompt audit, failure modes, tiny full-vocabulary sanity
+20260527   out-of-sample route generalization, random-init versus pretrained controls
 ```
 
 ## Environment
@@ -282,6 +283,8 @@ Confirmatory analyses are the claim-supporting tests used in the main paper narr
 - bootstrap CIs/effect sizes for the main steering and rho-quartile contrasts;
 - same scalar uncertainty plus same projected-gradient magnitude but different `rho`;
 - tiny-model full-vocabulary sanity check;
+- train-route held-out prompt generalization;
+- random-init versus pretrained learned-structure control;
 - answer-preserving qualitative steering examples.
 
 Exploratory and diagnostic analyses are used to bound the claim:
@@ -289,6 +292,7 @@ Exploratory and diagnostic analyses are used to bound the claim:
 - direct projected-gradient baselines;
 - residual `rho` effects after scalar, gradient, and geometric controls;
 - top-k robustness beyond the main lens;
+- random-route competitiveness in held-out route generalization;
 - prompt duplicate and near-duplicate audit;
 - failure-mode table;
 - Euclidean, shuffled-surprisal, and random-subspace ablations.
@@ -301,6 +305,8 @@ Control folders:
 
 - `experiments/controls/statistical_diagnostics/`
 - `experiments/controls/full_vocab_sanity/`
+- `experiments/controls/out_of_sample_generalization/`
+- `experiments/controls/random_init_vs_pretrained/`
 - `experiments/controls/topk_robustness/`
 - `experiments/controls/gradient_baselines/`
 - `experiments/controls/full_regression/`
@@ -314,6 +320,8 @@ What they address:
 
 - Statistical diagnostics add bootstrap CIs, effect sizes, matched scalar/gradient pairs, prompt audits, and failure modes.
 - Full-vocabulary sanity tests whether top-k accessibility tracks full-vocabulary accessibility on a tiny model.
+- Out-of-sample generalization tests whether train-estimated routes transfer to held-out prompts.
+- Random-init versus pretrained tests whether learned weights change accessibility structure.
 - Random subspaces test whether the result is a generic subspace effect.
 - Euclidean ablation tests whether Fisher geometry is needed.
 - Shuffled surprisal tests whether the true centered-surprisal direction is needed.
@@ -515,6 +523,57 @@ k=256: mean |rho_topk-rho_full| = 0.0829, Spearman = 0.4952
 
 Interpretation: small top-k lenses overestimate absolute full-vocabulary accessibility, while larger top-k lenses move closer to full-vocabulary rho. This supports the top-k lens as a useful local approximation but not as an invariant substitute for full-vocabulary geometry.
 
+## Added Control G: Out-of-Sample Route Generalization
+
+Primary artifacts:
+
+- `experiments/controls/out_of_sample_generalization/outputs/oos_scores.csv`
+- `experiments/controls/out_of_sample_generalization/outputs/oos_steering_records.csv`
+- `experiments/controls/out_of_sample_generalization/outputs/oos_contrasts.csv`
+- `experiments/controls/out_of_sample_generalization/reports/report.md`
+
+Protocol: estimate `state_pca` and `delta_pca` routes on train prompts, then evaluate accessibility and accessible steering on held-out prompts. Held-out oracle routes are computed as a diagnostic upper-bound, not as a deployable route.
+
+Key held-out train-route versus held-out oracle result:
+
+```text
+BERT delta rho:      train route 0.5394 vs oracle 0.5380; |Delta H| 0.03714 vs 0.03699
+BERT state rho:      train route 0.6246 vs oracle 0.6241; |Delta H| 0.04347 vs 0.04370
+DistilBERT delta rho: train route 0.4807 vs oracle 0.4986; |Delta H| 0.02781 vs 0.02786
+DistilBERT state rho: train route 0.5420 vs oracle 0.5504; |Delta H| 0.03334 vs 0.03373
+Tiny delta rho:      train route 0.3742 vs oracle 0.4524; |Delta H| 0.02540 vs 0.02786
+Tiny state rho:      train route 0.4203 vs oracle 0.3605; |Delta H| 0.02713 vs 0.02488
+```
+
+Random-route caveat:
+
+```text
+BERT state train route beats pooled random rho by +0.0342, but BERT delta is below pooled random by -0.0510.
+DistilBERT state is near pooled random (+0.0122), while delta is below pooled random (-0.0490).
+Tiny routes are mixed.
+```
+
+Interpretation: train-estimated routes transfer surprisingly well to held-out oracle routes for BERT and DistilBERT, especially for state routes. This supports route reusability, but random routes remain competitive in this small run, so the claim should remain preliminary rather than a strong global reusable-route theorem.
+
+## Added Control H: Random-Init Versus Pretrained
+
+Primary artifacts:
+
+- `experiments/controls/random_init_vs_pretrained/outputs/random_init_scores.csv`
+- `experiments/controls/random_init_vs_pretrained/outputs/pretrained_vs_random_contrasts.csv`
+- `experiments/controls/random_init_vs_pretrained/reports/report.md`
+
+Key result:
+
+```text
+BERT state_pca: pretrained rho 0.6367 vs random-init 0.2802, ratio 2.27, rank Spearman -0.105
+BERT delta_pca: pretrained rho 0.4900 vs random-init 0.2937, ratio 1.67, rank Spearman -0.025
+Tiny state_pca: pretrained rho 0.4169 vs random-init 0.2983, ratio 1.40, rank Spearman 0.219
+Tiny delta_pca: pretrained rho 0.3858 vs random-init 0.2941, ratio 1.31, rank Spearman -0.655
+```
+
+Interpretation: random-init models retain nonzero accessibility, so architecture/Jacobian geometry contributes. But pretrained models have substantially higher accessibility and weak or unstable rank alignment with random-init models, supporting the narrower claim that accessible varentropy reflects learned representational organization in addition to architecture.
+
 ## Added Diagnostic: Prompt Audit And Failure Modes
 
 Primary artifacts:
@@ -629,6 +688,12 @@ python scripts\run_statistical_diagnostics.py --bootstrap 1000 --seed 20260526
 python scripts\run_tiny_full_vocab_sanity.py --max-prompts-per-task 4 --top-k-values 16,32,64,128,256 --subspace-ks 8 --random-subspaces 1 --seed 20260526
 ```
 
+Out-of-sample and random-init reviewer controls:
+
+```powershell
+python scripts\run_generalization_random_init_controls.py --top-k 32 --subspace-ks 8 --max-prompts-per-task 8 --random-subspaces 1 --output-eps 0.05 --seed 20260527
+```
+
 The commands regenerate raw outputs under `results/`. The checked-in paper-ready artifacts are curated copies under `experiments/`.
 
 ## Limitations
@@ -638,5 +703,7 @@ The commands regenerate raw outputs under `results/`. The checked-in paper-ready
 - Decoder-only evidence is present in the main steering experiment but remains smaller than the masked-LM battery.
 - Direct projected gradients are stronger immediate predictors than rho for raw local movement; rho's stronger claim is residual geometric information after controls and decompositional interpretability.
 - Top-k robustness is good but not perfect; full-vocabulary tiny-model sanity shows that top-k can overestimate absolute rho at small k.
+- Out-of-sample route transfer is encouraging but preliminary because pooled random routes remain competitive in this small run.
+- Random-init controls show learned weights reshape accessibility, but nonzero random-init accessibility means architectural geometry is also part of the measurement.
 - RoBERTa was unavailable locally and was not downloaded.
 - The steering claim is local: it concerns hidden-state/logit-lens perturbations, not end-to-end generation behavior under arbitrary prompts.

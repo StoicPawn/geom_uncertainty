@@ -5,8 +5,8 @@ This repository separates model coverage from experiment logic so the paper can 
 | Model | Type | Role in repository | Status |
 |---|---|---|---|
 | `distilbert-base-uncased` | masked LM | Experiments 1-4, top-k robustness, gradient/regression controls | main |
-| `bert-base-uncased` | masked LM | Experiments 1 and 4, top-k robustness, gradient/regression controls | main |
-| `google/bert_uncased_L-2_H-128_A-2` | small masked LM | Experiments 1 and 4, top-k robustness, gradient/regression controls, full-vocabulary sanity | main small-model replication |
+| `bert-base-uncased` | masked LM | Experiments 1 and 4, top-k robustness, gradient/regression controls, out-of-sample routes, random-init control | main |
+| `google/bert_uncased_L-2_H-128_A-2` | small masked LM | Experiments 1 and 4, top-k robustness, gradient/regression controls, full-vocabulary sanity, random-init control | main small-model replication |
 | `Qwen/Qwen2.5-0.5B` | decoder-only LM | Decoder logit-lens uncertainty steering inside Experiment 4 | main decoder evidence |
 | RoBERTa family | masked LM | Intended replication | not available locally; no network download attempted |
 

@@ -37,6 +37,8 @@ experiments/
   controls/
     statistical_diagnostics/
     full_vocab_sanity/
+    out_of_sample_generalization/
+    random_init_vs_pretrained/
     topk_robustness/
     gradient_baselines/
     full_regression/
@@ -86,6 +88,12 @@ Run the statistical/diagnostic package and tiny-model full-vocabulary sanity che
 ```powershell
 python scripts\run_statistical_diagnostics.py --bootstrap 1000 --seed 20260526
 python scripts\run_tiny_full_vocab_sanity.py --max-prompts-per-task 4 --top-k-values 16,32,64,128,256 --subspace-ks 8 --random-subspaces 1 --seed 20260526
+```
+
+Run the out-of-sample and random-init reviewer controls:
+
+```powershell
+python scripts\run_generalization_random_init_controls.py --top-k 32 --subspace-ks 8 --max-prompts-per-task 8 --random-subspaces 1 --output-eps 0.05 --seed 20260527
 ```
 
 Minimal full-run commands are listed in `reports/final_reproducibility_and_results_report.md`. Raw reruns write under `results/`; the paper-ready artifacts are curated into `experiments/`.
