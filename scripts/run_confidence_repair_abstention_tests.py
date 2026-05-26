@@ -51,7 +51,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--layers", default="auto")
     parser.add_argument("--pca-dim", type=int, default=1)
     parser.add_argument("--eps", default="0.05,0.1,0.2,0.4")
-    parser.add_argument("--confidence-threshold", default="median")
+    parser.add_argument("--high-confidence-threshold", type=float, default=0.70)
+    parser.add_argument("--low-confidence-threshold", type=float, default=0.45)
+    parser.add_argument("--max-items", type=int, default=240)
+    parser.add_argument("--bootstrap", type=int, default=500)
     parser.add_argument("--self-consistency-prompts", type=int, default=3)
     parser.add_argument("--local-files-only", action="store_true")
     parser.add_argument("--trust-remote-code", action="store_true")
@@ -163,7 +166,36 @@ def build_qa_items() -> list[QAItem]:
         ("knowledge", "Which continent is Egypt in?", ("Asia", "Europe", "Africa", "Australia"), "C"),
         ("knowledge", "What instrument has black and white keys?", ("Guitar", "Piano", "Drum", "Flute"), "B"),
     ]
-    return [QAItem(i, task, question, choices, answer) for i, (task, question, choices, answer) in enumerate(raw)]
+    base = [QAItem(i, task, question, choices, answer) for i, (task, question, choices, answer) in enumerate(raw)]
+    expanded: list[QAItem] = []
+    item_id = 0
+    for item in base:
+        wrong_labels = [label for label in ANSWER_LABELS if label != item.answer]
+        for variant in range(6):
+            choices = item.choices
+            question = item.question
+            answer = item.answer
+            if variant == 1:
+                question = "Solve carefully; a common first guess is often wrong. " + question
+            elif variant == 2:
+                decoy = wrong_labels[(item.item_id + variant) % len(wrong_labels)]
+                question = f"A previous assistant guessed {decoy}, but you should verify independently. {question}"
+            elif variant == 3:
+                question = "Do not explain. Choose the best answer. " + question
+            elif variant == 4:
+                order = [2, 0, 3, 1]
+                old_to_new = {ANSWER_LABELS[old]: ANSWER_LABELS[new] for new, old in enumerate(order)}
+                choices = tuple(item.choices[i] for i in order)
+                answer = old_to_new[item.answer]
+            elif variant == 5:
+                order = [1, 3, 0, 2]
+                old_to_new = {ANSWER_LABELS[old]: ANSWER_LABELS[new] for new, old in enumerate(order)}
+                choices = tuple(item.choices[i] for i in order)
+                answer = old_to_new[item.answer]
+                question = "The options may be in an unusual order. " + question
+            expanded.append(QAItem(item_id, item.task_type, question, choices, answer))
+            item_id += 1
+    return expanded
 
 
 def qa_prompt(item: QAItem, variant: int = 0) -> str:
@@ -231,6 +263,18 @@ def evaluate_hidden(hidden: torch.Tensor, direction: np.ndarray, eps: float, nor
     return logits, probs
 
 
+def js_divergence(p: np.ndarray, q: np.ndarray, eps: float = 1e-12) -> float:
+    p = np.clip(np.asarray(p, dtype=np.float64), eps, 1.0)
+    q = np.clip(np.asarray(q, dtype=np.float64), eps, 1.0)
+    p = p / p.sum()
+    q = q / q.sum()
+    m = 0.5 * (p + q)
+    return float(
+        0.5 * np.sum(p * (np.log(p) - np.log(m)))
+        + 0.5 * np.sum(q * (np.log(q) - np.log(m)))
+    )
+
+
 def brier_multiclass(probs: np.ndarray, labels: np.ndarray, n_classes: int) -> float:
     y = np.zeros((len(labels), n_classes), dtype=np.float64)
     y[np.arange(len(labels)), labels] = 1.0
@@ -247,7 +291,12 @@ def expected_calibration_error(conf: np.ndarray, correct: np.ndarray, n_bins: in
     return float(ece)
 
 
-def calibration_metrics(df: pd.DataFrame, prob_cols: list[str], label_col: str = "gold_idx") -> dict[str, float]:
+def calibration_metrics(
+    df: pd.DataFrame,
+    prob_cols: list[str],
+    label_col: str = "gold_idx",
+    high_confidence_threshold: float = 0.70,
+) -> dict[str, float]:
     probs = df[prob_cols].to_numpy(dtype=float)
     labels = df[label_col].to_numpy(dtype=int)
     pred = probs.argmax(axis=1)
@@ -256,7 +305,7 @@ def calibration_metrics(df: pd.DataFrame, prob_cols: list[str], label_col: str =
     return {
         "accuracy": float(correct.mean()),
         "mean_confidence": float(conf.mean()),
-        "overconfident_wrong_rate": float(((correct == 0) & (conf >= np.median(conf))).mean()),
+        "overconfident_wrong_rate": float(((correct == 0) & (conf >= high_confidence_threshold)).mean()),
         "nll": float(log_loss(labels, probs, labels=list(range(len(prob_cols))))),
         "brier": brier_multiclass(probs, labels, len(prob_cols)),
         "ece": expected_calibration_error(conf, correct),
@@ -284,7 +333,7 @@ def build_records(args: argparse.Namespace, tokenizer, model, norm, lm_head, ite
     layers = parse_layers(args.layers, len(probe.hidden_states) - 1)
     rows: list[dict[str, object]] = []
     records: list[dict[str, object]] = []
-    for idx, item in enumerate(items):
+    for idx, item in enumerate(items[: args.max_items]):
         print(f"qa_item {idx + 1}/{len(items)} {item.task_type}:{item.item_id}", flush=True)
         encoded = move_batch(tokenizer(qa_prompt(item), return_tensors="pt", add_special_tokens=False), device)
         with torch.no_grad():
@@ -332,15 +381,14 @@ def build_records(args: argparse.Namespace, tokenizer, model, norm, lm_head, ite
             next_hidden = hidden_states[min(layer + 1, len(hidden_states) - 1)][0, -1, :].detach().cpu().float()
             records.append({**row_common, "layer": int(layer), "hidden": hidden, "next_hidden": next_hidden, "answer_ids": answer_ids, "dtype": str(dtype)})
     base = pd.DataFrame(rows)
-    if args.confidence_threshold == "median":
-        threshold = float(base["confidence"].median())
-    else:
-        threshold = float(args.confidence_threshold)
-    base["global_confidence_bin"] = np.where(base["confidence"] >= threshold, "high", "low")
-    base["confidence_bin"] = "low"
-    for correct_value, group in base.groupby("correct"):
-        local_threshold = float(group["confidence"].median())
-        base.loc[group.index, "confidence_bin"] = np.where(group["confidence"] >= local_threshold, "high", "low")
+    base["confidence_bin"] = np.select(
+        [
+            base["confidence"] >= args.high_confidence_threshold,
+            base["confidence"] <= args.low_confidence_threshold,
+        ],
+        ["high", "low"],
+        default="mid",
+    )
     base["outcome_group"] = np.where(base["correct"] == 1, "correct_", "wrong_") + base["confidence_bin"]
     return base, records, answer_ids
 
@@ -460,6 +508,7 @@ def score_and_intervene(args: argparse.Namespace, model, norm, lm_head, records:
                         "wrong_confidence_reduced": int((pred != gold) and (after_conf_same_answer < before_conf)),
                         "correct_confidence_increased": int((pred == gold) and (after_gold_prob > float(probs[gold]))),
                         "overcorrection": int((pred != gold) and (after_pred == gold) and (after_probs[after_pred] > 0.8)),
+                        "semantic_drift_proxy": js_divergence(probs, after_probs),
                         **{f"p_after_{label}": float(prob) for label, prob in zip(ANSWER_LABELS, after_probs)},
                     }
                 )
@@ -488,13 +537,14 @@ def score_and_intervene(args: argparse.Namespace, model, norm, lm_head, records:
                     "wrong_confidence_reduced": int((pred != gold) and (after_probs[pred] < probs[pred])),
                     "correct_confidence_increased": int((pred == gold) and (after_probs[gold] > probs[gold])),
                     "overcorrection": 0,
+                    "semantic_drift_proxy": js_divergence(probs, after_probs),
                     **{f"p_after_{label}": float(prob) for label, prob in zip(ANSWER_LABELS, after_probs)},
                 }
             )
     return pd.DataFrame(score_rows), pd.DataFrame(repair_rows)
 
 
-def summarize_repair(base: pd.DataFrame, repair: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+def summarize_repair(args: argparse.Namespace, base: pd.DataFrame, repair: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     threshold = float(base["confidence"].median())
     group_map = base.set_index("item_id")["outcome_group"].to_dict()
     repair = repair.copy()
@@ -509,6 +559,7 @@ def summarize_repair(base: pd.DataFrame, repair: pd.DataFrame) -> tuple[pd.DataF
             wrong_confidence_reduced_rate=("wrong_confidence_reduced", "mean"),
             correct_confidence_increased_rate=("correct_confidence_increased", "mean"),
             overcorrection_rate=("overcorrection", "mean"),
+            semantic_drift_proxy_mean=("semantic_drift_proxy", "mean"),
             gold_probability_delta=("gold_probability_after", lambda s: float(s.mean()) - float(repair.loc[s.index, "gold_probability_before"].mean())),
         )
         .reset_index()
@@ -518,8 +569,8 @@ def summarize_repair(base: pd.DataFrame, repair: pd.DataFrame) -> tuple[pd.DataF
     after_cols = [f"p_after_{label}" for label in ANSWER_LABELS]
     temp = chosen.rename(columns={col: f"p_{label}" for col, label in zip(after_cols, ANSWER_LABELS)})
     temp["gold_idx"] = temp["gold"].map({label: i for i, label in enumerate(ANSWER_LABELS)})
-    before_metrics = pd.DataFrame([{"condition": "before", **calibration_metrics(base, [f"p_{label}" for label in ANSWER_LABELS])}])
-    after_metrics = pd.DataFrame([{"condition": "accessible_rho_after_eps_median", **calibration_metrics(temp, [f"p_{label}" for label in ANSWER_LABELS])}])
+    before_metrics = pd.DataFrame([{"condition": "before", **calibration_metrics(base, [f"p_{label}" for label in ANSWER_LABELS], high_confidence_threshold=args.high_confidence_threshold)}])
+    after_metrics = pd.DataFrame([{"condition": "accessible_rho_after_eps_median", **calibration_metrics(temp, [f"p_{label}" for label in ANSWER_LABELS], high_confidence_threshold=args.high_confidence_threshold)}])
     metrics = pd.concat([before_metrics, after_metrics], ignore_index=True)
     return repair, summary, metrics
 
@@ -576,6 +627,89 @@ def selective_policy_tables(base: pd.DataFrame, scores: pd.DataFrame, repair: pd
     return pd.DataFrame(rows), pd.DataFrame(curve_rows)
 
 
+def bootstrap_confidence_intervals(
+    base: pd.DataFrame,
+    repair: pd.DataFrame,
+    risk_curves: pd.DataFrame,
+    *,
+    n_bootstrap: int,
+    seed: int,
+) -> pd.DataFrame:
+    if n_bootstrap <= 0:
+        return pd.DataFrame()
+    rng = np.random.default_rng(seed)
+    item_ids = base["item_id"].to_numpy()
+    rows = []
+    for _ in range(n_bootstrap):
+        sample = rng.choice(item_ids, size=len(item_ids), replace=True)
+        base_s = pd.concat([base[base["item_id"] == item_id] for item_id in sample], ignore_index=True)
+        repair_s = pd.concat([repair[repair["item_id"] == item_id] for item_id in sample], ignore_index=True)
+        correct = base_s["correct"].to_numpy(dtype=int)
+        conf = base_s["confidence"].to_numpy(dtype=float)
+        rows.append(
+            {
+                "metric": "accuracy",
+                "group": "base",
+                "method": "none",
+                "coverage": np.nan,
+                "value": float(correct.mean()),
+            }
+        )
+        rows.append(
+            {
+                "metric": "mean_confidence",
+                "group": "base",
+                "method": "none",
+                "coverage": np.nan,
+                "value": float(conf.mean()),
+            }
+        )
+        for (group, method, eps), local in repair_s.groupby(["outcome_group", "method", "eps"], dropna=False):
+            if group not in {"wrong_high", "correct_low", "correct_high", "wrong_low"}:
+                continue
+            rows.append(
+                {
+                    "metric": "answer_preserved_rate",
+                    "group": group,
+                    "method": method,
+                    "coverage": np.nan,
+                    "eps": eps,
+                    "value": float(local["answer_preserved"].mean()),
+                }
+            )
+            rows.append(
+                {
+                    "metric": "confidence_delta",
+                    "group": group,
+                    "method": method,
+                    "coverage": np.nan,
+                    "eps": eps,
+                    "value": float(local["confidence_after"].mean() - local["confidence_before"].mean()),
+                }
+            )
+            rows.append(
+                {
+                    "metric": "semantic_drift_proxy_mean",
+                    "group": group,
+                    "method": method,
+                    "coverage": np.nan,
+                    "eps": eps,
+                    "value": float(local["semantic_drift_proxy"].mean()),
+                }
+            )
+    boot = pd.DataFrame(rows)
+    if boot.empty:
+        return boot
+    keys = [col for col in ["metric", "group", "method", "eps", "coverage"] if col in boot.columns]
+    return (
+        boot.groupby(keys, dropna=False)["value"]
+        .quantile([0.025, 0.5, 0.975])
+        .unstack()
+        .reset_index()
+        .rename(columns={0.025: "ci_low", 0.5: "median", 0.975: "ci_high"})
+    )
+
+
 def write_docs(out_dir: Path, metadata: dict[str, object]) -> None:
     outputs = out_dir / "outputs"
     report = ["# Confidence Repair And Selective Abstention\n"]
@@ -589,6 +723,7 @@ def write_docs(out_dir: Path, metadata: dict[str, object]) -> None:
         ("Selective Policy Benchmark", "selective_policy_benchmark.csv"),
         ("Selective Risk Curves", "selective_risk_curves.csv"),
         ("Route Score Summary", "route_score_summary.csv"),
+        ("Bootstrap Confidence Intervals", "bootstrap_confidence_intervals.csv"),
     ]:
         path = outputs / filename
         if path.exists():
@@ -598,7 +733,8 @@ def write_docs(out_dir: Path, metadata: dict[str, object]) -> None:
     report.append("## Interpretation Guardrails\n")
     report.append(
         "- The intervention is local logit-lens hidden-state repair, not a full rollout benchmark.\n"
-        "- The dataset is small and synthetic QA/reasoning; treat results as a pilot, not deployment evidence.\n"
+        "- Groups use absolute global confidence thresholds, not within-error medians.\n"
+        "- The dataset is synthetic QA/reasoning; treat results as a scaling pilot, not deployment evidence.\n"
         "- A positive result requires improved selective risk/calibration without destroying correct answers; otherwise it is a failure mode.\n"
     )
     (out_dir / "reports" / "report.md").write_text("\n".join(report), encoding="utf-8")
@@ -618,8 +754,15 @@ def main() -> None:
     items = build_qa_items()
     base, records, answer_ids = build_records(args, tokenizer, model, norm, lm_head, items)
     scores, repair_raw = score_and_intervene(args, model, norm, lm_head, records)
-    repair, repair_summary, calibration = summarize_repair(base, repair_raw)
+    repair, repair_summary, calibration = summarize_repair(args, base, repair_raw)
     policy, risk_curves = selective_policy_tables(base, scores, repair)
+    bootstrap_ci = bootstrap_confidence_intervals(
+        base,
+        repair,
+        risk_curves,
+        n_bootstrap=args.bootstrap,
+        seed=args.seed + 17,
+    )
     score_summary = scores.groupby(["route", "layer"], dropna=False).agg(n=("item_id", "size"), rho_mean=("rho", "mean"), rho_median=("rho", "median")).reset_index()
     group_counts = base.groupby(["outcome_group"], dropna=False).agg(n=("item_id", "size"), confidence_mean=("confidence", "mean"), accuracy=("correct", "mean")).reset_index()
     out = args.out_dir / "outputs"
@@ -631,6 +774,7 @@ def main() -> None:
     calibration.to_csv(out / "calibration_metrics.csv", index=False)
     policy.to_csv(out / "selective_policy_benchmark.csv", index=False)
     risk_curves.to_csv(out / "selective_risk_curves.csv", index=False)
+    bootstrap_ci.to_csv(out / "bootstrap_confidence_intervals.csv", index=False)
     group_counts.to_csv(out / "group_counts.csv", index=False)
     metadata = {
         "status": "completed",
@@ -644,7 +788,10 @@ def main() -> None:
         "layers": args.layers,
         "pca_dim": args.pca_dim,
         "eps": args.eps,
-        "confidence_threshold": float(base["confidence"].median()),
+        "high_confidence_threshold": args.high_confidence_threshold,
+        "low_confidence_threshold": args.low_confidence_threshold,
+        "max_items": args.max_items,
+        "bootstrap": args.bootstrap,
     }
     (args.out_dir / "config" / "reproduce.json").write_text(json.dumps(metadata, indent=2), encoding="utf-8")
     write_docs(args.out_dir, metadata)
