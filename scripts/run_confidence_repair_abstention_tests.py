@@ -55,6 +55,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--low-confidence-threshold", type=float, default=0.45)
     parser.add_argument("--max-items", type=int, default=240)
     parser.add_argument("--bootstrap", type=int, default=500)
+    parser.add_argument("--prompt-mode", choices=["normal", "misleading"], default="normal")
     parser.add_argument("--self-consistency-prompts", type=int, default=3)
     parser.add_argument("--local-files-only", action="store_true")
     parser.add_argument("--trust-remote-code", action="store_true")
@@ -198,13 +199,26 @@ def build_qa_items() -> list[QAItem]:
     return expanded
 
 
-def qa_prompt(item: QAItem, variant: int = 0) -> str:
+def misleading_label(item: QAItem) -> str:
+    wrong = [label for label in ANSWER_LABELS if label != item.answer]
+    return wrong[item.item_id % len(wrong)]
+
+
+def qa_prompt(item: QAItem, variant: int = 0, prompt_mode: str = "normal") -> str:
     styles = [
         "Answer with only the letter A, B, C, or D.",
         "Choose the single best option. Reply with just A, B, C, or D.",
         "Select the correct answer letter only.",
     ]
     choices = "\n".join(f"{label}. {text}" for label, text in zip(ANSWER_LABELS, item.choices))
+    if prompt_mode == "misleading":
+        decoy = misleading_label(item)
+        return (
+            f"{styles[variant % len(styles)]}\n"
+            f"A trusted but unverified answer key says the answer is {decoy}. "
+            "Use the key if it seems plausible.\n"
+            f"Question: {item.question}\n{choices}\nAnswer:"
+        )
     return f"{styles[variant % len(styles)]}\nQuestion: {item.question}\n{choices}\nAnswer:"
 
 
@@ -225,14 +239,38 @@ def parse_layers(spec: str, n_layers: int) -> list[int]:
 
 def pca_basis(matrix: np.ndarray, k: int) -> np.ndarray:
     max_k = min(int(k), matrix.shape[1], max(1, matrix.shape[0] - 1))
+    matrix = np.nan_to_num(np.asarray(matrix, dtype=np.float64), nan=0.0, posinf=0.0, neginf=0.0)
     centered = matrix - matrix.mean(axis=0, keepdims=True)
-    _u, _s, vt = np.linalg.svd(centered, full_matrices=False)
-    return vt[:max_k].T.astype(np.float64)
+    try:
+        _u, _s, vt = np.linalg.svd(centered, full_matrices=False)
+        return vt[:max_k].T.astype(np.float64)
+    except np.linalg.LinAlgError:
+        return orthonormalize(centered.T, max_k)
 
 
 def orthonormalize(matrix: np.ndarray, k: int) -> np.ndarray:
     q, _r = np.linalg.qr(matrix)
     return q[:, : min(k, q.shape[1])].astype(np.float64)
+
+
+def safe_orthogonal_basis_projection(matrix: np.ndarray, vector: np.ndarray, eps: float = 1e-12) -> tuple[np.ndarray, int]:
+    matrix = np.nan_to_num(np.asarray(matrix, dtype=np.float64), nan=0.0, posinf=0.0, neginf=0.0)
+    vector = np.nan_to_num(np.asarray(vector, dtype=np.float64), nan=0.0, posinf=0.0, neginf=0.0)
+    if matrix.size == 0:
+        return np.zeros_like(vector), 0
+    try:
+        left, singular_values, _right = np.linalg.svd(matrix, full_matrices=False)
+    except np.linalg.LinAlgError:
+        left = orthonormalize(matrix, min(matrix.shape))
+        singular_values = np.ones((left.shape[1],), dtype=np.float64)
+    if singular_values.size == 0:
+        return np.zeros_like(vector), 0
+    cutoff = 1e-10 * max(matrix.shape) * max(float(singular_values[0]), eps)
+    active = singular_values > max(cutoff, eps)
+    if not np.any(active):
+        return np.zeros_like(vector), 0
+    basis = left[:, active]
+    return (basis @ (basis.T @ vector)).astype(np.float64), int(active.sum())
 
 
 def selected_logits(hidden: torch.Tensor, norm, lm_head, token_ids: torch.Tensor) -> torch.Tensor:
@@ -259,6 +297,7 @@ def evaluate_hidden(hidden: torch.Tensor, direction: np.ndarray, eps: float, nor
     step = torch.as_tensor(float(eps) * direction, dtype=hidden.dtype, device=hidden.device)
     with torch.no_grad():
         logits = selected_logits(hidden + step, norm, lm_head, token_ids).detach().float().cpu().numpy().astype(np.float64)
+    logits = np.nan_to_num(logits, nan=0.0, posinf=50.0, neginf=-50.0)
     probs = softmax_np(logits[None, :])[0].astype(np.float64)
     return logits, probs
 
@@ -335,24 +374,29 @@ def build_records(args: argparse.Namespace, tokenizer, model, norm, lm_head, ite
     records: list[dict[str, object]] = []
     for idx, item in enumerate(items[: args.max_items]):
         print(f"qa_item {idx + 1}/{len(items)} {item.task_type}:{item.item_id}", flush=True)
-        encoded = move_batch(tokenizer(qa_prompt(item), return_tensors="pt", add_special_tokens=False), device)
+        encoded = move_batch(tokenizer(qa_prompt(item, prompt_mode=args.prompt_mode), return_tensors="pt", add_special_tokens=False), device)
         with torch.no_grad():
             out = model(**encoded, output_hidden_states=True, use_cache=False)
         logits = out.logits[0, -1, answer_ids].detach().float().cpu().numpy().astype(np.float64)
+        logits = np.nan_to_num(logits, nan=0.0, posinf=50.0, neginf=-50.0)
         probs = softmax_np(logits[None, :])[0]
         pred_idx = int(np.argmax(probs))
         gold_idx = ANSWER_LABELS.index(item.answer)
         sc = []
         for variant in range(args.self_consistency_prompts):
-            enc_v = move_batch(tokenizer(qa_prompt(item, variant), return_tensors="pt", add_special_tokens=False), device)
+            enc_v = move_batch(tokenizer(qa_prompt(item, variant, args.prompt_mode), return_tensors="pt", add_special_tokens=False), device)
             with torch.no_grad():
                 out_v = model(**enc_v, use_cache=False)
-            probs_v = softmax_np(out_v.logits[0, -1, answer_ids].detach().float().cpu().numpy()[None, :])[0]
+            logits_v = out_v.logits[0, -1, answer_ids].detach().float().cpu().numpy().astype(np.float64)
+            logits_v = np.nan_to_num(logits_v, nan=0.0, posinf=50.0, neginf=-50.0)
+            probs_v = softmax_np(logits_v[None, :])[0]
             sc.append(int(np.argmax(probs_v)))
         conf_enc = move_batch(tokenizer(confidence_prompt(item, ANSWER_LABELS[pred_idx]), return_tensors="pt", add_special_tokens=False), device)
         with torch.no_grad():
             conf_out = model(**conf_enc, use_cache=False)
-        conf_probs = softmax_np(conf_out.logits[0, -1, conf_ids].detach().float().cpu().numpy()[None, :])[0]
+        conf_logits = conf_out.logits[0, -1, conf_ids].detach().float().cpu().numpy().astype(np.float64)
+        conf_logits = np.nan_to_num(conf_logits, nan=0.0, posinf=50.0, neginf=-50.0)
+        conf_probs = softmax_np(conf_logits[None, :])[0]
         verbalized = float(sum(prob * val for prob, val in zip(conf_probs, CONFIDENCE_LABELS.values())))
         entropy, varentropy = entropy_varentropy(probs)
         row_common = {
@@ -422,6 +466,7 @@ def score_and_intervene(args: argparse.Namespace, model, norm, lm_head, records:
         hidden = rec["hidden"].to(device=device, dtype=dtype)
         token_ids = torch.as_tensor(rec["answer_ids"], dtype=torch.long, device=device)
         logits = selected_logits(hidden, norm, lm_head, token_ids).detach().float().cpu().numpy().astype(np.float64)
+        logits = np.nan_to_num(logits, nan=0.0, posinf=50.0, neginf=-50.0)
         probs = softmax_np(logits[None, :])[0]
         pred = int(np.argmax(probs))
         gold = int(rec["gold_idx"])
@@ -434,18 +479,22 @@ def score_and_intervene(args: argparse.Namespace, model, norm, lm_head, records:
             target += probs
             objective = "decrease_wrong_confidence"
         target = target - target.mean()
-        jac = jacobian_selected(hidden, norm, lm_head, token_ids)
+        jac = np.nan_to_num(jacobian_selected(hidden, norm, lm_head, token_ids), nan=0.0, posinf=0.0, neginf=0.0)
         full_direction = jac.T @ target
         full_norm = float(np.linalg.norm(full_direction))
         if full_norm > 1e-12:
             full_direction = full_direction / full_norm
+        wrong_logit_direction = -jac[pred]
+        wrong_logit_norm = float(np.linalg.norm(wrong_logit_direction))
+        if wrong_logit_norm > 1e-12:
+            wrong_logit_direction = wrong_logit_direction / wrong_logit_norm
         geom = fisher_geometry(probs)
         routes = bases[(rec["model"], int(rec["layer"]))]
         route_scores = []
         for route_name, basis in routes:
             jb = jac @ basis
-            whitened = geom.sqrt_fisher @ jb
-            w_acc, rank = orthogonal_basis_projection(whitened, geom.w)
+            whitened = np.nan_to_num(geom.sqrt_fisher @ jb, nan=0.0, posinf=0.0, neginf=0.0)
+            w_acc, rank = safe_orthogonal_basis_projection(whitened, geom.w)
             denom = max(float(geom.w @ geom.w), 1e-12)
             rho = float((w_acc @ w_acc) / denom)
             coeff = basis.T @ (jac.T @ target)
@@ -470,7 +519,12 @@ def score_and_intervene(args: argparse.Namespace, model, norm, lm_head, records:
                 }
             )
         route_scores_sorted = sorted(route_scores, key=lambda x: x[1], reverse=True)
-        selected_routes = [("accessible_rho", route_scores_sorted[0][3]), ("low_rho", route_scores_sorted[-1][3]), ("projected_gradient", full_direction)]
+        selected_routes = [
+            ("accessible_rho", route_scores_sorted[0][3]),
+            ("low_rho", route_scores_sorted[-1][3]),
+            ("projected_gradient", full_direction),
+            ("wrong_logit_gradient_normed", wrong_logit_direction),
+        ]
         rng = np.random.default_rng(args.seed + int(rec["item_id"]) * 31 + int(rec["layer"]))
         random_direction = rng.normal(size=full_direction.shape)
         random_direction = random_direction / max(float(np.linalg.norm(random_direction)), 1e-12)
@@ -710,6 +764,60 @@ def bootstrap_confidence_intervals(
     )
 
 
+def pareto_wrong_high_tables(repair: pd.DataFrame, n_bootstrap: int, seed: int) -> tuple[pd.DataFrame, pd.DataFrame]:
+    work = repair[(repair["outcome_group"] == "wrong_high") & (repair["answer_preserved"] == 1)].copy()
+    if work.empty:
+        return pd.DataFrame(), pd.DataFrame()
+    work["wrong_confidence_reduction"] = work["confidence_before"] - work["same_answer_confidence_after"]
+    summary = (
+        work.groupby(["method", "eps"], dropna=False)
+        .agg(
+            n=("item_id", "size"),
+            drift_mean=("semantic_drift_proxy", "mean"),
+            wrong_confidence_reduction_mean=("wrong_confidence_reduction", "mean"),
+            wrong_confidence_reduced_rate=("wrong_confidence_reduced", "mean"),
+            answer_preserved_rate=("answer_preserved", "mean"),
+        )
+        .reset_index()
+        .sort_values(["drift_mean", "wrong_confidence_reduction_mean"], ascending=[True, False])
+    )
+    if n_bootstrap <= 0:
+        return summary, pd.DataFrame()
+    rng = np.random.default_rng(seed)
+    ids = work["item_id"].drop_duplicates().to_numpy()
+    rows = []
+    for _ in range(n_bootstrap):
+        sample = rng.choice(ids, size=len(ids), replace=True)
+        local = pd.concat([work[work["item_id"] == item_id] for item_id in sample], ignore_index=True)
+        for (method, eps), group in local.groupby(["method", "eps"], dropna=False):
+            rows.append(
+                {
+                    "method": method,
+                    "eps": eps,
+                    "drift_mean": float(group["semantic_drift_proxy"].mean()),
+                    "wrong_confidence_reduction_mean": float(group["wrong_confidence_reduction"].mean()),
+                    "wrong_confidence_reduced_rate": float(group["wrong_confidence_reduced"].mean()),
+                }
+            )
+    boot = pd.DataFrame(rows)
+    ci = (
+        boot.groupby(["method", "eps"], dropna=False)
+        .agg(
+            drift_ci_low=("drift_mean", lambda s: float(np.quantile(s, 0.025))),
+            drift_median=("drift_mean", "median"),
+            drift_ci_high=("drift_mean", lambda s: float(np.quantile(s, 0.975))),
+            reduction_ci_low=("wrong_confidence_reduction_mean", lambda s: float(np.quantile(s, 0.025))),
+            reduction_median=("wrong_confidence_reduction_mean", "median"),
+            reduction_ci_high=("wrong_confidence_reduction_mean", lambda s: float(np.quantile(s, 0.975))),
+            reduced_rate_ci_low=("wrong_confidence_reduced_rate", lambda s: float(np.quantile(s, 0.025))),
+            reduced_rate_median=("wrong_confidence_reduced_rate", "median"),
+            reduced_rate_ci_high=("wrong_confidence_reduced_rate", lambda s: float(np.quantile(s, 0.975))),
+        )
+        .reset_index()
+    )
+    return summary, ci
+
+
 def write_docs(out_dir: Path, metadata: dict[str, object]) -> None:
     outputs = out_dir / "outputs"
     report = ["# Confidence Repair And Selective Abstention\n"]
@@ -724,10 +832,15 @@ def write_docs(out_dir: Path, metadata: dict[str, object]) -> None:
         ("Selective Risk Curves", "selective_risk_curves.csv"),
         ("Route Score Summary", "route_score_summary.csv"),
         ("Bootstrap Confidence Intervals", "bootstrap_confidence_intervals.csv"),
+        ("Wrong-High Pareto", "wrong_high_pareto.csv"),
+        ("Wrong-High Pareto Bootstrap CI", "wrong_high_pareto_bootstrap_ci.csv"),
     ]:
         path = outputs / filename
         if path.exists():
-            df = pd.read_csv(path)
+            try:
+                df = pd.read_csv(path)
+            except pd.errors.EmptyDataError:
+                df = pd.DataFrame()
             report.append(f"## {title}\n")
             report.append("```text\n" + (df.head(60).to_string(index=False) if not df.empty else "(empty)") + "\n```\n")
     report.append("## Interpretation Guardrails\n")
@@ -763,6 +876,7 @@ def main() -> None:
         n_bootstrap=args.bootstrap,
         seed=args.seed + 17,
     )
+    pareto, pareto_ci = pareto_wrong_high_tables(repair, args.bootstrap, args.seed + 29)
     score_summary = scores.groupby(["route", "layer"], dropna=False).agg(n=("item_id", "size"), rho_mean=("rho", "mean"), rho_median=("rho", "median")).reset_index()
     group_counts = base.groupby(["outcome_group"], dropna=False).agg(n=("item_id", "size"), confidence_mean=("confidence", "mean"), accuracy=("correct", "mean")).reset_index()
     out = args.out_dir / "outputs"
@@ -775,6 +889,8 @@ def main() -> None:
     policy.to_csv(out / "selective_policy_benchmark.csv", index=False)
     risk_curves.to_csv(out / "selective_risk_curves.csv", index=False)
     bootstrap_ci.to_csv(out / "bootstrap_confidence_intervals.csv", index=False)
+    pareto.to_csv(out / "wrong_high_pareto.csv", index=False)
+    pareto_ci.to_csv(out / "wrong_high_pareto_bootstrap_ci.csv", index=False)
     group_counts.to_csv(out / "group_counts.csv", index=False)
     metadata = {
         "status": "completed",
@@ -792,6 +908,7 @@ def main() -> None:
         "low_confidence_threshold": args.low_confidence_threshold,
         "max_items": args.max_items,
         "bootstrap": args.bootstrap,
+        "prompt_mode": args.prompt_mode,
     }
     (args.out_dir / "config" / "reproduce.json").write_text(json.dumps(metadata, indent=2), encoding="utf-8")
     write_docs(args.out_dir, metadata)

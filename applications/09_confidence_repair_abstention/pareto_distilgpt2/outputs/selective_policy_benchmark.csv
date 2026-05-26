@@ -1,0 +1,15 @@
+policy,metric,value,n
+confidence,auroc_correct,0.4990050272308336,216
+confidence,auprc_correct,0.28647793840834845,216
+negative_entropy,auroc_correct,0.5091642228739003,216
+negative_entropy,auprc_correct,0.29044831543549243,216
+margin,auroc_correct,0.4828759949727691,216
+margin,auprc_correct,0.2818421424304023,216
+self_consistency,auroc_correct,,216
+self_consistency,auprc_correct,,216
+verbalized_confidence,auroc_correct,0.44988479262672815,216
+verbalized_confidence,auprc_correct,0.26317132035561164,216
+rho,auroc_correct,0.5584415584415584,216
+rho,auprc_correct,0.41278153136920226,216
+accessible_policy,auroc_correct,0.5082739840804357,216
+accessible_policy,auprc_correct,0.34908053337947176,216
