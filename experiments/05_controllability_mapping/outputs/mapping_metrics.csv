@@ -1,0 +1,11 @@
+target,model,metric,value
+max_uncertainty_movement,controls,mae,0.045796400848969764
+max_uncertainty_movement,controls_plus_rho,mae,0.045304948373129365
+safe_movement_target,controls,auprc,0.6737567101535618
+safe_movement_target,controls,auroc,0.8880896898140956
+safe_movement_target,controls,log_loss,0.43326489919423583
+safe_movement_target,controls_plus_rho,auprc,0.763992808246364
+safe_movement_target,controls_plus_rho,auroc,0.9193145530181417
+safe_movement_target,controls_plus_rho,log_loss,0.37235272269798636
+minimal_energy,controls,mae_log10,0.39149594525107706
+minimal_energy,controls_plus_rho,mae_log10,0.3464230040996083

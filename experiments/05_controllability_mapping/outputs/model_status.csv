@@ -1,0 +1,8 @@
+model,status,reason,layers
+distilbert-base-uncased,skipped_not_local,"We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.",
+bert-base-uncased,skipped_not_local,"We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.",
+prajjwal1/bert-tiny,skipped_not_local,"We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.",
+distilgpt2,completed,,"[1, 3, 4]"
+Qwen/Qwen2.5-0.5B,completed,,"[6, 12, 18]"
+Qwen/Qwen2.5-1.5B-Instruct,completed,,"[7, 14, 21]"
+microsoft/phi-2,completed,,"[8, 16, 24]"

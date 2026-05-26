@@ -1,37 +1,33 @@
 path,description
-README.md,Project overview and clean GitHub map
-CLAIM_MAP.md,Claim-to-experiment-to-artifact mapping
-configs/paper_runs.json,Central paper run and artifact index
+README.md,Clean paper-facing project overview
+CLAIM_MAP.md,Claim-to-experiment artifact map
+configs/paper_runs.json,Central run and artifact index
 models/model_inventory.md,Model coverage and run status
-paper/,Paper section files in requested order
-reports/final_reproducibility_and_results_report.md,Single final report with methods results limitations and commands
+paper/,Paper section files
+reports/final_reproducibility_and_results_report.md,Integrated methods results limitations and commands
 reports/figure_index.md,Paper-ready figure index
 reports/figures/,Canonical SVG and PNG paper figures
-experiments/01_matched_scalar_uncertainty/,Experiment 1 data outputs figures reports and config
-experiments/02_local_perturbation_prediction/,Experiment 2 data outputs figures reports and config
-experiments/03_layerwise_k_structure/,Experiment 3 data outputs figures reports and config
-experiments/04_uncertainty_steering/,Experiment 4 five-check steering battery outputs figures reports and config
-experiments/04_uncertainty_steering/01_minimal_intervention_energy/,Operational control-cost test for fixed uncertainty targets
-experiments/04_uncertainty_steering/02_equal_output_movement/,Equal Fisher-output movement uncertainty-efficiency test
-experiments/04_uncertainty_steering/decoder_main_battery/,Main decoder-only LLM steering battery
-experiments/controls/,Controls ablations and boundary cases
-experiments/controls/statistical_diagnostics/,Bootstrap intervals effect sizes duplicate audit and failure modes
-experiments/controls/full_vocab_sanity/,Tiny-model full-vocabulary sanity check against top-k Fisher geometry
-experiments/controls/out_of_sample_generalization/,Train-route held-out prompt generalization control
-experiments/controls/random_init_vs_pretrained/,Random initialization versus pretrained learned-structure control
-experiments/controls/external_uncertainty_comparators/,Semantic Entropy Semantic Density and HaloScope-style comparator diagnostics
-experiments/controls/topk_robustness/,Top-k robustness controls
+experiments/01_matched_scalar_uncertainty/,Experiment 1 scalar-matched uncertainty/accessibility evidence
+experiments/02_local_perturbation_prediction/,Experiment 2 local uncertainty movement prediction
+experiments/03_layerwise_k_structure/,Experiment 3 layerwise and k-dimensional structure
+experiments/04_uncertainty_steering/,Experiment 4 uncertainty steering and controllability evidence
+experiments/04_uncertainty_steering/01_minimal_intervention_energy/,Minimal energy control-cost test
+experiments/04_uncertainty_steering/02_equal_output_movement/,Equal Fisher-output movement steering test
+experiments/04_uncertainty_steering/decoder_main_battery/,Decoder-only LLM steering battery
+experiments/05_controllability_mapping/,Diagnostic uncertainty controllability mapping test
+experiments/controls/,Reviewer controls and appendix ablations
 experiments/controls/gradient_baselines/,Projected gradient baseline controls
 experiments/controls/full_regression/,Full regression controls
 experiments/controls/semantic_preservation/,Top-k semantic preservation controls
-experiments/controls/random_subspaces/,Random subspace controls
-experiments/controls/euclidean_ablation/,Euclidean ablation controls
-experiments/controls/shuffled_surprisal/,Shuffled surprisal controls
-experiments/controls/fisher_output_energy_control/,Equal Fisher-output-energy controls
-applications/03_calibration_diagnosis/,Calibration diagnosis application for internal steerability of miscalibration
-applications/local_confidence_control/,Killer application slice for local answer-preserving confidence control
-applications/04_uncertainty_circuits/,Route interpretability application testing causal localization of uncertainty accessibility
-applications/05_brittle_confidence/,Brittle-confidence matched perturbation application and boundary-case diagnostic
-applications/06_hidden_fragility_cifar_c/,CIFAR-10 to CIFAR-10-C hidden-fragility protocol for confident correct predictions
+experiments/controls/topk_robustness/,Top-k robustness controls
+experiments/controls/fisher_output_energy_control/,Equal Fisher-output energy controls
+experiments/controls/statistical_diagnostics/,Bootstrap intervals effect sizes duplicate audit and matched scalar-gradient controls
+experiments/controls/random_subspaces/,Appendix random subspace controls
+experiments/controls/euclidean_ablation/,Appendix Euclidean ablation controls
+experiments/controls/shuffled_surprisal/,Appendix shuffled surprisal controls
+experiments/controls/full_vocab_sanity/,Appendix full-vocabulary sanity check
+experiments/controls/out_of_sample_generalization/,Appendix held-out prompt route reuse control
+experiments/controls/random_init_vs_pretrained/,Appendix random initialization control
+experiments/controls/external_uncertainty_comparators/,Appendix external uncertainty comparator diagnostics
 src/accessible_varentropy/,Core implementation
-scripts/,Curated reproduction scripts and paper-figure generator
+scripts/,Curated reproduction scripts and paper figure generator

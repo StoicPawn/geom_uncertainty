@@ -1,9 +1,0 @@
-subset,outcome,n,spearman
-all,abs_delta_entropy,1440,0.8040971606207484
-all,abs_delta_varentropy,1440,0.7241361784396677
-all,selected_top1_changed,1440,-0.14274377724194195
-all,candidate_set_kl,1440,0.0013199057661823549
-accessible_routes_only,abs_delta_entropy,864,0.8389090917329219
-accessible_routes_only,abs_delta_varentropy,864,0.7373355029685441
-accessible_routes_only,selected_top1_changed,864,-0.14919540884375332
-accessible_routes_only,candidate_set_kl,864,0.0009530880165288136

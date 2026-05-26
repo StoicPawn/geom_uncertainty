@@ -1,5 +1,0 @@
-comparison,metric,n_pairs,high_minus_low_mean,high_better_rate
-high_rho_route_vs_low_rho_route,after_nll,57,-2.685416512397261,0.7017543859649122
-high_rho_route_vs_low_rho_route,after_brier,57,-0.3006455741945929,0.5789473684210527
-high_rho_route_vs_low_rho_route,full_vocab_kl,57,-0.0001536235524322875,0.49122807017543857
-high_rho_route_vs_low_rho_route,delta_target_prob,57,0.005150847478925813,0.7017543859649122

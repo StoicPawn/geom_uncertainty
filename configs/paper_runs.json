@@ -11,40 +11,28 @@
     "experiments/04_uncertainty_steering/config/reproduce.json",
     "experiments/04_uncertainty_steering/01_minimal_intervention_energy/config/reproduce.json",
     "experiments/04_uncertainty_steering/02_equal_output_movement/config/reproduce.json",
-    "experiments/04_uncertainty_steering/decoder_main_battery/config/reproduce.json"
+    "experiments/04_uncertainty_steering/decoder_main_battery/config/reproduce.json",
+    "experiments/05_controllability_mapping/config/reproduce.json"
   ],
-  "controls": [
-    "experiments/controls/statistical_diagnostics/config/reproduce.json",
-    "experiments/controls/full_vocab_sanity/config/reproduce.json",
-    "experiments/controls/out_of_sample_generalization/config/reproduce.json",
-    "experiments/controls/random_init_vs_pretrained/config/reproduce.json",
-    "experiments/controls/external_uncertainty_comparators/config/reproduce.json",
-    "experiments/controls/topk_robustness/config/reproduce.json",
+  "core_controls": [
     "experiments/controls/gradient_baselines/config/reproduce.json",
     "experiments/controls/full_regression/config/reproduce.json",
     "experiments/controls/semantic_preservation/config/reproduce.json",
+    "experiments/controls/topk_robustness/config/reproduce.json",
+    "experiments/controls/fisher_output_energy_control/config/reproduce.json",
+    "experiments/controls/statistical_diagnostics/config/reproduce.json"
+  ],
+  "appendix_controls": [
     "experiments/controls/random_subspaces/config/reproduce.json",
     "experiments/controls/euclidean_ablation/config/reproduce.json",
     "experiments/controls/shuffled_surprisal/config/reproduce.json",
-    "experiments/controls/fisher_output_energy_control/config/reproduce.json"
-  ],
-  "applications": [
-    "applications/03_calibration_diagnosis/config/reproduce.json",
-    "applications/local_confidence_control/config/reproduce.json",
-    "applications/04_uncertainty_circuits/config/reproduce.json",
-    "applications/05_brittle_confidence/config/reproduce.json",
-    "applications/06_hidden_fragility_cifar_c/config/reproduce.json",
-    "applications/07_safe_model_editing/config/reproduce.json"
+    "experiments/controls/full_vocab_sanity/config/reproduce.json",
+    "experiments/controls/out_of_sample_generalization/config/reproduce.json",
+    "experiments/controls/random_init_vs_pretrained/config/reproduce.json",
+    "experiments/controls/external_uncertainty_comparators/config/reproduce.json"
   ],
   "canonical_figure_command": "python scripts/make_paper_figures.py",
-  "new_control_command": "python scripts/run_topk_gradient_regression_controls.py --top-k-values 16,32,64,128,256 --subspace-ks 8 --max-prompts-per-task 8 --random-subspaces 1 --output-eps 0.05 --seed 20260525",
-  "statistical_diagnostic_command": "python scripts/run_statistical_diagnostics.py --bootstrap 1000 --seed 20260526",
-  "full_vocab_sanity_command": "python scripts/run_tiny_full_vocab_sanity.py --max-prompts-per-task 4 --top-k-values 16,32,64,128,256 --subspace-ks 8 --random-subspaces 1 --seed 20260526",
-  "generalization_random_init_command": "python scripts/run_generalization_random_init_controls.py --top-k 32 --subspace-ks 8 --max-prompts-per-task 8 --random-subspaces 1 --output-eps 0.05 --seed 20260527",
-  "decoder_comparator_application_command": "python scripts/run_decoder_llm_main_and_comparators.py --local-files-only --trust-remote-code --max-prompts-per-task 3 --top-m 16 --pca-dim 8 --output-eps 0.05 --seed 20260528",
-  "control_cost_equal_output_command": "python scripts/run_control_cost_and_equal_output_tests.py --tau-entropy 0.02 --tau-varentropy 0.04 --top-k-output 32 --seed 20260529",
-  "calibration_diagnosis_command": "python scripts/run_calibration_diagnosis.py --max-prompts-per-task 10 --top-k 32 --subspace-ks 8 --output-eps 0.05 --seed 20260532",
-  "brittle_confidence_circuits_command": "python scripts/run_brittle_confidence_and_circuit_applications.py --max-prompts-per-task 6 --top-k 32 --subspace-k 8 --output-eps 0.05 --seed 20260530",
-  "hidden_fragility_cifar_c_command": "python scripts/run_hidden_fragility_cifar_c.py --cifar10-dir data/cifar-10-batches-py --cifar10c-dir data/CIFAR-10-C --checkpoint applications/06_hidden_fragility_cifar_c/models/resnet18_cifar10_full.pt --train-if-missing --epochs 40 --batch-size 256 --pca-dim 2 --confidence-quantile 0.70 --seed 20260531",
-  "safe_model_editing_command": "python scripts/run_safe_model_editing_application.py --models distilbert-base-uncased,google/bert_uncased_L-2_H-128_A-2 --max-prompts-per-task 8 --top-k 32 --subspace-k 8 --random-subspaces 1 --side-prompts-per-edit 12 --seed 20260601"
+  "steering_control_command": "python scripts/run_control_cost_and_equal_output_tests.py --tau-entropy 0.02 --tau-varentropy 0.04 --top-k-output 32 --seed 20260529",
+  "controllability_mapping_command": "python scripts/run_uncertainty_controllability_mapping_test.py --out-dir experiments/05_controllability_mapping --decoder-models distilgpt2,Qwen/Qwen2.5-0.5B,Qwen/Qwen2.5-1.5B-Instruct,microsoft/phi-2 --max-items 18 --top-m 8 --layers auto3 --subspace-dims 1,2,4 --eps 0.01,0.025,0.05,0.1,0.2 --movement-threshold 0.01 --drift-cap 0.00025 --top-k 3 --bootstrap 300 --torch-dtype float16 --device cuda --trust-remote-code --seed 20260608",
+  "archive_branch": "archive_applications_exploratory"
 }

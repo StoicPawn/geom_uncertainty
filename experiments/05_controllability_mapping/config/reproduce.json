@@ -1,0 +1,41 @@
+{
+  "status": "completed",
+  "decoder_models": [
+    "distilgpt2",
+    "Qwen/Qwen2.5-0.5B",
+    "Qwen/Qwen2.5-1.5B-Instruct",
+    "microsoft/phi-2"
+  ],
+  "masked_models_requested": [
+    "distilbert-base-uncased",
+    "bert-base-uncased",
+    "prajjwal1/bert-tiny"
+  ],
+  "max_items": 18,
+  "top_m": 8,
+  "layers": "auto3",
+  "subspace_dims": "1,2,4",
+  "eps": "0.01,0.025,0.05,0.1,0.2",
+  "movement_threshold": 0.01,
+  "drift_cap": 0.00025,
+  "top_k": 3,
+  "bootstrap": 300,
+  "seed": 20260608,
+  "controls": [
+    "entropy",
+    "confidence",
+    "margin",
+    "varentropy",
+    "projected_gradient_norm",
+    "fisher_output_energy",
+    "unit_fisher_output_energy",
+    "jacobian_norm",
+    "layer",
+    "model",
+    "task",
+    "route_family",
+    "subspace_dim",
+    "budget_mode"
+  ],
+  "rho_added": "rho"
+}

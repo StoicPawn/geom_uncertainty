@@ -1,0 +1,73 @@
+model,model_type,item_id,task,prompt,confidence,margin,entropy,varentropy,top1_token
+distilgpt2,decoder,0,masked_factual_cloze,The capital of France is,0.2962930619627983,0.08618981991167085,1.8763895521065947,0.3733135600144065,the
+distilgpt2,decoder,1,masked_factual_cloze,The chemical symbol for water is,0.41038389003333925,0.19072122281291384,1.7209734302351267,0.7117433045201462,the
+distilgpt2,decoder,2,masked_factual_cloze,The largest ocean on Earth is the,0.2550270419624819,0.06844527225869909,1.9772170469818422,0.21318210849159522,largest
+distilgpt2,decoder,3,masked_factual_cloze,The author of Hamlet was,0.31902374740788586,0.11938378759589677,1.838167565189409,0.4317994307940956,a
+distilgpt2,decoder,4,ambiguous_prompt,"The bank was quiet, so the visitor sat near the",0.1882596981045539,0.0,2.0312506982185243,0.09671248898755136,entrance
+distilgpt2,decoder,5,ambiguous_prompt,The crane was visible beside the,0.40301484242308117,0.2801022599492386,1.8163256438724062,0.5959931330396873,building
+distilgpt2,decoder,6,ambiguous_prompt,The bat was found in the,0.16985807296422295,0.005225983503190285,2.0609539200592746,0.03867450072611299,middle
+distilgpt2,decoder,7,ambiguous_prompt,The seal was lying on the,0.521861266777687,0.1849223088828803,1.2267186353903905,1.0520554124538153,ground
+distilgpt2,decoder,8,factual_error_prompt,The capital of Australia is Sydney. Therefore the capital is,0.5056859697940335,0.35146046262791203,1.5748337786681494,0.9675309639917085,Sydney
+distilgpt2,decoder,9,factual_error_prompt,The Sun orbits Earth. This means Earth is the center of the,0.4270971375887819,0.19123169689776448,1.6011346170294154,0.7762915556183496,sun
+distilgpt2,decoder,10,factual_error_prompt,Water freezes at 100 degrees Celsius. At sea level it freezes at,0.5914809264105144,0.4820679566246282,1.4412466973276514,1.2788641113758945,100
+distilgpt2,decoder,11,factual_error_prompt,Shakespeare wrote The Odyssey. The author was,0.424612368416913,0.2778702604622205,1.7152595204001388,0.6783934809194367,a
+distilgpt2,decoder,12,decoder_qa_completion,Question: What gas do plants take in for photosynthesis? Answer:,0.18924463592145133,0.0323553222831196,2.0479566018578357,0.06438265236861238,I
+distilgpt2,decoder,13,decoder_qa_completion,"Question: If 3 notebooks cost 9 dollars, 5 notebooks cost",0.18699626707344244,0.011329531087293149,2.043446922837069,0.07395879079963852,9
+distilgpt2,decoder,14,decoder_qa_completion,Question: Which planet is known as the Red Planet? Answer:,0.2994707465072789,0.09998022212885124,1.9091489494018057,0.3455324775870726,The
+distilgpt2,decoder,15,decoder_qa_completion,Question: A square has four equal,0.6735982344931793,0.5565444129840419,1.1853521462153953,1.4370368583466644,parts
+distilgpt2,decoder,16,decoder_completion,"To make tea, first boil the",0.38292921477300096,0.1432982353576148,1.7240821851747616,0.6495281308281655,water
+distilgpt2,decoder,17,decoder_completion,A compass is used to find,0.3730230064932501,0.15373409359894824,1.691849758685248,0.6265949488769138,the
+Qwen/Qwen2.5-0.5B,decoder,0,masked_factual_cloze,The capital of France is,0.46125296182639597,0.2967881534234261,1.6711669377209248,0.8241530784210902,Paris
+Qwen/Qwen2.5-0.5B,decoder,1,masked_factual_cloze,The chemical symbol for water is,0.3794890980935511,0.11456301127997293,1.6076952713614876,0.6688852510843306,____
+Qwen/Qwen2.5-0.5B,decoder,2,masked_factual_cloze,The largest ocean on Earth is the,0.3328308101099452,0.13563508122859497,1.8469118372068953,0.45173559203588,Pacific
+Qwen/Qwen2.5-0.5B,decoder,3,masked_factual_cloze,The author of Hamlet was,0.3638324737405723,0.19725782916624354,1.8202441954615538,0.4995087926028919,a
+Qwen/Qwen2.5-0.5B,decoder,4,ambiguous_prompt,"The bank was quiet, so the visitor sat near the",0.6350112058841499,0.48652120144568467,1.2826553806150878,1.3776141645383722,window
+Qwen/Qwen2.5-0.5B,decoder,5,ambiguous_prompt,The crane was visible beside the,0.197230231018633,0.01904756606055996,2.0055496230433647,0.13872514375310913,road
+Qwen/Qwen2.5-0.5B,decoder,6,ambiguous_prompt,The bat was found in the,0.3433660199580775,0.20678445361517916,1.9016429822779752,0.40113353960865217,woods
+Qwen/Qwen2.5-0.5B,decoder,7,ambiguous_prompt,The seal was lying on the,0.41717354596787143,0.13489980504270377,1.5013029130253006,0.7885535563639837,floor
+Qwen/Qwen2.5-0.5B,decoder,8,factual_error_prompt,The capital of Australia is Sydney. Therefore the capital is,0.7972856144580336,0.7490293585008616,0.879578674082905,1.7106287393410178,Sydney
+Qwen/Qwen2.5-0.5B,decoder,9,factual_error_prompt,The Sun orbits Earth. This means Earth is the center of the,0.6990846873912387,0.6115839789360712,1.1407793296292246,1.529045686012581,Sun
+Qwen/Qwen2.5-0.5B,decoder,10,factual_error_prompt,Water freezes at 100 degrees Celsius. At sea level it freezes at,0.7999894025649052,0.6652492024416589,0.7357377567356108,1.319741541929158,
+Qwen/Qwen2.5-0.5B,decoder,11,factual_error_prompt,Shakespeare wrote The Odyssey. The author was,0.20557345297818916,0.013957925094264884,2.005453731512061,0.1471024511520232,______
+Qwen/Qwen2.5-0.5B,decoder,12,decoder_qa_completion,Question: What gas do plants take in for photosynthesis? Answer:,0.271835130580076,0.06664320880638161,1.8713481423723959,0.36850359624243645,The
+Qwen/Qwen2.5-0.5B,decoder,13,decoder_qa_completion,"Question: If 3 notebooks cost 9 dollars, 5 notebooks cost",0.5388167925901721,0.15072161574121667,1.017448695416897,0.9039465889316777,
+Qwen/Qwen2.5-0.5B,decoder,14,decoder_qa_completion,Question: Which planet is known as the Red Planet? Answer:,0.6931581288590879,0.46457883863016497,0.9207016749055491,1.1478095764097347,Mars
+Qwen/Qwen2.5-0.5B,decoder,15,decoder_qa_completion,Question: A square has four equal,0.8795649665925143,0.815849494116713,0.5285384561506085,1.271548311465118,sides
+Qwen/Qwen2.5-0.5B,decoder,16,decoder_completion,"To make tea, first boil the",0.8135132295507297,0.7222395747979752,0.7720869029399585,1.5405406949041145,water
+Qwen/Qwen2.5-0.5B,decoder,17,decoder_completion,A compass is used to find,0.797074425511876,0.7062368473407012,0.8224187521006546,1.52519279526176,the
+Qwen/Qwen2.5-1.5B-Instruct,decoder,0,masked_factual_cloze,The capital of France is,,,,,(
+Qwen/Qwen2.5-1.5B-Instruct,decoder,1,masked_factual_cloze,The chemical symbol for water is,,,,,(
+Qwen/Qwen2.5-1.5B-Instruct,decoder,2,masked_factual_cloze,The largest ocean on Earth is the,,,,,(
+Qwen/Qwen2.5-1.5B-Instruct,decoder,3,masked_factual_cloze,The author of Hamlet was,,,,,(
+Qwen/Qwen2.5-1.5B-Instruct,decoder,4,ambiguous_prompt,"The bank was quiet, so the visitor sat near the",,,,,(
+Qwen/Qwen2.5-1.5B-Instruct,decoder,5,ambiguous_prompt,The crane was visible beside the,,,,,(
+Qwen/Qwen2.5-1.5B-Instruct,decoder,6,ambiguous_prompt,The bat was found in the,,,,,(
+Qwen/Qwen2.5-1.5B-Instruct,decoder,7,ambiguous_prompt,The seal was lying on the,,,,,(
+Qwen/Qwen2.5-1.5B-Instruct,decoder,8,factual_error_prompt,The capital of Australia is Sydney. Therefore the capital is,,,,,(
+Qwen/Qwen2.5-1.5B-Instruct,decoder,9,factual_error_prompt,The Sun orbits Earth. This means Earth is the center of the,,,,,(
+Qwen/Qwen2.5-1.5B-Instruct,decoder,10,factual_error_prompt,Water freezes at 100 degrees Celsius. At sea level it freezes at,,,,,(
+Qwen/Qwen2.5-1.5B-Instruct,decoder,11,factual_error_prompt,Shakespeare wrote The Odyssey. The author was,,,,,(
+Qwen/Qwen2.5-1.5B-Instruct,decoder,12,decoder_qa_completion,Question: What gas do plants take in for photosynthesis? Answer:,,,,,(
+Qwen/Qwen2.5-1.5B-Instruct,decoder,13,decoder_qa_completion,"Question: If 3 notebooks cost 9 dollars, 5 notebooks cost",,,,,(
+Qwen/Qwen2.5-1.5B-Instruct,decoder,14,decoder_qa_completion,Question: Which planet is known as the Red Planet? Answer:,,,,,(
+Qwen/Qwen2.5-1.5B-Instruct,decoder,15,decoder_qa_completion,Question: A square has four equal,,,,,(
+Qwen/Qwen2.5-1.5B-Instruct,decoder,16,decoder_completion,"To make tea, first boil the",,,,,(
+Qwen/Qwen2.5-1.5B-Instruct,decoder,17,decoder_completion,A compass is used to find,,,,,(
+microsoft/phi-2,decoder,0,masked_factual_cloze,The capital of France is,,,,,(
+microsoft/phi-2,decoder,1,masked_factual_cloze,The chemical symbol for water is,,,,,(
+microsoft/phi-2,decoder,2,masked_factual_cloze,The largest ocean on Earth is the,,,,,(
+microsoft/phi-2,decoder,3,masked_factual_cloze,The author of Hamlet was,,,,,(
+microsoft/phi-2,decoder,4,ambiguous_prompt,"The bank was quiet, so the visitor sat near the",,,,,(
+microsoft/phi-2,decoder,5,ambiguous_prompt,The crane was visible beside the,,,,,(
+microsoft/phi-2,decoder,6,ambiguous_prompt,The bat was found in the,,,,,(
+microsoft/phi-2,decoder,7,ambiguous_prompt,The seal was lying on the,,,,,(
+microsoft/phi-2,decoder,8,factual_error_prompt,The capital of Australia is Sydney. Therefore the capital is,,,,,(
+microsoft/phi-2,decoder,9,factual_error_prompt,The Sun orbits Earth. This means Earth is the center of the,,,,,(
+microsoft/phi-2,decoder,10,factual_error_prompt,Water freezes at 100 degrees Celsius. At sea level it freezes at,,,,,(
+microsoft/phi-2,decoder,11,factual_error_prompt,Shakespeare wrote The Odyssey. The author was,,,,,(
+microsoft/phi-2,decoder,12,decoder_qa_completion,Question: What gas do plants take in for photosynthesis? Answer:,,,,,(
+microsoft/phi-2,decoder,13,decoder_qa_completion,"Question: If 3 notebooks cost 9 dollars, 5 notebooks cost",,,,,(
+microsoft/phi-2,decoder,14,decoder_qa_completion,Question: Which planet is known as the Red Planet? Answer:,,,,,(
+microsoft/phi-2,decoder,15,decoder_qa_completion,Question: A square has four equal,,,,,(
+microsoft/phi-2,decoder,16,decoder_completion,"To make tea, first boil the",,,,,(
+microsoft/phi-2,decoder,17,decoder_completion,A compass is used to find,,,,,(

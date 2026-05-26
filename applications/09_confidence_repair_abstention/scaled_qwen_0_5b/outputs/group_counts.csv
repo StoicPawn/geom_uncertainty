@@ -1,6 +1,0 @@
-outcome_group,n,confidence_mean,accuracy
-correct_high,85,0.8977032364110317,1.0
-correct_low,36,0.35095468731884993,1.0
-correct_mid,31,0.5946384976623358,1.0
-wrong_low,63,0.34250230023343975,0.0
-wrong_mid,1,0.451736060091314,0.0
