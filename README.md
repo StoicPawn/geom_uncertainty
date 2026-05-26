@@ -57,6 +57,7 @@ applications/
   04_uncertainty_circuits/
   05_brittle_confidence/
   06_hidden_fragility_cifar_c/
+  07_safe_model_editing/
 models/
 configs/
 reports/
@@ -130,10 +131,16 @@ Run the route-interpretability and brittle-confidence applications:
 python scripts\run_brittle_confidence_and_circuit_applications.py --max-prompts-per-task 6 --top-k 32 --subspace-k 8 --output-eps 0.05 --seed 20260530
 ```
 
-Run the CIFAR-10/CIFAR-10-C hidden-fragility application after placing local data:
+Run the CIFAR-10/CIFAR-10-C hidden-fragility application after placing local data. The runner saves a resumable checkpoint after every epoch:
 
 ```powershell
-python scripts\run_hidden_fragility_cifar_c.py --cifar10-dir data\cifar-10-batches-py --cifar10c-dir data\CIFAR-10-C --train-if-missing --epochs 40 --pca-dim 64 --confidence-quantile 0.70 --seed 20260531
+python scripts\run_hidden_fragility_cifar_c.py --cifar10-dir data\cifar-10-batches-py --cifar10c-dir data\CIFAR-10-C --checkpoint applications\06_hidden_fragility_cifar_c\models\resnet18_cifar10_full.pt --train-if-missing --epochs 40 --batch-size 256 --pca-dim 2 --confidence-quantile 0.70 --seed 20260531
+```
+
+Run the safe model-editing diagnostic:
+
+```powershell
+python scripts\run_safe_model_editing_application.py --models distilbert-base-uncased,google/bert_uncased_L-2_H-128_A-2 --max-prompts-per-task 8 --top-k 32 --subspace-k 8 --random-subspaces 1 --side-prompts-per-edit 12 --seed 20260601
 ```
 
 Minimal full-run commands are listed in `reports/final_reproducibility_and_results_report.md`. Raw reruns write under `results/`; the paper-ready artifacts are curated into `experiments/`.

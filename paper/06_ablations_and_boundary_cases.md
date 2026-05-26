@@ -14,7 +14,8 @@ Confirmatory controls that support the main claims:
 - `topk_robustness`
 - `fisher_output_energy_control`
 - `semantic_preservation`
-- `hidden_fragility_cifar_c` (configured protocol; execution requires local CIFAR-10/CIFAR-10-C assets)
+- `hidden_fragility_cifar_c` (CIFAR-10/CIFAR-10-C protocol with a completed small CPU pilot; full run pending)
+- `safe_model_editing` (local representation-editing diagnostic; mixed/negative for rho as the main edit-cost predictor)
 
 Exploratory and diagnostic controls that bound the claims:
 
@@ -25,4 +26,4 @@ Exploratory and diagnostic controls that bound the claims:
 - `full_regression`
 - `brittle_confidence`
 
-Boundary cases include top-k sensitivity, projected-gradient baselines that outperform `rho` as raw local predictors, train-route generalization that is close to held-out oracle but not clearly better than random routes, external semantic uncertainty metrics that measure different objects, calibration-diagnosis cases where NLL/Brier improve but ECE worsens, duplicate or near-duplicate prompts, brittle-confidence perturbations where low-rho high-confidence predictions are not consistently more fragile, the not-yet-executed CIFAR-10-C hidden-fragility protocol, and failure modes where high `rho` does not produce large movement or answer neighborhoods degrade.
+Boundary cases include top-k sensitivity, projected-gradient baselines that outperform `rho` as raw local predictors, train-route generalization that is close to held-out oracle but not clearly better than random routes, external semantic uncertainty metrics that measure different objects, calibration-diagnosis cases where NLL/Brier improve but ECE worsens, duplicate or near-duplicate prompts, brittle-confidence perturbations where low-rho high-confidence predictions are not consistently more fragile, the mixed underpowered CIFAR-10-C hidden-fragility pilot, the safe-editing diagnostic where target-specific edit gradients dominate `rho`, and failure modes where high `rho` does not produce large movement or answer neighborhoods degrade.

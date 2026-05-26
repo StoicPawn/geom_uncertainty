@@ -9,7 +9,8 @@
 - The calibration-diagnosis application shows high-rho NLL/Brier/target-probability steerability, but not ECE improvement; the exact-token baseline is low-confidence and low-accuracy.
 - The uncertainty-circuit application supports causal route localization, but the high-rho advantage over low-rho/random routes is modest in the first checked-in battery.
 - The brittle-confidence application is a mixed/negative boundary case under the current template perturbations, not a positive claim.
-- The CIFAR-10/CIFAR-10-C hidden-fragility application is prepared as a cross-domain protocol but was not executed because the local datasets were absent.
+- The CIFAR-10/CIFAR-10-C hidden-fragility application has a completed small CPU pilot, but the classifier is undertrained and the matched set is too small for a paper claim. The full run is now resumable through per-epoch checkpointing.
+- The safe model-editing application is only a local representation-edit diagnostic, not a persistent weight-editing method. In the current run, `rho` is not the strongest predictor of edit cost; target-specific edit-gradient and Fisher-output norms are stronger.
 - Train-estimated route generalization is preliminary: train routes match held-out oracle routes in this small run, but random routes remain competitive.
 - Random-init controls show learned weights change accessibility structure, but random architectures still have nonzero accessibility.
 - Most intervention evidence is local logit-lens steering, not end-to-end generation-time intervention.

@@ -1,0 +1,19 @@
+{
+  "status": "completed",
+  "seed": 20260601,
+  "models": [
+    "distilbert-base-uncased",
+    "google/bert_uncased_L-2_H-128_A-2"
+  ],
+  "top_k": 32,
+  "subspace_k": 8,
+  "layers": "auto",
+  "max_prompts_per_task": 8,
+  "random_subspaces": 1,
+  "edit_margin": 0.0,
+  "max_latent_norm": 8.0,
+  "side_prompts_per_edit": 12,
+  "n_prompts": 48,
+  "n_edit_records": 240,
+  "n_side_effect_records": 2880
+}

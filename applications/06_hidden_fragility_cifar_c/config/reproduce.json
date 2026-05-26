@@ -1,11 +1,32 @@
 {
   "application": "hidden fragility in confident predictions",
-  "status": "not_run",
-  "reason": "CIFAR-10 python batches at C:\\Users\\bottolonif\\projects\\paper\\data\\cifar-10-batches-py; CIFAR-10-C directory at C:\\Users\\bottolonif\\projects\\paper\\data\\CIFAR-10-C",
-  "command": "python scripts\\run_hidden_fragility_cifar_c.py --cifar10-dir data\\cifar-10-batches-py --cifar10c-dir data\\CIFAR-10-C --checkpoint applications\\06_hidden_fragility_cifar_c\\models\\resnet18_cifar10.pt --train-if-missing --epochs 40 --pca-dim 64 --confidence-quantile 0.70 --seed 20260531",
+  "status": "pilot_completed_full_pending",
+  "pilot": {
+    "out_dir": "applications/06_hidden_fragility_cifar_c/pilot_k2",
+    "checkpoint": "applications/06_hidden_fragility_cifar_c/models/resnet18_cifar10_pilot_5ep_10k.pt",
+    "epochs": 5,
+    "max_train": 10000,
+    "max_test": 2000,
+    "pca_dim": 2,
+    "corruptions": [
+      "gaussian_noise",
+      "brightness",
+      "contrast",
+      "jpeg_compression"
+    ],
+    "severities": [
+      1,
+      3,
+      5
+    ],
+    "n_matched_pairs": 12,
+    "n_corruption_records": 288
+  },
+  "full_command": "python scripts\\run_hidden_fragility_cifar_c.py --cifar10-dir data\\cifar-10-batches-py --cifar10c-dir data\\CIFAR-10-C --checkpoint applications\\06_hidden_fragility_cifar_c\\models\\resnet18_cifar10_full.pt --train-if-missing --epochs 40 --batch-size 256 --pca-dim 2 --confidence-quantile 0.70 --seed 20260531",
+  "resume_behavior": "The checkpoint is saved after every epoch. Rerunning full_command resumes until the requested epoch count is reached.",
   "dataset": "CIFAR-10 clean test plus CIFAR-10-C corruptions, severities 1-5",
   "model": "ResNet-18 for CIFAR-10, implemented locally without torchvision",
-  "route": "penultimate embedding PCA subspace",
+  "route": "penultimate embedding PCA subspace; use small dimensions such as 1,2,4 because the output distribution has only 10 classes",
   "matching": "correct, high-confidence, low-entropy, high-margin; paired within class on scalar and gradient covariates",
   "confidence_quantile": 0.7,
   "low_entropy_quantile": 0.3,

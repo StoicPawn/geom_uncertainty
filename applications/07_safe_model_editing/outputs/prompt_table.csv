@@ -1,0 +1,49 @@
+prompt_id,prompt,task,topic,fact_id,template_id,target,target_id,observed_condition,final_top1_token,final_top1_prob_topk,target_rank_final,model
+0,The visitor visited the [MASK].,ambiguous_open,open,ambiguous_open:92,extended,,,ambiguous,monastery,0.07364986188773719,,distilbert-base-uncased
+1,The continent containing Thailand is [MASK].,factual_deep,continent,continent:thailand,t1,asia,4021.0,error,thailand,0.09026095302219826,6.0,distilbert-base-uncased
+2,The language of Spain is [MASK].,factual_simple,language,factual_simple:77,extended,spanish,3009.0,correct,spanish,0.3729345019328926,1.0,distilbert-base-uncased
+3,The meeting happened near the [MASK] in the theater.,ambiguous_open,open,ambiguous_open:141,extended,,,ambiguous,stage,0.24238851466965297,,distilbert-base-uncased
+4,The dolphin is classified as a [MASK].,factual_deep,animal_class,animal_class:dolphin,t1,mammal,25476.0,error,subspecies,0.4997521319102352,16.0,distilbert-base-uncased
+5,The opposite of yes is [MASK].,factual_simple,lexical,factual_simple:58,extended,no,2053.0,error,yes,0.2900866436832234,11.0,distilbert-base-uncased
+6,The bank was beside the [MASK].,ambiguous_open,polysemy,ambiguous_open:160,extended,,,ambiguous,river,0.08000667824774951,,distilbert-base-uncased
+7,Left has the opposite meaning of [MASK].,factual_deep,antonym,antonym:left,t1,right,2157.0,correct,right,0.1577592945059318,1.0,distilbert-base-uncased
+8,The capital of Sweden is [MASK].,factual_simple,capital,factual_simple:14,extended,stockholm,8947.0,correct,stockholm,0.39695244926867995,1.0,distilbert-base-uncased
+9,Yesterday they visited the [MASK].,ambiguous_open,open,ambiguous_open:112,extended,,,ambiguous,monastery,0.09956621767938509,,distilbert-base-uncased
+10,Someone who drives a bus can be called a [MASK].,factual_deep,role,role:drives_a_bus,t1,driver,4062.0,correct,driver,0.40041670023491277,1.0,distilbert-base-uncased
+11,The largest planet is [MASK].,factual_simple,science,factual_simple:44,extended,jupiter,13035.0,correct,jupiter,0.23557371628913515,1.0,distilbert-base-uncased
+12,People at the airport asked for a [MASK].,ambiguous_open,open,ambiguous_open:146,extended,,,ambiguous,visa,0.1417551047139408,,distilbert-base-uncased
+13,A triangle has [MASK] sides.,factual_deep,math,math:triangle_sides,t0,three,2093.0,error,two,0.21784500741755697,3.0,distilbert-base-uncased
+14,Five minus two equals [MASK].,factual_simple,math,factual_simple:52,extended,three,2093.0,error,zero,0.24950669872049996,7.0,distilbert-base-uncased
+15,The story about the station mentioned a [MASK].,ambiguous_open,open,ambiguous_open:127,extended,,,ambiguous,lighthouse,0.08003843001607527,,distilbert-base-uncased
+16,People in France pay with the [MASK].,factual_deep,currency,currency:france,t1,euro,9944.0,correct,euro,0.20291289899978618,1.0,distilbert-base-uncased
+17,A person who cooks food is a [MASK].,factual_simple,role,factual_simple:65,extended,chef,10026.0,error,vegetarian,0.5974123042792545,3.0,distilbert-base-uncased
+18,The patient waited for the [MASK].,ambiguous_open,role,ambiguous_open:164,extended,,,ambiguous,doctor,0.20071240410257962,,distilbert-base-uncased
+19,A common container for coffee is a [MASK].,factual_deep,common,common:coffee,t1,cup,2452.0,error,container,0.09864949232080046,3.0,distilbert-base-uncased
+20,The capital of France is [MASK].,factual_simple,capital,factual_simple:0,extended,paris,3000.0,error,marseille,0.15256806514416105,4.0,distilbert-base-uncased
+21,The bat flew out of the [MASK].,ambiguous_open,polysemy,ambiguous_open:161,extended,,,ambiguous,room,0.0849808156234169,,distilbert-base-uncased
+22,Germany's capital city is [MASK].,factual_deep,capital,capital:germany,t1,berlin,4068.0,error,bonn,0.16212876510167376,2.0,distilbert-base-uncased
+23,The color of the sky is often [MASK].,factual_simple,common,factual_simple:67,extended,blue,2630.0,correct,blue,0.15056384386899546,1.0,distilbert-base-uncased
+0,The visitor visited the [MASK].,ambiguous_open,open,ambiguous_open:92,extended,,,ambiguous,museum,0.17466251090809803,,google/bert_uncased_L-2_H-128_A-2
+1,The continent containing Thailand is [MASK].,factual_deep,continent,continent:thailand,t1,asia,4021.0,error,endemic,0.1118218360575356,27.0,google/bert_uncased_L-2_H-128_A-2
+2,The language of Spain is [MASK].,factual_simple,language,factual_simple:77,extended,spanish,3009.0,error,spain,0.5189195644011945,2.0,google/bert_uncased_L-2_H-128_A-2
+3,The meeting happened near the [MASK] in the theater.,ambiguous_open,open,ambiguous_open:141,extended,,,ambiguous,theater,0.1433655814958652,,google/bert_uncased_L-2_H-128_A-2
+4,The dolphin is classified as a [MASK].,factual_deep,animal_class,animal_class:dolphin,t1,mammal,25476.0,error,species,0.34440804035819783,114.0,google/bert_uncased_L-2_H-128_A-2
+5,The opposite of yes is [MASK].,factual_simple,lexical,factual_simple:58,extended,no,2053.0,error,there,0.08266946527781643,18.0,google/bert_uncased_L-2_H-128_A-2
+6,The bank was beside the [MASK].,ambiguous_open,polysemy,ambiguous_open:160,extended,,,ambiguous,bank,0.3525375420410064,,google/bert_uncased_L-2_H-128_A-2
+7,Left has the opposite meaning of [MASK].,factual_deep,antonym,antonym:left,t1,right,2157.0,error,it,0.21881805576145472,421.0,google/bert_uncased_L-2_H-128_A-2
+8,The capital of Sweden is [MASK].,factual_simple,capital,factual_simple:14,extended,stockholm,8947.0,error,sweden,0.3992458286777285,11.0,google/bert_uncased_L-2_H-128_A-2
+9,Yesterday they visited the [MASK].,ambiguous_open,open,ambiguous_open:112,extended,,,ambiguous,day,0.13814069841257912,,google/bert_uncased_L-2_H-128_A-2
+10,Someone who drives a bus can be called a [MASK].,factual_deep,role,role:drives_a_bus,t1,driver,4062.0,error,car,0.14077341408106184,9.0,google/bert_uncased_L-2_H-128_A-2
+11,The largest planet is [MASK].,factual_simple,science,factual_simple:44,extended,jupiter,13035.0,error,unknown,0.1722085621644731,27.0,google/bert_uncased_L-2_H-128_A-2
+12,People at the airport asked for a [MASK].,ambiguous_open,open,ambiguous_open:146,extended,,,ambiguous,airport,0.5339270905082515,,google/bert_uncased_L-2_H-128_A-2
+13,A triangle has [MASK] sides.,factual_deep,math,math:triangle_sides,t0,three,2093.0,error,two,0.40143344264065667,2.0,google/bert_uncased_L-2_H-128_A-2
+14,Five minus two equals [MASK].,factual_simple,math,factual_simple:52,extended,three,2093.0,error,1,0.11486916631141844,5.0,google/bert_uncased_L-2_H-128_A-2
+15,The story about the station mentioned a [MASK].,ambiguous_open,open,ambiguous_open:127,extended,,,ambiguous,story,0.23925446378621767,,google/bert_uncased_L-2_H-128_A-2
+16,People in France pay with the [MASK].,factual_deep,currency,currency:france,t1,euro,9944.0,error,netherlands,0.189064490123795,168.0,google/bert_uncased_L-2_H-128_A-2
+17,A person who cooks food is a [MASK].,factual_simple,role,factual_simple:65,extended,chef,10026.0,error,vegetarian,0.2842523052762343,22.0,google/bert_uncased_L-2_H-128_A-2
+18,The patient waited for the [MASK].,ambiguous_open,role,ambiguous_open:164,extended,,,ambiguous,hospital,0.30052828442757334,,google/bert_uncased_L-2_H-128_A-2
+19,A common container for coffee is a [MASK].,factual_deep,common,common:coffee,t1,cup,2452.0,error,coffee,0.20713559299589646,629.0,google/bert_uncased_L-2_H-128_A-2
+20,The capital of France is [MASK].,factual_simple,capital,factual_simple:0,extended,paris,3000.0,error,france,0.42450126275711947,29.0,google/bert_uncased_L-2_H-128_A-2
+21,The bat flew out of the [MASK].,ambiguous_open,polysemy,ambiguous_open:161,extended,,,ambiguous,air,0.265923157258414,,google/bert_uncased_L-2_H-128_A-2
+22,Germany's capital city is [MASK].,factual_deep,capital,capital:germany,t1,berlin,4068.0,error,germany,0.49118825176569586,31.0,google/bert_uncased_L-2_H-128_A-2
+23,The color of the sky is often [MASK].,factual_simple,common,factual_simple:67,extended,blue,2630.0,error,visible,0.23942627044316017,4.0,google/bert_uncased_L-2_H-128_A-2

@@ -4,3 +4,6 @@
 .env
 .DS_Store
 .ipynb_checkpoints/
+data/
+applications/06_hidden_fragility_cifar_c/models/*.pt
+applications/06_hidden_fragility_cifar_c/pilot_quick/

@@ -59,13 +59,15 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--out-dir", type=Path, default=OUT)
     parser.add_argument("--mode", choices=["run", "write_skeleton"], default="run")
     parser.add_argument("--train-if-missing", action="store_true")
+    parser.add_argument("--force-retrain", action="store_true")
+    parser.add_argument("--keep-epoch-checkpoints", action="store_true")
     parser.add_argument("--epochs", type=int, default=40)
     parser.add_argument("--batch-size", type=int, default=128)
     parser.add_argument("--lr", type=float, default=0.1)
     parser.add_argument("--weight-decay", type=float, default=5e-4)
     parser.add_argument("--max-train", type=int, default=0)
     parser.add_argument("--max-test", type=int, default=0)
-    parser.add_argument("--pca-dim", type=int, default=64)
+    parser.add_argument("--pca-dim", type=int, default=2)
     parser.add_argument("--confidence-quantile", type=float, default=0.70)
     parser.add_argument("--low-entropy-quantile", type=float, default=0.30)
     parser.add_argument("--high-margin-quantile", type=float, default=0.70)
@@ -114,6 +116,15 @@ def maybe_extract_cifar10(path: Path) -> Path | None:
         root = find_cifar10_root(archive.parent)
         if root is not None:
             return root
+    return None
+
+
+def find_cifar10c_root(path: Path) -> Path | None:
+    candidates = [path, path / "CIFAR-10-C"]
+    for candidate in candidates:
+        has_corruption = any((candidate / f"{name}.npy").exists() for name in DEFAULT_CORRUPTIONS)
+        if has_corruption and (candidate / "labels.npy").exists():
+            return candidate
     return None
 
 
@@ -255,6 +266,8 @@ def train_model(
     lr: float,
     weight_decay: float,
     max_train: int,
+    resume_state: dict[str, object] | None = None,
+    keep_epoch_checkpoints: bool = False,
 ) -> None:
     if max_train > 0:
         train_ds = Subset(train_ds, list(range(min(max_train, len(train_ds)))))
@@ -262,8 +275,16 @@ def train_model(
     model.to(device)
     optimizer = torch.optim.SGD(model.parameters(), lr=lr, momentum=0.9, weight_decay=weight_decay)
     scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=[epochs // 2, int(epochs * 0.75)], gamma=0.1)
+    start_epoch = 0
+    if resume_state:
+        start_epoch = int(resume_state.get("epoch", 0))
+        if "optimizer" in resume_state:
+            optimizer.load_state_dict(resume_state["optimizer"])
+        if "scheduler" in resume_state:
+            scheduler.load_state_dict(resume_state["scheduler"])
+        print(f"resume_training epoch={start_epoch}/{epochs}", flush=True)
     model.train()
-    for epoch in range(epochs):
+    for epoch in range(start_epoch, epochs):
         total_loss = 0.0
         total = 0
         correct = 0
@@ -279,16 +300,59 @@ def train_model(
             total += len(labels)
             correct += int((logits.argmax(dim=-1) == labels).sum().item())
         scheduler.step()
-        print(f"epoch={epoch + 1}/{epochs} loss={total_loss / max(total, 1):.4f} acc={correct / max(total, 1):.4f}")
+        epoch_state = {
+            "model": model.state_dict(),
+            "optimizer": optimizer.state_dict(),
+            "scheduler": scheduler.state_dict(),
+            "epoch": epoch + 1,
+            "epochs": epochs,
+            "complete": epoch + 1 >= epochs,
+            "train_loss": total_loss / max(total, 1),
+            "train_accuracy": correct / max(total, 1),
+        }
+        checkpoint.parent.mkdir(parents=True, exist_ok=True)
+        torch.save(epoch_state, checkpoint)
+        if keep_epoch_checkpoints:
+            epoch_checkpoint = checkpoint.with_name(f"{checkpoint.stem}_epoch{epoch + 1:03d}{checkpoint.suffix}")
+            torch.save(epoch_state, epoch_checkpoint)
+        print(
+            f"epoch={epoch + 1}/{epochs} loss={epoch_state['train_loss']:.4f} "
+            f"acc={epoch_state['train_accuracy']:.4f} checkpoint={checkpoint}",
+            flush=True,
+        )
     checkpoint.parent.mkdir(parents=True, exist_ok=True)
-    torch.save({"model": model.state_dict()}, checkpoint)
+    torch.save(
+        {
+            "model": model.state_dict(),
+            "epoch": epochs,
+            "epochs": epochs,
+            "complete": True,
+        },
+        checkpoint,
+    )
 
 
 def load_or_train_model(args: argparse.Namespace, train_ds: Dataset, device: torch.device) -> ResNet18Cifar:
     model = ResNet18Cifar()
-    if args.checkpoint.exists():
+    if args.checkpoint.exists() and not args.force_retrain:
         state = torch.load(args.checkpoint, map_location=device)
         model.load_state_dict(state.get("model", state))
+        complete = bool(state.get("complete", True))
+        epoch = int(state.get("epoch", 0))
+        if args.train_if_missing and not complete and epoch < args.epochs:
+            train_model(
+                model,
+                train_ds,
+                args.checkpoint,
+                device,
+                args.epochs,
+                args.batch_size,
+                args.lr,
+                args.weight_decay,
+                args.max_train,
+                resume_state=state,
+                keep_epoch_checkpoints=args.keep_epoch_checkpoints,
+            )
     elif args.train_if_missing:
         train_model(
             model,
@@ -300,6 +364,7 @@ def load_or_train_model(args: argparse.Namespace, train_ds: Dataset, device: tor
             args.lr,
             args.weight_decay,
             args.max_train,
+            keep_epoch_checkpoints=args.keep_epoch_checkpoints,
         )
     else:
         raise FileNotFoundError(
@@ -597,6 +662,7 @@ def build_selected_from_pairs(clean: pd.DataFrame, pairs: pd.DataFrame) -> pd.Da
     for pair in pairs.itertuples(index=False):
         for group, idx in [("low_rho", int(pair.low_index)), ("high_rho", int(pair.high_index))]:
             row = clean_by_index.loc[idx].to_dict()
+            row["index"] = idx
             row["rho_group"] = group
             row["pair_id"] = int(pair.pair_id)
             row["match_distance"] = float(pair.match_distance)
@@ -730,7 +796,7 @@ def write_skeleton(out_dir: Path, args: argparse.Namespace, reason: str) -> None
             "python scripts\\run_hidden_fragility_cifar_c.py "
             "--cifar10-dir data\\cifar-10-batches-py --cifar10c-dir data\\CIFAR-10-C "
             "--checkpoint applications\\06_hidden_fragility_cifar_c\\models\\resnet18_cifar10.pt "
-            "--train-if-missing --epochs 40 --pca-dim 64 --confidence-quantile 0.70 --seed 20260531"
+            "--train-if-missing --epochs 40 --pca-dim 2 --confidence-quantile 0.70 --seed 20260531"
         ),
         "dataset": "CIFAR-10 clean test plus CIFAR-10-C corruptions, severities 1-5",
         "model": "ResNet-18 for CIFAR-10, implemented locally without torchvision",
@@ -753,7 +819,7 @@ def write_skeleton(out_dir: Path, args: argparse.Namespace, reason: str) -> None
         "## Reproduce\n\n"
         "Place CIFAR-10 python batches under `data/cifar-10-batches-py` and CIFAR-10-C `.npy` files under `data/CIFAR-10-C`, then run:\n\n"
         "```powershell\n"
-        "python scripts\\run_hidden_fragility_cifar_c.py --cifar10-dir data\\cifar-10-batches-py --cifar10c-dir data\\CIFAR-10-C --train-if-missing --epochs 40 --pca-dim 64 --confidence-quantile 0.70 --seed 20260531\n"
+        "python scripts\\run_hidden_fragility_cifar_c.py --cifar10-dir data\\cifar-10-batches-py --cifar10c-dir data\\CIFAR-10-C --train-if-missing --epochs 40 --pca-dim 2 --confidence-quantile 0.70 --seed 20260531\n"
         "```\n\n"
         "The outputs are written to `outputs/` and summarized in `reports/report.md`.\n",
         encoding="utf-8",
@@ -806,17 +872,19 @@ def main() -> None:
         write_skeleton(args.out_dir, args, "skeleton requested")
         return
 
+    cifar10_root = maybe_extract_cifar10(args.cifar10_dir)
+    cifar10c_root = find_cifar10c_root(args.cifar10c_dir)
     missing = []
-    if maybe_extract_cifar10(args.cifar10_dir) is None:
+    if cifar10_root is None:
         missing.append(f"CIFAR-10 python batches at {args.cifar10_dir}")
-    if not args.cifar10c_dir.exists():
+    if cifar10c_root is None:
         missing.append(f"CIFAR-10-C directory at {args.cifar10c_dir}")
     if missing:
         write_skeleton(args.out_dir, args, "; ".join(missing))
         raise FileNotFoundError("; ".join(missing))
 
     device = device_from_arg(args.device)
-    train_ds, test_ds = load_cifar10(args.cifar10_dir)
+    train_ds, test_ds = load_cifar10(cifar10_root)
     if args.max_test > 0:
         test_ds = Subset(test_ds, list(range(min(args.max_test, len(test_ds)))))
     model = load_or_train_model(args, train_ds, device)
@@ -846,7 +914,7 @@ def main() -> None:
     if not selected.empty:
         for corruption in corruptions:
             for severity in severities:
-                ds_c = load_cifar10c(args.cifar10c_dir, corruption, severity, labels)
+                ds_c = load_cifar10c(cifar10c_root, corruption, severity, labels)
                 if args.max_test > 0:
                     ds_c = Subset(ds_c, list(range(min(args.max_test, len(ds_c)))))
                 records.append(score_corruption(model, ds_c, selected, device, args.batch_size, corruption, severity))
@@ -864,8 +932,8 @@ def main() -> None:
         "seed": args.seed,
         "device": str(device),
         "checkpoint": str(args.checkpoint),
-        "cifar10_dir": str(args.cifar10_dir),
-        "cifar10c_dir": str(args.cifar10c_dir),
+        "cifar10_dir": str(cifar10_root),
+        "cifar10c_dir": str(cifar10c_root),
         "pca_dim_requested": args.pca_dim,
         **pca_meta,
         "confidence_quantile": args.confidence_quantile,

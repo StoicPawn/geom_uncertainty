@@ -9,7 +9,8 @@ This repository separates model coverage from experiment logic so the paper can 
 | `google/bert_uncased_L-2_H-128_A-2` | small masked LM | Experiments 1 and 4, top-k robustness, gradient/regression controls, full-vocabulary sanity, random-init control | main small-model replication |
 | `Qwen/Qwen2.5-0.5B` | decoder-only LM | Decoder logit-lens uncertainty steering inside Experiment 4, comparator diagnostics, local confidence-control application | main decoder evidence |
 | `microsoft/phi-2` | decoder-only LM | Decoder logit-lens uncertainty steering inside Experiment 4, comparator diagnostics, local confidence-control application | main decoder replication |
-| ResNet-18 CIFAR | vision classifier | Hidden-fragility CIFAR-10/CIFAR-10-C application | configured; not executed because local datasets absent |
+| ResNet-18 CIFAR | vision classifier | Hidden-fragility CIFAR-10/CIFAR-10-C application | 5-epoch CPU pilot completed; full resumable run pending |
+| DistilBERT / Tiny BERT MLM heads | local masked-LM logit-lens editors | Safe model-editing diagnostic | completed as local representation edits; not persistent weight editing |
 | Llama family | decoder-only LM | Intended stronger decoder replication | not available locally; no network download attempted |
 | Mistral family | decoder-only LM | Intended stronger decoder replication | not available locally; no network download attempted |
 | RoBERTa family | masked LM | Intended replication | not available locally; no network download attempted |

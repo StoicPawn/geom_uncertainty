@@ -20,6 +20,7 @@ applications/
   04_uncertainty_circuits/
   05_brittle_confidence/
   06_hidden_fragility_cifar_c/
+  07_safe_model_editing/
 reports/
   final_reproducibility_and_results_report.md
   figures/
@@ -79,9 +80,11 @@ The decoder-only main battery uses token-level QA, factual completion, and gener
 
 The uncertainty-circuit application uses the same three local masked-LM models with top-k 32 route scoring and 1,440 Fisher-normalized route interventions. The brittle-confidence application audits 96 matched high/low-rho rows and 368 prompt-perturbation records across neutral context, format, template, and synonym changes.
 
-The hidden-fragility vision application is configured for CIFAR-10 clean test predictions and CIFAR-10-C corruptions across standard severities 1-5. It was not executed in this workspace because local CIFAR-10 and CIFAR-10-C files were absent.
+The hidden-fragility vision application is configured for CIFAR-10 clean test predictions and CIFAR-10-C corruptions across standard severities 1-5. A small local CPU pilot has been executed: 2,000 clean test examples, 12 matched low/high-rho pairs, 288 corruption records, and a 5-epoch ResNet-18 checkpoint. This is a pipeline validation, not paper evidence.
 
 The calibration-diagnosis application uses 57 factual model-prompt rows across the three local masked-LM models, full-vocabulary calibration metrics, top-k 32 accessibility geometry, auto-selected layers, and Fisher-output-equal interventions.
+
+The safe model-editing diagnostic uses DistilBERT and tiny BERT local masked-LM logit-lens edits: 48 prompt rows, 240 route-specific edit records, and 2,880 side-effect prompt evaluations.
 
 ## Layers, Dimensions, Epsilons, And Subspaces
 
@@ -94,6 +97,7 @@ Layer coverage:
 - Applications 4 and 5: auto-selected masked-LM layers from each model.
 - Application 6: ResNet-18 CIFAR penultimate embedding route.
 - Application 3: auto-selected masked-LM layers from each model.
+- Application 7: auto-selected masked-LM layers for local representation edits.
 
 Subspace dimensions:
 
@@ -101,6 +105,7 @@ Subspace dimensions:
 - Experiment 4: `k = 1, 4, 8, 16`, filtered by hidden dimension and sample count.
 - Decoder main battery: PCA/random subspace dimension `8`.
 - Applications 4 and 5: route subspace dimension `8`.
+- Application 7: route subspace dimension `8`.
 - Application 6: PCA route dimension `64` by default, plus full 10-class output Fisher geometry.
 - Application 3: route subspace dimension `8`.
 
@@ -173,8 +178,9 @@ Output lens:
 20260528   decoder-only main battery, external uncertainty comparators, local confidence-control application
 20260529   fixed-target intervention cost and equal-output-movement efficiency tests
 20260530   uncertainty-circuit route localization and brittle-confidence perturbation applications
-20260531   CIFAR-10/CIFAR-10-C hidden-fragility protocol, configured but not executed locally
+20260531   CIFAR-10/CIFAR-10-C hidden-fragility protocol, CPU pilot completed; full run resumable
 20260532   calibration-diagnosis application for internal steerability of miscalibration
+20260601   safe model-editing local representation diagnostic
 ```
 
 ## Environment
@@ -352,6 +358,7 @@ Exploratory and diagnostic analyses are used to bound the claim:
 - Semantic Entropy, Semantic Density, and HaloScope-style comparator diagnostics;
 - ECE caveat in calibration diagnosis, where the exact-token baseline is already low-confidence and low-accuracy;
 - brittle-confidence perturbation battery, currently a mixed/negative boundary case;
+- safe model-editing diagnostic, where target-specific edit gradients dominate `rho` as edit-cost predictors;
 - random-route competitiveness in held-out route generalization;
 - prompt duplicate and near-duplicate audit;
 - failure-mode table;
@@ -400,6 +407,7 @@ Application folder:
 - `applications/04_uncertainty_circuits/`: route-interpretability test for causal localization of uncertainty accessibility.
 - `applications/05_brittle_confidence/`: high-confidence matched prompt-perturbation fragility test and boundary-case diagnostic.
 - `applications/06_hidden_fragility_cifar_c/`: CIFAR-10 to CIFAR-10-C hidden-fragility protocol for confident correct predictions.
+- `applications/07_safe_model_editing/`: local representation-editing diagnostic for edit cost and side effects.
 
 ## Added Control A: Top-k Robustness
 
@@ -794,6 +802,8 @@ Primary artifacts:
 - `applications/06_hidden_fragility_cifar_c/README.md`
 - `applications/06_hidden_fragility_cifar_c/config/reproduce.json`
 - `applications/06_hidden_fragility_cifar_c/reports/report.md`
+- `applications/06_hidden_fragility_cifar_c/pilot_k2/outputs/predictor_benchmark.csv`
+- `applications/06_hidden_fragility_cifar_c/pilot_k2/reports/report.md`
 - `scripts/run_hidden_fragility_cifar_c.py`
 
 Protocol: train or load a ResNet-18 CIFAR-10 classifier, compute `rho(B)` on the penultimate embedding using a PCA route, restrict to correctly classified high-confidence clean CIFAR-10 examples, greedily match high-rho and low-rho examples within class on confidence, entropy, margin, loss, entropy-gradient norm, and projected-gradient norm, then evaluate label-preserving CIFAR-10-C corruptions over severities 1-5.
@@ -811,13 +821,73 @@ incremental AUROC/AUPRC and regression value of rho beyond confidence, entropy, 
 Status in this workspace:
 
 ```text
-not executed
-missing: data/cifar-10-batches-py
-missing: data/CIFAR-10-C
+partial CPU pilot completed
+checkpoint: applications/06_hidden_fragility_cifar_c/models/resnet18_cifar10_pilot_5ep_10k.pt
+clean scored rows: 2000
+matched low/high-rho pairs: 12
+corruption records: 288
+route: penultimate PCA with pca_dim=2
 torchvision was not installed, so the runner includes a local CIFAR ResNet-18 and direct CIFAR batch loaders
 ```
 
-Interpretation: this is a clean cross-domain protocol, not a completed result. It is intentionally kept separate from the language-model experiments so that, once CIFAR-10/CIFAR-10-C assets are placed locally, it can test whether accessible varentropy reveals hidden robustness differences among equally confident and correct vision predictions.
+Pilot result:
+
+```text
+any_flip AUROC:
+scalar baseline      = 0.8472
+gradient baseline    = 0.8681
+gradient + rho       = 0.8611
+rho only             = 0.6528
+
+mean true-probability drop:
+scalar baseline R2   = 0.2859
+gradient baseline R2 = 0.3343
+gradient + rho R2    = 0.4560
+rho only R2          = 0.0615
+```
+
+Interpretation: this is a clean cross-domain protocol with a completed smoke test, not a completed paper result. The pilot model is undertrained and the matched set is small. It does not support a strong hidden-fragility claim yet, but it shows the pipeline works, that large PCA dimensions saturate the 10-class Fisher geometry, and that the full run should use `pca_dim` in `{1,2,4}` plus resumable training.
+
+## Added Application 7: Safe Model Editing Diagnostic
+
+Primary artifacts:
+
+- `applications/07_safe_model_editing/outputs/edit_records.csv`
+- `applications/07_safe_model_editing/outputs/side_effect_records.csv`
+- `applications/07_safe_model_editing/outputs/edit_summary.csv`
+- `applications/07_safe_model_editing/outputs/rho_quartile_summary.csv`
+- `applications/07_safe_model_editing/outputs/predictor_benchmark.csv`
+- `applications/07_safe_model_editing/outputs/qualitative_safe_edit_examples.csv`
+- `applications/07_safe_model_editing/reports/report.md`
+
+Protocol: for factual masked-LM prompts, choose a correction target when the model is wrong and a same-topic/top-candidate counterfactual when it is right. For each route, compute `rho`, construct the least-norm route direction that increases the edit target over the source token, binary-search the actual local edit cost, then apply the same hidden-state delta to unrelated prompts to measure side effects.
+
+Coverage:
+
+```text
+models: distilbert-base-uncased; google/bert_uncased_L-2_H-128_A-2
+prompt rows: 48
+edit records: 240
+side-effect records: 2880
+top-k lens: 32
+subspace k: 8
+```
+
+Key result:
+
+```text
+rho Spearman with lower actual edit cost:          0.0536
+edit-gradient norm Spearman with lower cost:       0.2429
+Fisher-output norm Spearman with lower cost:       0.3547
+rho Spearman with safe-success:                    0.0798
+
+cost model R2:
+scalar baseline             0.1222
+edit-gradient baseline      0.2275
+edit-gradient + rho         0.2342
+```
+
+Interpretation: this is a useful diagnostic but not a positive model-editing claim. `rho` adds a small amount beyond scalar and edit-gradient controls, but target-specific edit gradients and Fisher-output norms are stronger cost predictors. The result should be framed as evidence that a serious safe-editing claim needs persistent weight-editing experiments or a target-specific accessibility metric, not as a headline result.
 
 ## Added Control F: Full-Vocabulary Tiny-Model Sanity
 
@@ -1017,7 +1087,13 @@ python scripts\run_brittle_confidence_and_circuit_applications.py --max-prompts-
 CIFAR-10/CIFAR-10-C hidden-fragility application:
 
 ```powershell
-python scripts\run_hidden_fragility_cifar_c.py --cifar10-dir data\cifar-10-batches-py --cifar10c-dir data\CIFAR-10-C --train-if-missing --epochs 40 --pca-dim 64 --confidence-quantile 0.70 --seed 20260531
+python scripts\run_hidden_fragility_cifar_c.py --cifar10-dir data\cifar-10-batches-py --cifar10c-dir data\CIFAR-10-C --checkpoint applications\06_hidden_fragility_cifar_c\models\resnet18_cifar10_full.pt --train-if-missing --epochs 40 --batch-size 256 --pca-dim 2 --confidence-quantile 0.70 --seed 20260531
+```
+
+Safe model-editing diagnostic:
+
+```powershell
+python scripts\run_safe_model_editing_application.py --models distilbert-base-uncased,google/bert_uncased_L-2_H-128_A-2 --max-prompts-per-task 8 --top-k 32 --subspace-k 8 --random-subspaces 1 --side-prompts-per-edit 12 --seed 20260601
 ```
 
 Paper figures:
@@ -1058,7 +1134,8 @@ The commands regenerate raw outputs under `results/`. The checked-in paper-ready
 - The calibration-diagnosis application improves NLL/Brier/target probability through high-rho routes, but ECE worsens because the exact-token baseline is low-confidence and low-accuracy; do not frame it as a pure ECE win.
 - The uncertainty-circuit application supports route localization, but high-rho improvements over low-rho/random routes are modest in this first battery and still use local logit-lens interventions.
 - The brittle-confidence application is mixed/negative: low-rho high-confidence cases do not show uniformly higher fragility under the current template perturbations.
-- The CIFAR-10/CIFAR-10-C hidden-fragility application is configured but not executed in this workspace because the required local vision datasets are absent.
+- The CIFAR-10/CIFAR-10-C hidden-fragility application has only a small CPU pilot so far. The pilot is mixed and underpowered; the full 40-epoch run is resumable but still pending.
+- The safe model-editing diagnostic is local representation editing, not persistent weight editing. In the current run, `rho` is weak for edit cost while target-specific edit gradients and Fisher-output norms are stronger.
 - Top-k robustness is good but not perfect; full-vocabulary tiny-model sanity shows that top-k can overestimate absolute rho at small k.
 - Out-of-sample route transfer is encouraging but preliminary because pooled random routes remain competitive in this small run.
 - Random-init controls show learned weights reshape accessibility, but nonzero random-init accessibility means architectural geometry is also part of the measurement.
