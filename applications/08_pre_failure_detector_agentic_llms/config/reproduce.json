@@ -1,0 +1,35 @@
+{
+  "status": "completed",
+  "seed": 20260602,
+  "models": [
+    "Qwen/Qwen2.5-0.5B",
+    "microsoft/phi-2"
+  ],
+  "local_files_only": false,
+  "top_m": 6,
+  "pca_dim": 4,
+  "layers": "auto",
+  "max_tasks": 10,
+  "self_consistency_prompts": 4,
+  "resume": true,
+  "step_checkpoints": true,
+  "checkpoint_dir": "/home/stoicpawn/projects/geom_uncertainty/applications/08_pre_failure_detector_agentic_llms/outputs/checkpoints",
+  "n_agent_tasks": 10,
+  "n_agent_steps": 41,
+  "n_step_records": 246,
+  "n_base_step_records": 41,
+  "skipped_models": [
+    {
+      "model": "microsoft/phi-2",
+      "reason": "CUDA out of memory. Tried to allocate 250.00 MiB. GPU 0 has a total capacity of 5.64 GiB of which 98.44 MiB is free. Including non-PyTorch memory, this process has 5.52 GiB memory in use. Of the allocated memory 4.95 GiB is allocated by PyTorch, and 464.02 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)"
+    }
+  ],
+  "action_labels": {
+    "A": "reason internally / compute next step",
+    "B": "use a tool or retrieve external information",
+    "C": "ask the user for clarification",
+    "D": "verify or run a check before proceeding",
+    "E": "give the final answer or take the final action",
+    "F": "stop, defer, or refuse because the action is unsafe"
+  }
+}

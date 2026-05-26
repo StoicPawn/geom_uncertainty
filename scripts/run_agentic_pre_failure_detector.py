@@ -76,6 +76,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--local-files-only", action="store_true")
     parser.add_argument("--trust-remote-code", action="store_true")
     parser.add_argument("--torch-dtype", choices=["float32", "float16", "bfloat16"], default="float32")
+    parser.add_argument("--device", default="auto")
     parser.add_argument("--seed", type=int, default=20260602)
     return parser.parse_args()
 
@@ -91,6 +92,16 @@ def resolve_torch_dtype(name: str):
     if name == "bfloat16":
         return torch.bfloat16
     return torch.float32
+
+
+def resolve_device(name: str) -> torch.device:
+    if name == "auto":
+        return torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    return torch.device(name)
+
+
+def move_batch(encoded: dict[str, torch.Tensor], device: torch.device) -> dict[str, torch.Tensor]:
+    return {key: value.to(device) for key, value in encoded.items()}
 
 
 def safe_name(name: str) -> str:
@@ -313,6 +324,7 @@ def token_id_for_label(tokenizer, label: str) -> int | None:
 
 def load_decoder(args: argparse.Namespace, model_name: str):
     dtype = resolve_torch_dtype(args.torch_dtype)
+    device = resolve_device(args.device)
     tokenizer = AutoTokenizer.from_pretrained(
         model_name,
         local_files_only=args.local_files_only,
@@ -327,9 +339,11 @@ def load_decoder(args: argparse.Namespace, model_name: str):
         model = AutoModelForCausalLM.from_pretrained(model_name, attn_implementation="eager", **kwargs)
     except TypeError:
         model = AutoModelForCausalLM.from_pretrained(model_name, **kwargs)
+    model.to(device)
     model.eval()
     norm = get_final_norm(model)
     lm_head = model.get_output_embeddings()
+    print(f"agentic_device {model_name} {device}", flush=True)
     return tokenizer, model, norm, lm_head
 
 
@@ -391,6 +405,22 @@ def selected_logits(hidden: torch.Tensor, norm, lm_head, token_ids: torch.Tensor
     return logits
 
 
+def jacobian_selected_model_dtype(hidden: torch.Tensor, norm, lm_head, token_ids: torch.Tensor) -> np.ndarray:
+    base = hidden.detach().clone().requires_grad_(True)
+
+    def fn(vec: torch.Tensor) -> torch.Tensor:
+        return selected_logits(vec, norm, lm_head, token_ids).float()
+
+    jac = torch.autograd.functional.jacobian(
+        fn,
+        base,
+        create_graph=False,
+        strict=False,
+        vectorize=True,
+    )
+    return jac.detach().float().cpu().numpy().astype(np.float64)
+
+
 def forward_step_record(
     *,
     tokenizer,
@@ -404,7 +434,8 @@ def forward_step_record(
     confidence_token_ids: dict[str, int],
     self_consistency_prompts: int,
 ) -> tuple[list[dict[str, object]], dict[str, object]]:
-    encoded = tokenizer(action_prompt(step, 0), return_tensors="pt", add_special_tokens=False)
+    device = next(model.parameters()).device
+    encoded = move_batch(tokenizer(action_prompt(step, 0), return_tensors="pt", add_special_tokens=False), device)
     with torch.no_grad():
         outputs = model(**encoded, output_hidden_states=True, use_cache=False)
     hidden_states = outputs.hidden_states
@@ -422,7 +453,10 @@ def forward_step_record(
 
     sc_actions = []
     for variant in range(self_consistency_prompts):
-        encoded_variant = tokenizer(action_prompt(step, variant), return_tensors="pt", add_special_tokens=False)
+        encoded_variant = move_batch(
+            tokenizer(action_prompt(step, variant), return_tensors="pt", add_special_tokens=False),
+            device,
+        )
         with torch.no_grad():
             out_variant = model(**encoded_variant, use_cache=False)
         _values_v, probs_v = score_candidate_distribution(out_variant.logits[0, -1, :], action_ids)
@@ -431,7 +465,10 @@ def forward_step_record(
     self_consistency = max(counts.values()) / max(1, len(sc_actions))
     chosen_consistency = counts.get(chosen_action, 0) / max(1, len(sc_actions))
 
-    encoded_conf = tokenizer(confidence_prompt(step, chosen_action), return_tensors="pt", add_special_tokens=False)
+    encoded_conf = move_batch(
+        tokenizer(confidence_prompt(step, chosen_action), return_tensors="pt", add_special_tokens=False),
+        device,
+    )
     confidence_ids = np.asarray([confidence_token_ids[k] for k in CONFIDENCE_LABELS], dtype=np.int64)
     with torch.no_grad():
         conf_out = model(**encoded_conf, use_cache=False)
@@ -470,8 +507,8 @@ def forward_step_record(
     for layer in active_layers:
         if not (1 <= layer < len(hidden_states)):
             continue
-        hidden = hidden_states[layer][0, -1, :].detach().float()
-        next_hidden = hidden_states[min(layer + 1, n_layers)][0, -1, :].detach().float()
+        hidden = hidden_states[layer][0, -1, :].detach().cpu().float()
+        next_hidden = hidden_states[min(layer + 1, n_layers)][0, -1, :].detach().cpu().float()
         records.append(
             {
                 **row_common,
@@ -521,19 +558,24 @@ def add_future_failure_labels(df: pd.DataFrame) -> pd.DataFrame:
 
 def score_rho_records(model, norm, lm_head, records: list[dict[str, object]], pca_dim: int, seed: int) -> pd.DataFrame:
     rows = []
+    if not records:
+        return pd.DataFrame()
+    model_param = next(model.parameters())
+    device = model_param.device
+    dtype = model_param.dtype
     for (model_name, layer), layer_records_df in pd.DataFrame(
         [{"idx": i, "model": rec["model"], "layer": rec["layer"]} for i, rec in enumerate(records)]
     ).groupby(["model", "layer"]):
         layer_records = [records[int(i)] for i in layer_records_df["idx"].tolist()]
         subspaces = make_subspaces(layer_records, pca_dim, seed + int(layer))
         for rec in layer_records:
-            hidden = rec["hidden"].detach()
+            hidden = rec["hidden"].detach().to(device=device, dtype=dtype)
             token_ids = np.asarray(rec["action_token_ids"], dtype=np.int64)
             token_ids_t = torch.as_tensor(token_ids, dtype=torch.long, device=hidden.device)
             logits = selected_logits(hidden, norm, lm_head, token_ids_t).detach().float().cpu().numpy().astype(np.float64)
             probs = softmax_np(logits[None, :])[0].astype(np.float64)
             geometry = fisher_geometry(probs)
-            jac = jacobian_selected(hidden, norm, lm_head, token_ids_t)
+            jac = jacobian_selected_model_dtype(hidden, norm, lm_head, token_ids_t)
             for family, k, basis in subspaces:
                 jb = jac @ basis
                 whitened = geometry.sqrt_fisher @ jb
@@ -584,6 +626,8 @@ def score_rho_records(model, norm, lm_head, records: list[dict[str, object]], pc
 
 def cv_predictive_benchmark(df: pd.DataFrame) -> pd.DataFrame:
     rows = []
+    if df.empty:
+        return pd.DataFrame()
     outcomes = [
         "future_failure",
         "pre_failure_after_correct",
@@ -850,7 +894,10 @@ def write_docs(out_dir: Path, metadata: dict[str, object]) -> None:
         path = outputs / filename
         if not path.exists():
             continue
-        df = pd.read_csv(path)
+        try:
+            df = pd.read_csv(path)
+        except pd.errors.EmptyDataError:
+            df = pd.DataFrame()
         report.append(f"## {title}\n")
         if df.empty:
             report.append("```text\n(empty)\n```\n")
@@ -890,7 +937,12 @@ def run_model(args: argparse.Namespace, model_name: str, steps: list[AgentStep])
     if any(value is None for value in confidence_token_ids.values()):
         raise RuntimeError(f"Could not map all confidence labels to tokens for {model_name}: {confidence_token_ids}")
     with torch.no_grad():
-        probe = model(**tokenizer("probe", return_tensors="pt", add_special_tokens=False), output_hidden_states=True, use_cache=False)
+        device = next(model.parameters()).device
+        probe = model(
+            **move_batch(tokenizer("probe", return_tensors="pt", add_special_tokens=False), device),
+            output_hidden_states=True,
+            use_cache=False,
+        )
     n_layers = len(probe.hidden_states) - 1
     layers = parse_layers(args.layers, n_layers)
     checkpoint = raw_checkpoint_path(args.out_dir, model_name)
