@@ -42,7 +42,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--models",
-        default="distilbert-base-uncased,bert-base-uncased,google/bert_uncased_L-2_H-128_A-2",
+        default="distilbert-base-uncased,bert-base-uncased,roberta-base,google/bert_uncased_L-2_H-128_A-2",
     )
     parser.add_argument("--top-k-values", default="16,32,64,128,256")
     parser.add_argument("--subspace-ks", default="8")
@@ -52,7 +52,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output-eps", type=float, default=0.05)
     parser.add_argument("--semantic-clusters", type=int, default=4)
     parser.add_argument("--seed", type=int, default=20260525)
-    parser.add_argument("--local-files-only", action="store_true")
+    parser.add_argument("--local-files-only", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--analysis-only", action="store_true")
     parser.add_argument(
         "--out-root",
@@ -62,13 +62,13 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def safe_tokenizer(model_name: str):
+def safe_tokenizer(model_name: str, local_files_only: bool = False):
     if "roberta" not in model_name.lower():
         try:
-            return BertTokenizer.from_pretrained(model_name, local_files_only=True)
+            return BertTokenizer.from_pretrained(model_name, local_files_only=local_files_only)
         except Exception:
             pass
-    return AutoTokenizer.from_pretrained(model_name, local_files_only=True)
+    return AutoTokenizer.from_pretrained(model_name, local_files_only=local_files_only)
 
 
 def pca_basis(matrix: np.ndarray, max_k: int) -> np.ndarray:
@@ -144,8 +144,8 @@ def apply_hidden_step(model, hidden: torch.Tensor, hidden_direction: np.ndarray,
 
 def run_model(args: argparse.Namespace, model_name: str, top_k_values: list[int], subspace_ks: list[int]):
     print(f"load_model {model_name}", flush=True)
-    tokenizer = safe_tokenizer(model_name)
-    model = AutoModelForMaskedLM.from_pretrained(model_name, local_files_only=True)
+    tokenizer = safe_tokenizer(model_name, args.local_files_only)
+    model = AutoModelForMaskedLM.from_pretrained(model_name, local_files_only=args.local_files_only)
     model.eval()
     cases = build_cases(args.seed, args.max_prompts_per_task)
     prompt_table, records = build_records(tokenizer, model, cases, max(top_k_values))

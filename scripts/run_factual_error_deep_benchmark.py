@@ -46,6 +46,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--test-size", type=float, default=0.35)
     parser.add_argument("--logreg-c", type=float, default=0.1)
     parser.add_argument("--max-prompts", type=int, default=0)
+    parser.add_argument("--local-files-only", action=argparse.BooleanOptionalAction, default=False)
     return parser.parse_args()
 
 
@@ -862,10 +863,10 @@ def main() -> None:
     args.out_dir.mkdir(parents=True, exist_ok=True)
     torch.set_num_threads(1)
 
-    tokenizer = BertTokenizer.from_pretrained(args.model, local_files_only=True)
+    tokenizer = BertTokenizer.from_pretrained(args.model, local_files_only=args.local_files_only)
     model = AutoModelForMaskedLM.from_pretrained(
         args.model,
-        local_files_only=True,
+        local_files_only=args.local_files_only,
         attn_implementation="eager",
     )
     model.eval()

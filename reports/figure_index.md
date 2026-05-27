@@ -8,8 +8,6 @@ The canonical paper-ready figure set is in `reports/figures/`. SVG files are pre
 | `fig02_scalar_uncertainty_vs_rho.svg` | Scatter of entropy/varentropy against rho | `scripts/make_paper_figures.py` | Experiment 4 subspace scores |
 | `fig03_scalar_matched_pairs.svg` | Scalar-matched examples with different accessibility | `scripts/make_paper_figures.py` | Experiment 1 matched-pair CSVs |
 | `fig04_rho_vs_delta_controls.svg` | Rho versus `|Delta H|` and `|Delta Var|`, split by controls | `scripts/make_paper_figures.py` | Top-k robustness steering records |
-| `fig05_layerwise_heatmap.svg` | Layer by k heatmap of adjusted accessibility | `scripts/make_paper_figures.py` | Experiment 3 layerwise summary |
-| `fig05_compressibility_curves.svg` | Accessibility accumulation as k grows | `scripts/make_paper_figures.py` | Experiment 3 layerwise summary |
 | `fig06_steering_vs_controls_ci.svg` | Steering versus controls with 95% confidence intervals | `scripts/make_paper_figures.py` | Top-k robustness steering records |
 | `fig06_uncertainty_steering_main.svg` | Supplementary equal-energy dose response and preservation panel | `scripts/make_paper_figures.py` | Experiment 4 steering summaries and records |
 | `fig07_topk_robustness.svg` | Top-k robustness for rho ranking, steering movement, and top-10 preservation | `scripts/make_paper_figures.py` | Top-k robustness outputs |

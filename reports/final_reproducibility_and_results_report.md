@@ -5,11 +5,11 @@ This cleaned main branch contains the paper-facing scientific story:
 1. core Fisher-output accessible-varentropy theory;
 2. scalar-matched evidence that uncertainty scalars do not determine accessibility;
 3. local perturbation evidence that accessibility predicts uncertainty movement;
-4. layerwise and k-dimensional structure;
-5. uncertainty steering and equal-output-movement/minimal-energy controls;
-6. uncertainty controllability mapping as the diagnostic application.
+4. uncertainty steering and equal-output-movement/minimal-energy controls;
+5. uncertainty controllability mapping as the diagnostic application;
+6. rho-guided selective reliability as the non-oracle decision test.
 
-Exploratory application tests were moved to `archive_applications_exploratory`.
+Side experiments and exploratory ablations were moved to `archive_disruptive_experiments_full`.
 
 ## Core Definition
 
@@ -37,15 +37,6 @@ Primary artifacts:
 
 ### Experiment 3
 
-Accessibility has structure over layer and subspace dimension. The layer heatmaps and k-compressibility curves show that rho is not route noise.
-
-Primary artifacts:
-
-- `experiments/03_layerwise_k_structure/outputs/layerwise_k_summary.csv`
-- `experiments/03_layerwise_k_structure/outputs/compressibility_summary.csv`
-
-### Experiment 4
-
 Accessible directions steer uncertainty more efficiently than random and orthogonal controls, with answer/top-k preservation at small epsilon. Equal-output-movement controls address the objection that accessible directions merely move logits more.
 
 Primary artifacts:
@@ -55,7 +46,7 @@ Primary artifacts:
 - `experiments/04_uncertainty_steering/01_minimal_intervention_energy/`
 - `experiments/04_uncertainty_steering/02_equal_output_movement/`
 
-### Experiment 5
+### Experiment 4
 
 The uncertainty controllability mapping test asks whether rho helps predict where uncertainty is controllable after controlling for scalar uncertainty, gradient norms, Fisher-output energy, Jacobian norm, model, layer, task, route family, subspace dimension, and budget mode.
 
@@ -75,6 +66,26 @@ Primary artifacts:
 - `experiments/05_controllability_mapping/outputs/mapping_bootstrap_ci.csv`
 - `experiments/05_controllability_mapping/reports/uncertainty_controllability_mapping_test.md`
 
+### Experiment 5
+
+The rho-guided selective reliability test asks whether rho improves a non-oracle accept/abstain/route/intervene policy. Correctness is not used as a decision feature; it is used only for grouped out-of-fold training and evaluation.
+
+Primary result:
+
+```text
+AURC mean risk:  baseline 0.469461 -> baseline+rho 0.448106
+Brier:           baseline 0.153992 -> baseline+rho 0.118298
+Log-loss:        baseline 0.511038 -> baseline+rho 0.384790
+```
+
+Bootstrap CIs are positive for AURC, Brier, and log-loss improvements.
+
+Primary artifacts:
+
+- `experiments/controls/rho_guided_selective_reliability/outputs/selective_reliability_metrics.csv`
+- `experiments/controls/rho_guided_selective_reliability/outputs/selective_reliability_bootstrap_ci.csv`
+- `experiments/controls/rho_guided_selective_reliability/reports/report.md`
+
 ## Required Controls
 
 Core controls retained on main:
@@ -84,17 +95,12 @@ Core controls retained on main:
 - semantic/top-k preservation: `experiments/controls/semantic_preservation/`;
 - top-k robustness: `experiments/controls/topk_robustness/`;
 - equal Fisher-output movement: `experiments/controls/fisher_output_energy_control/`;
-- bootstrap and matched scalar-gradient diagnostics: `experiments/controls/statistical_diagnostics/`.
+- bootstrap and matched scalar-gradient diagnostics: `experiments/controls/statistical_diagnostics/`;
+- rho-guided selective reliability: `experiments/controls/rho_guided_selective_reliability/`.
 
-Appendix controls retained on main:
+Scale and model-family robustness retained on main:
 
-- `experiments/controls/random_subspaces/`;
-- `experiments/controls/euclidean_ablation/`;
-- `experiments/controls/shuffled_surprisal/`;
-- `experiments/controls/full_vocab_sanity/`;
-- `experiments/controls/out_of_sample_generalization/`;
-- `experiments/controls/random_init_vs_pretrained/`;
-- `experiments/controls/external_uncertainty_comparators/`.
+- `experiments/controls/scale_external_robustness/`.
 
 ## Reproduction Commands
 
@@ -113,9 +119,21 @@ python scripts/run_control_cost_and_equal_output_tests.py --tau-entropy 0.02 --t
 Run controllability mapping:
 
 ```bash
-python scripts/run_uncertainty_controllability_mapping_test.py --out-dir experiments/05_controllability_mapping --decoder-models distilgpt2,Qwen/Qwen2.5-0.5B,Qwen/Qwen2.5-1.5B-Instruct,microsoft/phi-2 --max-items 18 --top-m 8 --layers auto3 --subspace-dims 1,2,4 --eps 0.01,0.025,0.05,0.1,0.2 --movement-threshold 0.01 --drift-cap 0.00025 --top-k 3 --bootstrap 300 --torch-dtype float16 --device cuda --trust-remote-code --seed 20260608
+python scripts/run_uncertainty_controllability_mapping_test.py --out-dir experiments/05_controllability_mapping --decoder-models distilgpt2,Qwen/Qwen2.5-0.5B,Qwen/Qwen2.5-1.5B-Instruct,microsoft/phi-2,meta-llama/Llama-3.2-1B,mistralai/Mistral-7B-v0.1 --masked-models distilbert-base-uncased,bert-base-uncased,roberta-base,prajjwal1/bert-tiny --max-items 18 --top-m 8 --layers auto3 --subspace-dims 1,2,4 --eps 0.01,0.025,0.05,0.1,0.2 --movement-threshold 0.01 --drift-cap 0.00025 --top-k 3 --bootstrap 300 --torch-dtype float16 --device cuda --trust-remote-code --seed 20260608
+```
+
+Aggregate scale and external robustness evidence:
+
+```bash
+python scripts/run_scale_external_robustness_matrix.py
+```
+
+Run rho-guided selective reliability:
+
+```bash
+python scripts/run_rho_guided_selective_reliability.py --bootstrap 1000 --seed 20260609
 ```
 
 ## Limitations
 
-Rho should be claimed as a local controllability geometry, not a generic error predictor. Gradient baselines remain strong for raw local movement. Minimal-energy results are strongest in the top-k local-linear setting and should be stated with that caveat. The mapping test currently covers local decoder models; masked-LM variants requested in that test were not present in the local cache and were skipped without download.
+Rho should be claimed as a local controllability geometry, not a generic error predictor. Gradient baselines remain strong for raw local movement. Minimal-energy results are strongest in the top-k local-linear setting and should be stated with that caveat. RoBERTa, Llama, and Mistral are now part of the requested default test sets and are downloaded automatically when absent unless `--local-files-only` is set.

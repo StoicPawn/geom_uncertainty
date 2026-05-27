@@ -1,0 +1,25 @@
+source,model,family,status,rows,reason
+masked_topk,bert-base-uncased,BERT,completed,920,
+masked_topk,distilbert-base-uncased,DistilBERT,completed,920,
+masked_topk,google/bert_uncased_L-2_H-128_A-2,BERT,completed,575,
+masked_full_battery,bert-base-uncased,BERT,completed,1188,
+masked_full_battery,distilbert-base-uncased,DistilBERT,completed,1188,
+masked_full_battery,google/bert_uncased_L-2_H-128_A-2,BERT,completed,792,
+decoder_battery,Qwen/Qwen2.5-0.5B,Qwen,completed,54,
+decoder_battery,microsoft/phi-2,Phi,completed,54,
+controllability_mapping,Qwen/Qwen2.5-0.5B,Qwen,completed,90,
+controllability_mapping,Qwen/Qwen2.5-1.5B-Instruct,Qwen,completed,45,
+controllability_mapping,distilgpt2,GPT-2,completed,90,
+controllability_mapping,microsoft/phi-2,Phi,completed,90,
+decoder_battery,meta-llama/Llama-3.2-1B,Llama,historical_skip_auto_download_now,0,previous checked-in run skipped; current reproduce config downloads automatically
+decoder_battery,mistralai/Mistral-7B-v0.1,Mistral,historical_skip_auto_download_now,0,previous checked-in run skipped; current reproduce config downloads automatically
+controllability_mapping,distilbert-base-uncased,DistilBERT,historical_skip_auto_download_now,0,previous checked-in run skipped; current reproduce config downloads automatically
+controllability_mapping,bert-base-uncased,BERT,historical_skip_auto_download_now,0,previous checked-in run skipped; current reproduce config downloads automatically
+controllability_mapping,prajjwal1/bert-tiny,BERT,historical_skip_auto_download_now,0,previous checked-in run skipped; current reproduce config downloads automatically
+masked_topk,roberta-base,RoBERTa,requested_pending_run,0,listed in reproduce config but not present in checked-in outputs
+masked_full_battery,roberta-base,RoBERTa,requested_pending_run,0,listed in reproduce config but not present in checked-in outputs
+decoder_battery,distilgpt2,GPT-2,requested_pending_run,0,listed in reproduce config but not present in checked-in outputs
+decoder_battery,Qwen/Qwen2.5-1.5B-Instruct,Qwen,requested_pending_run,0,listed in reproduce config but not present in checked-in outputs
+controllability_mapping,meta-llama/Llama-3.2-1B,Llama,requested_pending_run,0,listed in reproduce config but not present in checked-in outputs
+controllability_mapping,mistralai/Mistral-7B-v0.1,Mistral,requested_pending_run,0,listed in reproduce config but not present in checked-in outputs
+controllability_mapping,roberta-base,RoBERTa,requested_pending_run,0,listed in reproduce config but not present in checked-in outputs

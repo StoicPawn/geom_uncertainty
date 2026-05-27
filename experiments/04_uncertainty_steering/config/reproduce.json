@@ -4,6 +4,7 @@
   "models": [
     "distilbert-base-uncased",
     "bert-base-uncased",
+    "roberta-base",
     "google/bert_uncased_L-2_H-128_A-2"
   ],
   "decoder_model": "Qwen/Qwen2.5-0.5B",
@@ -27,9 +28,9 @@
     "figures/fig06_uncertainty_steering_main.png"
   ],
   "minimal_commands": [
-    "python scripts/run_uncertainty_steering_full_battery.py --out-dir results/uncertainty_steering_full_battery_v1 --top-k 16 --seed 20260524",
+    "python scripts/run_uncertainty_steering_full_battery.py --models distilbert-base-uncased,bert-base-uncased,roberta-base,google/bert_uncased_L-2_H-128_A-2 --out-dir results/uncertainty_steering_full_battery_v1 --top-k 16 --seed 20260524",
     "python scripts/run_uncertainty_steering.py --out-dir results/uncertainty_steering_distilbert_pca16 --top-k 32 --layer 5 --pca-dim 16 --seed 20260524",
-    "python scripts/run_decoder_uncertainty_steering.py --out-dir results/decoder_uncertainty_steering_qwen2_5_0_5b --max-prompts 64 --top-m 16 --layer 23 --pca-dim 16 --torch-dtype float32 --local-files-only --seed 20260524",
+    "python scripts/run_decoder_uncertainty_steering.py --out-dir results/decoder_uncertainty_steering_qwen2_5_0_5b --max-prompts 64 --top-m 16 --layer 23 --pca-dim 16 --torch-dtype float32 --seed 20260524",
     "python scripts/make_paper_figures.py"
   ]
 }

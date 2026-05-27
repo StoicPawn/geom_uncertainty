@@ -1,0 +1,18 @@
+{
+  "command": "python scripts/run_rho_guided_selective_reliability.py",
+  "bootstrap": 1000,
+  "seed": 20260609,
+  "coverages": [
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.9,
+    1.0
+  ],
+  "high_confidence_threshold": 0.8,
+  "policy_constraint": "No oracle correctness feature; correctness is used only for out-of-fold evaluation/training labels."
+}

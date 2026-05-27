@@ -42,8 +42,11 @@ class PromptItem:
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--out-dir", type=Path, default=OUT)
-    parser.add_argument("--decoder-models", default="distilgpt2,Qwen/Qwen2.5-0.5B,Qwen/Qwen2.5-1.5B-Instruct,microsoft/phi-2")
-    parser.add_argument("--masked-models", default="distilbert-base-uncased,bert-base-uncased,prajjwal1/bert-tiny")
+    parser.add_argument(
+        "--decoder-models",
+        default="distilgpt2,Qwen/Qwen2.5-0.5B,Qwen/Qwen2.5-1.5B-Instruct,microsoft/phi-2,meta-llama/Llama-3.2-1B,mistralai/Mistral-7B-v0.1",
+    )
+    parser.add_argument("--masked-models", default="distilbert-base-uncased,bert-base-uncased,roberta-base,prajjwal1/bert-tiny")
     parser.add_argument("--max-items", type=int, default=24)
     parser.add_argument("--top-m", type=int, default=8)
     parser.add_argument("--layers", default="auto3")
@@ -56,7 +59,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--torch-dtype", choices=["float32", "float16", "bfloat16"], default="float16")
     parser.add_argument("--device", default="auto")
     parser.add_argument("--trust-remote-code", action="store_true")
-    parser.add_argument("--local-files-only", action="store_true", default=True)
+    parser.add_argument("--local-files-only", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--seed", type=int, default=20260608)
     return parser.parse_args()
 
@@ -361,8 +364,8 @@ def build_decoder_records(model_name: str, args: argparse.Namespace) -> tuple[pd
 
 def try_masked_model(model_name: str, args: argparse.Namespace) -> dict[str, object]:
     try:
-        _tok = AutoTokenizer.from_pretrained(model_name, local_files_only=True)
-        _model = AutoModelForMaskedLM.from_pretrained(model_name, local_files_only=True)
+        _tok = AutoTokenizer.from_pretrained(model_name, local_files_only=args.local_files_only)
+        _model = AutoModelForMaskedLM.from_pretrained(model_name, local_files_only=args.local_files_only)
         del _model
         return {"model": model_name, "status": "available_but_not_run", "reason": "masked-LM mapping path not enabled in this compact audit"}
     except Exception as exc:

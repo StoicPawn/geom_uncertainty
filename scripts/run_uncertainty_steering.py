@@ -48,6 +48,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--eps", default="0.1,0.2,0.4")
     parser.add_argument("--semantic-clusters", type=int, default=4)
     parser.add_argument("--seed", type=int, default=20260524)
+    parser.add_argument("--local-files-only", action=argparse.BooleanOptionalAction, default=False)
     return parser.parse_args()
 
 
@@ -618,10 +619,10 @@ def main() -> None:
     np.random.seed(args.seed)
     torch.set_num_threads(1)
 
-    tokenizer = BertTokenizer.from_pretrained(args.model, local_files_only=True)
+    tokenizer = BertTokenizer.from_pretrained(args.model, local_files_only=args.local_files_only)
     model = AutoModelForMaskedLM.from_pretrained(
         args.model,
-        local_files_only=True,
+        local_files_only=args.local_files_only,
         attn_implementation="eager",
     )
     model.eval()

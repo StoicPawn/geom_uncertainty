@@ -1,0 +1,5 @@
+target,metric,ci_low,median,ci_high,supported
+max_uncertainty_movement,delta_mae_improvement,0.0001199740962404,0.0004966218900875,0.0008541941884161,True
+minimal_energy,delta_mae_improvement,0.0344247029640985,0.0451346808850228,0.0547331521285397,True
+safe_movement_target,delta_auprc,0.0644839566237598,0.0880655776711082,0.1141169013523589,True
+safe_movement_target,delta_log_loss_improvement,0.043724564536376,0.0604296376134565,0.0806584691652869,True

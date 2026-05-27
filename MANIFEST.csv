@@ -9,7 +9,6 @@ reports/figure_index.md,Paper-ready figure index
 reports/figures/,Canonical SVG and PNG paper figures
 experiments/01_matched_scalar_uncertainty/,Experiment 1 scalar-matched uncertainty/accessibility evidence
 experiments/02_local_perturbation_prediction/,Experiment 2 local uncertainty movement prediction
-experiments/03_layerwise_k_structure/,Experiment 3 layerwise and k-dimensional structure
 experiments/04_uncertainty_steering/,Experiment 4 uncertainty steering and controllability evidence
 experiments/04_uncertainty_steering/01_minimal_intervention_energy/,Minimal energy control-cost test
 experiments/04_uncertainty_steering/02_equal_output_movement/,Equal Fisher-output movement steering test
@@ -22,12 +21,7 @@ experiments/controls/semantic_preservation/,Top-k semantic preservation controls
 experiments/controls/topk_robustness/,Top-k robustness controls
 experiments/controls/fisher_output_energy_control/,Equal Fisher-output energy controls
 experiments/controls/statistical_diagnostics/,Bootstrap intervals effect sizes duplicate audit and matched scalar-gradient controls
-experiments/controls/random_subspaces/,Appendix random subspace controls
-experiments/controls/euclidean_ablation/,Appendix Euclidean ablation controls
-experiments/controls/shuffled_surprisal/,Appendix shuffled surprisal controls
-experiments/controls/full_vocab_sanity/,Appendix full-vocabulary sanity check
-experiments/controls/out_of_sample_generalization/,Appendix held-out prompt route reuse control
-experiments/controls/random_init_vs_pretrained/,Appendix random initialization control
-experiments/controls/external_uncertainty_comparators/,Appendix external uncertainty comparator diagnostics
+experiments/controls/scale_external_robustness/,Aggregate model-scale and external robustness matrix
+experiments/controls/rho_guided_selective_reliability/,Rho-guided selective reliability and risk-coverage test
 src/accessible_varentropy/,Core implementation
 scripts/,Curated reproduction scripts and paper figure generator

@@ -51,7 +51,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--models",
-        default="distilbert-base-uncased,bert-base-uncased,google/bert_uncased_L-2_H-128_A-2",
+        default="distilbert-base-uncased,bert-base-uncased,roberta-base,google/bert_uncased_L-2_H-128_A-2",
     )
     parser.add_argument("--out-dir", type=Path, default=ROOT / "results" / "uncertainty_steering_full_battery")
     parser.add_argument("--top-k", type=int, default=16)
@@ -63,6 +63,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output-eps", default="0.02,0.05,0.1")
     parser.add_argument("--semantic-clusters", type=int, default=4)
     parser.add_argument("--seed", type=int, default=20260524)
+    parser.add_argument("--local-files-only", action=argparse.BooleanOptionalAction, default=False)
     return parser.parse_args()
 
 
@@ -511,10 +512,14 @@ def intervention_metrics(
 def run_model(args: argparse.Namespace, model_name: str, cases: list[CaseSpec]) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     print(f"loading_model {model_name}", flush=True)
     try:
-        tokenizer = AutoTokenizer.from_pretrained(model_name, local_files_only=True)
+        tokenizer = AutoTokenizer.from_pretrained(model_name, local_files_only=args.local_files_only)
     except ValueError:
-        tokenizer = BertTokenizer.from_pretrained(model_name, local_files_only=True)
-    model = AutoModelForMaskedLM.from_pretrained(model_name, local_files_only=True, attn_implementation="eager")
+        tokenizer = BertTokenizer.from_pretrained(model_name, local_files_only=args.local_files_only)
+    model = AutoModelForMaskedLM.from_pretrained(
+        model_name,
+        local_files_only=args.local_files_only,
+        attn_implementation="eager",
+    )
     model.eval()
     prompt_table, records = build_records(tokenizer, model, cases, args.top_k)
     if prompt_table.empty:
@@ -834,7 +839,7 @@ def write_report(
         "",
         "This suite targets five checks: directional monotonicity, equal Fisher-output-energy controls, specificity, rho dependency after scalar controls, and replication across available local MLM models/tasks/layers/subspace dimensions/random seeds.",
         "",
-        "RoBERTa was not present in the local Hugging Face cache; no network download was attempted.",
+        "The default model set includes RoBERTa. Missing models are downloaded automatically unless `--local-files-only` is set; unavailable models are recorded in `skipped_models.csv`.",
         "",
         "## Skipped Models",
         markdown_table(skipped, 20),

@@ -1,0 +1,7 @@
+metric,value
+delta_brier_improvement,0.03569420210526507
+delta_log_loss_improvement,0.12624804280774687
+delta_aurc_improvement,0.021355085650581695
+delta_risk50_improvement,0.045454545454545525
+delta_risk80_improvement,0.0
+delta_high_conf_error_improvement,0.07096774193548383

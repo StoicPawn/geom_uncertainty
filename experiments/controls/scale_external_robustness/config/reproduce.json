@@ -1,0 +1,10 @@
+{
+  "command": "python scripts/run_scale_external_robustness_matrix.py",
+  "inputs": [
+    "experiments/controls/topk_robustness/outputs/",
+    "experiments/04_uncertainty_steering/outputs/",
+    "experiments/04_uncertainty_steering/decoder_main_battery/outputs/",
+    "experiments/05_controllability_mapping/outputs/"
+  ],
+  "purpose": "Aggregate scale, model-family, top-k, and controllability robustness evidence."
+}

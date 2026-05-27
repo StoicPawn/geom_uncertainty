@@ -40,7 +40,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--pca-dim", type=int, default=16)
     parser.add_argument("--eps", default="0.05,0.1,0.2")
     parser.add_argument("--semantic-clusters", type=int, default=4)
-    parser.add_argument("--local-files-only", action="store_true")
+    parser.add_argument("--local-files-only", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--trust-remote-code", action="store_true")
     parser.add_argument("--torch-dtype", choices=["auto", "float32", "float16", "bfloat16"], default="float32")
     parser.add_argument("--seed", type=int, default=20260524)

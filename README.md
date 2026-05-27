@@ -2,7 +2,7 @@
 
 Paper-facing repository for accessible varentropy: a Fisher-output geometric measure of where uncertainty can be controlled inside a network.
 
-The main branch is intentionally narrow. It keeps the scientific spine, the required controls, and one diagnostic application that closes the story. Exploratory application tests live on the archive branch `archive_applications_exploratory`.
+The main branch is intentionally narrow. It keeps the disruptive scientific spine plus the statistical robustness controls needed to defend it. Exploratory and side-branch experiments live on `archive_disruptive_experiments_full`.
 
 ## Core Claim
 
@@ -16,14 +16,14 @@ For an internal route or subspace `B`, `rho(B)` measures the fraction of local v
 2. `experiments/02_local_perturbation_prediction/`
    Accessibility predicts local uncertainty movement under small interventions.
 
-3. `experiments/03_layerwise_k_structure/`
-   Rho has layerwise and k-dimensional structure, including compressibility and heatmap evidence.
-
-4. `experiments/04_uncertainty_steering/`
+3. `experiments/04_uncertainty_steering/`
    High-accessibility directions support uncertainty steering, with equal-output-movement and minimal-energy controls.
 
-5. `experiments/05_controllability_mapping/`
+4. `experiments/05_controllability_mapping/`
    Diagnostic mapping test: controls plus rho better predict safe uncertainty movement and minimal energy than controls alone.
+
+5. `experiments/controls/rho_guided_selective_reliability/`
+   Non-oracle selective reliability test: baseline+rho improves risk-coverage/calibration tradeoffs.
 
 ## Required Controls
 
@@ -33,9 +33,10 @@ Curated controls are under `experiments/controls/`:
 - `full_regression/`
 - `semantic_preservation/`
 - `topk_robustness/`
+- `scale_external_robustness/`
+- `rho_guided_selective_reliability/`
 - `fisher_output_energy_control/`
 - `statistical_diagnostics/`
-- appendix-style ablations: `random_subspaces/`, `euclidean_ablation/`, `shuffled_surprisal/`, `full_vocab_sanity/`, `out_of_sample_generalization/`, `random_init_vs_pretrained/`, `external_uncertainty_comparators/`
 
 ## Paper Files
 
@@ -63,7 +64,19 @@ python scripts/run_control_cost_and_equal_output_tests.py --tau-entropy 0.02 --t
 Run the diagnostic controllability mapping:
 
 ```bash
-python scripts/run_uncertainty_controllability_mapping_test.py --out-dir experiments/05_controllability_mapping --decoder-models distilgpt2,Qwen/Qwen2.5-0.5B,Qwen/Qwen2.5-1.5B-Instruct,microsoft/phi-2 --max-items 18 --top-m 8 --layers auto3 --subspace-dims 1,2,4 --eps 0.01,0.025,0.05,0.1,0.2 --movement-threshold 0.01 --drift-cap 0.00025 --top-k 3 --bootstrap 300 --torch-dtype float16 --device cuda --trust-remote-code --seed 20260608
+python scripts/run_uncertainty_controllability_mapping_test.py --out-dir experiments/05_controllability_mapping --decoder-models distilgpt2,Qwen/Qwen2.5-0.5B,Qwen/Qwen2.5-1.5B-Instruct,microsoft/phi-2,meta-llama/Llama-3.2-1B,mistralai/Mistral-7B-v0.1 --masked-models distilbert-base-uncased,bert-base-uncased,roberta-base,prajjwal1/bert-tiny --max-items 18 --top-m 8 --layers auto3 --subspace-dims 1,2,4 --eps 0.01,0.025,0.05,0.1,0.2 --movement-threshold 0.01 --drift-cap 0.00025 --top-k 3 --bootstrap 300 --torch-dtype float16 --device cuda --trust-remote-code --seed 20260608
 ```
 
-The paper-ready artifacts are checked in under `experiments/`; raw exploratory results are archived off main.
+Aggregate the broad robustness matrix:
+
+```bash
+python scripts/run_scale_external_robustness_matrix.py
+```
+
+Run rho-guided selective reliability:
+
+```bash
+python scripts/run_rho_guided_selective_reliability.py --bootstrap 1000 --seed 20260609
+```
+
+The paper-ready artifacts are checked in under `experiments/`; archived experiments are on `archive_disruptive_experiments_full`.

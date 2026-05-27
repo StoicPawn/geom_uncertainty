@@ -219,57 +219,6 @@ def rho_vs_delta_controls() -> None:
     save_figure(fig, ROOT / "experiments" / "02_local_perturbation_prediction", "fig04_rho_vs_delta_controls")
 
 
-def layerwise_heatmap() -> None:
-    df = read_csv("experiments/03_layerwise_k_structure/outputs/layerwise_k_summary.csv")
-    view = (
-        df[df["subspace"].eq("delta_pca")]
-        .groupby(["layer", "k"], as_index=False)["rho_adjusted_mean"]
-        .mean()
-        .pivot(index="layer", columns="k", values="rho_adjusted_mean")
-        .sort_index()
-    )
-    fig, ax = plt.subplots(figsize=(6.4, 4.2), constrained_layout=True)
-    im = ax.imshow(view.to_numpy(), aspect="auto", cmap="coolwarm", origin="lower")
-    ax.set_title(r"Layerwise adjusted accessibility, delta PCA")
-    ax.set_xlabel(r"subspace dimension $k$")
-    ax.set_ylabel("layer")
-    ax.set_xticks(np.arange(len(view.columns)))
-    ax.set_xticklabels([str(v) for v in view.columns])
-    ax.set_yticks(np.arange(len(view.index)))
-    ax.set_yticklabels([str(v) for v in view.index])
-    for i, layer in enumerate(view.index):
-        for j, k in enumerate(view.columns):
-            value = view.loc[layer, k]
-            ax.text(j, i, f"{value:.2f}", ha="center", va="center", fontsize=7)
-    fig.colorbar(im, ax=ax, label=r"mean $\rho_{\mathrm{adj}}$")
-    save_figure(fig, ROOT / "experiments" / "03_layerwise_k_structure", "fig05_layerwise_heatmap")
-
-
-def compressibility_curves() -> None:
-    df = read_csv("experiments/03_layerwise_k_structure/outputs/layerwise_k_summary.csv")
-    view = (
-        df[df["subspace"].isin(["delta_pca", "state_pca"])]
-        .groupby(["subspace", "k"], as_index=False)
-        .agg(rho_structured_mean=("rho_structured_mean", "mean"), rho_adjusted_mean=("rho_adjusted_mean", "mean"))
-        .sort_values(["subspace", "k"])
-    )
-    fig, axes = plt.subplots(1, 2, figsize=(9.0, 3.3), constrained_layout=True)
-    for subspace, group in view.groupby("subspace"):
-        axes[0].plot(group["k"], group["rho_structured_mean"], marker="o", label=subspace)
-        axes[1].plot(group["k"], group["rho_adjusted_mean"], marker="o", label=subspace)
-    for ax in axes:
-        ax.set_xscale("log", base=2)
-        ax.set_xticks(sorted(view["k"].unique()))
-        ax.set_xticklabels([str(int(v)) for v in sorted(view["k"].unique())])
-        ax.set_xlabel(r"subspace dimension $k$")
-    axes[0].set_title("Accumulated accessibility")
-    axes[0].set_ylabel(r"mean $\rho$")
-    axes[1].set_title("Adjusted over random baseline")
-    axes[1].set_ylabel(r"mean $\rho_{\mathrm{adj}}$")
-    axes[1].legend(frameon=False)
-    save_figure(fig, ROOT / "experiments" / "03_layerwise_k_structure", "fig05_compressibility_curves")
-
-
 def steering_main() -> None:
     contrasts = read_csv("experiments/04_uncertainty_steering/outputs/equal_output_energy_contrasts.csv")
     specificity = read_csv("experiments/04_uncertainty_steering/outputs/specificity_summary.csv")
@@ -441,8 +390,6 @@ def main() -> None:
     scalar_matched_pairs()
     accessibility_predicts_movement()
     rho_vs_delta_controls()
-    layerwise_heatmap()
-    compressibility_curves()
     steering_main()
     steering_with_ci()
     topk_robustness_figure()

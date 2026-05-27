@@ -54,10 +54,13 @@ ROOT_APPLICATION = ROOT / "applications" / "local_confidence_control"
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--models", default="Qwen/Qwen2.5-0.5B,microsoft/phi-2")
+    parser.add_argument(
+        "--models",
+        default="distilgpt2,Qwen/Qwen2.5-0.5B,Qwen/Qwen2.5-1.5B-Instruct,microsoft/phi-2,meta-llama/Llama-3.2-1B,mistralai/Mistral-7B-v0.1",
+    )
     parser.add_argument(
         "--record-skipped-models",
-        default="meta-llama/Llama-3.2-1B:missing local cache;mistralai/Mistral-7B-v0.1:missing local cache",
+        default="",
     )
     parser.add_argument("--top-m", type=int, default=16)
     parser.add_argument("--pca-dim", type=int, default=8)
@@ -66,7 +69,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output-eps", type=float, default=0.05)
     parser.add_argument("--semantic-clusters", type=int, default=4)
     parser.add_argument("--seed", type=int, default=20260528)
-    parser.add_argument("--local-files-only", action="store_true")
+    parser.add_argument("--local-files-only", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--trust-remote-code", action="store_true")
     parser.add_argument("--torch-dtype", choices=["float32", "float16", "bfloat16"], default="float32")
     parser.add_argument("--decoder-out", type=Path, default=ROOT_EXPERIMENT)
@@ -647,7 +650,7 @@ def write_decoder_report(out_dir: Path, prompt_table: pd.DataFrame, score_summar
         "",
         "This is the main decoder-only extension of the accessible-varentropy steering protocol. It uses token-level QA, factual completion, and short generative-open prompts with next-token logit-lens geometry.",
         "",
-        "Qwen and Phi are executed from the local cache. Llama and Mistral are recorded as skipped when absent from the local Hugging Face cache; no network download is attempted.",
+        "The default decoder set spans GPT-2, Qwen, Phi, Llama, and Mistral families. Missing models are downloaded automatically unless `--local-files-only` is set; unavailable models are recorded in `skipped_models.csv`.",
         "",
         "## Prompt Counts",
         markdown_table(counts, 40),
@@ -743,7 +746,7 @@ def write_readmes(args: argparse.Namespace) -> None:
                 "## Reproduce",
                 "",
                 "```powershell",
-                "python scripts\\run_decoder_llm_main_and_comparators.py --local-files-only --trust-remote-code --max-prompts-per-task 3 --top-m 16 --pca-dim 8 --output-eps 0.05 --seed 20260528",
+                "python scripts\\run_decoder_llm_main_and_comparators.py --trust-remote-code --models distilgpt2,Qwen/Qwen2.5-0.5B,Qwen/Qwen2.5-1.5B-Instruct,microsoft/phi-2,meta-llama/Llama-3.2-1B,mistralai/Mistral-7B-v0.1 --max-prompts-per-task 3 --top-m 16 --pca-dim 8 --output-eps 0.05 --seed 20260528",
                 "```",
                 "",
                 "## Claim Supported",
@@ -782,7 +785,7 @@ def write_readmes(args: argparse.Namespace) -> None:
 
 def write_configs(args: argparse.Namespace) -> None:
     command = (
-        "python scripts\\run_decoder_llm_main_and_comparators.py --local-files-only --trust-remote-code "
+        "python scripts\\run_decoder_llm_main_and_comparators.py --trust-remote-code "
         f"--models {args.models} --record-skipped-models \"{args.record_skipped_models}\" "
         f"--max-prompts-per-task {args.max_prompts_per_task} --top-m {args.top_m} "
         f"--pca-dim {args.pca_dim} --output-eps {args.output_eps} --seed {args.seed}"
