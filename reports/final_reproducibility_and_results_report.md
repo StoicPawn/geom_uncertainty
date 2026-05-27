@@ -68,7 +68,7 @@ Primary artifacts:
 
 ### Experiment 5
 
-The rho-guided selective reliability test asks whether rho improves a non-oracle accept/abstain/route/intervene policy. Correctness is not used as a decision feature; it is used only for grouped out-of-fold training and evaluation.
+The rho-guided selective reliability test asks whether rho improves a non-oracle accept/abstain/route/intervene policy. Correctness is not used as a decision feature; it is used only for out-of-fold training and evaluation. The retained test compares a strong B2 baseline against B2+rho and B2+shuffled-rho under grouped-prompt, leave-one-model-out, and leave-one-source-out splits.
 
 Primary result:
 
@@ -80,8 +80,11 @@ Log-loss:        baseline 0.511038 -> baseline+rho 0.384790
 
 Bootstrap CIs are positive for AURC, Brier, and log-loss improvements.
 
+Leave-one-model-out keeps the same qualitative pattern, while leave-one-source-out does not. This is treated as a limitation and boundary condition: current evidence supports rho as useful outside prompt groups and across held-out models, but not yet across source/protocol shifts.
+
 Primary artifacts:
 
+- `experiments/controls/rho_guided_selective_reliability/outputs/selective_reliability_final_table.csv`
 - `experiments/controls/rho_guided_selective_reliability/outputs/selective_reliability_metrics.csv`
 - `experiments/controls/rho_guided_selective_reliability/outputs/selective_reliability_bootstrap_ci.csv`
 - `experiments/controls/rho_guided_selective_reliability/reports/report.md`
@@ -136,4 +139,4 @@ python scripts/run_rho_guided_selective_reliability.py --bootstrap 1000 --seed 2
 
 ## Limitations
 
-Rho should be claimed as a local controllability geometry, not a generic error predictor. Gradient baselines remain strong for raw local movement. Minimal-energy results are strongest in the top-k local-linear setting and should be stated with that caveat. RoBERTa, Llama, and Mistral are now part of the requested default test sets and are downloaded automatically when absent unless `--local-files-only` is set.
+Rho should be claimed as a local controllability geometry, not a generic error predictor. Gradient baselines remain strong for raw local movement. Minimal-energy results are strongest in the top-k local-linear setting and should be stated with that caveat. Selective reliability improves under grouped-prompt and leave-one-model-out evaluation, but not under leave-one-source-out evaluation. RoBERTa, Llama, and Mistral are now part of the requested default test sets and are downloaded automatically when absent unless `--local-files-only` is set.

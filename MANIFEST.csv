@@ -22,6 +22,6 @@ experiments/controls/topk_robustness/,Top-k robustness controls
 experiments/controls/fisher_output_energy_control/,Equal Fisher-output energy controls
 experiments/controls/statistical_diagnostics/,Bootstrap intervals effect sizes duplicate audit and matched scalar-gradient controls
 experiments/controls/scale_external_robustness/,Aggregate model-scale and external robustness matrix
-experiments/controls/rho_guided_selective_reliability/,Rho-guided selective reliability and risk-coverage test
+experiments/controls/rho_guided_selective_reliability/,Rho-guided selective reliability with grouped prompt leave-one-model leave-one-source and shuffled-rho controls
 src/accessible_varentropy/,Core implementation
 scripts/,Curated reproduction scripts and paper figure generator
