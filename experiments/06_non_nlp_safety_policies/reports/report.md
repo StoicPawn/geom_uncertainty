@@ -2,7 +2,12 @@
 
 These are complete non-NLP decision-policy tests on real local sklearn datasets, not synthetic mock rows. The medical test uses the Wisconsin breast-cancer diagnostic classification dataset. The perception test uses the handwritten-digits image dataset as a compact vision-perception surrogate; it is not claimed to be an autonomous-driving dataset.
 
-For each fold, a small MLP is trained from scratch, hidden-state PCA routes are fitted on the training split only, and test decisions use scalar uncertainty, entropy-gradient norm, and rho thresholds calibrated on the training split only. Correctness is used only for evaluation. The rho policies defer high-uncertainty/low-rho cases and apply a light hidden-route refinement to high-uncertainty/high-rho cases under an output-drift cap; the guarded variant sends the case to review if refinement fails to move entropy below the fold's training-calibrated uncertainty threshold.
+For each fold, a small MLP is trained from scratch, hidden-state PCA routes are fitted on the training split only, and test decisions use scalar uncertainty, entropy-gradient norm, Jacobian norm, and rho thresholds calibrated on the training split only. Correctness is used only for evaluation. The rho policies defer high-uncertainty/low-rho cases and apply a light hidden-route refinement to high-uncertainty/high-rho cases under an output-drift cap; the guarded variant sends the case to review if refinement fails to move entropy below the fold's training-calibrated uncertainty threshold.
+
+The equal-cost panel is the stricter inverse test: entropy, entropy-gradient norm, input-Jacobian Frobenius norm, and rho all defer the same fraction of held-out cases within each fold. The rho score ranks cases by high uncertainty and low local accessibility, so a gain there means better triage at the same review cost rather than a different budget.
+
+## Equal-Cost Verdict
+Equal-cost selector test is a boundary case: rho does not beat entropy/gradient at the same review cost overall. It does beat the Jacobian selector on the digits perception surrogate.
 
 ## Route Diagnostics
 ```text
@@ -178,6 +183,205 @@ vision_digits_perception rho_guided_review_or_refine_vs_gradient_human_review pr
 vision_digits_perception rho_guided_review_or_refine_vs_gradient_human_review                 safe_decision_rate -0.018193 -0.014098 -0.010390
 ```
 
+## Equal Review-Cost Selector Summary
+```text
+                  domain  target_review_cost                policy    n  review_cost  coverage  automatic_accuracy  error_on_non_deferred  safe_decision_rate  reviewed_error_rate  deferred_error_capture
+   medical_breast_cancer                0.17  entropy_fixed_review 1707     0.166960  0.833040            0.995077               0.004923            0.995899             0.147368                0.857143
+   medical_breast_cancer                0.17 gradient_fixed_review 1707     0.166960  0.833040            0.995077               0.004923            0.995899             0.147368                0.857143
+   medical_breast_cancer                0.17 jacobian_fixed_review 1707     0.166960  0.833040            0.996484               0.003516            0.997071             0.154386                0.897959
+   medical_breast_cancer                0.17      rho_fixed_review 1707     0.166960  0.833040            0.984529               0.015471            0.987112             0.094737                0.551020
+   medical_breast_cancer                0.19  entropy_fixed_review 1707     0.191564  0.808436            0.995652               0.004348            0.996485             0.131498                0.877551
+   medical_breast_cancer                0.19 gradient_fixed_review 1707     0.191564  0.808436            0.995652               0.004348            0.996485             0.131498                0.877551
+   medical_breast_cancer                0.19 jacobian_fixed_review 1707     0.191564  0.808436            0.997101               0.002899            0.997657             0.137615                0.918367
+   medical_breast_cancer                0.19      rho_fixed_review 1707     0.191564  0.808436            0.984058               0.015942            0.987112             0.082569                0.551020
+vision_digits_perception                0.17  entropy_fixed_review 5391     0.169727  0.830273            0.996872               0.003128            0.997403             0.155191                0.910256
+vision_digits_perception                0.17 gradient_fixed_review 5391     0.169727  0.830273            0.996872               0.003128            0.997403             0.155191                0.910256
+vision_digits_perception                0.17 jacobian_fixed_review 5391     0.169727  0.830273            0.978776               0.021224            0.982378             0.066667                0.391026
+vision_digits_perception                0.17      rho_fixed_review 5391     0.169727  0.830273            0.996425               0.003575            0.997032             0.153005                0.897436
+vision_digits_perception                0.19  entropy_fixed_review 5391     0.189204  0.810796            0.996797               0.003203            0.997403             0.139216                0.910256
+vision_digits_perception                0.19 gradient_fixed_review 5391     0.189204  0.810796            0.996797               0.003203            0.997403             0.139216                0.910256
+vision_digits_perception                0.19 jacobian_fixed_review 5391     0.189204  0.810796            0.980325               0.019675            0.984047             0.068627                0.448718
+vision_digits_perception                0.19      rho_fixed_review 5391     0.189204  0.810796            0.996340               0.003660            0.997032             0.137255                0.897436
+```
+
+## Equal Review-Cost Rho Contrasts
+```text
+                  domain  target_review_cost                                  contrast                 metric      rho  control  delta_rho_minus_control
+   medical_breast_cancer                0.17  rho_fixed_review_vs_entropy_fixed_review            review_cost 0.166960 0.166960                 0.000000
+   medical_breast_cancer                0.17  rho_fixed_review_vs_entropy_fixed_review               coverage 0.833040 0.833040                 0.000000
+   medical_breast_cancer                0.17  rho_fixed_review_vs_entropy_fixed_review     automatic_accuracy 0.984529 0.995077                -0.010549
+   medical_breast_cancer                0.17  rho_fixed_review_vs_entropy_fixed_review  error_on_non_deferred 0.015471 0.004923                 0.010549
+   medical_breast_cancer                0.17  rho_fixed_review_vs_entropy_fixed_review     safe_decision_rate 0.987112 0.995899                -0.008787
+   medical_breast_cancer                0.17  rho_fixed_review_vs_entropy_fixed_review    reviewed_error_rate 0.094737 0.147368                -0.052632
+   medical_breast_cancer                0.17  rho_fixed_review_vs_entropy_fixed_review deferred_error_capture 0.551020 0.857143                -0.306122
+   medical_breast_cancer                0.17 rho_fixed_review_vs_gradient_fixed_review            review_cost 0.166960 0.166960                 0.000000
+   medical_breast_cancer                0.17 rho_fixed_review_vs_gradient_fixed_review               coverage 0.833040 0.833040                 0.000000
+   medical_breast_cancer                0.17 rho_fixed_review_vs_gradient_fixed_review     automatic_accuracy 0.984529 0.995077                -0.010549
+   medical_breast_cancer                0.17 rho_fixed_review_vs_gradient_fixed_review  error_on_non_deferred 0.015471 0.004923                 0.010549
+   medical_breast_cancer                0.17 rho_fixed_review_vs_gradient_fixed_review     safe_decision_rate 0.987112 0.995899                -0.008787
+   medical_breast_cancer                0.17 rho_fixed_review_vs_gradient_fixed_review    reviewed_error_rate 0.094737 0.147368                -0.052632
+   medical_breast_cancer                0.17 rho_fixed_review_vs_gradient_fixed_review deferred_error_capture 0.551020 0.857143                -0.306122
+   medical_breast_cancer                0.17 rho_fixed_review_vs_jacobian_fixed_review            review_cost 0.166960 0.166960                 0.000000
+   medical_breast_cancer                0.17 rho_fixed_review_vs_jacobian_fixed_review               coverage 0.833040 0.833040                 0.000000
+   medical_breast_cancer                0.17 rho_fixed_review_vs_jacobian_fixed_review     automatic_accuracy 0.984529 0.996484                -0.011955
+   medical_breast_cancer                0.17 rho_fixed_review_vs_jacobian_fixed_review  error_on_non_deferred 0.015471 0.003516                 0.011955
+   medical_breast_cancer                0.17 rho_fixed_review_vs_jacobian_fixed_review     safe_decision_rate 0.987112 0.997071                -0.009959
+   medical_breast_cancer                0.17 rho_fixed_review_vs_jacobian_fixed_review    reviewed_error_rate 0.094737 0.154386                -0.059649
+   medical_breast_cancer                0.17 rho_fixed_review_vs_jacobian_fixed_review deferred_error_capture 0.551020 0.897959                -0.346939
+   medical_breast_cancer                0.19  rho_fixed_review_vs_entropy_fixed_review            review_cost 0.191564 0.191564                 0.000000
+   medical_breast_cancer                0.19  rho_fixed_review_vs_entropy_fixed_review               coverage 0.808436 0.808436                 0.000000
+   medical_breast_cancer                0.19  rho_fixed_review_vs_entropy_fixed_review     automatic_accuracy 0.984058 0.995652                -0.011594
+   medical_breast_cancer                0.19  rho_fixed_review_vs_entropy_fixed_review  error_on_non_deferred 0.015942 0.004348                 0.011594
+   medical_breast_cancer                0.19  rho_fixed_review_vs_entropy_fixed_review     safe_decision_rate 0.987112 0.996485                -0.009373
+   medical_breast_cancer                0.19  rho_fixed_review_vs_entropy_fixed_review    reviewed_error_rate 0.082569 0.131498                -0.048930
+   medical_breast_cancer                0.19  rho_fixed_review_vs_entropy_fixed_review deferred_error_capture 0.551020 0.877551                -0.326531
+   medical_breast_cancer                0.19 rho_fixed_review_vs_gradient_fixed_review            review_cost 0.191564 0.191564                 0.000000
+   medical_breast_cancer                0.19 rho_fixed_review_vs_gradient_fixed_review               coverage 0.808436 0.808436                 0.000000
+   medical_breast_cancer                0.19 rho_fixed_review_vs_gradient_fixed_review     automatic_accuracy 0.984058 0.995652                -0.011594
+   medical_breast_cancer                0.19 rho_fixed_review_vs_gradient_fixed_review  error_on_non_deferred 0.015942 0.004348                 0.011594
+   medical_breast_cancer                0.19 rho_fixed_review_vs_gradient_fixed_review     safe_decision_rate 0.987112 0.996485                -0.009373
+   medical_breast_cancer                0.19 rho_fixed_review_vs_gradient_fixed_review    reviewed_error_rate 0.082569 0.131498                -0.048930
+   medical_breast_cancer                0.19 rho_fixed_review_vs_gradient_fixed_review deferred_error_capture 0.551020 0.877551                -0.326531
+   medical_breast_cancer                0.19 rho_fixed_review_vs_jacobian_fixed_review            review_cost 0.191564 0.191564                 0.000000
+   medical_breast_cancer                0.19 rho_fixed_review_vs_jacobian_fixed_review               coverage 0.808436 0.808436                 0.000000
+   medical_breast_cancer                0.19 rho_fixed_review_vs_jacobian_fixed_review     automatic_accuracy 0.984058 0.997101                -0.013043
+   medical_breast_cancer                0.19 rho_fixed_review_vs_jacobian_fixed_review  error_on_non_deferred 0.015942 0.002899                 0.013043
+   medical_breast_cancer                0.19 rho_fixed_review_vs_jacobian_fixed_review     safe_decision_rate 0.987112 0.997657                -0.010545
+   medical_breast_cancer                0.19 rho_fixed_review_vs_jacobian_fixed_review    reviewed_error_rate 0.082569 0.137615                -0.055046
+   medical_breast_cancer                0.19 rho_fixed_review_vs_jacobian_fixed_review deferred_error_capture 0.551020 0.918367                -0.367347
+vision_digits_perception                0.17  rho_fixed_review_vs_entropy_fixed_review            review_cost 0.169727 0.169727                 0.000000
+vision_digits_perception                0.17  rho_fixed_review_vs_entropy_fixed_review               coverage 0.830273 0.830273                 0.000000
+vision_digits_perception                0.17  rho_fixed_review_vs_entropy_fixed_review     automatic_accuracy 0.996425 0.996872                -0.000447
+vision_digits_perception                0.17  rho_fixed_review_vs_entropy_fixed_review  error_on_non_deferred 0.003575 0.003128                 0.000447
+vision_digits_perception                0.17  rho_fixed_review_vs_entropy_fixed_review     safe_decision_rate 0.997032 0.997403                -0.000371
+vision_digits_perception                0.17  rho_fixed_review_vs_entropy_fixed_review    reviewed_error_rate 0.153005 0.155191                -0.002186
+vision_digits_perception                0.17  rho_fixed_review_vs_entropy_fixed_review deferred_error_capture 0.897436 0.910256                -0.012821
+vision_digits_perception                0.17 rho_fixed_review_vs_gradient_fixed_review            review_cost 0.169727 0.169727                 0.000000
+vision_digits_perception                0.17 rho_fixed_review_vs_gradient_fixed_review               coverage 0.830273 0.830273                 0.000000
+vision_digits_perception                0.17 rho_fixed_review_vs_gradient_fixed_review     automatic_accuracy 0.996425 0.996872                -0.000447
+vision_digits_perception                0.17 rho_fixed_review_vs_gradient_fixed_review  error_on_non_deferred 0.003575 0.003128                 0.000447
+vision_digits_perception                0.17 rho_fixed_review_vs_gradient_fixed_review     safe_decision_rate 0.997032 0.997403                -0.000371
+vision_digits_perception                0.17 rho_fixed_review_vs_gradient_fixed_review    reviewed_error_rate 0.153005 0.155191                -0.002186
+vision_digits_perception                0.17 rho_fixed_review_vs_gradient_fixed_review deferred_error_capture 0.897436 0.910256                -0.012821
+vision_digits_perception                0.17 rho_fixed_review_vs_jacobian_fixed_review            review_cost 0.169727 0.169727                 0.000000
+vision_digits_perception                0.17 rho_fixed_review_vs_jacobian_fixed_review               coverage 0.830273 0.830273                 0.000000
+vision_digits_perception                0.17 rho_fixed_review_vs_jacobian_fixed_review     automatic_accuracy 0.996425 0.978776                 0.017650
+vision_digits_perception                0.17 rho_fixed_review_vs_jacobian_fixed_review  error_on_non_deferred 0.003575 0.021224                -0.017650
+vision_digits_perception                0.17 rho_fixed_review_vs_jacobian_fixed_review     safe_decision_rate 0.997032 0.982378                 0.014654
+vision_digits_perception                0.17 rho_fixed_review_vs_jacobian_fixed_review    reviewed_error_rate 0.153005 0.066667                 0.086339
+vision_digits_perception                0.17 rho_fixed_review_vs_jacobian_fixed_review deferred_error_capture 0.897436 0.391026                 0.506410
+vision_digits_perception                0.19  rho_fixed_review_vs_entropy_fixed_review            review_cost 0.189204 0.189204                 0.000000
+vision_digits_perception                0.19  rho_fixed_review_vs_entropy_fixed_review               coverage 0.810796 0.810796                 0.000000
+vision_digits_perception                0.19  rho_fixed_review_vs_entropy_fixed_review     automatic_accuracy 0.996340 0.996797                -0.000458
+vision_digits_perception                0.19  rho_fixed_review_vs_entropy_fixed_review  error_on_non_deferred 0.003660 0.003203                 0.000458
+vision_digits_perception                0.19  rho_fixed_review_vs_entropy_fixed_review     safe_decision_rate 0.997032 0.997403                -0.000371
+vision_digits_perception                0.19  rho_fixed_review_vs_entropy_fixed_review    reviewed_error_rate 0.137255 0.139216                -0.001961
+vision_digits_perception                0.19  rho_fixed_review_vs_entropy_fixed_review deferred_error_capture 0.897436 0.910256                -0.012821
+vision_digits_perception                0.19 rho_fixed_review_vs_gradient_fixed_review            review_cost 0.189204 0.189204                 0.000000
+vision_digits_perception                0.19 rho_fixed_review_vs_gradient_fixed_review               coverage 0.810796 0.810796                 0.000000
+vision_digits_perception                0.19 rho_fixed_review_vs_gradient_fixed_review     automatic_accuracy 0.996340 0.996797                -0.000458
+vision_digits_perception                0.19 rho_fixed_review_vs_gradient_fixed_review  error_on_non_deferred 0.003660 0.003203                 0.000458
+vision_digits_perception                0.19 rho_fixed_review_vs_gradient_fixed_review     safe_decision_rate 0.997032 0.997403                -0.000371
+vision_digits_perception                0.19 rho_fixed_review_vs_gradient_fixed_review    reviewed_error_rate 0.137255 0.139216                -0.001961
+vision_digits_perception                0.19 rho_fixed_review_vs_gradient_fixed_review deferred_error_capture 0.897436 0.910256                -0.012821
+vision_digits_perception                0.19 rho_fixed_review_vs_jacobian_fixed_review            review_cost 0.189204 0.189204                 0.000000
+vision_digits_perception                0.19 rho_fixed_review_vs_jacobian_fixed_review               coverage 0.810796 0.810796                 0.000000
+vision_digits_perception                0.19 rho_fixed_review_vs_jacobian_fixed_review     automatic_accuracy 0.996340 0.980325                 0.016015
+vision_digits_perception                0.19 rho_fixed_review_vs_jacobian_fixed_review  error_on_non_deferred 0.003660 0.019675                -0.016015
+vision_digits_perception                0.19 rho_fixed_review_vs_jacobian_fixed_review     safe_decision_rate 0.997032 0.984047                 0.012985
+vision_digits_perception                0.19 rho_fixed_review_vs_jacobian_fixed_review    reviewed_error_rate 0.137255 0.068627                 0.068627
+vision_digits_perception                0.19 rho_fixed_review_vs_jacobian_fixed_review deferred_error_capture 0.897436 0.448718                 0.448718
+```
+
+## Equal Review-Cost Bootstrap CI
+```text
+                  domain  target_review_cost                                  contrast                 metric    ci_low    median   ci_high
+   medical_breast_cancer                0.17  rho_fixed_review_vs_entropy_fixed_review     automatic_accuracy -0.014789 -0.010549 -0.006320
+   medical_breast_cancer                0.17  rho_fixed_review_vs_entropy_fixed_review               coverage  0.000000  0.000000  0.000000
+   medical_breast_cancer                0.17  rho_fixed_review_vs_entropy_fixed_review deferred_error_capture -0.425532 -0.302678 -0.181818
+   medical_breast_cancer                0.17  rho_fixed_review_vs_entropy_fixed_review  error_on_non_deferred  0.006320  0.010549  0.014789
+   medical_breast_cancer                0.17  rho_fixed_review_vs_entropy_fixed_review            review_cost  0.000000  0.000000  0.000000
+   medical_breast_cancer                0.17  rho_fixed_review_vs_entropy_fixed_review    reviewed_error_rate -0.073684 -0.052632 -0.031579
+   medical_breast_cancer                0.17  rho_fixed_review_vs_entropy_fixed_review     safe_decision_rate -0.012317 -0.008787 -0.005266
+   medical_breast_cancer                0.17 rho_fixed_review_vs_gradient_fixed_review     automatic_accuracy -0.014789 -0.010549 -0.006320
+   medical_breast_cancer                0.17 rho_fixed_review_vs_gradient_fixed_review               coverage  0.000000  0.000000  0.000000
+   medical_breast_cancer                0.17 rho_fixed_review_vs_gradient_fixed_review deferred_error_capture -0.425532 -0.302678 -0.181818
+   medical_breast_cancer                0.17 rho_fixed_review_vs_gradient_fixed_review  error_on_non_deferred  0.006320  0.010549  0.014789
+   medical_breast_cancer                0.17 rho_fixed_review_vs_gradient_fixed_review            review_cost  0.000000  0.000000  0.000000
+   medical_breast_cancer                0.17 rho_fixed_review_vs_gradient_fixed_review    reviewed_error_rate -0.073684 -0.052632 -0.031579
+   medical_breast_cancer                0.17 rho_fixed_review_vs_gradient_fixed_review     safe_decision_rate -0.012317 -0.008787 -0.005266
+   medical_breast_cancer                0.17 rho_fixed_review_vs_jacobian_fixed_review     automatic_accuracy -0.016197 -0.011963 -0.007032
+   medical_breast_cancer                0.17 rho_fixed_review_vs_jacobian_fixed_review               coverage  0.000000  0.000000  0.000000
+   medical_breast_cancer                0.17 rho_fixed_review_vs_jacobian_fixed_review deferred_error_capture -0.468085 -0.350000 -0.207547
+   medical_breast_cancer                0.17 rho_fixed_review_vs_jacobian_fixed_review  error_on_non_deferred  0.007032  0.011963  0.016197
+   medical_breast_cancer                0.17 rho_fixed_review_vs_jacobian_fixed_review            review_cost  0.000000  0.000000  0.000000
+   medical_breast_cancer                0.17 rho_fixed_review_vs_jacobian_fixed_review    reviewed_error_rate -0.080702 -0.059649 -0.035088
+   medical_breast_cancer                0.17 rho_fixed_review_vs_jacobian_fixed_review     safe_decision_rate -0.013490 -0.009965 -0.005858
+   medical_breast_cancer                0.19  rho_fixed_review_vs_entropy_fixed_review     automatic_accuracy -0.015942 -0.011594 -0.007246
+   medical_breast_cancer                0.19  rho_fixed_review_vs_entropy_fixed_review               coverage  0.000000  0.000000  0.000000
+   medical_breast_cancer                0.19  rho_fixed_review_vs_entropy_fixed_review deferred_error_capture -0.428571 -0.325581 -0.226380
+   medical_breast_cancer                0.19  rho_fixed_review_vs_entropy_fixed_review  error_on_non_deferred  0.007246  0.011594  0.015942
+   medical_breast_cancer                0.19  rho_fixed_review_vs_entropy_fixed_review            review_cost  0.000000  0.000000  0.000000
+   medical_breast_cancer                0.19  rho_fixed_review_vs_entropy_fixed_review    reviewed_error_rate -0.067278 -0.048930 -0.030488
+   medical_breast_cancer                0.19  rho_fixed_review_vs_entropy_fixed_review     safe_decision_rate -0.012888 -0.009373 -0.005855
+   medical_breast_cancer                0.19 rho_fixed_review_vs_gradient_fixed_review     automatic_accuracy -0.015942 -0.011594 -0.007246
+   medical_breast_cancer                0.19 rho_fixed_review_vs_gradient_fixed_review               coverage  0.000000  0.000000  0.000000
+   medical_breast_cancer                0.19 rho_fixed_review_vs_gradient_fixed_review deferred_error_capture -0.428571 -0.325581 -0.226380
+   medical_breast_cancer                0.19 rho_fixed_review_vs_gradient_fixed_review  error_on_non_deferred  0.007246  0.011594  0.015942
+   medical_breast_cancer                0.19 rho_fixed_review_vs_gradient_fixed_review            review_cost  0.000000  0.000000  0.000000
+   medical_breast_cancer                0.19 rho_fixed_review_vs_gradient_fixed_review    reviewed_error_rate -0.067278 -0.048930 -0.030488
+   medical_breast_cancer                0.19 rho_fixed_review_vs_gradient_fixed_review     safe_decision_rate -0.012888 -0.009373 -0.005855
+   medical_breast_cancer                0.19 rho_fixed_review_vs_jacobian_fixed_review     automatic_accuracy -0.016685 -0.013043 -0.008696
+   medical_breast_cancer                0.19 rho_fixed_review_vs_jacobian_fixed_review               coverage  0.000000  0.000000  0.000000
+   medical_breast_cancer                0.19 rho_fixed_review_vs_jacobian_fixed_review deferred_error_capture -0.470588 -0.366667 -0.269133
+   medical_breast_cancer                0.19 rho_fixed_review_vs_jacobian_fixed_review  error_on_non_deferred  0.008696  0.013043  0.016685
+   medical_breast_cancer                0.19 rho_fixed_review_vs_jacobian_fixed_review            review_cost  0.000000  0.000000  0.000000
+   medical_breast_cancer                0.19 rho_fixed_review_vs_jacobian_fixed_review    reviewed_error_rate -0.071031 -0.055046 -0.036807
+   medical_breast_cancer                0.19 rho_fixed_review_vs_jacobian_fixed_review     safe_decision_rate -0.013511 -0.010545 -0.007034
+vision_digits_perception                0.17  rho_fixed_review_vs_entropy_fixed_review     automatic_accuracy -0.001117 -0.000447  0.000000
+vision_digits_perception                0.17  rho_fixed_review_vs_entropy_fixed_review               coverage  0.000000  0.000000  0.000000
+vision_digits_perception                0.17  rho_fixed_review_vs_entropy_fixed_review deferred_error_capture -0.033790 -0.012346  0.000000
+vision_digits_perception                0.17  rho_fixed_review_vs_entropy_fixed_review  error_on_non_deferred  0.000000  0.000447  0.001117
+vision_digits_perception                0.17  rho_fixed_review_vs_entropy_fixed_review            review_cost  0.000000  0.000000  0.000000
+vision_digits_perception                0.17  rho_fixed_review_vs_entropy_fixed_review    reviewed_error_rate -0.005464 -0.002186  0.000000
+vision_digits_perception                0.17  rho_fixed_review_vs_entropy_fixed_review     safe_decision_rate -0.000927 -0.000371  0.000000
+vision_digits_perception                0.17 rho_fixed_review_vs_gradient_fixed_review     automatic_accuracy -0.001117 -0.000447  0.000000
+vision_digits_perception                0.17 rho_fixed_review_vs_gradient_fixed_review               coverage  0.000000  0.000000  0.000000
+vision_digits_perception                0.17 rho_fixed_review_vs_gradient_fixed_review deferred_error_capture -0.033790 -0.012346  0.000000
+vision_digits_perception                0.17 rho_fixed_review_vs_gradient_fixed_review  error_on_non_deferred  0.000000  0.000447  0.001117
+vision_digits_perception                0.17 rho_fixed_review_vs_gradient_fixed_review            review_cost  0.000000  0.000000  0.000000
+vision_digits_perception                0.17 rho_fixed_review_vs_gradient_fixed_review    reviewed_error_rate -0.005464 -0.002186  0.000000
+vision_digits_perception                0.17 rho_fixed_review_vs_gradient_fixed_review     safe_decision_rate -0.000927 -0.000371  0.000000
+vision_digits_perception                0.17 rho_fixed_review_vs_jacobian_fixed_review     automatic_accuracy  0.013402  0.017650  0.021890
+vision_digits_perception                0.17 rho_fixed_review_vs_jacobian_fixed_review               coverage  0.000000  0.000000  0.000000
+vision_digits_perception                0.17 rho_fixed_review_vs_jacobian_fixed_review deferred_error_capture  0.396734  0.505848  0.618437
+vision_digits_perception                0.17 rho_fixed_review_vs_jacobian_fixed_review  error_on_non_deferred -0.021890 -0.017650 -0.013402
+vision_digits_perception                0.17 rho_fixed_review_vs_jacobian_fixed_review            review_cost  0.000000  0.000000  0.000000
+vision_digits_perception                0.17 rho_fixed_review_vs_jacobian_fixed_review    reviewed_error_rate  0.065574  0.086339  0.107104
+vision_digits_perception                0.17 rho_fixed_review_vs_jacobian_fixed_review     safe_decision_rate  0.011128  0.014654  0.018175
+vision_digits_perception                0.19  rho_fixed_review_vs_entropy_fixed_review     automatic_accuracy -0.001143 -0.000457  0.000000
+vision_digits_perception                0.19  rho_fixed_review_vs_entropy_fixed_review               coverage  0.000000  0.000000  0.000000
+vision_digits_perception                0.19  rho_fixed_review_vs_entropy_fixed_review deferred_error_capture -0.033790 -0.012346  0.000000
+vision_digits_perception                0.19  rho_fixed_review_vs_entropy_fixed_review  error_on_non_deferred  0.000000  0.000457  0.001143
+vision_digits_perception                0.19  rho_fixed_review_vs_entropy_fixed_review            review_cost  0.000000  0.000000  0.000000
+vision_digits_perception                0.19  rho_fixed_review_vs_entropy_fixed_review    reviewed_error_rate -0.004902 -0.001961  0.000000
+vision_digits_perception                0.19  rho_fixed_review_vs_entropy_fixed_review     safe_decision_rate -0.000927 -0.000371  0.000000
+vision_digits_perception                0.19 rho_fixed_review_vs_gradient_fixed_review     automatic_accuracy -0.001143 -0.000457  0.000000
+vision_digits_perception                0.19 rho_fixed_review_vs_gradient_fixed_review               coverage  0.000000  0.000000  0.000000
+vision_digits_perception                0.19 rho_fixed_review_vs_gradient_fixed_review deferred_error_capture -0.033790 -0.012346  0.000000
+vision_digits_perception                0.19 rho_fixed_review_vs_gradient_fixed_review  error_on_non_deferred  0.000000  0.000457  0.001143
+vision_digits_perception                0.19 rho_fixed_review_vs_gradient_fixed_review            review_cost  0.000000  0.000000  0.000000
+vision_digits_perception                0.19 rho_fixed_review_vs_gradient_fixed_review    reviewed_error_rate -0.004902 -0.001961  0.000000
+vision_digits_perception                0.19 rho_fixed_review_vs_gradient_fixed_review     safe_decision_rate -0.000927 -0.000371  0.000000
+vision_digits_perception                0.19 rho_fixed_review_vs_jacobian_fixed_review     automatic_accuracy  0.012109  0.016013  0.020128
+vision_digits_perception                0.19 rho_fixed_review_vs_jacobian_fixed_review               coverage  0.000000  0.000000  0.000000
+vision_digits_perception                0.19 rho_fixed_review_vs_jacobian_fixed_review deferred_error_capture  0.342666  0.447205  0.560832
+vision_digits_perception                0.19 rho_fixed_review_vs_jacobian_fixed_review  error_on_non_deferred -0.020128 -0.016013 -0.012109
+vision_digits_perception                0.19 rho_fixed_review_vs_jacobian_fixed_review            review_cost  0.000000  0.000000  0.000000
+vision_digits_perception                0.19 rho_fixed_review_vs_jacobian_fixed_review    reviewed_error_rate  0.051936  0.068627  0.086275
+vision_digits_perception                0.19 rho_fixed_review_vs_jacobian_fixed_review     safe_decision_rate  0.009820  0.012983  0.016321
+```
+
 ## Files
 ```text
 non_nlp_route_records.csv
@@ -185,5 +389,9 @@ non_nlp_policy_records.csv
 non_nlp_policy_summary.csv
 non_nlp_policy_contrasts.csv
 non_nlp_policy_bootstrap_ci.csv
+non_nlp_fixed_cost_policy_records.csv
+non_nlp_fixed_cost_summary.csv
+non_nlp_fixed_cost_contrasts.csv
+non_nlp_fixed_cost_bootstrap_ci.csv
 report.md
 ```

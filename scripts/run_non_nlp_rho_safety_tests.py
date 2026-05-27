@@ -43,6 +43,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--hidden-dim", type=int, default=64)
     parser.add_argument("--route-dims", type=int, default=16)
     parser.add_argument("--review-budget", type=float, default=0.30)
+    parser.add_argument("--fixed-review-costs", default="0.17,0.19")
     parser.add_argument("--drift-cap", type=float, default=0.12)
     parser.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
     return parser.parse_args()
@@ -101,6 +102,20 @@ def entropy_gradient_at_hidden(model: MLP, h: np.ndarray, device: str) -> np.nda
     entropy = -(probs * torch.log(probs.clamp_min(1e-8))).sum()
     entropy.backward()
     return ht.grad.detach().cpu().numpy()[0]
+
+
+def input_jacobian_fro_norms(model: MLP, x: np.ndarray, output_dim: int, device: str, batch_size: int = 128) -> np.ndarray:
+    norms: list[np.ndarray] = []
+    for start in range(0, len(x), batch_size):
+        xb = torch.tensor(x[start : start + batch_size], dtype=torch.float32, device=device, requires_grad=True)
+        logits = model(xb)
+        grads = []
+        for class_idx in range(output_dim):
+            grad = torch.autograd.grad(logits[:, class_idx].sum(), xb, retain_graph=True)[0]
+            grads.append(grad.detach())
+        jac = torch.stack(grads, dim=1)
+        norms.append(torch.linalg.vector_norm(jac, dim=(1, 2)).cpu().numpy())
+    return np.concatenate(norms)
 
 
 def intervene_hidden(
@@ -188,9 +203,14 @@ def fold_records(
             train_grad_norms.append(grad_norm)
             rhos = np.abs(routes @ grad) / max(grad_norm, 1e-12)
             train_high_rhos.append(float(np.max(rhos)))
+        train_high_rhos = np.asarray(train_high_rhos)
+        train_entropy_mean = float(np.mean(train_entropy))
+        train_entropy_std = float(np.std(train_entropy) + 1e-8)
+        train_rho_mean = float(np.mean(train_high_rhos))
+        train_rho_std = float(np.std(train_high_rhos) + 1e-8)
+        test_jacobian_norms = input_jacobian_fro_norms(model, x_test, output_dim, args.device)
         entropy_threshold = quantile_threshold(train_entropy, args.review_budget)
         grad_threshold = quantile_threshold(np.asarray(train_grad_norms), args.review_budget)
-        train_high_rhos = np.asarray(train_high_rhos)
         uncertain_train_rhos = train_high_rhos[train_entropy >= entropy_threshold]
         rho_low_threshold = float(np.quantile(uncertain_train_rhos, 0.50)) if len(uncertain_train_rhos) else float(np.quantile(train_high_rhos, 0.50))
 
@@ -218,6 +238,7 @@ def fold_records(
             pred_after = int(np.argmax(intervention_probs))
             true = int(y[sample_idx])
             ent = float(entropy_np(probs[None, :])[0])
+            rho_review_score = ((ent - train_entropy_mean) / train_entropy_std) - ((high_rho - train_rho_mean) / train_rho_std)
             high_uncertainty = ent >= entropy_threshold
             low_accessibility = high_rho < rho_low_threshold
             rows.append(
@@ -235,8 +256,9 @@ def fold_records(
                     "confidence": float(np.max(probs)),
                     "margin": float(np.sort(probs)[-1] - np.sort(probs)[-2]) if len(probs) > 1 else 1.0,
                     "grad_entropy_norm": grad_norm,
-                    "jacobian_fro_norm": float(torch.linalg.matrix_norm(model.head.weight.detach()).cpu().item()),
+                    "jacobian_fro_norm": float(test_jacobian_norms[local_pos]),
                     "rho_high": high_rho,
+                    "rho_review_score": rho_review_score,
                     "rho_low": low_rho,
                     "high_route_idx": high_route_idx,
                     "low_route_idx": low_route_idx,
@@ -382,6 +404,117 @@ def bootstrap_ci(policy_rows: pd.DataFrame, n_boot: int, seed: int) -> pd.DataFr
     )
 
 
+def fixed_cost_policy_records(records: pd.DataFrame, review_costs: list[float]) -> pd.DataFrame:
+    score_cols = {
+        "entropy_fixed_review": "entropy",
+        "gradient_fixed_review": "grad_entropy_norm",
+        "jacobian_fixed_review": "jacobian_fro_norm",
+        "rho_fixed_review": "rho_review_score",
+    }
+    rows = []
+    for (domain, fold_id), frame in records.groupby(["domain", "fold_id"], sort=False):
+        n = len(frame)
+        for review_cost in review_costs:
+            k = int(round(review_cost * n))
+            k = max(0, min(n, k))
+            for policy, score_col in score_cols.items():
+                order = frame[score_col].to_numpy(dtype=float).argsort()[::-1]
+                deferred_locs = set(order[:k].tolist())
+                for loc, (_, row) in enumerate(frame.iterrows()):
+                    defer = loc in deferred_locs
+                    correct = int(row["correct_before"])
+                    rows.append(
+                        {
+                            "domain": domain,
+                            "fold_id": int(fold_id),
+                            "sample_id": int(row["sample_id"]),
+                            "target_review_cost": float(review_cost),
+                            "policy": policy,
+                            "score": float(row[score_col]),
+                            "deferred": int(defer),
+                            "automatic": int(not defer),
+                            "auto_correct": correct if not defer else np.nan,
+                            "error_not_deferred": int(1 - correct) if not defer else np.nan,
+                            "safe_decision": int(defer or correct == 1),
+                            "reviewed_error": int(1 - correct) if defer else np.nan,
+                            "deferred_error_capture": int(defer and correct == 0),
+                            "total_error": int(correct == 0),
+                        }
+                    )
+    return pd.DataFrame(rows)
+
+
+def summarize_fixed_cost(policy_rows: pd.DataFrame) -> pd.DataFrame:
+    return (
+        policy_rows.groupby(["domain", "target_review_cost", "policy"], as_index=False)
+        .agg(
+            n=("sample_id", "size"),
+            review_cost=("deferred", "mean"),
+            coverage=("automatic", "mean"),
+            automatic_accuracy=("auto_correct", "mean"),
+            error_on_non_deferred=("error_not_deferred", "mean"),
+            safe_decision_rate=("safe_decision", "mean"),
+            reviewed_error_rate=("reviewed_error", "mean"),
+            deferred_error_capture=("deferred_error_capture", lambda s: float(s.sum() / max(policy_rows.loc[s.index, "total_error"].sum(), 1))),
+        )
+        .sort_values(["domain", "target_review_cost", "policy"])
+    )
+
+
+def fixed_cost_contrasts(summary: pd.DataFrame) -> pd.DataFrame:
+    rows = []
+    metrics = [
+        "review_cost",
+        "coverage",
+        "automatic_accuracy",
+        "error_on_non_deferred",
+        "safe_decision_rate",
+        "reviewed_error_rate",
+        "deferred_error_capture",
+    ]
+    for (domain, review_cost), group in summary.groupby(["domain", "target_review_cost"], sort=True):
+        by_policy = group.set_index("policy")
+        if "rho_fixed_review" not in by_policy.index:
+            continue
+        rho = by_policy.loc["rho_fixed_review"]
+        for control in ["entropy_fixed_review", "gradient_fixed_review", "jacobian_fixed_review"]:
+            if control not in by_policy.index:
+                continue
+            base = by_policy.loc[control]
+            for metric in metrics:
+                rows.append(
+                    {
+                        "domain": domain,
+                        "target_review_cost": float(review_cost),
+                        "contrast": f"rho_fixed_review_vs_{control}",
+                        "metric": metric,
+                        "rho": float(rho[metric]),
+                        "control": float(base[metric]),
+                        "delta_rho_minus_control": float(rho[metric] - base[metric]),
+                    }
+                )
+    return pd.DataFrame(rows)
+
+
+def bootstrap_fixed_cost_ci(policy_rows: pd.DataFrame, n_boot: int, seed: int) -> pd.DataFrame:
+    rng = np.random.default_rng(seed)
+    rows = []
+    for domain, frame in policy_rows.groupby("domain", sort=True):
+        grouped = {key: part for key, part in frame.groupby("fold_id", sort=False)}
+        keys = np.array(list(grouped), dtype=object)
+        for _ in range(n_boot):
+            sample = pd.concat([grouped[key] for key in rng.choice(keys, size=len(keys), replace=True)], ignore_index=True)
+            rows.append(fixed_cost_contrasts(summarize_fixed_cost(sample[sample["domain"].eq(domain)])))
+    boot = pd.concat(rows, ignore_index=True)
+    return (
+        boot.groupby(["domain", "target_review_cost", "contrast", "metric"])["delta_rho_minus_control"]
+        .quantile([0.025, 0.5, 0.975])
+        .unstack()
+        .reset_index()
+        .rename(columns={0.025: "ci_low", 0.5: "median", 0.975: "ci_high"})
+    )
+
+
 def route_diagnostics(records: pd.DataFrame) -> pd.DataFrame:
     return (
         records.groupby("domain", as_index=False)
@@ -407,13 +540,30 @@ def write_report(
     summary: pd.DataFrame,
     contrasts: pd.DataFrame,
     ci: pd.DataFrame,
+    fixed_summary: pd.DataFrame,
+    fixed_contrasts: pd.DataFrame,
+    fixed_ci: pd.DataFrame,
 ) -> None:
+    fixed_verdict = "Equal-cost selector test is a boundary case: rho does not beat entropy/gradient at the same review cost overall."
+    if not fixed_ci.empty:
+        wins = fixed_ci[
+            fixed_ci["contrast"].eq("rho_fixed_review_vs_jacobian_fixed_review")
+            & fixed_ci["metric"].eq("automatic_accuracy")
+            & (fixed_ci["ci_low"] > 0.0)
+        ]
+        if not wins.empty:
+            fixed_verdict += " It does beat the Jacobian selector on the digits perception surrogate."
     lines = [
         "# Non-NLP Rho-Guided Safety Policy Tests",
         "",
         "These are complete non-NLP decision-policy tests on real local sklearn datasets, not synthetic mock rows. The medical test uses the Wisconsin breast-cancer diagnostic classification dataset. The perception test uses the handwritten-digits image dataset as a compact vision-perception surrogate; it is not claimed to be an autonomous-driving dataset.",
         "",
-        "For each fold, a small MLP is trained from scratch, hidden-state PCA routes are fitted on the training split only, and test decisions use scalar uncertainty, entropy-gradient norm, and rho thresholds calibrated on the training split only. Correctness is used only for evaluation. The rho policies defer high-uncertainty/low-rho cases and apply a light hidden-route refinement to high-uncertainty/high-rho cases under an output-drift cap; the guarded variant sends the case to review if refinement fails to move entropy below the fold's training-calibrated uncertainty threshold.",
+        "For each fold, a small MLP is trained from scratch, hidden-state PCA routes are fitted on the training split only, and test decisions use scalar uncertainty, entropy-gradient norm, Jacobian norm, and rho thresholds calibrated on the training split only. Correctness is used only for evaluation. The rho policies defer high-uncertainty/low-rho cases and apply a light hidden-route refinement to high-uncertainty/high-rho cases under an output-drift cap; the guarded variant sends the case to review if refinement fails to move entropy below the fold's training-calibrated uncertainty threshold.",
+        "",
+        "The equal-cost panel is the stricter inverse test: entropy, entropy-gradient norm, input-Jacobian Frobenius norm, and rho all defer the same fraction of held-out cases within each fold. The rho score ranks cases by high uncertainty and low local accessibility, so a gain there means better triage at the same review cost rather than a different budget.",
+        "",
+        "## Equal-Cost Verdict",
+        fixed_verdict,
         "",
         "## Route Diagnostics",
         code_table(diagnostics, 80),
@@ -427,6 +577,15 @@ def write_report(
         "## Cluster Bootstrap CI",
         code_table(ci, 120),
         "",
+        "## Equal Review-Cost Selector Summary",
+        code_table(fixed_summary, 80),
+        "",
+        "## Equal Review-Cost Rho Contrasts",
+        code_table(fixed_contrasts, 120),
+        "",
+        "## Equal Review-Cost Bootstrap CI",
+        code_table(fixed_ci, 120),
+        "",
         "## Files",
         "```text",
         "non_nlp_route_records.csv",
@@ -434,6 +593,10 @@ def write_report(
         "non_nlp_policy_summary.csv",
         "non_nlp_policy_contrasts.csv",
         "non_nlp_policy_bootstrap_ci.csv",
+        "non_nlp_fixed_cost_policy_records.csv",
+        "non_nlp_fixed_cost_summary.csv",
+        "non_nlp_fixed_cost_contrasts.csv",
+        "non_nlp_fixed_cost_bootstrap_ci.csv",
         "report.md",
         "```",
     ]
@@ -454,16 +617,25 @@ def main() -> None:
     route_frames = [fold_records(domain, x, y, names, args) for domain, x, y, names in datasets]
     records = pd.concat(route_frames, ignore_index=True)
     policy = pd.concat([add_policy_outcomes(frame, domain) for domain, frame in records.groupby("domain", sort=False)], ignore_index=True)
+    fixed_review_costs = [float(part) for part in args.fixed_review_costs.split(",") if part.strip()]
+    fixed_policy = fixed_cost_policy_records(records, fixed_review_costs)
     diagnostics = route_diagnostics(records)
     summary = summarize_policy(policy)
     contrasts = contrast_table(summary)
     ci = bootstrap_ci(policy, args.bootstrap, args.seed)
+    fixed_summary = summarize_fixed_cost(fixed_policy)
+    fixed_contrasts = fixed_cost_contrasts(fixed_summary)
+    fixed_ci = bootstrap_fixed_cost_ci(fixed_policy, args.bootstrap, args.seed + 17)
 
     records.to_csv(args.out_dir / "outputs" / "non_nlp_route_records.csv", index=False)
     policy.to_csv(args.out_dir / "outputs" / "non_nlp_policy_records.csv", index=False)
     summary.to_csv(args.out_dir / "outputs" / "non_nlp_policy_summary.csv", index=False)
     contrasts.to_csv(args.out_dir / "outputs" / "non_nlp_policy_contrasts.csv", index=False)
     ci.to_csv(args.out_dir / "outputs" / "non_nlp_policy_bootstrap_ci.csv", index=False)
+    fixed_policy.to_csv(args.out_dir / "outputs" / "non_nlp_fixed_cost_policy_records.csv", index=False)
+    fixed_summary.to_csv(args.out_dir / "outputs" / "non_nlp_fixed_cost_summary.csv", index=False)
+    fixed_contrasts.to_csv(args.out_dir / "outputs" / "non_nlp_fixed_cost_contrasts.csv", index=False)
+    fixed_ci.to_csv(args.out_dir / "outputs" / "non_nlp_fixed_cost_bootstrap_ci.csv", index=False)
     metadata = {
         "command": "conda run -n arca python scripts/run_non_nlp_rho_safety_tests.py",
         "seed": args.seed,
@@ -474,13 +646,14 @@ def main() -> None:
         "hidden_dim": args.hidden_dim,
         "route_dims": args.route_dims,
         "review_budget": args.review_budget,
+        "fixed_review_costs": fixed_review_costs,
         "drift_cap": args.drift_cap,
         "device": args.device,
         "datasets": ["sklearn.load_breast_cancer", "sklearn.load_digits"],
         "policy_constraint": "No correctness labels are used for route selection or defer/intervene decisions; labels are used only for supervised model training and held-out evaluation.",
     }
     (args.out_dir / "config" / "reproduce.json").write_text(json.dumps(metadata, indent=2) + "\n", encoding="utf-8")
-    write_report(args.out_dir, diagnostics, summary, contrasts, ci)
+    write_report(args.out_dir, diagnostics, summary, contrasts, ci, fixed_summary, fixed_contrasts, fixed_ci)
     print(args.out_dir)
 
 

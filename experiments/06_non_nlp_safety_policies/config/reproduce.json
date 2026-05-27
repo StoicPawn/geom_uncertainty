@@ -8,6 +8,10 @@
   "hidden_dim": 64,
   "route_dims": 16,
   "review_budget": 0.3,
+  "fixed_review_costs": [
+    0.17,
+    0.19
+  ],
   "drift_cap": 0.12,
   "device": "cuda",
   "datasets": [

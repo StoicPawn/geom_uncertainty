@@ -91,7 +91,7 @@ python scripts/run_rho_guided_selective_reliability.py --bootstrap 1000 --seed 2
 Run non-NLP rho-guided safety policies:
 
 ```bash
-conda run -n arca python scripts/run_non_nlp_rho_safety_tests.py --bootstrap 1000 --seed 20260611 --device cuda
+conda run -n arca python scripts/run_non_nlp_rho_safety_tests.py --bootstrap 1000 --seed 20260611 --device cuda --fixed-review-costs 0.17,0.19
 ```
 
 The paper-ready artifacts are checked in under `experiments/`; archived experiments are on `archive_disruptive_experiments_full`.
