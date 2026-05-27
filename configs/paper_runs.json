@@ -12,7 +12,8 @@
     "experiments/04_uncertainty_steering/02_equal_output_movement/config/reproduce.json",
     "experiments/04_uncertainty_steering/03_choose_route_intervention/config/reproduce.json",
     "experiments/04_uncertainty_steering/decoder_main_battery/config/reproduce.json",
-    "experiments/05_controllability_mapping/config/reproduce.json"
+    "experiments/05_controllability_mapping/config/reproduce.json",
+    "experiments/06_non_nlp_safety_policies/config/reproduce.json"
   ],
   "core_controls": [
     "experiments/controls/gradient_baselines/config/reproduce.json",
@@ -32,5 +33,6 @@
   "controllability_mapping_command": "python scripts/run_uncertainty_controllability_mapping_test.py --out-dir experiments/05_controllability_mapping --decoder-models distilgpt2,Qwen/Qwen2.5-0.5B,Qwen/Qwen2.5-1.5B-Instruct,microsoft/phi-2,meta-llama/Llama-3.2-1B,mistralai/Mistral-7B-v0.1 --masked-models distilbert-base-uncased,bert-base-uncased,roberta-base,prajjwal1/bert-tiny --max-items 18 --top-m 8 --layers auto3 --subspace-dims 1,2,4 --eps 0.01,0.025,0.05,0.1,0.2 --movement-threshold 0.01 --drift-cap 0.00025 --top-k 3 --bootstrap 300 --torch-dtype float16 --device cuda --trust-remote-code --seed 20260608",
   "scale_external_robustness_command": "python scripts/run_scale_external_robustness_matrix.py",
   "rho_guided_selective_reliability_command": "python scripts/run_rho_guided_selective_reliability.py --bootstrap 1000 --seed 20260609",
+  "non_nlp_safety_policies_command": "conda run -n arca python scripts/run_non_nlp_rho_safety_tests.py --bootstrap 1000 --seed 20260611 --device cuda",
   "archive_branch": "archive_disruptive_experiments_full"
 }

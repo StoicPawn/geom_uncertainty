@@ -25,6 +25,9 @@ For an internal route or subspace `B`, `rho(B)` measures the fraction of local v
 5. `experiments/controls/rho_guided_selective_reliability/`
    Non-oracle selective reliability test: baseline+rho improves risk-coverage/calibration tradeoffs.
 
+6. `experiments/06_non_nlp_safety_policies/`
+   Non-NLP safety-policy tests on medical diagnostic classification and vision perception surrogates.
+
 ## Required Controls
 
 Curated controls are under `experiments/controls/`:
@@ -83,6 +86,12 @@ Run rho-guided selective reliability:
 
 ```bash
 python scripts/run_rho_guided_selective_reliability.py --bootstrap 1000 --seed 20260609
+```
+
+Run non-NLP rho-guided safety policies:
+
+```bash
+conda run -n arca python scripts/run_non_nlp_rho_safety_tests.py --bootstrap 1000 --seed 20260611 --device cuda
 ```
 
 The paper-ready artifacts are checked in under `experiments/`; archived experiments are on `archive_disruptive_experiments_full`.
