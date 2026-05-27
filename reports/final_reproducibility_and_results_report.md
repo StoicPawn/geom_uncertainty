@@ -37,7 +37,17 @@ Primary artifacts:
 
 ### Experiment 3
 
-Accessible directions steer uncertainty more efficiently than random and orthogonal controls, with answer/top-k preservation at small epsilon. Equal-output-movement controls address the objection that accessible directions merely move logits more.
+Accessible directions steer uncertainty more efficiently than random and orthogonal controls, with answer/top-k preservation at small epsilon. Equal-output-movement controls address the objection that accessible directions merely move logits more. The choose-the-route intervention test makes this decision-facing: for each example, choose the high-rho route and compare it against low-rho, gradient-selected, random, and equal-Fisher-output controls.
+
+Primary choose-route result:
+
+```text
+abs Delta entropy:     high-rho 0.048148 vs low-rho 0.027510 vs random 0.037249
+abs Delta varentropy:  high-rho 0.078786 vs low-rho 0.050399 vs random 0.063799
+Fisher-output drift:   all matched at 0.05
+```
+
+Cluster bootstrap CIs are positive for high-rho over low-rho, random-route, gradient-orthogonal, and equal-output-energy controls on entropy and varentropy movement. High-rho is roughly tied with the gradient-selected route on raw movement, which should be presented as a caveat rather than a failure.
 
 Primary artifacts:
 
@@ -45,6 +55,7 @@ Primary artifacts:
 - `experiments/04_uncertainty_steering/outputs/equal_output_energy_contrasts.csv`
 - `experiments/04_uncertainty_steering/01_minimal_intervention_energy/`
 - `experiments/04_uncertainty_steering/02_equal_output_movement/`
+- `experiments/04_uncertainty_steering/03_choose_route_intervention/`
 
 ### Experiment 4
 
@@ -68,19 +79,19 @@ Primary artifacts:
 
 ### Experiment 5
 
-The rho-guided selective reliability test asks whether rho improves a non-oracle accept/abstain/route/intervene policy. Correctness is not used as a decision feature; it is used only for out-of-fold training and evaluation. The retained test compares a strong B2 baseline against B2+rho and B2+shuffled-rho under grouped-prompt, leave-one-model-out, and leave-one-source-out splits.
+The rho-guided selective reliability test asks whether rho improves a non-oracle accept/abstain/route/intervene policy. Correctness is not used as a decision feature; it is used only for out-of-fold training and evaluation. The retained test compares a strong B2 baseline against B2+rho variants and B2+shuffled-rho variants under grouped-prompt, leave-one-model-out, and leave-one-source-out splits.
 
 Primary result:
 
 ```text
-AURC mean risk:  baseline 0.469461 -> baseline+rho 0.448106
-Brier:           baseline 0.153992 -> baseline+rho 0.118298
-Log-loss:        baseline 0.511038 -> baseline+rho 0.384790
+AURC mean risk:  baseline 0.469461 -> baseline+rho_abs 0.446009
+Brier:           baseline 0.153992 -> baseline+rho_abs 0.115138
+Log-loss:        baseline 0.511038 -> baseline+rho_abs 0.382033
 ```
 
-Bootstrap CIs are positive for AURC, Brier, and log-loss improvements.
+Bootstrap CIs are positive for AURC, Brier, and log-loss improvements versus B2. The shuffled-rho control remains competitive in grouped-prompt and leave-one-model-out splits, so this result should be treated as secondary reliability evidence for rho-family features rather than the cleanest mechanistic isolation of row-aligned rho.
 
-Leave-one-model-out keeps the same qualitative pattern, while leave-one-source-out does not. This is treated as a limitation and boundary condition: current evidence supports rho as useful outside prompt groups and across held-out models, but not yet across source/protocol shifts.
+Leave-one-model-out keeps the same qualitative pattern, while leave-one-source-out does not. Absolute, adjusted, rank, percentile, and model/layer/route-family z-scored rho variants do not rescue leave-one-source-out on log-loss, Brier, or ECE. The source breakdown shows the failure is concentrated when `masked_topk` is held out. This is treated as a limitation and boundary condition: current evidence supports rho as useful outside prompt groups and across held-out models, but not yet as a general reliability method across source/protocol shifts.
 
 Primary artifacts:
 
@@ -119,6 +130,12 @@ Run steering cost/equal-output controls:
 python scripts/run_control_cost_and_equal_output_tests.py --tau-entropy 0.02 --tau-varentropy 0.04 --top-k-output 32 --seed 20260529
 ```
 
+Run choose-the-route intervention:
+
+```bash
+python scripts/run_choose_route_intervention_test.py --bootstrap 1000 --seed 20260610
+```
+
 Run controllability mapping:
 
 ```bash
@@ -139,4 +156,4 @@ python scripts/run_rho_guided_selective_reliability.py --bootstrap 1000 --seed 2
 
 ## Limitations
 
-Rho should be claimed as a local controllability geometry, not a generic error predictor. Gradient baselines remain strong for raw local movement. Minimal-energy results are strongest in the top-k local-linear setting and should be stated with that caveat. Selective reliability improves under grouped-prompt and leave-one-model-out evaluation, but not under leave-one-source-out evaluation. RoBERTa, Llama, and Mistral are now part of the requested default test sets and are downloaded automatically when absent unless `--local-files-only` is set.
+Rho should be claimed as a local controllability geometry, not a generic error predictor. Gradient baselines remain strong for raw local movement. Minimal-energy results are strongest in the top-k local-linear setting and should be stated with that caveat. Selective reliability improves under grouped-prompt and leave-one-model-out evaluation, but not under leave-one-source-out evaluation; the current source count is too small to sell "general reliability." RoBERTa, Llama, and Mistral are now part of the requested default test sets and are downloaded automatically when absent unless `--local-files-only` is set.

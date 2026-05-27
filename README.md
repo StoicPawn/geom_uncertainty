@@ -17,7 +17,7 @@ For an internal route or subspace `B`, `rho(B)` measures the fraction of local v
    Accessibility predicts local uncertainty movement under small interventions.
 
 3. `experiments/04_uncertainty_steering/`
-   High-accessibility directions support uncertainty steering, with equal-output-movement and minimal-energy controls.
+   High-accessibility directions support uncertainty steering, with equal-output-movement, minimal-energy, and choose-the-route intervention controls.
 
 4. `experiments/05_controllability_mapping/`
    Diagnostic mapping test: controls plus rho better predict safe uncertainty movement and minimal energy than controls alone.
@@ -59,6 +59,12 @@ Run the main steering controls:
 
 ```bash
 python scripts/run_control_cost_and_equal_output_tests.py --tau-entropy 0.02 --tau-varentropy 0.04 --top-k-output 32 --seed 20260529
+```
+
+Run the choose-the-route intervention test:
+
+```bash
+python scripts/run_choose_route_intervention_test.py --bootstrap 1000 --seed 20260610
 ```
 
 Run the diagnostic controllability mapping:

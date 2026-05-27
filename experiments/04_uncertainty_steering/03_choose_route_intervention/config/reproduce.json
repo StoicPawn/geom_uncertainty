@@ -1,0 +1,11 @@
+{
+  "command": "python scripts/run_choose_route_intervention_test.py",
+  "bootstrap": 1000,
+  "seed": 20260610,
+  "fisher_output_energy": 0.05,
+  "source_records": [
+    "experiments/04_uncertainty_steering/02_equal_output_movement/outputs/equal_output_efficiency_records.csv",
+    "experiments/04_uncertainty_steering/01_minimal_intervention_energy/outputs/minimal_energy_cost_records.csv"
+  ],
+  "policy_constraint": "Routes are selected from rho, gradient proxy, or deterministic route identity; correctness is not used."
+}

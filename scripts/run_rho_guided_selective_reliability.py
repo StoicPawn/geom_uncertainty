@@ -19,6 +19,13 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "experiments" / "controls" / "rho_guided_selective_reliability"
+RHO_VARIANTS = {
+    "absolute": "rho_abs_",
+    "adj": "rho_adj_",
+    "rank": "rho_rank_",
+    "percentile": "rho_percentile_",
+    "z_model_layer_family": "rho_z_",
+}
 
 
 def parse_args() -> argparse.Namespace:
@@ -92,6 +99,27 @@ def aggregate_prefixed(
     return agg.reset_index()
 
 
+def add_rho_variants(frame: pd.DataFrame, keys: list[str]) -> pd.DataFrame:
+    work = frame.copy()
+    if "rho" not in work.columns:
+        return work
+    grouped = work.groupby(keys, dropna=False)["rho"]
+    route_count = grouped.transform("count").clip(lower=1)
+    route_rank = grouped.rank(method="average", ascending=True)
+    work["rho_abs"] = work["rho"]
+    work["rho_adj"] = work["rho"] - grouped.transform("mean")
+    work["rho_rank"] = route_rank
+    work["rho_percentile"] = np.where(route_count.gt(1), (route_rank - 1.0) / (route_count - 1.0), 0.5)
+    z_keys = [col for col in ["model", "layer", "subspace_family"] if col in work.columns]
+    if z_keys:
+        z_group = work.groupby(z_keys, dropna=False)["rho"]
+        z_std = z_group.transform("std").replace(0.0, np.nan)
+        work["rho_z"] = ((work["rho"] - z_group.transform("mean")) / z_std).fillna(0.0)
+    else:
+        work["rho_z"] = 0.0
+    return work
+
+
 def build_masked_dataset() -> pd.DataFrame:
     scores = read_csv(ROOT / "experiments" / "controls" / "topk_robustness" / "outputs" / "topk_scores.csv")
     prompts = read_csv(ROOT / "experiments" / "controls" / "topk_robustness" / "outputs" / "prompt_tables.csv")
@@ -102,6 +130,7 @@ def build_masked_dataset() -> pd.DataFrame:
     prompts = prompts[prompts["observed_condition"].isin(["correct", "error"])].copy()
     prompts["label_correct"] = prompts["observed_condition"].eq("correct").astype(int)
     keys = ["model", "prompt_id"]
+    scores = add_rho_variants(scores, keys)
     base_cols = [
         "entropy",
         "varentropy",
@@ -115,11 +144,11 @@ def build_masked_dataset() -> pd.DataFrame:
         "logit_norm",
         "rank_whitened_jb",
     ]
-    rho_cols = ["rho"]
+    rho_cols = ["rho_abs", "rho_adj", "rho_rank", "rho_percentile", "rho_z"]
     base = aggregate_prefixed(scores, keys, base_cols, "base_")
     rho = aggregate_prefixed(scores, keys, rho_cols, "rho_")
     family_rho = (
-        scores.pivot_table(index=keys, columns="subspace_family", values="rho", aggfunc="mean")
+        scores.pivot_table(index=keys, columns="subspace_family", values="rho_abs", aggfunc="mean")
         .add_prefix("rho_family_")
         .reset_index()
     )
@@ -137,6 +166,7 @@ def build_masked_full_battery_dataset() -> pd.DataFrame:
     scores = scores[scores["observed_condition"].isin(["correct", "error"])].copy()
     scores["label_correct"] = scores["observed_condition"].eq("correct").astype(int)
     keys = ["model", "prompt_id"]
+    scores = add_rho_variants(scores, keys)
     meta_cols = ["model", "prompt_id", "task", "topic", "observed_condition", "label_correct"]
     meta = scores[meta_cols].drop_duplicates(keys)
     base_cols = [
@@ -150,11 +180,11 @@ def build_masked_full_battery_dataset() -> pd.DataFrame:
         "accessible_ls_norm",
         "rank_whitened_jb",
     ]
-    rho_cols = ["rho"]
+    rho_cols = ["rho_abs", "rho_adj", "rho_rank", "rho_percentile", "rho_z"]
     base = aggregate_prefixed(scores, keys, base_cols, "base_")
     rho = aggregate_prefixed(scores, keys, rho_cols, "rho_")
     family_rho = (
-        scores.pivot_table(index=keys, columns="subspace_family", values="rho", aggfunc="mean")
+        scores.pivot_table(index=keys, columns="subspace_family", values="rho_abs", aggfunc="mean")
         .add_prefix("rho_family_")
         .reset_index()
     )
@@ -173,6 +203,7 @@ def build_decoder_dataset() -> pd.DataFrame:
     prompts = prompts[prompts["top1_correct"].notna()].copy()
     prompts["label_correct"] = prompts["top1_correct"].astype(int)
     keys = ["model", "prompt_id"]
+    scores = add_rho_variants(scores, keys)
     base_cols = [
         "entropy",
         "varentropy",
@@ -184,11 +215,11 @@ def build_decoder_dataset() -> pd.DataFrame:
         "semantic_density_uncertainty",
         "haloscope_style_consistency_risk",
     ]
-    rho_cols = ["rho"]
+    rho_cols = ["rho_abs", "rho_adj", "rho_rank", "rho_percentile", "rho_z"]
     base = aggregate_prefixed(scores, keys, base_cols, "base_")
     rho = aggregate_prefixed(scores, keys, rho_cols, "rho_")
     family_rho = (
-        scores.pivot_table(index=keys, columns="subspace_family", values="rho", aggfunc="mean")
+        scores.pivot_table(index=keys, columns="subspace_family", values="rho_abs", aggfunc="mean")
         .add_prefix("rho_family_")
         .reset_index()
     )
@@ -220,6 +251,22 @@ def build_dataset() -> pd.DataFrame:
     data["row_id"] = np.arange(len(data))
     data["label_error"] = 1 - data["label_correct"].astype(int)
     return data
+
+
+def add_group_shuffled_rho(data: pd.DataFrame, rho_cols: list[str], rng: np.random.Generator) -> pd.DataFrame:
+    work = data.copy()
+    shuffle_groups = [col for col in ["source", "model"] if col in work.columns]
+    if not shuffle_groups:
+        for col in rho_cols:
+            work[f"shuffled_{col}"] = rng.permutation(work[col].to_numpy())
+        return work
+    for col in rho_cols:
+        shuffled = np.empty(len(work), dtype=np.float64)
+        for _, idx in work.groupby(shuffle_groups, sort=False).groups.items():
+            locs = np.array(list(idx), dtype=int)
+            shuffled[locs] = rng.permutation(work.iloc[locs][col].to_numpy())
+        work[f"shuffled_{col}"] = shuffled
+    return work
 
 
 def feature_sets(data: pd.DataFrame, rho_prefix: str = "rho_") -> tuple[list[str], list[str], list[str]]:
@@ -316,14 +363,21 @@ def split_indices(data: pd.DataFrame, split: str, min_groups: int) -> list[tuple
     raise ValueError(f"Unknown split: {split}")
 
 
-def oof_predictions(data: pd.DataFrame, policy: str, split: str, min_groups: int) -> np.ndarray:
+def oof_predictions(
+    data: pd.DataFrame,
+    policy: str,
+    split: str,
+    min_groups: int,
+    rho_prefix: str = "rho_abs_",
+) -> np.ndarray:
     base_numeric, rho_numeric, categorical = feature_sets(data)
     if policy == "baseline":
         numeric = base_numeric
     elif policy == "baseline_plus_rho":
+        _base, rho_numeric, categorical = feature_sets(data, rho_prefix=rho_prefix)
         numeric = base_numeric + rho_numeric
     elif policy == "baseline_plus_shuffled_rho":
-        _base, shuffled_rho, categorical = feature_sets(data, rho_prefix="shuffled_rho_")
+        _base, shuffled_rho, categorical = feature_sets(data, rho_prefix=f"shuffled_{rho_prefix}")
         numeric = base_numeric + shuffled_rho
     else:
         raise ValueError(f"Unknown policy: {policy}")
@@ -368,7 +422,14 @@ def coverage_at_risk(y: np.ndarray, p: np.ndarray, target_risk: float) -> float:
     return float((int(ok[-1]) + 1) / len(y_sorted))
 
 
-def risk_curve(data: pd.DataFrame, pred_col: str, coverages: list[float], policy: str | None = None, split: str | None = None) -> pd.DataFrame:
+def risk_curve(
+    data: pd.DataFrame,
+    pred_col: str,
+    coverages: list[float],
+    policy: str | None = None,
+    split: str | None = None,
+    rho_feature: str | None = None,
+) -> pd.DataFrame:
     y = data["label_correct"].to_numpy(dtype=int)
     p = data[pred_col].to_numpy(dtype=float)
     rows = [risk_at_coverage(y, p, c) for c in coverages]
@@ -376,6 +437,8 @@ def risk_curve(data: pd.DataFrame, pred_col: str, coverages: list[float], policy
     out["policy"] = policy or pred_col
     if split is not None:
         out["split"] = split
+    if rho_feature is not None:
+        out["rho_feature"] = rho_feature
     return out
 
 
@@ -432,6 +495,34 @@ def action_table(data: pd.DataFrame, pred_col: str) -> pd.DataFrame:
     )
 
 
+def source_breakdown(
+    data: pd.DataFrame,
+    rho_variant: str,
+    pred_cols: dict[str, str],
+    coverages: list[float],
+    high_conf: float,
+    target_risk: float,
+    ece_bins: int,
+) -> pd.DataFrame:
+    rows = []
+    for source, frame in data.groupby("source", sort=True):
+        base = policy_metrics(frame, pred_cols["baseline"], coverages, high_conf, target_risk, ece_bins)
+        rho = policy_metrics(frame, pred_cols["+rho"], coverages, high_conf, target_risk, ece_bins)
+        rows.append(
+            {
+                "rho_feature": rho_variant,
+                "heldout_source": source,
+                "n": int(len(frame)),
+                "base_correct_rate": float(frame["label_correct"].mean()),
+                "delta_log_loss": float(base["log_loss"] - rho["log_loss"]),
+                "delta_brier": float(base["brier"] - rho["brier"]),
+                "delta_AURC": float(base["aurc_mean_risk"] - rho["aurc_mean_risk"]),
+                "delta_risk50": float(base["risk_at_50pct_coverage"] - rho["risk_at_50pct_coverage"]),
+            }
+        )
+    return pd.DataFrame(rows)
+
+
 def metric_direction(metric: str) -> int:
     if metric.startswith("coverage_at_risk"):
         return 1
@@ -441,19 +532,18 @@ def metric_direction(metric: str) -> int:
 def split_policy_metrics(
     data: pd.DataFrame,
     split: str,
+    rho_variant: str,
+    pred_cols: dict[str, str],
     coverages: list[float],
     high_conf: float,
     target_risk: float,
     ece_bins: int,
 ) -> pd.DataFrame:
     rows = []
-    for policy, pred_col in [
-        ("baseline", "pred_baseline"),
-        ("+rho", "pred_baseline_plus_rho"),
-        ("+shuffled_rho", "pred_baseline_plus_shuffled_rho"),
-    ]:
+    for policy, pred_col in pred_cols.items():
         row = policy_metrics(data, pred_col, coverages, high_conf, target_risk, ece_bins)
         row["split"] = split
+        row["rho_feature"] = rho_variant
         row["policy"] = policy
         rows.append(row)
     return pd.DataFrame(rows)
@@ -469,7 +559,7 @@ def final_comparison_table(metrics: pd.DataFrame) -> pd.DataFrame:
         ("ece", "ECE", -1),
     ]
     rows = []
-    for split, group in metrics.groupby("split", sort=False):
+    for (split, rho_feature), group in metrics.groupby(["split", "rho_feature"], sort=False):
         by_policy = group.set_index("policy")
         for metric, label, direction in wanted:
             if metric not in by_policy.columns:
@@ -482,6 +572,7 @@ def final_comparison_table(metrics: pd.DataFrame) -> pd.DataFrame:
             rows.append(
                 {
                     "split": split,
+                    "rho_feature": rho_feature,
                     "metric": label,
                     "baseline": base,
                     "+rho": rho,
@@ -496,14 +587,16 @@ def final_comparison_table(metrics: pd.DataFrame) -> pd.DataFrame:
 def paired_deltas(
     data: pd.DataFrame,
     split: str,
+    rho_variant: str,
+    pred_cols: dict[str, str],
     coverages: list[float],
     high_conf: float,
     target_risk: float,
     ece_bins: int,
 ) -> pd.DataFrame:
-    base = policy_metrics(data, "pred_baseline", coverages, high_conf, target_risk, ece_bins)
-    rho = policy_metrics(data, "pred_baseline_plus_rho", coverages, high_conf, target_risk, ece_bins)
-    shuffled = policy_metrics(data, "pred_baseline_plus_shuffled_rho", coverages, high_conf, target_risk, ece_bins)
+    base = policy_metrics(data, pred_cols["baseline"], coverages, high_conf, target_risk, ece_bins)
+    rho = policy_metrics(data, pred_cols["+rho"], coverages, high_conf, target_risk, ece_bins)
+    shuffled = policy_metrics(data, pred_cols["+shuffled_rho"], coverages, high_conf, target_risk, ece_bins)
     rows = []
     improvements = {
         "delta_brier_improvement": base["brier"] - rho["brier"],
@@ -520,7 +613,7 @@ def paired_deltas(
         "shuffled_delta_ece_improvement": base["ece"] - shuffled["ece"],
     }
     for metric, value in improvements.items():
-        rows.append({"split": split, "metric": metric, "value": float(value)})
+        rows.append({"split": split, "rho_feature": rho_variant, "metric": metric, "value": float(value)})
     return pd.DataFrame(rows)
 
 
@@ -535,6 +628,8 @@ def bootstrap_unit(split: str) -> str:
 def bootstrap_ci(
     data: pd.DataFrame,
     split: str,
+    rho_variant: str,
+    pred_cols: dict[str, str],
     coverages: list[float],
     high_conf: float,
     target_risk: float,
@@ -549,10 +644,10 @@ def bootstrap_ci(
     rows = []
     for _ in range(n_boot):
         sample = pd.concat([grouped[group] for group in rng.choice(groups, size=len(groups), replace=True)], ignore_index=True)
-        rows.append(paired_deltas(sample, split, coverages, high_conf, target_risk, ece_bins))
+        rows.append(paired_deltas(sample, split, rho_variant, pred_cols, coverages, high_conf, target_risk, ece_bins))
     boot = pd.concat(rows, ignore_index=True)
     return (
-        boot.groupby(["split", "metric"])["value"]
+        boot.groupby(["split", "rho_feature", "metric"])["value"]
         .quantile([0.025, 0.5, 0.975])
         .unstack()
         .reset_index()
@@ -574,14 +669,15 @@ def write_report(
     deltas: pd.DataFrame,
     ci: pd.DataFrame,
     curve: pd.DataFrame,
+    by_source: pd.DataFrame,
     action: pd.DataFrame,
 ) -> None:
     coverage = data.groupby(["source", "model"], as_index=False).agg(n=("row_id", "size"), correct_rate=("label_correct", "mean"))
-    risk_wide = curve.pivot_table(index=["split", "requested_coverage"], columns="policy", values="risk").reset_index()
+    risk_wide = curve.pivot_table(index=["split", "rho_feature", "requested_coverage"], columns="policy", values="risk").reset_index()
     if {"baseline", "+rho"}.issubset(risk_wide.columns):
         risk_wide["risk_improvement"] = risk_wide["baseline"] - risk_wide["+rho"]
     verdict = "Inconclusive"
-    grouped_ci = ci[ci["split"].eq("grouped_prompt")]
+    grouped_ci = ci[ci["split"].eq("grouped_prompt") & ci["rho_feature"].eq("absolute")]
     aurc = grouped_ci[grouped_ci["metric"].eq("delta_aurc_improvement")]
     logloss = grouped_ci[grouped_ci["metric"].eq("delta_log_loss_improvement")]
     brier = grouped_ci[grouped_ci["metric"].eq("delta_brier_improvement")]
@@ -594,9 +690,13 @@ def write_report(
     lines = [
         "# Rho-Guided Selective Reliability",
         "",
-        "This disruptive test asks whether `rho` improves a non-oracle selective reliability policy over a strong B2 baseline: scalar uncertainty, gradient/Jacobian/Fisher features, and model/source/task/topic metadata. B3 adds rho. A shuffled-rho negative control keeps the same feature dimensionality but breaks rho-row alignment.",
+        "This disruptive test asks whether `rho` improves a non-oracle selective reliability policy over a strong B2 baseline: scalar uncertainty, gradient/Jacobian/Fisher features, and model/source/task/topic metadata. B3 adds one rho feature family at a time: absolute rho, intra-example adjusted rho, intra-example rank, intra-example percentile, or model/layer/route-family z-scored rho. A shuffled-rho negative control keeps the same feature dimensionality but breaks rho-row alignment.",
         "",
         "Correctness is never used as a decision feature. It is used only for held-out evaluation and cross-validated training labels. Evaluation uses grouped-prompt, leave-one-model-out, and leave-one-source-out splits; bootstrap intervals resample the matching cluster unit rather than individual rows.",
+        "",
+        "The leave-one-source-out panel is diagnostic rather than a general-reliability claim: the current dataset has three source families, and all rho variants fail on log-loss/Brier/ECE when the held-out protocol is far from the training sources.",
+        "",
+        "The shuffled-rho control remains competitive in grouped-prompt and leave-one-model-out splits, so this test should be read as reliability evidence for rho-family features rather than a clean mechanistic isolation of row-aligned rho.",
         "",
         "## Verdict",
         verdict,
@@ -605,10 +705,13 @@ def write_report(
         code_table(coverage, 80),
         "",
         "## Final Split Table",
-        code_table(final_table, 80),
+        code_table(final_table, 120),
+        "",
+        "## Leave-One-Source Breakdown",
+        code_table(by_source, 80),
         "",
         "## Policy Metrics",
-        code_table(metrics, 80),
+        code_table(metrics, 120),
         "",
         "## Baseline Vs Baseline+rho Deltas",
         code_table(deltas, 20),
@@ -628,6 +731,7 @@ def write_report(
         "selective_reliability_predictions.csv",
         "selective_reliability_metrics.csv",
         "selective_reliability_final_table.csv",
+        "leave_one_source_breakdown.csv",
         "selective_reliability_deltas.csv",
         "selective_reliability_bootstrap_ci.csv",
         "risk_coverage_curve.csv",
@@ -648,8 +752,7 @@ def main() -> None:
     coverages = [float(part) for part in args.coverages.split(",") if part.strip()]
     rng = np.random.default_rng(args.seed)
     rho_cols = [col for col in data.columns if col.startswith("rho_") and pd.api.types.is_numeric_dtype(data[col])]
-    for col in rho_cols:
-        data[f"shuffled_{col}"] = rng.permutation(data[col].to_numpy())
+    data = add_group_shuffled_rho(data, rho_cols, rng)
 
     split_names = ["grouped_prompt", "leave_one_model_out", "leave_one_source_out"]
     prediction_frames = []
@@ -657,34 +760,47 @@ def main() -> None:
     deltas_frames = []
     ci_frames = []
     curve_frames = []
+    source_breakdown_frames = []
     for split in split_names:
         local = data.copy()
         local["split"] = split
         local["pred_baseline"] = oof_predictions(local, "baseline", split, args.min_groups)
-        local["pred_baseline_plus_rho"] = oof_predictions(local, "baseline_plus_rho", split, args.min_groups)
-        local["pred_baseline_plus_shuffled_rho"] = oof_predictions(local, "baseline_plus_shuffled_rho", split, args.min_groups)
-        prediction_frames.append(local)
-        metrics_frames.append(split_policy_metrics(local, split, coverages, args.high_confidence_threshold, args.target_risk, args.ece_bins))
-        deltas_frames.append(paired_deltas(local, split, coverages, args.high_confidence_threshold, args.target_risk, args.ece_bins))
-        ci_frames.append(
-            bootstrap_ci(
-                local,
-                split,
-                coverages,
-                args.high_confidence_threshold,
-                args.target_risk,
-                args.ece_bins,
-                args.bootstrap,
-                args.seed + 1009 * len(ci_frames),
+        for rho_variant, rho_prefix in RHO_VARIANTS.items():
+            rho_col = f"pred_baseline_plus_{rho_variant}"
+            shuffled_col = f"pred_baseline_plus_shuffled_{rho_variant}"
+            pred_cols = {
+                "baseline": "pred_baseline",
+                "+rho": rho_col,
+                "+shuffled_rho": shuffled_col,
+            }
+            local[rho_col] = oof_predictions(local, "baseline_plus_rho", split, args.min_groups, rho_prefix)
+            local[shuffled_col] = oof_predictions(local, "baseline_plus_shuffled_rho", split, args.min_groups, rho_prefix)
+            metrics_frames.append(split_policy_metrics(local, split, rho_variant, pred_cols, coverages, args.high_confidence_threshold, args.target_risk, args.ece_bins))
+            deltas_frames.append(paired_deltas(local, split, rho_variant, pred_cols, coverages, args.high_confidence_threshold, args.target_risk, args.ece_bins))
+            ci_frames.append(
+                bootstrap_ci(
+                    local,
+                    split,
+                    rho_variant,
+                    pred_cols,
+                    coverages,
+                    args.high_confidence_threshold,
+                    args.target_risk,
+                    args.ece_bins,
+                    args.bootstrap,
+                    args.seed + 1009 * len(ci_frames),
+                )
             )
-        )
-        curve_frames.extend(
-            [
-                risk_curve(local, "pred_baseline", coverages, "baseline", split),
-                risk_curve(local, "pred_baseline_plus_rho", coverages, "+rho", split),
-                risk_curve(local, "pred_baseline_plus_shuffled_rho", coverages, "+shuffled_rho", split),
-            ]
-        )
+            curve_frames.extend(
+                [
+                    risk_curve(local, "pred_baseline", coverages, "baseline", split, rho_variant),
+                    risk_curve(local, rho_col, coverages, "+rho", split, rho_variant),
+                    risk_curve(local, shuffled_col, coverages, "+shuffled_rho", split, rho_variant),
+                ]
+            )
+            if split == "leave_one_source_out":
+                source_breakdown_frames.append(source_breakdown(local, rho_variant, pred_cols, coverages, args.high_confidence_threshold, args.target_risk, args.ece_bins))
+        prediction_frames.append(local)
 
     predictions = pd.concat(prediction_frames, ignore_index=True)
     metrics = pd.concat(metrics_frames, ignore_index=True)
@@ -692,11 +808,13 @@ def main() -> None:
     deltas = pd.concat(deltas_frames, ignore_index=True)
     ci = pd.concat(ci_frames, ignore_index=True)
     curve = pd.concat(curve_frames, ignore_index=True)
-    action = action_table(predictions[predictions["split"].eq("grouped_prompt")].copy(), "pred_baseline_plus_rho")
+    by_source = pd.concat(source_breakdown_frames, ignore_index=True)
+    action = action_table(predictions[predictions["split"].eq("grouped_prompt")].copy(), "pred_baseline_plus_absolute")
     predictions.to_csv(args.out_dir / "outputs" / "selective_reliability_predictions.csv", index=False)
     data.to_csv(args.out_dir / "outputs" / "selective_reliability_dataset.csv", index=False)
     metrics.to_csv(args.out_dir / "outputs" / "selective_reliability_metrics.csv", index=False)
     final_table.to_csv(args.out_dir / "outputs" / "selective_reliability_final_table.csv", index=False)
+    by_source.to_csv(args.out_dir / "outputs" / "leave_one_source_breakdown.csv", index=False)
     deltas.to_csv(args.out_dir / "outputs" / "selective_reliability_deltas.csv", index=False)
     ci.to_csv(args.out_dir / "outputs" / "selective_reliability_bootstrap_ci.csv", index=False)
     curve.to_csv(args.out_dir / "outputs" / "risk_coverage_curve.csv", index=False)
@@ -710,11 +828,13 @@ def main() -> None:
         "target_risk": args.target_risk,
         "ece_bins": args.ece_bins,
         "splits": split_names,
-        "policies": ["baseline", "baseline_plus_rho", "baseline_plus_shuffled_rho"],
+        "rho_variants": list(RHO_VARIANTS),
+        "policies": ["baseline", "baseline_plus_rho_variant", "baseline_plus_shuffled_rho_variant"],
+        "shuffled_control": "Rho columns are shuffled within source/model groups to preserve local feature distributions while breaking row alignment.",
         "policy_constraint": "No oracle correctness feature; correctness is used only for out-of-fold evaluation/training labels.",
     }
     (args.out_dir / "config" / "reproduce.json").write_text(json.dumps(metadata, indent=2) + "\n", encoding="utf-8")
-    write_report(args.out_dir, data, metrics, final_table, deltas, ci, curve, action)
+    write_report(args.out_dir, data, metrics, final_table, deltas, ci, curve, by_source, action)
     print(args.out_dir)
 
 

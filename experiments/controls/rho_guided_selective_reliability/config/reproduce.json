@@ -21,10 +21,18 @@
     "leave_one_model_out",
     "leave_one_source_out"
   ],
+  "rho_variants": [
+    "absolute",
+    "adj",
+    "rank",
+    "percentile",
+    "z_model_layer_family"
+  ],
   "policies": [
     "baseline",
-    "baseline_plus_rho",
-    "baseline_plus_shuffled_rho"
+    "baseline_plus_rho_variant",
+    "baseline_plus_shuffled_rho_variant"
   ],
+  "shuffled_control": "Rho columns are shuffled within source/model groups to preserve local feature distributions while breaking row alignment.",
   "policy_constraint": "No oracle correctness feature; correctness is used only for out-of-fold evaluation/training labels."
 }

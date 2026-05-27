@@ -12,6 +12,7 @@ experiments/02_local_perturbation_prediction/,Experiment 2 local uncertainty mov
 experiments/04_uncertainty_steering/,Experiment 4 uncertainty steering and controllability evidence
 experiments/04_uncertainty_steering/01_minimal_intervention_energy/,Minimal energy control-cost test
 experiments/04_uncertainty_steering/02_equal_output_movement/,Equal Fisher-output movement steering test
+experiments/04_uncertainty_steering/03_choose_route_intervention/,Choose-the-route intervention test with high-rho low-rho gradient random and equal-output controls
 experiments/04_uncertainty_steering/decoder_main_battery/,Decoder-only LLM steering battery
 experiments/05_controllability_mapping/,Diagnostic uncertainty controllability mapping test
 experiments/controls/,Reviewer controls and appendix ablations
