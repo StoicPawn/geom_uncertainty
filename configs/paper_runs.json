@@ -1,1 +1,186 @@
-# incolla qui il JSON senza i backtick
+```json
+{
+  "branch": "paper-main-clean",
+  "paper_title": "From Uncertainty to Actionability: Fisher-Geometric Accessibility in Neural Representations",
+  "purpose": "Paper-facing run index for the main ICML/NeurIPS submission. This file lists only the experiments and controls used to support the main paper claim.",
+  "main_claim": {
+    "short": "rho(B) measures route-dependent Fisher-geometric accessibility of the current uncertainty direction.",
+    "expanded": "rho(B) is not a generic uncertainty score. It measures how much of the current Fisher-weighted uncertainty direction is locally reachable through an internal route or subspace B, and can be used to guide route-level intervention and fixed-budget allocation."
+  },
+  "main_experiments": [
+    {
+      "name": "matched_scalar_uncertainty",
+      "role": "non_redundancy",
+      "claim": "Accessibility is not determined by scalar uncertainty.",
+      "path": "experiments/01_matched_scalar_uncertainty/",
+      "config": "experiments/01_matched_scalar_uncertainty/config/reproduce.json",
+      "paper_section": "Accessibility is not determined by scalar uncertainty"
+    },
+    {
+      "name": "local_perturbation_prediction",
+      "role": "local_validity",
+      "claim": "rho predicts local entropy and varentropy movement under small representation perturbations.",
+      "path": "experiments/02_local_perturbation_prediction/",
+      "config": "experiments/02_local_perturbation_prediction/config/reproduce.json",
+      "paper_section": "Accessibility predicts local uncertainty movement"
+    },
+    {
+      "name": "equal_output_uncertainty_steering",
+      "role": "intervention_control",
+      "claim": "High-rho routes move uncertainty under matched output-motion controls.",
+      "path": "experiments/04_uncertainty_steering/02_equal_output_movement/",
+      "config": "experiments/04_uncertainty_steering/02_equal_output_movement/config/reproduce.json",
+      "paper_section": "Accessibility selects routes that move uncertainty"
+    },
+    {
+      "name": "choose_route_intervention",
+      "role": "route_selection",
+      "claim": "rho selects routes that move entropy and varentropy more than low-rho, random, gradient-orthogonal, and matched-output controls.",
+      "path": "experiments/04_uncertainty_steering/03_choose_route_intervention/",
+      "config": "experiments/04_uncertainty_steering/03_choose_route_intervention/config/reproduce.json",
+      "paper_section": "Accessibility selects routes that move uncertainty"
+    },
+    {
+      "name": "budgeted_controllability_allocation",
+      "role": "main_downstream_result",
+      "claim": "Adding rho improves fixed-budget safe uncertainty movement selection over matched policies without rho.",
+      "path": "experiments/05_controllability_mapping/budgeted_allocation_policy/",
+      "config": "experiments/05_controllability_mapping/budgeted_allocation_policy/config/reproduce.json",
+      "paper_section": "Accessibility improves budgeted route allocation"
+    }
+  ],
+  "appendix_controls": [
+    {
+      "name": "gradient_baselines",
+      "role": "sensitivity_control",
+      "path": "experiments/controls/gradient_baselines/",
+      "claim_scope": "Shows that direct gradients are strong baselines for raw movement; rho should be interpreted as route-relative accessibility, not a universal gradient replacement."
+    },
+    {
+      "name": "full_regression_controls",
+      "role": "controlled_regression",
+      "path": "experiments/controls/full_regression/",
+      "claim_scope": "Tests residual rho signal after scalar uncertainty, gradients, model, layer, task, route family, and subspace controls."
+    },
+    {
+      "name": "semantic_preservation",
+      "role": "preservation_control",
+      "path": "experiments/controls/semantic_preservation/",
+      "claim_scope": "Tracks top-1 preservation, top-k neighborhood overlap, and output drift under interventions."
+    },
+    {
+      "name": "topk_robustness",
+      "role": "output_lens_robustness",
+      "path": "experiments/controls/topk_robustness/",
+      "claim_scope": "Checks robustness of rho and movement summaries to monitored top-k/top-m choices."
+    },
+    {
+      "name": "fisher_output_energy_control",
+      "role": "matched_motion_control",
+      "path": "experiments/controls/fisher_output_energy_control/",
+      "claim_scope": "Tests whether rho effects persist under matched Fisher-output movement."
+    },
+    {
+      "name": "statistical_diagnostics",
+      "role": "non_redundancy_diagnostics",
+      "path": "experiments/controls/statistical_diagnostics/",
+      "claim_scope": "Checks same-scalar uncertainty and gradient-magnitude alternatives."
+    },
+    {
+      "name": "scale_external_robustness",
+      "role": "coverage_and_limitation",
+      "path": "experiments/controls/scale_external_robustness/",
+      "claim_scope": "Documents model and family coverage, including limitations."
+    },
+    {
+      "name": "minimal_intervention_energy",
+      "role": "supporting_control",
+      "path": "experiments/04_uncertainty_steering/01_minimal_intervention_energy/",
+      "claim_scope": "Supporting evidence for intervention efficiency; not the main downstream claim."
+    },
+    {
+      "name": "decoder_main_battery",
+      "role": "decoder_replication",
+      "path": "experiments/04_uncertainty_steering/decoder_main_battery/",
+      "claim_scope": "Decoder-only replication/supporting battery."
+    },
+    {
+      "name": "controllability_mapping_support",
+      "role": "diagnostic_support",
+      "path": "experiments/05_controllability_mapping/",
+      "claim_scope": "Diagnostic controllability mapping and route-selection support; the main paper-facing downstream claim is budgeted allocation."
+    }
+  ],
+  "exploratory_or_boundary": {
+    "branch": "experiments-full",
+    "local_path_on_clean_branch": "experiments_exploratory/",
+    "not_main_claims": [
+      {
+        "name": "rho_guided_selective_reliability",
+        "original_path": "experiments/controls/rho_guided_selective_reliability/",
+        "clean_branch_path": "experiments_exploratory/controls/rho_guided_selective_reliability/",
+        "reason": "Auxiliary reliability feature; not a main claim."
+      },
+      {
+        "name": "non_nlp_safety_policies",
+        "original_path": "experiments/06_non_nlp_safety_policies/",
+        "clean_branch_path": "experiments_exploratory/06_non_nlp_safety_policies/",
+        "reason": "Boundary/stress test; not a main claim."
+      },
+      {
+        "name": "llm_equal_cost_review_policy",
+        "original_path": "experiments/controls/llm_equal_cost_review_policy/",
+        "clean_branch_path": "experiments_exploratory/controls/llm_equal_cost_review_policy/",
+        "reason": "Equal-cost review-policy stress test; separate from route-level controllability allocation."
+      }
+    ]
+  },
+  "main_commands": [
+    {
+      "name": "make_paper_figures",
+      "command": "python scripts/make_paper_figures.py"
+    },
+    {
+      "name": "equal_output_and_control_cost_tests",
+      "command": "python scripts/run_control_cost_and_equal_output_tests.py --tau-entropy 0.02 --tau-varentropy 0.04 --top-k-output 32 --seed 20260529"
+    },
+    {
+      "name": "choose_route_intervention",
+      "command": "python scripts/run_choose_route_intervention_test.py --bootstrap 1000 --seed 20260610"
+    },
+    {
+      "name": "budgeted_controllability_allocation",
+      "command": "python scripts/run_budgeted_controllability_allocation_test.py --bootstrap 1000 --permutations 5000 --seed 20260613"
+    }
+  ],
+  "main_outputs": {
+    "budgeted_allocation": [
+      "experiments/05_controllability_mapping/budgeted_allocation_policy/report.md",
+      "experiments/05_controllability_mapping/budgeted_allocation_policy/budgeted_allocation_summary.csv",
+      "experiments/05_controllability_mapping/budgeted_allocation_policy/budgeted_allocation_fold_summary.csv",
+      "experiments/05_controllability_mapping/budgeted_allocation_policy/budgeted_allocation_permutation_fdr.csv",
+      "experiments/05_controllability_mapping/budgeted_allocation_policy/budgeted_allocation_selected_records_sample.csv",
+      "experiments/05_controllability_mapping/budgeted_allocation_policy/config/reproduce.json"
+    ],
+    "route_selection": [
+      "experiments/05_controllability_mapping/route_selection_policy/report.md",
+      "experiments/05_controllability_mapping/route_selection_policy/route_selection_summary.csv",
+      "experiments/05_controllability_mapping/route_selection_policy/route_selection_contrasts.csv",
+      "experiments/05_controllability_mapping/route_selection_policy/route_selection_bootstrap_ci.csv",
+      "experiments/05_controllability_mapping/route_selection_policy/config/reproduce.json"
+    ]
+  },
+  "statistics_policy": {
+    "main_text": "Report compact aggregate effects and confidence intervals for main decision-facing tests.",
+    "repository": "Keep fold summaries, paired bootstrap intervals, permutation tests, FDR-adjusted q-values, configs, reports, and deterministic samples where full records exceed file-size limits.",
+    "large_files": "Full selected-record tables may be generated by reproduction scripts and omitted from git when they exceed GitHub file-size limits."
+  },
+  "claims_to_avoid": [
+    "rho is a generic error predictor",
+    "rho is a universal replacement for gradients",
+    "rho uniformly improves human-review triage",
+    "rho is a broad safety score",
+    "rho improves accuracy whenever uncertainty is moved"
+  ]
+}
+```
