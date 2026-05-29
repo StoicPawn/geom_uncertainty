@@ -1,0 +1,16 @@
+{
+  "command": "python scripts/run_budgeted_controllability_allocation_test.py --bootstrap 1000 --permutations 5000 --seed 20260613",
+  "input": "experiments/05_controllability_mapping/outputs/intervention_points.csv",
+  "outputs": "experiments/05_controllability_mapping/budgeted_allocation_policy",
+  "budget_mode": "same_fisher_output_energy",
+  "budgets": [
+    0.05,
+    0.1,
+    0.2,
+    0.3
+  ],
+  "drift_cap": 0.00025,
+  "tau_varentropy": 0.01,
+  "topk_threshold": 0.9,
+  "seed": 20260613
+}

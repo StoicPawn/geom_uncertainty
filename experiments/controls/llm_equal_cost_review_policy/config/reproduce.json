@@ -1,0 +1,13 @@
+{
+  "name": "llm_equal_cost_review_policy",
+  "command": "python scripts/run_llm_equal_cost_review_policy_test.py",
+  "inputs": [
+    "experiments/controls/rho_guided_selective_reliability/outputs/selective_reliability_dataset.csv"
+  ],
+  "outputs": [
+    "experiments/controls/llm_equal_cost_review_policy/llm_equal_cost_review_fold_records.csv",
+    "experiments/controls/llm_equal_cost_review_policy/llm_equal_cost_review_summary.csv",
+    "experiments/controls/llm_equal_cost_review_policy/llm_equal_cost_review_contrasts.csv",
+    "experiments/controls/llm_equal_cost_review_policy/report.md"
+  ]
+}

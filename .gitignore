@@ -7,3 +7,5 @@
 data/
 applications/06_hidden_fragility_cifar_c/models/*.pt
 applications/06_hidden_fragility_cifar_c/pilot_quick/
+experiments/05_controllability_mapping/budgeted_allocation_policy/budgeted_allocation_selected_records.csv
+**/*selected_records.csv

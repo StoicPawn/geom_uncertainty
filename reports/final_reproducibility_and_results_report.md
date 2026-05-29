@@ -7,7 +7,8 @@ This cleaned main branch contains the paper-facing scientific story:
 3. local perturbation evidence that accessibility predicts uncertainty movement;
 4. uncertainty steering and equal-output-movement/minimal-energy controls;
 5. uncertainty controllability mapping as the diagnostic application;
-6. rho-guided selective reliability as the non-oracle decision test.
+6. route-selection and equal-cost review tests as decision-facing probes;
+7. rho-guided selective reliability as the non-oracle decision test, with stated boundary conditions.
 
 Side experiments and exploratory ablations were moved to `archive_disruptive_experiments_full`.
 
@@ -71,11 +72,36 @@ minimal_energy MAE log10:  controls 0.391496 -> controls+rho 0.346423
 
 Bootstrap deltas are positive for safe movement AUPRC, log-loss improvement, movement MAE improvement, and minimal-energy MAE improvement.
 
+The derived route-selection policy asks the narrower intervention question: if a case has many candidate internal routes, does selecting the high-rho route choose a better intervention route? High-rho strongly beats low-rho and deterministic random route selection, and roughly doubles safe-movement rate over random:
+
+```text
+safe_movement: high-rho 0.095238 vs random 0.047619 vs low-rho 0.004762
+mean uncertainty movement: high-rho 0.021195 vs random 0.019687 vs low-rho 0.010965
+top1 preservation: high-rho 0.993651 vs random 0.980952 vs low-rho 0.958730
+```
+
+The same route-selection test is not a clean win over every strong geometric selector: high-rho is close to high-gradient and high-Jacobian, and high-Fisher-energy has slightly higher safe-movement rate in this panel. This supports "rho helps choose routes" rather than "rho dominates all local geometric selectors."
+
+The budgeted controllability allocation test asks the stricter decision question: given a fixed intervention budget, which candidate routes should be selected? It evaluates only the matched `same_fisher_output_energy` intervention panel, applies the same top-budget fractions to every policy, and trains learned policies only on training folds. The cleanest publishable signal is SafeMove@20%, where the key rho deltas are positive with paired cluster bootstrap CIs above zero in grouped-example, leave-one-model-out, leave-one-task-out, and leave-one-route-family-out splits.
+
+Primary grouped-example SafeMove@20% deltas:
+
+```text
+controls+rho - controls-only:       +0.014195, CI [0.005509, 0.026392]
+gradient+rho - gradient-only:       +0.027604, CI [0.011319, 0.055714]
+rho-only - within-example shuffled: +0.034033, CI [0.020348, 0.051609]
+rho-only - Fisher-energy:           +0.032847, CI [0.003804, 0.060665]
+```
+
+At SafeMove@10%, the point estimates remain positive but some bootstrap intervals cross zero, so the allocation claim should be stated as strongest at 20-30% budgets rather than as a universal top-10% result.
+
 Primary artifacts:
 
 - `experiments/05_controllability_mapping/outputs/mapping_metrics.csv`
 - `experiments/05_controllability_mapping/outputs/mapping_bootstrap_ci.csv`
 - `experiments/05_controllability_mapping/reports/uncertainty_controllability_mapping_test.md`
+- `experiments/05_controllability_mapping/route_selection_policy/`
+- `experiments/05_controllability_mapping/budgeted_allocation_policy/`
 
 ### Experiment 5
 
@@ -100,6 +126,19 @@ Primary artifacts:
 - `experiments/controls/rho_guided_selective_reliability/outputs/selective_reliability_bootstrap_ci.csv`
 - `experiments/controls/rho_guided_selective_reliability/reports/report.md`
 
+### Equal-Cost Review Boundary Tests
+
+Two policy-facing equal-cost tests are retained to prevent overclaiming.
+
+The LLM equal-cost review selector test compares transparent review scores at the same held-out review budget. Rho-only and rho-combined selectors are useful in some splits, especially leave-one-source-out, but Fisher-output-energy is strongest in grouped-prompt and leave-one-model-out at the tested budgets. This supports rho as a useful decision feature, not as a standalone universal review score.
+
+The non-NLP safety-policy test transfers the same idea to sklearn breast-cancer and digits datasets. Rho-guided policies reduce review and compute budget, but lose automatic accuracy and safe-decision rate versus entropy/gradient human-review baselines. In the stricter equal-review-cost panel, rho does not beat entropy/gradient overall; it only beats the Jacobian selector on the digits surrogate. This is a boundary case and should be presented as such.
+
+Primary artifacts:
+
+- `experiments/controls/llm_equal_cost_review_policy/`
+- `experiments/06_non_nlp_safety_policies/`
+
 ## Required Controls
 
 Core controls retained on main:
@@ -111,6 +150,8 @@ Core controls retained on main:
 - equal Fisher-output movement: `experiments/controls/fisher_output_energy_control/`;
 - bootstrap and matched scalar-gradient diagnostics: `experiments/controls/statistical_diagnostics/`;
 - rho-guided selective reliability: `experiments/controls/rho_guided_selective_reliability/`.
+- LLM equal-cost review selector: `experiments/controls/llm_equal_cost_review_policy/`;
+- non-NLP boundary policy test: `experiments/06_non_nlp_safety_policies/`.
 
 Scale and model-family robustness retained on main:
 
@@ -154,6 +195,14 @@ Run rho-guided selective reliability:
 python scripts/run_rho_guided_selective_reliability.py --bootstrap 1000 --seed 20260609
 ```
 
+Run derived route-selection and equal-cost review tests:
+
+```bash
+python scripts/run_rho_route_selection_mapping_test.py --bootstrap 1000 --seed 20260612
+python scripts/run_budgeted_controllability_allocation_test.py --bootstrap 1000 --permutations 5000 --seed 20260613
+python scripts/run_llm_equal_cost_review_policy_test.py
+```
+
 ## Limitations
 
-Rho should be claimed as a local controllability geometry, not a generic error predictor. Gradient baselines remain strong for raw local movement. Minimal-energy results are strongest in the top-k local-linear setting and should be stated with that caveat. Selective reliability improves under grouped-prompt and leave-one-model-out evaluation, but not under leave-one-source-out evaluation; the current source count is too small to sell "general reliability." RoBERTa, Llama, and Mistral are now part of the requested default test sets and are downloaded automatically when absent unless `--local-files-only` is set.
+Rho should be claimed as a local controllability geometry, not a generic error predictor. Gradient and Fisher-energy baselines remain strong for raw local movement and route selection. Minimal-energy results are strongest in the top-k local-linear setting and should be stated with that caveat. Selective reliability improves under grouped-prompt and leave-one-model-out evaluation, but not under leave-one-source-out evaluation; the current source count is too small to sell "general reliability." Equal-cost non-NLP policy transfer is a boundary case, not a positive headline result. RoBERTa, Llama, and Mistral are now part of the requested default test sets and are downloaded automatically when absent unless `--local-files-only` is set.

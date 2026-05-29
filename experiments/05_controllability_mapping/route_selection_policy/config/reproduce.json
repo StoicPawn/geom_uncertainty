@@ -1,0 +1,14 @@
+{
+  "name": "rho_route_selection_mapping",
+  "command": "python scripts/run_rho_route_selection_mapping_test.py --bootstrap 1000 --seed 20260612",
+  "inputs": [
+    "experiments/05_controllability_mapping/outputs/intervention_points.csv"
+  ],
+  "outputs": [
+    "experiments/05_controllability_mapping/route_selection_policy/route_selection_records.csv",
+    "experiments/05_controllability_mapping/route_selection_policy/route_selection_summary.csv",
+    "experiments/05_controllability_mapping/route_selection_policy/route_selection_contrasts.csv",
+    "experiments/05_controllability_mapping/route_selection_policy/route_selection_bootstrap_ci.csv",
+    "experiments/05_controllability_mapping/route_selection_policy/report.md"
+  ]
+}
