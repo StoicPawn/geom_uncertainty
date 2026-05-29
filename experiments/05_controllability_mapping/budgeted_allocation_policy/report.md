@@ -68,12 +68,18 @@ Budget  Contrast                                           Delta      CI low    
 The test includes global shuffled rho, within-example shuffled rho, and rho shuffled within entropy, varentropy, gradient, and Fisher-energy bins. The within-example shuffle is the strictest negative control because it permutes rho only among candidate routes belonging to the same example/intervention setting.
 
 ## Files
-```text
-budgeted_allocation_selected_records.csv
-budgeted_allocation_fold_summary.csv
-budgeted_allocation_summary.csv
-budgeted_allocation_contrasts.csv
-budgeted_allocation_bootstrap_ci.csv
-budgeted_allocation_permutation_fdr.csv
-report.md
-```
+
+Committed:
+- `budgeted_allocation_selected_records_sample.csv`
+- `budgeted_allocation_fold_summary.csv`
+- `budgeted_allocation_summary.csv`
+- `budgeted_allocation_contrasts.csv`
+- `budgeted_allocation_bootstrap_ci.csv`
+- `budgeted_allocation_permutation_fdr.csv`
+- `report.md`
+- `config/reproduce.json`
+
+Generated but omitted from git due to GitHub file-size limits:
+- `budgeted_allocation_selected_records.csv`
+
+The sample file contains 5,000 deterministic inspection rows plus header. It is not used to compute the reported aggregate metrics; those are computed from the full generated records.
