@@ -1,4 +1,4 @@
-```json
+
 {
   "branch": "paper-main-clean",
   "paper_title": "From Uncertainty to Actionability: Fisher-Geometric Accessibility in Neural Representations",
@@ -183,4 +183,3 @@
     "rho improves accuracy whenever uncertainty is moved"
   ]
 }
-```
