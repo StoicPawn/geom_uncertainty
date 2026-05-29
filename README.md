@@ -20,6 +20,13 @@ For an internal route or subspace `B`, `rho(B)` measures the fraction of the loc
 4. `experiments/05_controllability_mapping/budgeted_allocation_policy/`
    Functional value: rho improves budgeted controllability-aware route allocation under fixed intervention budget and matched Fisher-output energy.
 
+## Main Results Snapshot
+
+- Scalar uncertainty is not enough: matched scalar-uncertainty cases can have substantially different rho values.
+- Local perturbations: higher-rho quartiles show larger local entropy and varentropy movement under controlled interventions.
+- Route intervention: high-rho routes move uncertainty more than low-rho and random routes at matched Fisher-output movement.
+- Budgeted allocation: at 20% budget, controls+rho improves SafeMove over controls-only by +0.014195, gradient+rho improves over gradient-only by +0.027604, and rho-only beats within-example shuffled rho by +0.034033.
+
 ## Appendix Controls
 
 Curated controls and supporting artifacts are documented in `APPENDIX_ARTIFACTS.md`. These controls support the paper but should not be framed as independent main claims.
