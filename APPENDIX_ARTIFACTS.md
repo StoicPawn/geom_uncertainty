@@ -2,7 +2,7 @@
 
 This file separates paper-supporting artifacts from the main narrative spine.
 
-## Appendix controls
+## Appendix controls retained for the paper
 
 | Artifact | Role |
 |---|---|
@@ -15,15 +15,19 @@ This file separates paper-supporting artifacts from the main narrative spine.
 | `experiments/controls/scale_external_robustness/` | Model and family coverage matrix. |
 | `experiments/04_uncertainty_steering/01_minimal_intervention_energy/` | Minimal-energy support with gradient caveats. |
 | `experiments/04_uncertainty_steering/decoder_main_battery/` | Decoder-only replication battery. |
-| `experiments/05_controllability_mapping/` | Diagnostic controllability mapping and supporting policy artifacts. |
+| `experiments/05_controllability_mapping/` | Diagnostic controllability mapping plus the paper-facing budgeted allocation policy. |
 
 ## Exploratory or boundary artifacts
 
-| Artifact | Recommended framing |
+These are not primary paper claims. The complete versions are kept on branch `experiments-full` for transparency rather than being used as the main paper spine.
+
+| Artifact on `experiments-full` | Recommended framing |
 |---|---|
 | `experiments/controls/rho_guided_selective_reliability/` | Auxiliary reliability feature, not a primary claim. |
 | `experiments/06_non_nlp_safety_policies/` | Boundary/stress test, not a primary claim. |
 | `experiments/controls/llm_equal_cost_review_policy/` | Equal-cost review-policy stress test, separate from controllability allocation. |
+
+See `experiments_exploratory/README.md` on this branch for the list of artifacts intentionally excluded from the paper spine.
 
 ## Branch policy
 
